@@ -1,0 +1,110 @@
+﻿
+@{
+    ViewBag.Title = "ver";
+    Page.Title = "Comunidad 1 - Brokolee Software";
+}
+
+<div class="page-content-wrapper">
+
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="page-title-box">
+                    <div class="float-left">
+                        <div class="breadcrumb float-md-right">
+                            <h4 class="page-title">Comunidad</h4>
+                        </div>
+                    </div>
+                    <div class="float-right">
+                        <ul class="breadcrumb float-md-right">
+                            <li class="breadcrumb-item"><a href="@Url.Action("panel", "control", new { area = "webmaster" })" class="text-success"><i class="mdi mdi-home-modern"></i> Panel de Control</a></li>
+                            <li class="breadcrumb-item active">Comunidad</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end page title end breadcrumb -->
+        <!-- back button -->
+        <div class="row pb-4">
+            <div class="col-md-6">
+                <a href="javascript:history.back()"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+            </div>
+        </div>
+        <!-- end back button -->
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="form-group row">
+                            <label for="example-name1-input" class="col-sm-3 col-form-label">Administrador</label>
+                            <div class="col-sm-9">
+                                <input class="form-control" type="text" value="@Model.viewCommunity.admin_email"
+                                       data-toggle="tooltip" title="Email del Administrador"readonly
+                                       placeholder="jdelpueblo@dominio.com" id="example-name1-input">
+                                <small class="form-text text-muted">Email del Administrador</small>
+                            </div>
+                        </div>
+                        <div class="form-divider"></div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Paquete</label>
+                            <div class="col-sm-9">
+                                <input class="form-control" type="text" value="@Model.package_name"
+                                       data-toggle="tooltip" title="Paquete adquirido"  readonly
+                                       placeholder="Paquete 1" id="example-name1-input">
+                                <small class="form-text text-muted">Paquete adquirido</small>
+                            </div>
+                        </div>
+                        <div class="form-divider"></div>
+                        <div class="form-group row">
+                            <label for="example-lastname1-input" class="col-sm-3 col-form-label">Apartamento</label>
+                            <div class="col-sm-9">
+                                <input class="form-control" value="@Model.viewCommunity.apart" 
+                                       data-toggle="tooltip" title="Apartamento" readonly
+                                       placeholder="Apartamento 1"/>
+                                <small class="form-text text-muted">Apartamento</small>
+                            </div>
+                        </div>
+                        <div class="form-divider"></div>
+                        <div class="form-group row">
+                            <label for="example-lastname1-input" class="col-sm-3 col-form-label">Descripción</label>
+                            <div class="col-sm-9">
+                                <textarea class="form-control" rows="3"  readonly
+                                          data-toggle="tooltip" title="Descripción de la comunidad"
+                                          placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.">@Model.viewCommunity.description</textarea>
+                                <small class="form-text text-muted">Descripción de la comunidad</small>
+                            </div>
+                        </div>
+                        <div class="form-divider"></div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Titulares</label>
+                            <div class="col-sm-9">
+                                @foreach (var item in Model.titularList)
+                                {
+                                    <div class="input-group mt-2">
+                                        <input type="text" class="form-control" value="@item.first_name1 @item.last_name1" 
+                                               placeholder="Daniel González" aria-label="" readonly />
+                                        <span class="input-group-append">
+                                            <button class="btn btn-primary" type="button" oncli><i class="mdi mdi-close"></i></button>
+                                        </span>
+                                    </div>
+                                }                        
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- end row -->
+        <!-- back button -->
+        <div class="row pb-4">
+            <div class="col-md-6">
+                <a href="javascript:history.back()"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+            </div>
+        </div>
+        <!-- end back button -->
+
+    </div><!-- container -->
+
+</div> <!-- Page content Wrapper -->

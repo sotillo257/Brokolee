@@ -1,0 +1,185 @@
+﻿
+@{
+    ViewBag.Title = "agregar";
+    Page.Title = "Agregar Suplidor - Brokolee Software";
+}
+
+<div class="page-content-wrapper">
+
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="page-title-box">
+                    <div class="float-left">
+                        <div class="breadcrumb float-md-right">
+                            <h4 class="page-title">Agregar Suplidor</h4>
+                        </div>
+                    </div>
+                    <div class="float-right">
+                        <ul class="breadcrumb float-md-right">
+                            <li class="breadcrumb-item"><a href="@Url.Action("panel", "control", new { area = "webmaster" })" class="text-success"><i class="mdi mdi-home-modern"></i> Panel de Control</a></li>
+                            <li class="breadcrumb-item active">Agregar Suplidor</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end page title end breadcrumb -->
+        <!-- back button -->
+        <div class="row pb-4">
+            <div class="col-md-6">
+                <a href="javascript:history.back()"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+            </div>
+        </div>
+        <!-- end back button -->
+
+        <div class="row">
+
+            <div class="col-12">
+                <div class="card">
+                    @using (Html.BeginForm(
+                       "newsupplier",
+                       "suplidores",
+                       FormMethod.Post,
+                       new
+                       {
+                           id = "newsupplier",
+                           @class = "",
+                           area = "webmaster",
+                           enctype = "multipart/form-data"
+                       }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="card-body">
+                            <h5 class="d-inline-block">Nuevo Suplidor</h5>
+                            <div class="form-divider"></div>
+                            <div class="form-group row">
+                                <label for="example-name2-input" class="col-sm-3 col-form-label">Logo</label>
+                                <div class="col-sm-9">
+                                    <div class="input-group mt-2">
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input" id="inputGroupFile04"
+                                                   name="logo_file" data-toggle="tooltip" title="Subir logo en formato jpg o png">
+                                            <label class="custom-file-label" for="inputGroupFile04">Seleccionar archivo</label>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <small class="form-text text-muted">Subir logo en formato jpg o png</small>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-divider"></div>
+                            <div class="form-group row">
+                                <label for="example-email-input" class="col-sm-3 col-form-label">Compañía Suplidor</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" type="text" value="" name="company" required
+                                           data-toggle="tooltip" title="Nombre de la compañía del suplidor"
+                                           placeholder="Compañía Suplidor" id="example-email-input">
+                                    <small class="form-text text-muted">Nombre de la compañía del suplidor</small>
+                                </div>
+                            </div>
+                            <div class="form-divider"></div>
+                            <div class="form-group row">
+                                <label for="example-name1-input" class="col-sm-3 col-form-label">Nombre de contacto</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" type="text" value="" name="contact_name" required
+                                           data-toggle="tooltip" title="Nombre de contacto del suplidor"
+                                           placeholder="Nombre de contacto" id="example-name1-input">
+                                    <small class="form-text text-muted">Nombre de contacto del suplidor</small>
+                                </div>
+                            </div>
+                            <div class="form-divider"></div>
+                            <div class="form-group row">
+                                <label for="example-lastname1-input" class="col-sm-3 col-form-label">Tipo de servicio</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" type="text" value="" name="type_service" required
+                                           data-toggle="tooltip" title="Servicio que ofrece"
+                                           placeholder="Tipo de servicio" id="example-lastname1-input">
+                                    <small class="form-text text-muted">Servicio que ofrece</small>
+                                </div>
+                            </div>
+                            <div class="form-divider"></div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">Categoría</label>
+                                <div class="col-sm-9">
+                                    <select class="form-control" name="category" required
+                                            data-toggle="tooltip" title="Categoría del suplidor">
+                                        <option value="">Elije una categoría</option>
+                                        @foreach (var item in Model.categoryList)
+                                        {
+                                            <option value="@item.Id">@item.name</option>
+                                        }
+                                    </select>
+                                    <small class="form-text text-muted">Categoría del suplidor</small>
+                                </div>
+                            </div>
+                            <div class="form-divider"></div>
+                            <div class="form-group row">
+                                <label for="example-lastname1-input" class="col-sm-3 col-form-label">Dirección</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" type="text" value="" name="address" required
+                                           data-toggle="tooltip" title="Dirección del suplidor"
+                                           placeholder="Dirección" id="example-lastname1-input">
+                                    <small class="form-text text-muted">Dirección del suplidor</small>
+                                </div>
+                            </div>
+                            <div class="form-divider"></div>
+                            <div class="form-group row">
+                                <label for="example-tel1-input" class="col-sm-3 col-form-label">Teléfono</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" type="tel" value="" name="phone" required
+                                           data-toggle="tooltip" title="Teléfono del suplidor"
+                                           placeholder="# Teléfono" id="example-tel1-input">
+                                    <small class="form-text text-muted">Teléfono del suplidor</small>
+                                </div>
+                            </div>
+                            <div class="form-divider"></div>
+                            <div class="form-group row">
+                                <label for="example-email-input" class="col-sm-3 col-form-label">Correo electrónico</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" type="email" value="" name="email" required
+                                           data-toggle="tooltip" title="Correo electrónico del suplidor"
+                                           placeholder="Correo electrónico" id="example-email-input">
+                                    <small class="form-text text-muted">Correo electrónico del suplidor</small>
+                                </div>
+                            </div>
+                            <div class="form-divider"></div>
+                            <div class="form-group row">
+                                <label for="example-date-input" class="col-sm-3 col-form-label">Suplidor desde</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" type="date" name="supplier_from" required
+                                           data-toggle="tooltip" title="Mes / día / año | Fecha de registro en el directorio"
+                                           value="" id="example-date-input">
+                                    <small class="form-text text-muted">Mes / día / año | Fecha de registro en el directorio</small>
+                                </div>
+                            </div>
+                            <div class="form-divider"></div>
+                            <div class="form-group row">
+                                <label for="example-email-input" class="col-sm-3 col-form-label">Página web</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" type="text" value="" name="web_page" required
+                                           data-toggle="tooltip" title="Por ejemplo: wwww.suplidores.com"
+                                           placeholder="Url de página web" id="example-email-input">
+                                    <small class="form-text text-muted">Por ejemplo: wwww.suplidores.com</small>
+                                </div>
+                            </div>
+                            <a href=""><button type="submit" class="btn btn-primary waves-effect waves-light">Agregar Suplidor</button></a>
+                            <a href=""><button type="button" class="btn btn-danger waves-effect waves-light">Cancelar</button></a>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div><!-- end row -->
+        <!-- back button -->
+        <div class="row pb-4">
+            <div class="col-md-6">
+                <a href="javascript:history.back()"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+            </div>
+        </div>
+        <!-- end back button -->
+
+    </div><!-- container -->
+
+</div> <!-- Page content Wrapper -->

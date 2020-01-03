@@ -1,0 +1,554 @@
+﻿
+@{
+    ViewBag.Title = "perfil";
+    Page.Title = "Brokolee Software - Perfil Administrador";
+}
+
+<div class="page-content-wrapper">
+
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="page-title-box">
+                    <div class="float-left">
+                        <div class="breadcrumb float-md-right">
+                            <h4 class="page-title">Perfil administrador</h4>
+                        </div>
+                    </div>
+                    <div class="float-right">
+                        <ul class="breadcrumb float-md-right">
+                            <li class="breadcrumb-item"><a href="@Url.Action("panel", "control", new { area = "coadmin" })" class="text-success"><i class="mdi mdi-home-modern"></i> Panel de Control</a></li>
+                            <li class="breadcrumb-item active">Perfil administrador</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end page title end breadcrumb -->
+        <!-- back button -->
+        <div class="row pb-4">
+            <div class="col-md-6">
+                <a href="javascript:history.back()"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+            </div>
+        </div>
+        <!-- end back button -->
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    @using (Html.BeginForm("editprofile", "administrador",
+                       FormMethod.Post, new
+                       {
+                           id = "editprofileForm",
+                           @class = "",
+                           area = "coadmin",
+                           enctype = "multipart/form-data"
+                       }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="card-body">
+                            <h5 class="d-inline-block">Información del Administrador</h5>
+                            <div class="form-divider"></div>
+                            <div class="form-group row">
+                                <div class="col-sm-3">
+                                    @if (Model.curUser.user_img != null)
+                                    {
+                                        <img src="~/Upload/User_Logo/@Model.curUser.user_img" alt="user-img" class="img-fluid" />
+                                    }
+                                    else
+                                    {
+                                        <img src="~/assets/images/user.svg" alt="user-img" class="img-fluid" />
+                                    }
+                                </div>
+                                <div class="col-sm-9">
+                                    <div class="input-group mt-2">
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input" id="inputGroupFile06" name="user_logo"
+                                                   data-toggle="tooltip" title="Subir logo en formato jpg o png"/>
+                                            <label class="custom-file-label" for="inputGroupFile06">Seleccionar archivo</label>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <small class="form-text text-muted">Subir logo en formato jpg o png</small>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-divider"></div>
+                            <div class="form-group row">
+                                <label for="example-email-input" class="col-sm-3 col-form-label">Correo electrónico</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" type="email" value="@Model.curUser.email" 
+                                           name="email" data-toggle="tooltip" title="Base utilizada para identificar las unidades suscritas de varias comunidades adscritas."
+                                           placeholder="Correo electrónico del titular" id="example-email-input">
+                                    <small class="form-text text-muted">Base utilizada para identificar las unidades suscritas de varias comunidades adscritas.</small>
+                                </div>
+                            </div>
+                            <div class="form-divider"></div>
+                            <div class="form-group row">
+                                <label for="example-password-input" class="col-sm-3 col-form-label">Contraseña</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" type="password" value="@Model.password" name="password"
+                                           data-toggle="tooltip" title="Contraseña utilizada para ingresar al sistema"
+                                           placeholder="Contraseña" id="example-password-input">
+                                    <small class="form-text text-muted">Contraseña utilizada para ingresar al sistema</small>
+                                </div>
+                            </div>
+                            <div class="form-divider"></div>
+                            <div class="form-group row">
+                                <label for="example-date-input" class="col-sm-3 col-form-label">Fecha de adquisición</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" type="date" value="@Convert.ToDateTime(Model.curUser.acq_date).ToString("yyyy-MM-dd")" 
+                                           name="acq_date" data-toggle="tooltip" title="Mes / día / año"
+                                           id="example-date-input">
+                                    <small class="form-text text-muted">Mes / día / año</small>
+                                </div>
+                            </div>
+                            <div class="form-divider"></div>
+                            <h6 class="mt-0 header-title">Nombre completo del Titular I</h6>
+                            <p>Nombre del titular según aparece en la escritura de compraventa.</p>
+                            <div class="form-group row">
+                                <label for="example-name1-input" class="col-sm-3 col-form-label">Nombre</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" type="text" value="@Model.curUser.first_name1" 
+                                           data-toggle="tooltip" title="Nombre del Titular I"
+                                           placeholder="Nombre" id="example-name1-input" name="first_name1">
+                                    <small class="form-text text-muted">Nombre del Titular I</small>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="example-lastname1-input" class="col-sm-3 col-form-label">Apellido paterno</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" type="text" value="@Model.curUser.last_name1"
+                                           data-toggle="tooltip" title="Apellido paterno del Titular I"
+                                           placeholder="Apellido paterno" id="example-lastname1-input" name="last_name1">
+                                    <small class="form-text text-muted">Apellido paterno del Titular I</small>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="example-lastname1m-input" class="col-sm-3 col-form-label">Apellido materno</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" type="text" value="@Model.curUser.mother_last_name1" 
+                                           data-toggle="tooltip" title="Apellido materno del Titular I"
+                                           placeholder="Apellido materno" id="example-lastname1m-input" name="mother_last_name1">
+                                    <small class="form-text text-muted">Apellido materno del Titular I</small>
+                                </div>
+                            </div>
+                            <div class="form-divider"></div>
+                            <h6 class="mt-0 header-title">Nombre completo del Titular II</h6>
+                            <p>Nombre del segundo titular según aparece en la escritura de compraventa.</p>
+                            <div class="form-group row">
+                                <label for="example-name2-input" class="col-sm-3 col-form-label">Nombre</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" type="text" value="@Model.curUser.first_name2"
+                                           data-toggle="tooltip" title="Nombre del Titular II"
+                                           placeholder="Nombre" id="example-name2-input" name="first_name2">
+                                    <small class="form-text text-muted">Nombre del Titular II</small>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="example-lastname2-input" class="col-sm-3 col-form-label">Apellido paterno</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" type="text" value="@Model.curUser.last_name2" 
+                                           name="last_name2" data-toggle="tooltip" title="Apellido paterno del Titular II"
+                                           placeholder="Apellido paterno" id="example-lastname2-input">
+                                    <small class="form-text text-muted">Apellido paterno del Titular II</small>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="example-lastname2m-input" class="col-sm-3 col-form-label">Apellido materno</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" type="text" value="@Model.curUser.mother_last_name2" 
+                                           name="mother_last_name2" data-toggle="tooltip" title="Apellido materno del Titular II"
+                                           placeholder="Apellido materno" id="example-lastname2m-input">
+                                    <small class="form-text text-muted">Apellido materno del Titular II</small>
+                                </div>
+                            </div>
+                            <div class="form-divider"></div>
+                            <div class="form-group row">
+                                <label for="example-tel1-input" class="col-sm-3 col-form-label">Número de Teléfono I</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" type="tel" value="@Model.curUser.phone_number1"
+                                           name="phone_number1" data-toggle="tooltip" title="Número de teléfono del Titular I"
+                                           placeholder="# Teléfono" id="example-tel1-input">
+                                    <small class="form-text text-muted">Número de teléfono del Titular I</small>
+                                </div>
+                            </div>
+                            <div class="form-divider"></div>
+                            <div class="form-group row">
+                                <label for="example-tel2-input" class="col-sm-3 col-form-label">Número de Teléfono II</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" type="tel" value="@Model.curUser.phone_number2" 
+                                           placeholder="# Teléfono" data-toggle="tooltip" title="Número de teléfono del Titular II"
+                                           id="example-tel2-input" name="phone_number2">
+                                    <small class="form-text text-muted">Número de teléfono del Titular II</small>
+                                </div>
+                            </div>
+                            <div class="form-divider"></div>
+                            <div class="form-group row">
+                                <label for="example-address1-input" class="col-sm-3 col-form-label">Dirección Postal</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" type="text" value="@Model.curUser.postal_address"
+                                           placeholder="Dirección Postal" name="postal_address"
+                                           data-toggle="tooltip" title="Dirección postal del Titular"
+                                           id="example-address1-input">
+                                    <small class="form-text text-muted">Dirección postal del Titular</small>
+                                </div>
+                            </div>
+                            <div class="form-divider"></div>
+                            <div class="form-group row">
+                                <label for="example-address2-input" class="col-sm-3 col-form-label">Dirección Residencial</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" type="text" value="@Model.curUser.residential_address"
+                                           name="residential_address" data-toggle="tooltip" title="Dirección residencial del Titular"
+                                           placeholder="Dirección Residencial" id="example-address2-input">
+                                    <small class="form-text text-muted">Dirección residencial del Titular</small>
+                                </div>
+                            </div>
+                            <div class="form-divider"></div>
+                            <h6 class="mt-0 header-title">Escritura</h6>
+                            <p>Escritura de compra-venta.</p>
+                            <div class="form-group row">
+                                <label for="example-name2-input" class="col-sm-3 col-form-label">Subir Escritura</label>
+                                <div class="col-sm-9">
+                                    
+                                    <div class="input-group mt-2">
+                                        <div class="custom-file" ">
+
+
+                                           
+
+                                            <input type="file" class="custom-file-input" id="inputGroupFile04"
+                                                   name="upload_writing" data-toggle="tooltip" title="Dirección residencial del Titular" />
+                                            <label class="custom-file-label" for="inputGroupFile04">Seleccionar archivo</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="example-name2-input" class="col-sm-3 col-form-label">Descargar archivo</label>
+                                <div class="col-sm-9">
+                                    <div class="input-group mt-2">
+                                        <div class="custom-file">
+                                            @if (Model.curUser.upload_writing != null)
+                                            {
+                                                <a href="~/Upload/Upload_Writing/@Model.curUser.upload_writing">
+                                                    <button type="button" class="btn btn-info waves-effect waves-light">
+                                                        <i class="mdi mdi-cloud-download  m-r-5"></i> Descargar archivo
+                                                    </button>
+                                                </a>
+                                            }
+                                            else
+                                            {
+                                                <button type="button" class="btn btn-info waves-effect waves-light">
+                                                    <i class="mdi mdi-cloud-download  m-r-5"></i> Descargar archivo
+                                                </button>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-divider"></div>
+                            <div class="form-group row">
+                                <label for="example-address1-input" class="col-sm-3 col-form-label">¿Está la propiedad arrendada?</label>
+                                <div class="col-sm-9">
+                                    <div class="form-check-inline my-2">
+                                        <div class="custom-control custom-checkbox">
+                                            @if (Model.curUser.siono == "boxyes")
+                                            {
+                                                <input type="checkbox" name="siono" value="boxyes" id="id-box-yes"
+                                                       class="custom-control-input"
+                                                       checked onclick="onBoxYes()">
+                                            }
+                                            else
+                                            {
+                                                <input type="checkbox" name="siono" value="boxyes" id="id-box-yes"
+                                                       class="custom-control-input"
+                                                       onclick="onBoxYes()">
+                                            }
+                                            <label class="custom-control-label" for="id-box-yes">
+                                                Si
+                                            </label>
+                                        </div>
+    
+                                        </div>
+    
+                                        <div class="form-check-inline my-2">
+                                            <div class="custom-control custom-checkbox">
+                                                @if (Model.curUser.siono == "boxno" || Model.curUser.siono == null)
+                                                {
+                                                    <input type="checkbox" name="siono" value="boxno" id="id-box-no"
+                                                           class="custom-control-input"
+                                                           onclick="onBoxNo()" checked>
+                                                }
+                                                else
+                                                {
+                                                    <input type="checkbox" name="siono" value="boxno" id="id-box-no"
+                                                           class="custom-control-input"
+                                                           onclick="onBoxNo()">
+                                                }
+                                                <label class="custom-control-label" for="id-box-no">
+                                                    No
+                                                </label>
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-divider"></div>
+                            <!-- View -->
+                            <div class="boxyes box">
+
+                                <h6 class="mt-0 header-title">Periodo de arrendamiento</h6>
+                                <div class="form-group row">
+                                    <label for="example-since-date-input" class="col-sm-3 col-form-label">Desde</label>
+                                    <div class="col-sm-9">
+                                        @if (Model.curUser.since == null)
+                                        {
+                                            <input class="form-control" type="date"
+                                                   data-toggle="tooltip" title="Mes / día / año"
+                                                   value=""
+                                                   name="since" id="example-since-date-input">
+                                        }
+                                        else
+                                        {
+                                            <input class="form-control" type="date"
+                                                   data-toggle="tooltip" title="Mes / día / año"
+                                                   value="@Convert.ToDateTime(Model.curUser.since).ToString("yyyy-MM-dd")"
+                                                   name="since" id="example-since-date-input">
+                                        }
+
+                                        <small class="form-text text-muted">Mes / día / año</small>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="example-until-date-input" class="col-sm-3 col-form-label">Hasta</label>
+                                    <div class="col-sm-9">
+                                        @if (Model.curUser.until == null)
+                                        {
+                                            <input class="form-control" type="date"
+                                                   data-toggle="tooltip" title="Mes / día / año"
+                                                   value=""
+                                                   id="example-until-date-input" name="until">
+                                        }
+                                        else
+                                        {
+                                            <input class="form-control" type="date"
+                                                   data-toggle="tooltip" title="Mes / día / año"
+                                                   value="@Convert.ToDateTime(Model.curUser.until).ToString("yyyy-MM-dd")"
+                                                   id="example-until-date-input" name="until">
+                                        }
+
+                                        <small class="form-text text-muted">Mes / día / año</small>
+                                    </div>
+                                </div>
+                                <div class="form-divider"></div>
+                                <h5 class="d-inline-block">Información del Arrendatario</h5>
+                                <div class="form-divider"></div>
+                                <h6 class="mt-0 header-title">Nombre completo del Arrendatario I</h6>
+                                <p>Nombre del arrendatario según aparece en el contrato de arrendamiento.</p>
+                                <div class="form-group row">
+                                    <label for="example-tenant-name1-input" class="col-sm-3 col-form-label">Nombre</label>
+                                    <div class="col-sm-9">
+                                        <input class="form-control" type="text" value="@Model.curUser.tenant_first_name1" 
+                                               name="tenant_first_name1" data-toggle="tooltip" title="Nombre del Arrendatario I"
+                                               placeholder="Nombre" id="example-tenant-name1-input">
+                                        <small class="form-text text-muted">Nombre del Arrendatario I</small>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="example-tenant-lastname1-input" class="col-sm-3 col-form-label">Apellido paterno</label>
+                                    <div class="col-sm-9">
+                                        <input class="form-control" type="text" data-toggle="tooltip" 
+                                               title="Apellido paterno del Arrendatario I"
+                                               value="@Model.curUser.tenant_last_name1" name="tenant_last_name1"
+                                               placeholder="Apellido paterno" id="example-tenant-lastname1-input">
+                                        <small class="form-text text-muted">Apellido paterno del Arrendatario I</small>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="example-tenant-lastname1m-input" class="col-sm-3 col-form-label">Apellido materno</label>
+                                    <div class="col-sm-9">
+                                        <input class="form-control" type="text" name="tenant_mother_last_name1"
+                                               value="@Model.curUser.tenant_mother_last_name1" data-toggle="tooltip" 
+                                               title="Apellido materno del Arrendatario I"
+                                               placeholder="Apellido materno" id="example-tenant-lastname1m-input">
+                                        <small class="form-text text-muted">Apellido materno del Arrendatario I</small>
+                                    </div>
+                                </div>
+                                <div class="form-divider"></div>
+                                <h6 class="mt-0 header-title">Nombre completo del Arrendatario II</h6>
+                                <p>Nombre del segundo arrendatario según aparece en contrato de arrendamiento.</p>
+                                <div class="form-group row">
+                                    <label for="example-tenant-name2-input" class="col-sm-3 col-form-label">Nombre</label>
+                                    <div class="col-sm-9">
+                                        <input class="form-control" type="text" value="@Model.curUser.tenant_first_name2"
+                                               name="tenant_first_name2" data-toggle="tooltip" 
+                                               title="Nombre del Arrendatario II"
+                                               placeholder="Nombre" id="example-tenant-name2-input">
+                                        <small class="form-text text-muted">Nombre del Arrendatario II</small>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="example-tenant-lastname2-input" class="col-sm-3 col-form-label">Apellido paterno</label>
+                                    <div class="col-sm-9">
+                                        <input class="form-control" type="text" value="@Model.curUser.tenant_last_name2"
+                                               data-toggle="tooltip" title="Apellido paterno del Arrendatario II"
+                                               placeholder="Apellido paterno" name="tenant_last_name2" id="example-tenant-lastname2-input">
+                                        <small class="form-text text-muted">Apellido paterno del Arrendatario II</small>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="example-tenant-lastname2m-input" class="col-sm-3 col-form-label">Apellido materno</label>
+                                    <div class="col-sm-9">
+                                        <input class="form-control" type="text" value="@Model.curUser.tenant_mother_last_name2" 
+                                               name="tenant_mother_last_name2" data-toggle="tooltip" 
+                                               title="Apellido materno del Arrendatario II"
+                                               placeholder="Apellido materno del Arrendatario II" id="example-tenant-lastname2m-input">
+                                        <small class="form-text text-muted">Apellido materno del Arrendatario II</small>
+                                    </div>
+                                </div>
+                                <div class="form-divider"></div>
+                                <div class="form-group row">
+                                    <label for="leased-example-address1-input" class="col-sm-3 col-form-label">Dirección Postal</label>
+                                    <div class="col-sm-9">
+                                        <input class="form-control" type="text" data-toggle="tooltip" 
+                                               title="Dirección postal del Arrendatario"
+                                               value="@Model.curUser.leased_postal_address" placeholder="Dirección Postal"
+                                               id="leased-example-address1-input" name="leased_postal_address" />
+                                        <small class="form-text text-muted">Dirección postal del Arrendatario</small>
+                                    </div>
+                                </div>
+                                <div class="form-divider"></div>
+                                <div class="form-group row">
+                                    <label for="leased-example-address2-input" class="col-sm-3 col-form-label">Dirección Residencial</label>
+                                    <div class="col-sm-9">
+                                        <input class="form-control" type="text" value="@Model.curUser.leased_residential_address"
+                                               name="leased_residential_address" data-toggle="tooltip" 
+                                               title="Dirección residencial del Arrendatario"
+                                               placeholder="Dirección Residencial" id="leased-example-address2-input">
+                                        <small class="form-text text-muted">Dirección residencial del Arrendatario</small>
+                                    </div>
+                                </div>
+                                <div class="form-divider"></div>
+                                <h6 class="mt-0 header-title">Contrato</h6>
+                                <p>Contrato de arrendamiento.</p>
+                                <div class="form-group row">
+                                    <label for="example-name2-input" class="col-sm-3 col-form-label">Subir archivo</label>
+                                    <div class="col-sm-9">
+                                        <div class="input-group mt-2">
+                                            <div class="custom-file">
+                                                <input type="file" name="leased_upload_file"
+                                                       class="custom-file-input" 
+                                                       id="inputGroupFile05">
+                                                <label class="custom-file-label" for="inputGroupFile05">Seleccionar archivo</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="example-name2-input" class="col-sm-3 col-form-label">Descargar Escritura</label>
+                                    <div class="col-sm-9">
+                                        <div class="input-group mt-2">
+                                            <div class="custom-file">
+                                                @if (Model.curUser.upload_writing != null)
+                                                {
+                                                    <a href="~/Upload/Upload_Writing/@Model.curUser.upload_writing" download="">
+                                                        <button type="button" class="btn btn-info waves-effect waves-light">
+                                                            <i class="mdi mdi-cloud-download  m-r-5"></i> Descargar archivo
+                                                        </button>
+                                                    </a>
+                                                }
+                                                else
+                                                {
+                                                    <button type="button" class="btn btn-info waves-effect waves-light">
+                                                        <i class="mdi mdi-cloud-download  m-r-5"></i> Descargar archivo
+                                                    </button>
+                                                }
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-divider"></div>
+                            </div>
+                            <!-- End View -->
+                            <div class="row form-material">
+                                <div class="col-md-12">
+                                    <h5 class="d-inline-block">Vehículos autorizados</h5>
+                                    <a href="#" class="text-bold"><button type="button" class="btn btn-primary waves-effect waves-light btn-sm"><i class="mdi mdi-plus"></i></button></a>
+                                </div>
+
+                            </div>
+                            <div class="form-divider"></div>
+                            <div class="form-group row">
+                                <label for="example-brand-input" class="col-sm-3 col-form-label">Marca</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" type="text" value="@Model.curUser.brand"
+                                           data-toggle="tooltip" title="Marca del vehículo"
+                                           name="brand" placeholder="Marca" id="example-brand-input">
+                                    <small class="form-text text-muted">Marca del vehículo</small>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="example-model-input" class="col-sm-3 col-form-label">Modelo</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" type="text" value="@Model.curUser.model"
+                                           data-toggle="tooltip" title="Modelo del vehículo"
+                                           placeholder="Modelo" name="model" id="example-model-input">
+                                    <small class="form-text text-muted">Modelo del vehículo</small>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="example-color-input" class="col-sm-3 col-form-label">Color</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" type="text" value="@Model.curUser.colour" 
+                                           data-toggle="tooltip" title="Color del vehículo"
+                                           name="colour" placeholder="Color" id="example-color-input">
+                                    <small class="form-text text-muted">Color del vehículo</small>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="example-year-input" class="col-sm-3 col-form-label">Año</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" type="number" value="@Model.curUser.year"
+                                           data-toggle="tooltip" title="Año del vehículo"
+                                           placeholder="Año" id="example-year-input" name="year" />
+                                    <small class="form-text text-muted">Año del vehículo</small>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="example-cartable-input" class="col-sm-3 col-form-label">Tablilla</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" type="text" value="@Model.curUser.clapboard"
+                                           data-toggle="tooltip" title="Tablilla del vehículo"
+                                           placeholder="Tablilla" id="example-cartable-input" name="clapboard">
+                                    <small class="form-text text-muted">Tablilla del vehículo</small>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="example-numbercar-input" class="col-sm-3 col-form-label">Número de sello</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" type="number" value="@Model.curUser.stamp_number"
+                                           data-toggle="tooltip" title="Número de sello del vehículo"
+                                           placeholder="Número de sello" id="example-numbercar-input" name="stamp_number" />
+                                    <small class="form-text text-muted">Número de sello del vehículo</small>
+                                </div>
+                            </div>
+                            <a href="#"><button type="submit" class="btn btn-primary waves-effect waves-light">Editar Perfil</button></a>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div><!-- end row -->
+        <!-- back button -->
+        <div class="row pb-4">
+            <div class="col-md-6">
+                <a href="javascript:history.back()"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+            </div>
+        </div>
+        <!-- end back button -->
+
+    </div><!-- container -->
+
+</div> <!-- Page content Wrapper -->

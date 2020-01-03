@@ -1,0 +1,154 @@
+﻿
+@{
+    ViewBag.Title = "vertarea";
+    Page.Title = "Ver Tarea - Brokolee Software";
+}
+
+<div class="page-content-wrapper">
+
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="page-title-box">
+                    <div class="float-left">
+                        <div class="breadcrumb float-md-right">
+                            <h4 class="page-title">Ver Tarea</h4>
+                        </div>
+                    </div>
+                    <div class="float-right">
+                        <ul class="breadcrumb float-md-right">
+                            <li class="breadcrumb-item"><a href="@Url.Action("panel", "control")" class="text-success"><i class="mdi mdi-home-modern"></i> Panel de Control</a></li>
+                            <li class="breadcrumb-item active">Ver Tarea</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end page title end breadcrumb -->
+        <!-- back button -->
+        <div class="row pb-4">
+            <div class="col-md-6">
+                <a href="javascript:history.back()"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+            </div>
+        </div>
+        <!-- end back button -->
+
+        <div class="row">
+
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row form-material">
+                            <div class="col-md-6 mb-1">
+                                <h5 class="d-inline-block">Servicio Plomería</h5>
+                            </div>
+                            <div class="col-md-6">
+
+                            </div>
+                        </div>
+                        <div class="form-divider"></div>
+                        <div class="row form-material">
+                            <div class="col-sm-12">
+                                <div class="row form-material">
+                                    <div class="col-md-2"><p><i class="mdi mdi-account text-primary"></i> @Model.viewTask.responsable</p></div>
+                                    <div class="col-md-2"><p><i class="mdi mdi-calendar-check text-primary"></i> @Convert.ToDateTime(Model.viewTask.task_date).ToString("MM/dd/yyyy")</p></div>
+                                    <div class="col-md-2"><p><i class="mdi mdi-calendar-clock text-primary"></i> @Convert.ToDateTime(Model.viewTask.estimated_date).ToString("MM/dd/yyyy")</p></div>
+                                    <div class="col-md-4">
+                                        <p>
+                                            @if (Model.viewTask.status == 0)
+                                            {
+                                                <button type="button" class="btn btn-primary waves-effect waves-light btn-sm">Sin comenzar</button>
+                                            }
+                                            else
+                                            {
+                                                <button type="button" class="btn btn-dark waves-effect waves-light btn-sm">Sin comenzar</button>
+                                            }
+
+                                            @if (Model.viewTask.status == 1)
+                                            {
+                                                <button type="button" class="btn btn-primary waves-effect waves-light btn-sm">En Proceso</button>
+                                            }
+                                            else
+                                            {
+                                                <button type="button" class="btn btn-dark waves-effect waves-light btn-sm">En Proceso</button>
+                                            }
+
+                                            @if (Model.viewTask.status == 2)
+                                            {
+                                                <button type="button" class="btn btn-primary waves-effect waves-light btn-sm">Terminada</button>
+                                            }
+                                            else
+                                            {
+                                                <button type="button" class="btn btn-dark waves-effect waves-light btn-sm">Terminada</button>
+                                            }
+                                        </p>
+                                    </div>
+                                    <div class="col-md-2"><p></p></div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <h6>Descripción</h6>
+                                <p>@Model.viewTask.description.</p>
+                            </div>
+                            <div class="col-sm-6">
+                                <h6>Comentarios del Administrador</h6>
+                                <p>@Model.viewTask.comments. </p>
+                            </div>
+                        </div>
+                        <div class="form-divider"></div>
+                        <div class="main-timeline mt-3">
+                            @for (int i = 0; i < Model.taskcommentList.Count; i++)
+                            {
+                                if (i % 2 == 0)
+                                {
+                                    <div class="timeline">
+                                        <span class="timeline-icon"></span>
+                                        <span class="year">@Convert.ToDateTime(Model.taskcommentList[i].comment_datetime).ToString("dd MMM yyyy")</span>
+                                        <div class="timeline-content">
+                                            <h5 class="title">@Model.taskcommentList[i].comment_username</h5>
+                                            <span class="post text-right"><i class="mdi mdi-clock"></i> @Convert.ToDateTime(Model.taskcommentList[i].comment_datetime).ToString("hh:mm tt")</span>
+                                            <p class="description">
+                                                @Model.taskcommentList[i].task_comment.
+                                            </p>
+                                        </div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="timeline">
+                                        <span class="timeline-icon"></span>
+                                        <span class="year">@Convert.ToDateTime(Model.taskcommentList[i].comment_datetime).ToString("dd MMM yyyy")</span>
+                                        <div class="timeline-content">
+                                            <h5 class="title">@Model.taskcommentList[i].comment_username</h5>
+                                            <span class="post text-right"><i class="mdi mdi-clock"></i> @Convert.ToDateTime(Model.taskcommentList[i].comment_datetime).ToString("hh:mm tt")</span>
+                                            <p class="description">
+                                                @Model.taskcommentList[i].task_comment.
+                                            </p>
+                                            <div class="timeline-body">
+                                                <div class="m-t-20">
+                                                    <a href="#">
+                                                        <img alt="" src="../assets/images/small/img-1.jpg">
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- end row -->
+        <!-- back button -->
+        <div class="row pb-4">
+            <div class="col-md-6">
+                <a href="javascript:history.back()"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+            </div>
+        </div>
+        <!-- end back button -->
+
+    </div><!-- container -->
+
+</div> <!-- Page content Wrapper -->

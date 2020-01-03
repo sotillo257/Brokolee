@@ -1,0 +1,177 @@
+﻿
+@{
+    ViewBag.Title = "informacion";
+    Page.Title = "Información de Contacto - Brokolee Software";
+}
+
+<div class="page-content-wrapper">
+
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="page-title-box">
+                    <div class="float-left">
+                        <div class="breadcrumb float-md-right">
+                            <h4 class="page-title">Información de Contacto</h4>
+                        </div>
+                    </div>
+                    <div class="float-right">
+                        <ul class="breadcrumb float-md-right">
+                            <li class="breadcrumb-item"><a href="@Url.Action("panel", "control")" class="text-success"><i class="mdi mdi-home-modern"></i> Panel de Control</a></li>
+                            <li class="breadcrumb-item active">Información de Contacto</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end page title end breadcrumb -->
+        <div class="row">
+
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="form-group row">
+                            <label for="example-email-input" class="col-sm-3 col-form-label">Compañía Administración</label>
+                            <div class="col-sm-9">
+                                <input class="form-control" type="email" value="@Model.contactinfo.company_admin" readonly
+                                       placeholder="Compañía Administración" id="example-email-input" 
+                                       data-toggle="tooltip" title="Nombre de Compañía de Administración"/>
+                                <small class="form-text text-muted">Nombre de Compañía de Administración</small>
+                            </div>
+                        </div>
+                        <div class="form-divider"></div>
+                        <div class="form-group row">
+                            <label for="example-name1-input" class="col-sm-3 col-form-label">Administrador o Coordinador</label>
+                            <div class="col-sm-9">
+                                <input class="form-control" type="text" value="@Model.contactinfo.coordinator" readonly
+                                       placeholder="Administrador o Coordinador" id="example-name1-input"
+                                       data-toggle="tooltip" title="Administrador o Coordinador de Administración" />
+                                <small class="form-text text-muted">Administrador o Coordinador de Administración</small>
+                            </div>
+                        </div>
+                        <div class="form-divider"></div>
+                        <h6 class="mt-0 header-title">Junta de Directores</h6>
+                        <div class="form-group row">
+                            <label for="example-lastname1-input" class="col-sm-3 col-form-label">Presidente</label>
+                            <div class="col-sm-9">
+                                <input class="form-control" type="text" value="@Model.contactinfo.president" readonly
+                                       placeholder="Nombre del Presidente" id="example-lastname1-input"
+                                       data-toggle="tooltip" title="Nombre completo del Presidente"
+                                       />
+                                <small class="form-text text-muted">Nombre completo del Presidente</small>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="example-lastname1-input" class="col-sm-3 col-form-label">Vice-Presidente</label>
+                            <div class="col-sm-9">
+                                <input class="form-control" type="text" value="@Model.contactinfo.vice_president" readonly
+                                       placeholder="Nombre del Vice-Presidente" id="example-lastname1-input"
+                                       data-toggle="tooltip" title="Nombre completo del Vice-Presidente"
+                                       />
+                                <small class="form-text text-muted">Nombre completo del Vice-Presidente</small>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="example-lastname1-input" class="col-sm-3 col-form-label">Tesorero</label>
+                            <div class="col-sm-9">
+                                <input class="form-control" type="text" value="@Model.contactinfo.treasurer" readonly
+                                       placeholder="Nombre del Tesorero" id="example-lastname1-input"
+                                       data-toggle="tooltip" title="Nombre completo del Tesorero" />
+                                <small class="form-text text-muted">Nombre completo del Tesorero</small>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="example-lastname1-input" class="col-sm-3 col-form-label">Secretario</label>
+                            <div class="col-sm-9">
+                                <input class="form-control" type="text" value="@Model.contactinfo.secretary" readonly
+                                       placeholder="Nombre del Secretario" id="example-lastname1-input"
+                                       data-toggle="tooltip" title="Nombre completo del Secretario"
+                                       />
+                                <small class="form-text text-muted">Nombre completo del Secretario</small>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="example-lastname1-input" class="col-sm-3 col-form-label">Vocal</label>
+                            <div class="col-sm-9">
+                                <input class="form-control" type="text" value="@Model.contactinfo.vocal1" readonly
+                                       placeholder="Nombre del Vocal" id="example-lastname1-input">
+                                <small class="form-text text-muted">Nombre completo del Vocal</small>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="example-lastname1-input" class="col-sm-3 col-form-label">Vocal</label>
+                            <div class="col-sm-9">
+                                <input class="form-control" type="text" value="@Model.contactinfo.vocal2" readonly
+                                       placeholder="Nombre del Vocal" id="example-lastname1-input">
+                                <small class="form-text text-muted">Nombre completo del Vocal</small>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="example-lastname1-input" class="col-sm-3 col-form-label">Vocal</label>
+                            <div class="col-sm-9">
+                                <input class="form-control" type="text" value="@Model.contactinfo.vocal3" readonly
+                                       placeholder="Nombre del Vocal" id="example-lastname1-input">
+                                <small class="form-text text-muted">Nombre completo del Vocal</small>
+                            </div>
+                        </div>
+                        <div class="form-divider"></div>
+                        <div class="form-group row">
+                            <label for="example-lastname1-input" class="col-sm-3 col-form-label">Dirección Física</label>
+                            <div class="col-sm-9">
+                                <input class="form-control" type="text" value="@Model.contactinfo.phy_address" readonly
+                                       placeholder="Dirección Física" id="example-lastname1-input">
+                                <small class="form-text text-muted">Dirección física</small>
+                            </div>
+                        </div>
+                        <div class="form-divider"></div>
+                        <div class="form-group row">
+                            <label for="example-lastname1-input" class="col-sm-3 col-form-label">Dirección Postal</label>
+                            <div class="col-sm-9">
+                                <input class="form-control" type="text" value="@Model.contactinfo.postal_address" readonly
+                                       placeholder="Dirección Postal" id="example-lastname1-input"/>
+                                <small class="form-text text-muted">Dirección postal</small>
+                            </div>
+                        </div>
+                        <div class="form-divider"></div>
+                        <div class="form-group row">
+                            <label for="example-tel1-input" class="col-sm-3 col-form-label">Teléfono</label>
+                            <div class="col-sm-9">
+                                <input class="form-control" type="tel" value="@Model.contactinfo.phone_number1" readonly
+                                       placeholder="# Teléfono" id="example-tel1-input">
+                                <small class="form-text text-muted">Teléfono de contacto</small>
+                            </div>
+                        </div>
+                        <div class="form-divider"></div>
+                        <div class="form-group row">
+                            <label for="example-tel1-input" class="col-sm-3 col-form-label">Teléfono</label>
+                            <div class="col-sm-9">
+                                <input class="form-control" type="tel" value="@Model.contactinfo.phone_number2" readonly
+                                       placeholder="# Teléfono" id="example-tel1-input">
+                                <small class="form-text text-muted">Teléfono de contacto</small>
+                            </div>
+                        </div>
+                        <div class="form-divider"></div>
+                        <div class="form-group row">
+                            <label for="example-email-input" class="col-sm-3 col-form-label">Correo electrónico</label>
+                            <div class="col-sm-9">
+                                <input class="form-control" type="email" value="@Model.contactinfo.email"  readonly
+                                       placeholder="Correo electrónico" id="example-email-input">
+                                <small class="form-text text-muted">Correo electrónico del suplidor</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- end row -->
+        <!-- back button -->
+        <div class="row pb-4">
+            <div class="col-md-6">
+                <a href="javascript:history.back()"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+            </div>
+        </div>
+        <!-- end back button -->
+
+    </div><!-- container -->
+
+</div> <!-- Page content Wrapper -->

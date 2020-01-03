@@ -1,0 +1,111 @@
+﻿
+@{
+    ViewBag.Title = "terminos";
+    Page.Title = "Términos de Uso - Brokolee Software";
+}
+
+    <div class="page-content-wrapper">
+
+        <div class="container-fluid">
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="page-title-box">
+                        <div class="float-left">
+                            <div class="breadcrumb float-md-right">
+                                <h4 class="page-title">Términos de Uso</h4>
+                            </div>
+                        </div>
+                        <div class="float-right">
+                            <ul class="breadcrumb float-md-right">
+                                <li class="breadcrumb-item"><a href="@Url.Action("panel", "control")" class="text-success"><i class="mdi mdi-home-modern"></i> Panel de Control</a></li>
+                                <li class="breadcrumb-item active">Términos de Uso</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end page title end breadcrumb -->
+            <div class="row">
+
+                <div class="col-12">
+                    <div class="card">
+                        @if (Model.uso != null)
+                        {
+                            if (Model.uso.terminos != null)
+                            {
+                                <div class="card-body">
+                                    @Model.uso.terminos
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="card-body">
+                                    Lorem ipsum dolor sit amet, sit et amet quando nemore, pri albucius gloriatur et. Eu populo corpora corrumpit eos, dolorem laboramus qui ei. Erat omnium animal mei id, usu ex feugait alienum expetenda, prima utinam contentiones eam ad. Commodo impetus in eam.
+
+                                    Solet partiendo at sit, vis ei ipsum percipit disputando. Illud option intellegam cum an, cu saperet erroribus conclusionemque his, cu sit graeco molestiae liberavisse. Suas sale etiam at mei, est ea posse tantas deterruisset. Sea primis definiebas eu. No odio solet noster vim. Te phaedrum argumentum sed, solet regione eos cu. Errem perfecto ad eam, in iudico regione euripidis nec.
+
+                                    His et delicata contentiones, ex eam patrioque contentiones, ne maiestatis referrentur est. Sea detracto legendos ne, eos dissentias accommodare in, ius id utinam ridens. Nam diam deseruisse ullamcorper an, ad dicant utinam vituperata mei. Eu possit nominati intellegam mei, in mei consul complectitur, cum amet sonet quaerendum ei. Dicant disputationi his ut.
+
+                                    Per in diam equidem meliore. No sint viderer eruditi pri, prompta evertitur eam ne. Dicam suscipit abhorreant vim et. Nec iuvaret pericula an, quis omittam imperdiet ut pri. Quot posidonium sed ea. Mei no exerci feugiat perpetua, mei tale error intellegebat at, sea no case vocent.
+
+                                    Iuvaret delicatissimi te vim, dolorum quaestio assentior duo ex. Sea et veri homero. Mei no semper dissentias. Ut nec libris offendit tincidunt, delenit veritus volutpat no vis.
+
+                                    At sea tantas impedit disputando. At cum nulla quodsi. Id congue fabulas accommodare vis, quo ei meis regione referrentur, eos ei melius rationibus. Ignota pertinax cu eam, officiis gloriatur adolescens pri in. Usu commodo graecis et.
+
+                                    Ut magna adolescens per, ei mea erat labore rationibus. Ei eum purto animal virtute, te dicat antiopam mandamus nam, stet incorrupte ad mel. Mea case minimum forensibus ea. Utroque accusamus cum ne, hinc appetere mea eu, ne nec labores urbanitas. Usu adipisci dignissim comprehensam ex, te saperet sensibus antiopam mei.
+
+                                    Vide indoctum ex sit, in elitr verterem his, vituperata scriptorem nec ex. Mea ne dolore iisque noluisse, no graece tamquam euripidis mei. Etiam nullam accusata id pro, in tale quidam tamquam sit. Iudico consul no vix, eu quem odio quas eos, graeci scriptorem neglegentur eu pri.
+
+                                    Oratio volumus tacimates eu usu, vim et novum instructior, te erat novum option per. Ei partiendo intellegebat est, eum ea noster oportere maiestatis. Has eu enim tamquam, diam assentior mei at. Vide nihil aeterno duo ad. An augue sanctus vix.
+
+                                    Usu te esse disputationi. At veniam fabulas sed, no paulo philosophia has. Ea eam natum nostrud, atqui dicta et eam. Et sed summo eruditi tibique, debet placerat platonem cu ius, eos quod electram no. In munere graeci fuisset vis, dicit ullamcorper sea ea. Te eam praesent dignissim, usu tation possit epicurei te.
+
+                                    Ea probo erant detracto usu. Mel ea diam recteque evertitur. Ubique intellegat id nam, no adhuc utinam sed. Et pro natum tamquam adipiscing. Vel id dicit virtute omittantur, his quas tritani at.
+
+                                    Eu clita commune mel, no mutat ignota eum. Putent iracundia quaerendum sea id, eu per liber deseruisse.
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <div class="card-body">
+                                Lorem ipsum dolor sit amet, sit et amet quando nemore, pri albucius gloriatur et. Eu populo corpora corrumpit eos, dolorem laboramus qui ei. Erat omnium animal mei id, usu ex feugait alienum expetenda, prima utinam contentiones eam ad. Commodo impetus in eam.
+
+                                Solet partiendo at sit, vis ei ipsum percipit disputando. Illud option intellegam cum an, cu saperet erroribus conclusionemque his, cu sit graeco molestiae liberavisse. Suas sale etiam at mei, est ea posse tantas deterruisset. Sea primis definiebas eu. No odio solet noster vim. Te phaedrum argumentum sed, solet regione eos cu. Errem perfecto ad eam, in iudico regione euripidis nec.
+
+                                His et delicata contentiones, ex eam patrioque contentiones, ne maiestatis referrentur est. Sea detracto legendos ne, eos dissentias accommodare in, ius id utinam ridens. Nam diam deseruisse ullamcorper an, ad dicant utinam vituperata mei. Eu possit nominati intellegam mei, in mei consul complectitur, cum amet sonet quaerendum ei. Dicant disputationi his ut.
+
+                                Per in diam equidem meliore. No sint viderer eruditi pri, prompta evertitur eam ne. Dicam suscipit abhorreant vim et. Nec iuvaret pericula an, quis omittam imperdiet ut pri. Quot posidonium sed ea. Mei no exerci feugiat perpetua, mei tale error intellegebat at, sea no case vocent.
+
+                                Iuvaret delicatissimi te vim, dolorum quaestio assentior duo ex. Sea et veri homero. Mei no semper dissentias. Ut nec libris offendit tincidunt, delenit veritus volutpat no vis.
+
+                                At sea tantas impedit disputando. At cum nulla quodsi. Id congue fabulas accommodare vis, quo ei meis regione referrentur, eos ei melius rationibus. Ignota pertinax cu eam, officiis gloriatur adolescens pri in. Usu commodo graecis et.
+
+                                Ut magna adolescens per, ei mea erat labore rationibus. Ei eum purto animal virtute, te dicat antiopam mandamus nam, stet incorrupte ad mel. Mea case minimum forensibus ea. Utroque accusamus cum ne, hinc appetere mea eu, ne nec labores urbanitas. Usu adipisci dignissim comprehensam ex, te saperet sensibus antiopam mei.
+
+                                Vide indoctum ex sit, in elitr verterem his, vituperata scriptorem nec ex. Mea ne dolore iisque noluisse, no graece tamquam euripidis mei. Etiam nullam accusata id pro, in tale quidam tamquam sit. Iudico consul no vix, eu quem odio quas eos, graeci scriptorem neglegentur eu pri.
+
+                                Oratio volumus tacimates eu usu, vim et novum instructior, te erat novum option per. Ei partiendo intellegebat est, eum ea noster oportere maiestatis. Has eu enim tamquam, diam assentior mei at. Vide nihil aeterno duo ad. An augue sanctus vix.
+
+                                Usu te esse disputationi. At veniam fabulas sed, no paulo philosophia has. Ea eam natum nostrud, atqui dicta et eam. Et sed summo eruditi tibique, debet placerat platonem cu ius, eos quod electram no. In munere graeci fuisset vis, dicit ullamcorper sea ea. Te eam praesent dignissim, usu tation possit epicurei te.
+
+                                Ea probo erant detracto usu. Mel ea diam recteque evertitur. Ubique intellegat id nam, no adhuc utinam sed. Et pro natum tamquam adipiscing. Vel id dicit virtute omittantur, his quas tritani at.
+
+                                Eu clita commune mel, no mutat ignota eum. Putent iracundia quaerendum sea id, eu per liber deseruisse.
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div><!-- end row -->
+            <!-- back button -->
+            <div class="row pb-4">
+                <div class="col-md-6">
+                    <a href="javascript:history.back()"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+                </div>
+            </div>
+            <!-- end back button -->
+
+        </div><!-- container -->
+
+    </div> <!-- Page content Wrapper -->  

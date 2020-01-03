@@ -1,0 +1,214 @@
+﻿
+@{
+    ViewBag.Title = "editar";
+    Page.Title = "Editar Tarea - Brokolee Software";
+}
+
+<div class="page-content-wrapper">
+
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="page-title-box">
+                    <div class="float-left">
+                        <div class="breadcrumb float-md-right">
+                            <h4 class="page-title">Editar Tarea</h4>
+                        </div>
+                    </div>
+                    <div class="float-right">
+                        <ul class="breadcrumb float-md-right">
+                            <li class="breadcrumb-item"><a href="@Url.Action("panel", "control", new { area = "webmaster" })" class="text-success"><i class="mdi mdi-home-modern"></i> Panel de Control</a></li>
+                            <li class="breadcrumb-item active">Editar Tarea</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end page title end breadcrumb -->
+        <!-- back button -->
+        <div class="row pb-4">
+            <div class="col-md-6">
+                <a href="javascript:history.back()"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+            </div>
+        </div>
+        <!-- end back button -->
+
+        <div class="row">
+
+            <div class="col-12">
+                <div class="card">
+                    @using (Html.BeginForm("edittask", "tareas", FormMethod.Post,
+                    new
+                    {
+                        id = "edittaskForm",
+                        @class = "",
+                        area = "webmaster"
+                    }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="editID" value="@Model.editTask.id" />
+                        <div class="card-body">
+                            <h5 class="d-inline-block">Servicio carpintería</h5>
+                            <div class="form-divider"></div>
+                            <div class="form-group row">
+                                <label for="example-email-input" class="col-sm-3 col-form-label">Nombre</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" type="text" value="@Model.editTask.task_name" name="task_name" required
+                                           data-toggle="tooltip" title="Nombre de la tarea"
+                                           placeholder="Servicio carpintería" id="example-email-input">
+                                    <small class="form-text text-muted">Nombre de la tarea</small>
+                                </div>
+                            </div>
+                            <div class="form-divider"></div>
+                            <div class="form-group row">
+                                <label for="example-lastname1-input" class="col-sm-3 col-form-label">Descripción</label>
+                                <div class="col-sm-9">
+                                    <textarea class="form-control" rows="3" name="description" data-toggle="tooltip" title="Descripción de la tarea"
+                                              placeholder="Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur">@Model.editTask.description</textarea>
+                                    <small class="form-text text-muted">Descripción de la tarea</small>
+                                </div>
+                            </div>
+                            <div class="form-divider"></div>
+                            <div class="form-group row">
+                                <label for="example-lastname1-input" class="col-sm-3 col-form-label">Responsable</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" type="text" value="@Model.editTask.responsable" name="responsable"
+                                           data-toggle="tooltip" title="Nombre de la persona responsable"
+                                           placeholder="Daniel González" id="example-lastname1-input">
+                                    <small class="form-text text-muted">Nombre de la persona responsable</small>
+                                </div>
+                            </div>
+                            <div class="form-divider"></div>
+                            <div class="form-group row">
+                                <label for="example-date-input" class="col-sm-3 col-form-label">Fecha</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" type="date" name="task_date" required
+                                           data-toggle="tooltip" title="Mes / día / año | Fecha de registro de la tarea"
+                                           value="@Convert.ToDateTime(Model.editTask.task_date).ToString("yyyy-MM-dd")"
+                                           id="example-date-input" />
+                                    <small class="form-text text-muted">Mes / día / año | Fecha de registro de la tarea</small>
+                                </div>
+                            </div>
+                            <div class="form-divider"></div>
+                            <h6 class="mt-0 header-title">Estimado de tiempo</h6>
+                            <div class="form-group row">
+                                <label for="example-date-input" class="col-sm-3 col-form-label">Fecha</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" type="date" name="estimated_date" required
+                                           data-toggle="tooltip" title="Mes / día / año | Fecha estimada para terminar la tarea"
+                                           value="@Convert.ToDateTime(Model.editTask.estimated_date).ToString("yyyy-MM-dd")"
+                                           id="example-date-input">
+                                    <small class="form-text text-muted">Mes / día / año | Fecha estimada para terminar la tarea</small>
+                                </div>
+                            </div>
+                            <div class="form-divider"></div>
+                            <div class="form-group row">
+                                <label for="example-lastname1-input" class="col-sm-3 col-form-label">Comentarios</label>
+                                <div class="col-sm-9">
+                                    <textarea class="form-control" rows="3" name="comments" data-toggle="tooltip" title="Comentarios del administrador"
+                                              placeholder="At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga.">@Model.editTask.comments</textarea>
+                                    <small class="form-text text-muted">Comentarios del administrador</small>
+                                </div>
+                            </div>
+                            <div class="form-divider"></div>
+                            <div class="form-group mb-0 row">
+                                <label class="col-md-3 my-2 control-label">Compartir / Privado</label>
+                                <div class="col-md-9">
+
+                                    <div class="form-check-inline my-2">
+                                        <div class="custom-control custom-checkbox">
+                                            @if (Model.editTask.share == 1)
+                                            {
+                                                <input type="checkbox" name="share" value="1" class="custom-control-input" id="customCheck6"
+                                                       data-toggle="tooltip" title="General"
+                                                       checked="" data-parsley-multiple="groups" data-parsley-mincheck="2">
+                                            }
+                                            else
+                                            {
+                                                <input type="checkbox" name="share" value="1" class="custom-control-input" id="customCheck6"
+                                                       data-toggle="tooltip" title="General"
+                                                       data-parsley-multiple="groups" data-parsley-mincheck="2">
+                                            }
+                                            <label class="custom-control-label" for="customCheck6">General</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-check-inline my-2">
+                                        <div class="custom-control custom-checkbox">
+                                            @if (Model.editTask.share == 2)
+                                            {
+                                                <input type="checkbox" class="custom-control-input" checked name="share" value="2"
+                                                       data-toggle="tooltip" title="Administradores"
+                                                       id="customCheck7" data-parsley-multiple="groups" data-parsley-mincheck="2">
+                                            }
+                                            else
+                                            {
+                                                <input type="checkbox" class="custom-control-input" name="share" value="2"
+                                                       data-toggle="tooltip" title="Administradores"
+                                                       id="customCheck7" data-parsley-multiple="groups" data-parsley-mincheck="2">
+                                            }
+                                            <label class="custom-control-label" for="customCheck7">Administradores</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-divider"></div>
+                            <div class="form-group mb-0 row">
+                                <label class="col-md-3 my-2 control-label">Status</label>
+                                <div class="col-md-9">
+
+                                    <div class="form-check-inline my-2">
+                                        <div class="custom-control custom-checkbox">
+                                            @if (Model.editTask.status == 1)
+                                            {
+                                                <input type="checkbox" class="custom-control-input" id="customCheck11" name="status" value="1"
+                                                       data-toggle="tooltip" title="En proceso"
+                                                       checked="" data-parsley-multiple="groups" data-parsley-mincheck="2">
+                                            }
+                                            else
+                                            {
+                                                <input type="checkbox" class="custom-control-input" id="customCheck11" name="status" value="1"
+                                                       data-toggle="tooltip" title="En proceso"
+                                                       data-parsley-multiple="groups" data-parsley-mincheck="2">
+                                            }
+                                            <label class="custom-control-label" for="customCheck11">En proceso</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-check-inline my-2">
+                                        <div class="custom-control custom-checkbox">
+                                            @if (Model.editTask.status == 2)
+                                            {
+                                                <input type="checkbox" class="custom-control-input" value="2" name="status" checked
+                                                       data-toggle="tooltip" title="Terminada"
+                                                       id="customCheck12" data-parsley-multiple="groups" data-parsley-mincheck="2">
+                                            }
+                                            else
+                                            {
+                                                <input type="checkbox" class="custom-control-input" value="2" name="status"
+                                                       data-toggle="tooltip" title="Terminada"
+                                                       id="customCheck12" data-parsley-multiple="groups" data-parsley-mincheck="2">
+                                            }
+                                            <label class="custom-control-label" for="customCheck12">Terminada</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-divider"></div>
+                            <a href=""><button type="submit" class="btn btn-primary waves-effect waves-light">Editar Tarea</button></a>
+                            <a href=""><button type="button" class="btn btn-danger waves-effect waves-light">Cancelar</button></a>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div><!-- end row -->
+        <!-- back button -->
+        <div class="row pb-4">
+            <div class="col-md-6">
+                <a href="javascript:history.back()"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+            </div>
+        </div>
+        <!-- end back button -->
+
+    </div><!-- container -->
+
+</div> <!-- Page content Wrapper -->

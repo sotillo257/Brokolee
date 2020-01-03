@@ -1,0 +1,84 @@
+Acceso Webmaster
+
+Link: http://70.35.195.31/iniciar/iniciar
+
+Usuario: webmaster@email.com
+
+Password: Abc123!
+
+Usuario: Liu
+
+Password: Prueba
+
+ rol 1 : admin 
+ rol 2 : pagos recibidos
+ rol 3 : webadmin
+ rol 4 : titulares
+
+
+
+ 
+
+1.  En el panel del administrador no me permite administrar titulares por lo que no continue en esas pantallas.
+
+ 
+
+Desde Webmaster
+
+ 
+
+2.  Trabajando desde Webmaster, esta creo que se me quedó a mi.  No hay un campo para identificar el número del apartamento o unidad. 
+
+ 
+
+3.  El sistema debe permitirme añadir otros titulares porque comunmente las propiedades tienen más de un titular.
+
+ 
+5.  Pregunta:  ¿Como funcionaría lo de la contraseña?
+
+ 
+
+6.  La dirección me inclinaría a que hubieran dos campos hacia abajo de dirección un tercero de ciudad un campo pais y zipcode, como funciona tradicionalmente y no únicamente una línea para todo.
+
+ 
+
+7.  Subí un pdf en lo de escritura pero no me deja accesarlo.
+
+ 
+
+
+
+ 
+
+7.Cuando voy a añadir vehículos me sale error al darle para grabarlo.
+
+Inline image
+
+ 
+
+
+ 
+
+9.  No puedo atar desde webmaster (que es donde unico puedo trabajar con titulares) al titular con un Condominio.
+
+ 
+
+10.  Al crear blogs en administrador no lo ve un titular (imagino que porque no pude atarlo al Condominio).
+
+ 
+
+11.  El administrador no puede crear las facilidades que están disponibles en la comunidad.
+
+ 
+
+12.  El administrador no puede añadir documentos.
+
+ 
+
+13.  El administrador no puede añadir eventos.
+
+ 
+
+ 
+
+ 

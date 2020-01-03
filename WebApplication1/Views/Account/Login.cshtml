@@ -1,0 +1,107 @@
+﻿@using WebApplication1.Models
+@model LoginViewModel
+@{
+    ViewBag.Title = "Log in";
+    Layout = "~/Views/Shared/_Layout_Login.cshtml";
+}
+
+@*<h2>@ViewBag.Title.</h2>*@
+
+<div class="login-box">
+    <div class="login-logo">
+        <a href=""><b>Test</b>App</a>
+    </div>
+
+
+    <section id="loginForm">
+        <div class="login-box-body">
+            <p class="login-box-msg">Sign in to start your session</p>
+
+            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-group has-feedback", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                @*<h4>Use a local account to log in.</h4>*@
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <div class="form-group has-feedback">
+                    @*@Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })*@
+                    <div class="form-group has-feedback">
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Email" })
+                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                    </div>
+                </div>
+
+
+                <div class="form-group has-feedback">
+                    @*@Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label"})*@
+                    <div class="form-group has-feedback">
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Password" })
+                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-8">
+                        <div class="checkbox icheckbox">
+
+                            <label>
+                                @*@Html.LabelFor(m => m.RememberMe)*@
+
+                                @Html.CheckBoxFor(m => m.RememberMe) Remember Me
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-4">
+                            <input type="submit" value="Log in" class="btn btn-primary btn-block btn-flat" />
+                        </div>
+                    </div>
+                </div>
+                @*<div class="social-auth-links text-center">
+                        <p>- OR -</p>
+                        <a href="#" class="btn btn-block btn-social btn-facebook btn-flat">
+                            <i class="fa fa-facebook"></i> Sign in using
+                            Facebook
+                        </a>
+                        <a href="#" class="btn btn-block btn-social btn-google btn-flat">
+                            <i class="fa fa-google-plus"></i> Sign in using
+                            Google+
+                        </a>
+                    </div>*@
+
+
+                <p>@Html.ActionLink("Register as a new user", "Register")</p>
+                <p>@Html.ActionLink("Forgot your password?", "ForgotPassword")</p>
+                //Enable this once you have account confirmation enabled for password reset functionality
+
+            }
+        </div>
+    </section>
+
+    @*<div class="col-md-4">
+            <section id="socialLoginForm">
+                @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
+            </section>
+        </div>*@
+</div>
+
+<script>
+    $(function () {
+        $('input').iCheck({
+            checkboxClass: 'icheckbox_square-blue',
+            radioClass: 'iradio_square-blue',
+            increaseArea: '20%' // optional
+        });
+    });
+</script>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/admin-lte/plugins/iCheck/icheck.min.js")
+    @Scripts.Render("~/admin-lte/plugins/iCheck/icheck.js")
+    @Styles.Render("~/admin-lte/plugins/iCheck/square/blue.css")
+    @Styles.Render("~/Content/font-awesome.min.css")
+
+}

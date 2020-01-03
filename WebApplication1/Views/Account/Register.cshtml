@@ -1,0 +1,75 @@
+﻿@model WebApplication1.Models.RegisterViewModel
+@{
+    //ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_Layout_Login.cshtml";
+
+}
+
+@*<h2>@ViewBag.Title.</h2>*@
+
+<div class="login-box">
+    <div class="login-logo">
+        <a href=""><b>Test</b>App</a>
+    </div>
+    <section id="loginForm">
+        <div class="login-box-body">
+            <p class="login-box-msg">Sign Up Now To Begin Your Mining Adventure!</p>
+
+            @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-group has-feedback", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                @*<h4>Create a new account.</h4>*@
+                <hr />
+                @Html.ValidationSummary("", new { @class = "text-danger" })
+
+
+                <div class="form-group has-feedback">
+                    <div class="form-group has-feedback">
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Email" })
+
+                        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                    </div>
+                </div>
+
+                <div class="form-group has-feedback">
+                    <div class="form-group has-feedback">
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Password" })
+                        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                    </div>
+                </div>
+
+                <div class="form-group has-feedback">
+                    <div class="form-group has-feedback">
+                        @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", placeholder = "Confirm Password" })
+                        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-xs-8">
+                        <div class="checkbox icheckbox">
+                            <label>
+                                @*<input type="checkbox"> I agree to the <a href="#">terms</a>*@
+                                @*@Html.CheckBoxFor(m => m.AgreeTerms) I agree to the terms*@
+                                @Html.CheckBoxFor(m => m.AgreeTerms, new { @checked = "true"}) Agree to the terms
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-xs-4">
+                            <input type="submit" class="btn btn-primary btn-block btn-flat" value="Register" />
+                        </div>
+                    </div>
+                </div>
+                <p>@Html.ActionLink("Already have an account?", "Login")</p>
+            }
+
+        </div>
+    </section>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

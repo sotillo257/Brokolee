@@ -1,0 +1,163 @@
+﻿
+@{
+    ViewBag.Title = "soporte";
+    Page.Title = "Soporte Técnico - Brokolee Software";
+}
+
+<div class="page-content-wrapper">
+
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="page-title-box">
+                    <div class="float-left">
+                        <div class="breadcrumb float-md-right">
+                            <h4 class="page-title">Soporte Técnico</h4>
+                        </div>
+                    </div>
+                    <div class="float-right">
+                        <ul class="breadcrumb float-md-right">
+                            <li class="breadcrumb-item"><a href="@Url.Action("panel", "control", new { area = "webmaster" })" class="text-success"><i class="mdi mdi-home-modern"></i> Panel de Control</a></li>
+                            <li class="breadcrumb-item active">Soporte Técnico</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end page title end breadcrumb -->
+        <!-- back button -->
+        <div class="row pb-4">
+            <div class="col-md-6">
+                <a href="javascript:history.back()"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+            </div>
+        </div>
+        <!-- end back button -->
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row form-material">
+                            <div class="col-md-4 mb-4">
+                                <h5><i class="mdi mdi-comment-processing"></i> Mensajes Privados <span class="float-right"><a href=""><i class="mdi mdi-lead-pencil"></i></a></span></h5>
+                                <div class="form-divider"></div>
+                                <div class="m-t-20">
+                                    <a class="arrow-none waves-effect waves-light nav-user-soporte" href="#">
+                                        @if (Model.tecUser == null)
+                                        {
+                                            <strong>Not soporte técnico</strong>
+                                        }
+                                        else
+                                        {
+                                            if (Model.tecUser.user_img == null)
+                                            {
+                                                <img src="~/assets/images/user.svg" alt="soporte" class="rounded-circle">
+                                            }
+                                            else
+                                            {
+                                                <img src="~/Upload/User_Logo/@Model.tecUser.user_img" alt="soporte" class="rounded-circle" />
+                                            }
+                                            <strong>Soporte Técnico</strong>
+                                        }
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-md-8 mb-4">
+                                <a class="arrow-none waves-effect waves-light nav-user-soporte" href="#">
+                                    @if (Model.tecUser == null)
+                                    {
+                                        <strong>Not soporte técnico</strong>
+                                    }
+                                    else
+                                    {
+                                        if (Model.tecUser.user_img == null)
+                                        {
+                                            <img src="~/assets/images/user.svg" alt="soporte" class="rounded-circle">
+                                        }
+                                        else
+                                        {
+                                            <img src="~/assets/images/users/juan_del_pueblo.jpg" alt="soporte" class="rounded-circle">
+                                        }
+                                        <strong>Soporte Técnico</strong>
+                                    }
+                                </a>
+                                <div class="form-divider"></div>
+                                <div class="m-t-20">
+                                    <div class="form-group row">
+                                        <label for="example-lastname1-input"></label>
+                                        <div class="col-sm-12 mb-2">
+                                            <div style="overflow-y: auto; height: 200px;" id="chat_box">
+                                                @if (Model.chatmessageList != null)
+                                                {
+                                                    foreach (var item in Model.chatmessageList)
+                                                    {
+                                                        if (item.from_user_id == Model.curUser.id)
+                                                        {
+                                                            <div>
+                                                                <span>@Model.curUser.first_name1 @Model.curUser.last_name1:</span>
+                                                                <span>@item.message</span>
+                                                            </div>
+                                                        }
+                                                        else
+                                                        {
+                                                            <div style="background-color: #0094ff; color: #ffffff">
+                                                                <span>@Model.tecUser.first_name1 @Model.tecUser.last_name1</span>
+                                                                <span>@item.message</span>
+                                                            </div>
+                                                        }
+                                                    }
+                                                }
+                                            </div>
+                                            @*<textarea class="form-control" rows="10" placeholder="Mensajes"></textarea>*@
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <input class="form-control form-control-lg" type="text" 
+                                                   placeholder="Escribir mensaje"
+                                                   id="txtMessage">
+                                        </div>
+                                    </div>
+                                    <div class="row form-material">
+                                        <div class="col-md-4 mb-4">
+                                            <div class="chat-extra-actions">
+                                                <input type="file" name="file_name" id="file-3" class="inputfile inputfile-3" style="display:none">
+                                                <label for="file-3"><i class="mdi mdi-paperclip"></i> <span>Enviar archivo...</span></label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8 mb-4">
+                                            <button type="button" id="btnSendMsg"
+                                                    class="btn btn-success waves-effect waves-light">
+                                                Enviar
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- end row -->
+        <!-- back button -->
+        <div class="row pb-4">
+            <div class="col-md-6">
+                <a href="javascript:history.back()"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+            </div>
+        </div>
+        <!-- end back button -->
+
+    </div><!-- container -->
+    <input id="hdUserID" value="@Model.curUser.id" type="hidden" />
+    <input id="hdUserName" value="@Model.curUser.first_name1 @Model.curUser.last_name1" type="hidden" />
+
+    @if (Model.tecUser != null)
+    {
+        <input id="hdToUserID" value="@Model.tecUser.id" type="hidden" />
+        <input id="hdToUserName" value="@Model.tecUser.first_name1 @Model.tecUser.last_name1" type="hidden" />
+    }
+    else
+    {
+        <input id="hdToUserID" value="0" type="hidden" />
+        <input id="hdToUserName" value="" type="hidden" />
+    }
+</div> <!-- Page content Wrapper -->

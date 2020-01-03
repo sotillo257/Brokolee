@@ -1,0 +1,137 @@
+﻿
+@{
+    ViewBag.Title = "reservartwo";
+    Page.Title = "Reservar Facilidad - Brokolee Software";
+}
+
+<div class="page-content-wrapper">
+
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="page-title-box">
+                    <div class="float-left">
+                        <div class="breadcrumb float-md-right">
+                            <h4 class="page-title">Reservar Facilidad</h4>
+                        </div>
+                    </div>
+                    <div class="float-right">
+                        <ul class="breadcrumb float-md-right">
+                            <li class="breadcrumb-item"><a href="@Url.Action("panel", "control", new { area = "webmaster" })" class="text-success"><i class="mdi mdi-home-modern"></i> Panel de Control</a></li>
+                            <li class="breadcrumb-item active">Reservar Facilidad</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end page title end breadcrumb -->
+        <!-- back button -->
+        <div class="row pb-4">
+            <div class="col-md-6">
+                <a href="javascript:history.back()"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+            </div>
+        </div>
+        <!-- end back button -->
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    @using (Html.BeginForm("addbook", "facilidades", FormMethod.Post,
+                    new
+                    {
+                        id = "addbookForm",
+                        @class = "",
+                        area = "webmaster",
+                        enctype = "multipart/form-data"
+                    }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="card-body">
+                            <h5 class="d-inline-block">3. Información del Titular</h5>
+                            <div class="form-divider"></div>
+                            <div class="form-group row">
+                                <label for="example-email-input" class="col-sm-3 col-form-label">Nombre</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" type="text" name="first_name" 
+                                           required value="" placeholder="Nombre" id="example-email-input"
+                                           data-toggle="tooltip" title="Nombre del Titular"
+                                           />
+                                    <small class="form-text text-muted">Nombre del Titular</small>
+                                </div>
+                            </div>
+                            <div class="form-divider"></div>
+                            <div class="form-group row">
+                                <label for="example-lastname1-input" class="col-sm-3 col-form-label">Descripción</label>
+                                <div class="col-sm-9">
+                                    <textarea class="form-control" rows="3" name="description" 
+                                              data-toggle="tooltip" title="Descripción de la actividad"
+                                              placeholder="Descripción"></textarea>
+                                    <small class="form-text text-muted">Descripción de la actividad</small>
+                                </div>
+                            </div>
+                            <div class="form-divider"></div>
+                            <div class="form-group row">
+                                <label for="example-time-input" class="col-sm-3 col-form-label">Hora de inicio</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" type="time" name="start_time"
+                                           data-toggle="tooltip" title="Hora de inicio de la actividad"
+                                           value=""  id="example-time-input" required />
+                                    <small class="form-text text-muted">Hora de inicio de la actividad</small>
+                                </div>
+                            </div>
+                            <div class="form-divider"></div>
+                            <div class="form-group row">
+                                <label for="example-time-input" class="col-sm-3 col-form-label">Hora de fin</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" type="time" name="end_time" value=""
+                                           id="example-time-input" required 
+                                           data-toggle="tooltip" title="Hora de fin de la actividad"
+                                           />
+                                    <small class="form-text text-muted">Hora de fin de la actividad</small>
+                                </div>
+                            </div>
+                            <div class="form-divider"></div>
+                            <div class="form-group row">
+                                <label for="example-date-input" class="col-sm-3 col-form-label">Fecha solicitada</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" type="date" name="requested_date"
+                                           data-toggle="tooltip" title="Mes / día / año | Fecha de la actividad"
+                                           required value="" id="example-date-input">
+                                    <small class="form-text text-muted">Mes / día / año | Fecha de la actividad</small>
+                                </div>
+                            </div>
+                            <div class="form-divider"></div>
+                            <div class="form-group row">
+                                <label for="example-date-input" class="col-sm-3 col-form-label">Costo por reservación</label>
+                                <div class="col-sm-9">
+                                    <div class="input-group mt-2">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-dollar-sign"></i></span>
+                                        </div>
+                                        <input type="text" class="form-control" name="cost_per_reserve" required
+                                               data-toggle="tooltip" title="Costo total de la reserva"
+                                               />
+                                    </div>
+                                    <small class="form-text text-muted">Costo total de la reserva</small>
+                                </div>
+                            </div>
+                            <div class="form-divider"></div>
+                            <a href=""><button type="submit" class="btn btn-primary waves-effect waves-light">Pagar Reserva</button></a>
+                            <a href="@Url.Action("reservartwo", "facilidades")"><button type="button" class="btn btn-danger waves-effect waves-light">Cancelar</button></a>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div><!-- end row -->
+        <!-- back button -->
+        <div class="row pb-4">
+            <div class="col-md-6">
+                <a href="javascript:history.back()"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+            </div>
+        </div>
+        <!-- end back button -->
+
+    </div><!-- container -->
+
+</div> <!-- Page content Wrapper -->

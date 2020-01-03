@@ -1,0 +1,103 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout_Suscribe.cshtml";
+    ViewBag.Title = "MonthlyPayment";
+}
+
+<div class="wrapper-page">
+    <div class="card">
+        <div class="card-body">
+            <h3 class="text-center mt-0">
+                Mensualidad
+            </h3>
+
+            <div class="row">
+                <div class="col-md-6 col-sm-6 col-xs-6">
+                    <input type="radio" name="SelectMode" checked value="Card Payment" />
+                    Card Payment
+                </div>
+
+                <div class="col-md-6 col-sm-6 col-xs-6">
+                    <input type="radio" name="SelectMode" value="Ach Payment" />
+                    Ach Payment
+                </div>
+            </div>
+
+            <form method="post" action="@Url.Action("MakeCardPayment", "suscribe")" style="display:block">
+                <div id="id_card_payment">
+                    <div class="form-label-group">
+                        <input name="CardNumber" class="form-control" placeholder="CardNumber" type="text" required />
+                    </div>
+
+                    <div class="form-label-group">
+                        <select name="ExpYear" class="form-control">
+                            <option value="2019">2019</option>
+                            <option value="2020">2020</option>
+                            <option value="2021">2021</option>
+                            <option value="2022">2022</option>
+                            <option value="2023">2023</option>
+                            <option value="2024">2024</option>
+                            <option value="2025">2025</option>
+                            <option value="2026">2026</option>
+                            <option value="2027">2027</option>
+                            <option value="2028">2028</option>
+                        </select>
+                    </div>
+
+                    <div class="form-label-group">
+                        <select name="ExpMonth" class="form-control">
+                            <option value="1">Enero</option>
+                            <option value="2">Febrero</option>
+                            <option value="3">Marzo</option>
+                            <option value="4">Abril</option>
+                            <option value="5">Mayo</option>
+                            <option value="6">Junio</option>
+                            <option value="7">Julio</option>
+                            <option value="8">Agosto</option>
+                            <option value="9">Septiembre</option>
+                            <option value="10">Octubre</option>
+                            <option value="11">Noviembre</option>
+                            <option value="12">Diciembre</option>
+                        </select>
+                    </div>
+
+                    <div class="form-label-group">
+                        <input type="number" name="Cvc" placeholder="CVC" class="form-control" />
+                    </div>
+
+                    <div class="form-label-group">
+                        <input type="number" name="Amount" placeholder="Amount" class="form-control" />
+                    </div>
+                </div>
+            </form>
+
+            <form method="post" action="@Url.Action("MakeAchPayment", "suscribe")" style="display: none;">
+                @if (Model.WarningMsg != "")
+                {
+                    <div class="alert alert-danger">
+                        <strong>Mensualidad Ha fallado</strong> @Model.WarningMsg.
+                    </div>
+                }
+
+                <div id="id_ach_payment">
+                    <div class="form-label-group">
+                        <input type="text" class="form-control" name="AccountName" placeholder="Account Name" />
+                    </div>
+
+                    <div class="form-label-group">
+                        <input type="number" name="RoutingNumber" class="form-control" placeholder="Routing Number" />
+                    </div>
+
+                    <div class="form-label-group">
+                        <input type="number" name="AccountNumber" class="form-control" placeholder="Account Number" />
+                    </div>
+
+                    <div class="form-label-group">
+                        <input type="number" name="AchAmount" class="form-control" placeholder="Amount" />
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

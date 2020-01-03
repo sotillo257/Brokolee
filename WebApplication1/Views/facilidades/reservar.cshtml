@@ -1,0 +1,205 @@
+﻿
+@{
+    ViewBag.Title = "reservar";
+    Page.Title = "Reservar Facilidad - Brokolee Software";
+}
+
+<div class="page-content-wrapper">
+
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="page-title-box">
+                    <div class="float-left">
+                        <div class="breadcrumb float-md-right">
+                            <h4 class="page-title">Reservar Facilidad</h4>
+                        </div>
+                    </div>
+                    <div class="float-right">
+                        <ul class="breadcrumb float-md-right">
+                            <li class="breadcrumb-item"><a href="@Url.Action("panel", "control")" class="text-success"><i class="mdi mdi-home-modern"></i> Panel de Control</a></li>
+                            <li class="breadcrumb-item active">Reservar Facilidad</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end page title end breadcrumb -->
+        <!-- back button -->
+        <div class="row pb-4">
+            <div class="col-md-6">
+                <a href="javascript:history.back()"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+            </div>
+        </div>
+        <!-- end back button -->
+
+        <div class="row">
+
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row form-material">
+                            <div class="col-md-6 mb-4">
+                                <h5 class="d-inline-block">1. Elije la fecha para reservar Gimnasio</h5>
+                                <div class="form-divider"></div>
+                                <div id='calendar' class="col-xl-12"></div>
+                            </div>
+                            <div class="col-md-6 mb-4">
+                                <h5 class="d-inline-block">2. Horarios disponibles para el 10 de Octubre de 2018</h5>
+                                <div class="form-divider"></div>
+                                <div class="table-responsive">
+                                    <table class="table-reservar" id="my-table">
+                                        <thead class="header-table">
+                                            <tr>
+                                                <th class="f-b">Horario</th>
+                                                <th class="f-b">Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td class="text-center">8:00 - 9:00</td>
+                                                <td class="text-center">
+                                                    <div class="checkbox">
+                                                        <div class="custom-control custom-checkbox">
+                                                            <input type="checkbox" class="custom-control-input" id="customCheck2" data-parsley-multiple="groups" data-parsley-mincheck="2">
+                                                            <label class="custom-control-label" for="customCheck2">Disponible</label>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-center">9:00 - 10:00</td>
+                                                <td class="text-center">
+                                                    <div class="checkbox">
+                                                        <div class="custom-control custom-checkbox">
+                                                            <input type="checkbox" class="custom-control-input" id="customCheck3" data-parsley-multiple="groups" data-parsley-mincheck="3">
+                                                            <label class="custom-control-label" for="customCheck2">Disponible</label>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-center">10:00 - 11:00</td>
+                                                <td class="text-center">
+                                                    <div class="checkbox">
+                                                        <div class="custom-control custom-checkbox">
+                                                            <input type="checkbox" class="custom-control-input" id="customCheck4" data-parsley-multiple="groups" data-parsley-mincheck="4">
+                                                            <label class="custom-control-label" for="customCheck2">Disponible</label>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-center">11:00 - 12:00</td>
+                                                <td class="text-center">
+                                                    <div class="checkbox">
+                                                        <div class="custom-control custom-checkbox">
+                                                            <input type="checkbox" class="custom-control-input" id="customCheck2" data-parsley-multiple="groups" data-parsley-mincheck="2">
+                                                            <label class="custom-control-label" for="customCheck2">Disponible</label>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-center">12:00 - 13:00</td>
+                                                <td class="text-center">
+                                                    <div class="checkbox">
+                                                        <div class="custom-control custom-checkbox">
+                                                            <input type="checkbox" class="custom-control-input" id="customCheck2" data-parsley-multiple="groups" data-parsley-mincheck="2">
+                                                            <label class="custom-control-label" for="customCheck2">Disponible</label>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-center">13:00 - 14:00</td>
+                                                <td class="text-center">
+                                                    <div class="checkbox">
+                                                        <div class="custom-control custom-checkbox">
+                                                            <input type="checkbox" class="custom-control-input" id="customCheck2" data-parsley-multiple="groups" data-parsley-mincheck="2">
+                                                            <label class="custom-control-label" for="customCheck2">Disponible</label>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-center">14:00 - 15:00</td>
+                                                <td class="text-center">
+                                                    <div class="checkbox">
+                                                        <div class="custom-control custom-checkbox">
+                                                            <input type="checkbox" class="custom-control-input" id="customCheck2" data-parsley-multiple="groups" data-parsley-mincheck="2">
+                                                            <label class="custom-control-label" for="customCheck2">Disponible</label>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-center">15:00 - 16:00</td>
+                                                <td class="text-center">
+                                                    <div class="checkbox">
+                                                        <div class="custom-control custom-checkbox">
+                                                            <input type="checkbox" class="custom-control-input" id="customCheck2" data-parsley-multiple="groups" data-parsley-mincheck="2">
+                                                            <label class="custom-control-label" for="customCheck2">Disponible</label>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-center">17:00 - 18:00</td>
+                                                <td class="text-center">
+                                                    <div class="checkbox">
+                                                        <div class="custom-control custom-checkbox">
+                                                            <input type="checkbox" class="custom-control-input" id="customCheck4" disabled>
+                                                            <label class="custom-control-label" for="customCheck4"> No disponible </label>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-center">18:00 - 19:00</td>
+                                                <td class="text-center">
+                                                    <div class="checkbox">
+                                                        <div class="custom-control custom-checkbox">
+                                                            <input type="checkbox" class="custom-control-input" id="customCheck4" disabled>
+                                                            <label class="custom-control-label" for="customCheck4"> No disponible </label>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-center">19:00 - 20:00</td>
+                                                <td class="text-center">
+                                                    <div class="checkbox">
+                                                        <div class="custom-control custom-checkbox">
+                                                            <input type="checkbox" class="custom-control-input" id="customCheck4" disabled>
+                                                            <label class="custom-control-label" for="customCheck4"> No disponible </label>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-divider"></div>
+                                <a href="@Url.Action("reservartwo", "facilidades", new { id=1 })"><button type="button" class="btn btn-primary waves-effect waves-light">Reservar Facilidad</button></a>
+                                <a href=""><button type="button" class="btn btn-danger waves-effect waves-light">Cancelar</button></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- end row -->
+        <!-- back button -->
+        <div class="row pb-4">
+            <div class="col-md-6">
+                <a href="javascript:history.back()"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+            </div>
+        </div>
+        <!-- end back button -->
+
+    </div><!-- container -->
+
+</div> <!-- Page content Wrapper -->

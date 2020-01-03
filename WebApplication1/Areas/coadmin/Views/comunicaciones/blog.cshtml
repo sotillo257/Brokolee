@@ -1,0 +1,124 @@
+﻿
+@{
+    ViewBag.Title = "blog";
+    Page.Title = "Blog General - Brokolee Software";
+}
+
+<link rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+<link rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+<link href="~/assets/css/blog.css" rel="stylesheet" />
+
+<div class="page-content-wrapper">
+
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="page-title-box">
+                    <div class="float-left">
+                        <div class="breadcrumb float-md-right">
+                            <h4 class="page-title">Blog General</h4>
+                        </div>
+                    </div>
+                    <div class="float-right">
+                        <ul class="breadcrumb float-md-right">
+                            <li class="breadcrumb-item"><a href="@Url.Action("panel", "control", new { area = "coadmin" })" class="text-success"><i class="mdi mdi-home-modern"></i> Panel de Control</a></li>
+                            <li class="breadcrumb-item active">Blog General</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- end page title end breadcrumb -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row form-material">
+                            <div class="col-md-6">
+                                <h5 class="d-inline-block">Últimas entradas</h5>
+                            </div>
+                            <div class="col-md-6 mb-1">
+                                <a href="@Url.Action("agregarblog", "comunicaciones", new { area = "coadmin" })"><button type="button" class="btn btn-primary waves-effect waves-light float-xl-right float-lg-right float-md-left">Crear Entrada</button></a>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div><!-- end row -->
+        <!-- back button -->
+        <!-- end back button -->
+
+    </div><!-- container -->
+    @foreach (var item in Model.blogList)
+
+    {
+        <div class="Container">
+
+            <div class="row">
+                <div class="col-sm-12">
+
+                    <div class="single-blog">
+                        <p class="fecha">
+                            @item.author<span>
+
+                                <td>@Convert.ToDateTime(item.blogdate).ToString("dd/MM/yyyy HH:mm")</td>
+                            </span>
+                        </p>
+
+                        @*<img src="~/Areas/coadmin/img/blog.png" />*@
+                        
+                            <h2>
+                                <a class="titulo" href="#"> @item.title</a>
+                            </h2>
+                            <p class="blog-text">@item.content</p>
+                            <p>
+                                <a href="" class="">
+
+                                    <a href="@Url.Action("editarblog", "comunicaciones", new { area = "coadmin", blogID = item.id })">
+                                        <button type="button" class="btn btn-primary waves-effect waves-light btn-sm mr-1 mb-1"
+                                                data-toggle="tooltip" data-placement="top" title="Editar">
+                                            <i class="mdi mdi-lead-pencil"></i>
+                                        </button>
+                                    </a>
+                                    <a href="@Url.Action("verblog", "comunicaciones", new { blogID = item.id, area = "coadmin" })">
+                                        <button type="button" class="btn btn-success waves-effect waves-light btn-sm mr-1 mb-1"
+                                                data-toggle="tooltip" data-placement="top" title="Ver">
+                                            <i class="mdi mdi-eye"></i>
+                                        </button>
+                                    </a>
+                                </a>
+                                <span>
+                                    <i class="fa fa-thumbs-o-up"></i> likes
+                                    <i class="fa fa-comment-o"></i> Coments
+                                   
+
+
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+
+
+
+            </div>
+
+        </div>
+    }
+
+    <div class="row pb-4">
+        <div class="col-md-6">
+            <a href="javascript:history.back()"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+        </div>
+    </div>
+</div> <!-- Page content Wrapper -->

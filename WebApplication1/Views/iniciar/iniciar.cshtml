@@ -1,0 +1,75 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout_Login.cshtml";
+    ViewBag.Title = "Log in";
+    Page.Title = "Ingresar - Brokolee Software";
+}
+
+<div class="wrapper-page">
+
+    <div class="card">
+        <div class="card-body">
+
+            <h3 class="text-center mt-0">
+                <a href="@Url.Action("panel", "control")" class="logo logo-admin"><img src="~/assets/images/logo.png" height="100" alt="logo"></a>
+            </h3>
+
+            <h6 class="text-center">Ingresar</h6>
+
+            <div class="p-3">
+
+                @*<form class="form-horizontal" action="index.html">*@
+
+                    <div class="form-group row">
+                        <div class="col-12">
+                            <input class="form-control" id="id_login_email" value="@Model.email" onkeypress="onChangeEmail()"
+                                   type="text" required="" placeholder="Email">
+                            <span class="error" id="id-email-error"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-12">
+                            <input class="form-control" id="id_login_password" type="password" value="@Model.password" onkeypress="onChangePassword()"
+                                   required="" placeholder="Contraseña">
+                            <span class="error" id="id-password-error"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-12">
+                            <div class="custom-control custom-checkbox">
+                                @if (Model.rememberme == true)
+                                {
+                                    <input type="checkbox" class="custom-control-input" checked id="customCheck1">
+                                } else
+                                {
+                                    <input type="checkbox" class="custom-control-input" id="customCheck1">
+                                }
+
+                                <label class="custom-control-label" for="customCheck1">Recordarme</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group text-center row m-t-20">
+                        <div class="col-12">
+                            <button class="btn btn-primary btn-block waves-effect waves-light" type="button"
+                                    data-loading-text="<i class='fa fa-spinner fa-spin '></i> Processing"
+                                    onclick="onLogin(this)">Ingresar</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group m-t-10 mb-0 row">
+                        <div class="col-sm-7 m-t-20">
+                            <a href="@Url.Action("recuperar", "iniciar")" class="text-muted"><i class="mdi mdi-lock"></i> ¿Olvidaste tu contraseña?</a>
+                        </div>
+                        <div class="col-sm-5 m-t-20">
+
+                        </div>
+                    </div>
+                @*</form>*@
+            </div>
+        </div>
+    </div>
+</div>

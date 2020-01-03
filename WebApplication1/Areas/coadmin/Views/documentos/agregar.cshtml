@@ -1,0 +1,214 @@
+﻿
+@{
+    ViewBag.Title = "agregar";
+    Page.Title = "Agregar Documento - Brokolee Software";
+}
+
+<script src="~/Scripts/jquery-3.1.1.min.js"></script>
+
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<div class="page-content-wrapper">
+
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="page-title-box">
+                    <div class="float-left">
+                        <div class="breadcrumb float-md-right">
+                            <h4 class="page-title">Agregar Documento</h4>
+                        </div>
+                    </div>
+                    <div class="float-right">
+                        <ul class="breadcrumb float-md-right">
+                            <li class="breadcrumb-item"><a href="@Url.Action("panel", "control", new { area = "coadmin"})" class="text-success"><i class="mdi mdi-home-modern"></i> Panel de Control</a></li>
+                            <li class="breadcrumb-item active">Agregar Documento</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end page title end breadcrumb -->
+        <!-- back button -->
+        <div class="row pb-4">
+            <div class="col-md-6">
+                <a href="javascript:history.back()"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+            </div>
+        </div>
+        <!-- end back button -->
+
+        <div class="row">
+
+            <div class="col-12">
+                <div class="card">
+                    @using (Html.BeginForm("newdocument", "documentos",
+                        FormMethod.Post,
+                        new
+                        {
+                            id = "newdocumentForm",
+                            @class = "",
+                            area = "coadmin",
+                            enctype = "multipart/form-data"
+                        }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="card-body">
+                            <h5 class="d-inline-block">Nuevo Documento</h5>
+                            <div class="form-divider"></div>
+                            <div class="form-group row">
+                                <label for="example-email-input" class="col-sm-3 col-form-label">Nombre</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" type="text" value="" name="first_name" 
+                                           data-toggle="tooltip" title="Nombre descriptivo del documento"
+                                           placeholder="Nombre" id="example-email-input" required>
+                                    <small class="form-text text-muted">Nombre descriptivo del documento</small>
+                                </div>
+                            </div>
+                            <div class="form-divider"></div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">Categoría</label>
+                                <div class="col-sm-9">
+                                    <select class="form-control" name="document_category"
+                                            data-toggle="tooltip" title="Categoría del suplidor" required>
+                                        <option value="0">Elije una categoría</option>
+                                        @foreach (var item in Model.document_category_list)
+                                        {
+                                            <option value="@item.id">@item.type_name</option>
+                                        }
+                                    </select>
+                                    <small class="form-text text-muted">Categoría del suplidor</small>
+                                </div>
+                            </div>
+                            <div class="form-divider"></div>
+                            <div class="form-group row">
+                                <label for="example-name2-input" class="col-sm-3 col-form-label">Subir Documento</label>
+                                <div class="col-sm-9">
+                                    <div class="input-group mt-2">
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input" id="inputGroupFile04"
+                                                   name="upload_document" required>
+                                            <label id="input-arch" class="custom-file-label" for="inputGroupFile04">Seleccionar archivo</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            @*<div class="form-divider"></div>
+                                <div class="form-group row">
+                                    <label for="example-lastname1-input" class="col-sm-3 col-form-label">Link</label>
+                                    <div class="col-sm-9">
+                                        <input class="form-control" type="text" value=""
+                                               data-toggle="tooltip" title="Coloque aquí el link para acceder a documentos o videos localizados en otras plataformas"
+                                               placeholder="Link" name="link" required
+                                               id="example-lastname1-input">
+                                        <small class="form-text text-muted">Coloque aquí el link para acceder a documentos o videos localizados en otras plataformas</small>
+                                    </div>
+                                </div>*@
+                            
+                            <div class="form-group row">
+                                <label for="example-lastname1-input"  hidden="hidden" class="col-sm-3 col-form-label">ID:</label>
+                                <div class="col-sm-9">
+
+                                    <input class="form-control" type="text" hidden="hidden" value="@Session["USER_ID"]"
+                                           data-toggle="tooltip" title="Correo electrónico de quien sube el documento"
+                                           placeholder="Subido por" name="id_user"
+                                           id="id_user" required />
+                                    @*<small class="form-text text-muted">Correo electrónico de quien sube el documento</small>*@
+                                </div>
+                            </div>
+                            <div class="form-divider"></div>
+                            <div class="form-group row">
+                                <label for="example-date-input" class="col-sm-3 col-form-label">Fecha</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" type="date" readonly
+                                           data-toggle="tooltip" title="Mes / día / año | Fecha que se sube el documento"
+                                           value="@Convert.ToDateTime(DateTime.Now).ToString("yyyy-MM-dd")" id="example-date-input"
+                                           name="uploaded_date" required>
+                                    <small class="form-text text-muted">Mes / día / año | Fecha que se sube el documento</small>
+                                </div>
+                            </div>
+                            <div class="form-divider"></div>
+                            <div class="form-group row">
+                                <label for="example-address1-input" class="col-sm-3 col-form-label">Compartir / Privado</label>
+                                <div class="col-sm-9">
+                                    <div class="form-check-inline my-2">
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input"
+                                                   checked name="share" value="1"
+                                                   id="customCheck6" data-parsley-multiple="groups"
+                                                   data-parsley-mincheck="2" />
+                                            <label class="custom-control-label" for="customCheck6">General</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-check-inline my-2">
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" id="customCheck7"
+                                                   data-parsley-multiple="groups" data-parsley-mincheck="2"
+                                                   name="share" value="2" />
+                                            <label class="custom-control-label" for="customCheck7">Administradores</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-divider"></div>
+                            <div class="form-group row">
+                                <label for="example-address1-input" class="col-sm-3 col-form-label">Notificar por Correo Electrónico</label>
+                                <div class="col-sm-9">
+                                    <div class="form-check-inline my-2">
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input"
+                                                   id="id_notify_email_yes" name="notify_email" value="1"
+                                                   checked="" data-parsley-multiple="groups"
+                                                   data-parsley-mincheck="2">
+                                            <label class="custom-control-label" for="id_notify_email_yes">Si</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-check-inline my-2">
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input"
+                                                   id="id_notify_email_no" name="notify_email" value="0"
+                                                   data-parsley-multiple="groups" data-parsley-mincheck="2">
+                                            <label class="custom-control-label" for="id_notify_email_no">No</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-divider"></div>
+                            <a href=""><button type="submit" class="btn btn-primary waves-effect waves-light">Agregar Documento</button></a>
+                            <a href="javascript:history.back()"><button type="button" class="btn btn-danger waves-effect waves-light">Cancelar</button></a>
+</div>
+                    }
+                </div>
+            </div>
+        </div><!-- end row -->
+        <!-- back button -->
+        <div class="row pb-4">
+            <div class="col-md-6">
+                <a href="javascript:history.back()"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+            </div>
+        </div>
+        <!-- end back button -->
+
+    </div><!-- container -->
+
+</div> <!-- Page content Wrapper -->
+
+<script type="text/javascript">
+
+    (function () {
+
+        $('#inputGroupFile04').change(function () {
+
+            // $('#garras').prev().text($(this)[0].files[0].name);
+            //nombre del archivo cargado=$(this)[0].files[0].name
+            $('#input-arch').html($(this)[0].files[0].name);
+        });
+
+
+    })();
+</script>
+

@@ -1,0 +1,123 @@
+﻿
+@{
+    ViewBag.Title = "ver";
+    Page.Title = "Juan del Pueblo - Brokolee Software";
+}
+
+<div class="page-content-wrapper">
+
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="page-title-box">
+                    <div class="float-left">
+                        <div class="breadcrumb float-md-right">
+                            <h4 class="page-title">Perfil de webmaster</h4>
+                        </div>
+                    </div>
+                    <div class="float-right">
+                        <ul class="breadcrumb float-md-right">
+                            <li class="breadcrumb-item"><a href="@Url.Action("panel", "control", new { area = "webmaster" })" class="text-success"><i class="mdi mdi-home-modern"></i> Panel de Control</a></li>
+                            <li class="breadcrumb-item active">El nombre del Webmaster</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end page title end breadcrumb -->
+        <!-- back button -->
+        <div class="row pb-4">
+            <div class="col-md-6">
+                <a href="javascript:history.back()"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+            </div>
+        </div>
+        <!-- end back button -->
+
+        <div class="row">
+
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="d-inline-block">@Model.viewAdmin.first_name1 @Model.viewAdmin.last_name1</h5>
+                        <div class="form-divider"></div>
+                        <div class="form-group row">
+                            <label for="example-email-input" class="col-sm-3 col-form-label">
+                                @if (Model.viewAdmin.user_img != null)
+                                {
+                                    <img src="~/Upload/User_Logo/@Model.viewAdmin.user_img" alt="user-img" class="img-fluid" />
+                                }
+                                else
+                                {
+                                    <img src="~/assets/images/user.svg" alt="user-img" class="img-fluid" />
+                                }
+                            </label>
+                            <div class="col-sm-9">
+                                
+                            </div>
+                        </div>
+                        <div class="form-divider"></div>
+                        <div class="form-group row">
+                            <label for="example-email-input" class="col-sm-3 col-form-label">Nombre</label>
+                            <div class="col-sm-9">
+                                <input class="form-control" type="text" value="@Model.viewAdmin.first_name1"
+                                        placeholder="Nombre" id="example-email-input" name="first_name1" readonly
+                                        data-toggle="tooltip" title="Nombre del Administrador" />
+                                <small class="form-text text-muted">Nombre del Administrador</small>
+                            </div>
+                        </div>
+                        <div class="form-divider"></div>
+                        <div class="form-group row">
+                            <label for="example-email-input" class="col-sm-3 col-form-label">Apellido Paterno</label>
+                            <div class="col-sm-9">
+                                <input class="form-control" type="text" value="@Model.viewAdmin.last_name1"
+                                        placeholder="Apellido Paterno" id="example-email-input" name="last_name1" readonly
+                                        data-toggle="tooltip" title="Apellido Paterno del Administrador" />
+                                <small class="form-text text-muted">Apellido Paterno del Administrador</small>
+                            </div>
+                        </div>
+                        <div class="form-divider"></div>
+                        <div class="form-group row">
+                            <label for="example-email-input" class="col-sm-3 col-form-label">Apellido Materno</label>
+                            <div class="col-sm-9">
+                                <input class="form-control" type="text" value="@Model.viewAdmin.mother_last_name1"
+                                        placeholder="Apellido Materno" id="example-email-input" name="mother_last_name1"
+                                        data-toggle="tooltip" title="Apellido Materno del Administrador" readonly/>
+                                <small class="form-text text-muted">Apellido Materno del Administrador</small>
+                            </div>
+                        </div>
+                        <div class="form-divider"></div>
+                        <div class="form-group row">
+                            <label for="example-lastname1-input" class="col-sm-3 col-form-label">Email</label>
+                            <div class="col-sm-9">
+                                <input class="form-control" type="email" value="@Model.viewAdmin.email"
+                                        placeholder="Email" id="example-email-input" name="email"
+                                        data-toggle="tooltip" title="Email del Administrador" readonly/>
+                                <small class="form-text text-muted">Email del Administrador</small>
+                            </div>
+                        </div>
+                        <div class="form-divider"></div>
+                        <div class="form-group row">
+                            <label for="example-password-input" class="col-sm-3 col-form-label">Contraseña</label>
+                            <div class="col-sm-9">
+                                <input class="form-control" type="password" value="@Model.viewPassword"
+                                        placeholder="Contraseña" id="example-password-input" name="password" readonly
+                                        data-toggle="tooltip" title="Contraseña utilizada para ingresar al sistema" />
+                                <small class="form-text text-muted">Contraseña utilizada para ingresar al sistema</small>
+                            </div>
+                        </div>
+                    </div> 
+                </div>
+            </div>
+        </div><!-- end row -->
+        <!-- back button -->
+        <div class="row pb-4">
+            <div class="col-md-6">
+                <a href="javascript:history.back()"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+            </div>
+        </div>
+        <!-- end back button -->
+
+    </div><!-- container -->
+
+</div> <!-- Page content Wrapper -->

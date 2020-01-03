@@ -1,0 +1,191 @@
+﻿
+@{
+    ViewBag.Title = "editar";
+    Page.Title = "Editar Documento - Brokolee Software";
+}
+
+<div class="page-content-wrapper">
+
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="page-title-box">
+                    <div class="float-left">
+                        <div class="breadcrumb float-md-right">
+                            <h4 class="page-title">Editar Documento</h4>
+                        </div>
+                    </div>
+                    <div class="float-right">
+                        <ul class="breadcrumb float-md-right">
+                            <li class="breadcrumb-item"><a href="@Url.Action("panel", "control", new { area = "coadmin" })" class="text-success"><i class="mdi mdi-home-modern"></i> Dashboard</a></li>
+                            <li class="breadcrumb-item active">Editar Documento</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end page title end breadcrumb -->
+        <div class="row">
+
+            <div class="col-12">
+                <div class="card">
+                    @using (Html.BeginForm("editdocument", "documentos",
+                        FormMethod.Post, new {
+                            id = "editdocumentForm",
+                            @class = "",
+                            area = "coadmin",
+                            enctype = "multipart/form-data"
+                        }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" value="@Model.editDocument.id" name="editID"/>
+                        <div class="card-body">
+                            <h5 class="d-inline-block">@Model.editDocument.first_name</h5>
+                            <div class="form-divider"></div>
+                            <div class="form-group row">
+                                <label for="example-email-input" class="col-sm-3 col-form-label">Nombre</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" type="text" value="@Model.curUser.first_name1 @Model.curUser.last_name1" 
+                                           name="first_name" required data-toggle="tooltip" title="Nombre descriptivo del documento"
+                                           placeholder="Documento 1" id="example-email-input">
+                                    <small class="form-text text-muted">Nombre descriptivo del documento</small>
+                                </div>
+                            </div>
+                            <div class="form-divider"></div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">Categoría</label>
+                                <div class="col-sm-9">
+                                    <select class="form-control" name="document_category" required>
+                                        <option value="0">Elije una categoría</option>
+                                        @foreach (var item in Model.document_category_list)
+                                        {
+                                            if (Model.editDocument.type_id == item.id)
+                                            {
+                                                <option value="@item.id" selected>@item.type_name</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@item.id">@item.type_name</option>
+                                            }
+                                        }
+                                    </select>
+                                    <small class="form-text text-muted">Categoría del suplidor</small>
+                                </div>
+                            </div>
+                            <div class="form-divider"></div>
+                            <div class="form-group row">
+                                <label for="example-name2-input" class="col-sm-3 col-form-label">Subir Documento</label>
+                                <div class="col-sm-9">
+                                    <div class="input-group mt-2">
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input" id="inputGroupFile04" name="upload_document">
+                                            <label class="custom-file-label" for="inputGroupFile04">Seleccionar archivo</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            @*<div class="form-divider"></div>
+                            <div class="form-group row">
+                                <label for="example-lastname1-input" class="col-sm-3 col-form-label">Link</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" type="text" value="@Model.editDocument.link" 
+                                           name="link" data-toggle="tooltip" title="Coloque aquí el link para acceder a documentos o videos localizados en otras plataformas" required
+                                           placeholder="https://youtube.com" id="example-lastname1-input">
+                                    <small class="form-text text-muted">Coloque aquí el link para acceder a documentos o videos localizados en otras plataformas</small>
+                                </div>
+                            </div>*@
+                            <div class="form-group row">
+                                <label for="example-name2-input" class="col-sm-3 col-form-label">Descargar archivo</label>
+                                <div class="col-sm-9">
+                                    <div class="input-group mt-2">
+                                        <div class="custom-file">
+                                            @if (Model.editDocument.upload_document != null)
+                                            {
+                                                <a href="~/Upload/Upload_Document/@Model.editDocument.upload_document" download="">
+                                                    <button type="button" class="btn btn-info waves-effect waves-light">
+                                                        <i class="mdi mdi-cloud-download  m-r-5"></i> Descargar archivo
+                                                    </button>
+                                                </a>
+                                            }
+                                            else
+                                            {
+                                                <button type="button" class="btn btn-info waves-effect waves-light">
+                                                    <i class="mdi mdi-cloud-download  m-r-5"></i> Descargar archivo
+                                                </button>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-divider"></div>
+                            <div class="form-group row">
+                                <label for="example-lastname1-input" class="col-sm-3 col-form-label">Subido por</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" type="text" value="@Model.editDocument.uploaded_by" name="uploaded_by"
+                                           data-toggle="tooltip" title="Nombre de quien sube el documento"
+                                           placeholder="Daniel González" id="example-lastname1-input" required>
+                                    <small class="form-text text-muted">Nombre de quien sube el documento</small>
+                                </div>
+                            </div>
+                            <div class="form-divider"></div>
+                            <div class="form-group row">
+                                <label for="example-date-input" class="col-sm-3 col-form-label">Fecha</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" type="date" value="@Convert.ToDateTime(DateTime.Now).ToString("yyyy-MM-dd")"
+                                           name="uploaded_date" data-toggle="tooltip" title="Mes / día / año | Fecha que se sube el documento" required
+                                           id="example-date-input">
+                                    <small class="form-text text-muted">Mes / día / año | Fecha que se sube el documento</small>
+                                </div>
+                            </div>
+                            <div class="form-divider"></div>
+                            <div class="form-group row">
+                                <label for="example-address1-input" class="col-sm-3 col-form-label">Compartir / Privado</label>
+                                <div class="col-sm-9">
+                                    <div class="form-check-inline my-2">
+                                        <div class="custom-control custom-checkbox">
+                                            @if (Model.editDocument.share == 1)
+                                            {
+                                                <input type="checkbox" class="custom-control-input" id="customCheck6" name="share" value="1" checked="" data-parsley-multiple="groups" data-parsley-mincheck="2">
+                                            }
+                                            else
+                                            {
+                                                <input type="checkbox" class="custom-control-input" id="customCheck6" name="share" value="1"  data-parsley-multiple="groups" data-parsley-mincheck="2">
+                                            }
+
+                                            <label class="custom-control-label" for="customCheck6">General</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-check-inline my-2">
+                                        <div class="custom-control custom-checkbox">
+                                            @if (Model.editDocument.share == 2)
+                                            {
+                                                <input type="checkbox"  class="custom-control-input" name="share" value="2" checked id="customCheck7" data-parsley-multiple="groups" data-parsley-mincheck="2">
+                                            }
+                                            else
+                                            {
+                                                <input type="checkbox" class="custom-control-input" name="share" value="2" id="customCheck7" data-parsley-multiple="groups" data-parsley-mincheck="2">
+                                            }
+                                            <label class="custom-control-label" for="customCheck7">Administradores</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href=""><button type="submit" class="btn btn-primary waves-effect waves-light">Editar Documento</button></a>
+                            <a href=""><button type="button" class="btn btn-danger waves-effect waves-light">Cancelar</button></a>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div><!-- end row -->
+        <!-- back button -->
+        <div class="row pb-4">
+            <div class="col-md-6">
+                <a href="javascript:history.back()"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+            </div>
+        </div>
+        <!-- end back button -->
+
+    </div><!-- container -->
+
+</div> <!-- Page content Wrapper -->

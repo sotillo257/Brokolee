@@ -1,0 +1,111 @@
+﻿
+@{
+    ViewBag.Title = "tema";
+}
+
+
+
+
+@*<div class="page-content-wrapper">
+
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="page-title-box">
+                    <div class="float-left">
+                        <div class="breadcrumb float-md-right">
+                            <h4 class="page-title">Plantillas Confirmación del pedido</h4>
+                        </div>
+                    </div>
+                    <div class="float-right">
+                        <ul class="breadcrumb float-md-right">
+                            <li class="breadcrumb-item"><a href="@Url.Action("panel", "control", new { area = "webmaster"  })" class="text-success"><i class="mdi mdi-home-modern"></i> Panel de Control</a></li>
+                            <li class="breadcrumb-item active">Plantillas Confirmación del pedido</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end page title end breadcrumb -->
+        <!-- back button -->
+        <div class="row pb-4">
+            <div class="col-md-6">
+                <a href="javascript:history.back()"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+            </div>
+        </div>
+        <!-- end back button -->
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-8 col-sm-8 col-xs-12">
+                                <ul>
+                                    <li class="active"><a data-toggle="tab" href="#sectionEmail">Email</a></li>
+                                    <li><a data-toggle="tab" href="#sectionSms">SMS</a></li>
+                                </ul>
+
+                                <div class="tab-content">
+                                    <div id="sectionEmail" class="tab-pane fade">
+                                        <div>
+                                            <p>Email subject</p>
+                                            <input type="text" class="form-control" />
+                                        </div>
+
+                                        <div>
+                                            <p>Email body (HTML)</p>
+                                            <textarea class="form-control">
+                            {% capture email_title %}Thank you for your purchase!{% endcapture %}
+                            {% capture email_body %}
+                                {% if requires_shipping %}
+                                    Hi {{ customer.first_name }}, we're getting your order ready be shipped. We will notify
+                                    you when it has been sent
+                                {% endif %}
+                            {% endcapture %}
+                        </textarea>
+                                        </div>
+                                    </div>
+
+                                    <div id="sectionSms" class="tab-pane fade">
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 col-sm-4 col-xs-12">
+                                <div>
+                                    <h4>Liquid variables</h4>
+                                    <p>
+                                        You can use liquid variables to output an<br />
+                                        accent colour and logo image in your<br />
+                                        templates. The available variables are:
+                                    </p>
+                                    <ol>
+                                        <li>{{ shop.email_logo_url }}</li>
+                                        <li>{{ shop.email_logo_width }}</li>
+                                        <li>{{ shop.email_accent }}</li>
+                                    </ol>
+                                    <a>
+                                        Read more about using liquid variables in<br />
+                                        notification templates
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- end row -->
+        <!-- back button -->
+        <div class="row pb-4">
+            <div class="col-md-6">
+                <a href="javascript:history.back()"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+            </div>
+        </div>
+        <!-- end back button -->
+
+    </div><!-- container -->
+
+</div> <!-- Page content Wrapper -->*@

@@ -1,0 +1,245 @@
+﻿
+@{
+    ViewBag.Title = "editar";
+    Page.Title = "Editar Administrador - Brokolee Software";
+}
+
+<script src="~/Scripts/jquery-3.1.1.min.js"></script>
+
+<style media="screen">
+    #inputGroupFile04 {
+        max-width: 130px;
+        margin: 0 auto;
+        height: 150px;
+    }
+
+
+    .garritas {
+        max-width: 150px;
+        height: 130px;
+        margin: 0 auto;
+    }
+</style>
+
+
+
+<div class="page-content-wrapper">
+
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="page-title-box">
+                    <div class="float-left">
+                        <div class="breadcrumb float-md-right">
+                            <h4 class="page-title">Editar Administrador</h4>
+                        </div>
+                    </div>
+                    <div class="float-right">
+                        <ul class="breadcrumb float-md-right">
+                            <li class="breadcrumb-item"><a href="@Url.Action("panel", "control", new { area = "webmaster" })" class="text-success"><i class="mdi mdi-home-modern"></i> Panel de Control</a></li>
+                            <li class="breadcrumb-item active">Editar Administrador</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end page title end breadcrumb -->
+        <!-- back button -->
+        <div class="row pb-4">
+            <div class="col-md-6">
+                <a href="javascript:history.back()"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+            </div>
+        </div>
+        <!-- end back button -->
+
+        <div class="row">
+
+            <div class="col-12">
+                <div class="card">
+                    @using (Html.BeginForm("editadmin", "administradores", FormMethod.Post,
+                     new
+                     {
+                         id = "editadminForm",
+                         @class = "",
+                         area = "webmaster",
+                         enctype = "multipart/form-data"
+                     }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <input name="adminID" value="@Model.editAdmin.id" type="hidden" />
+                        <div class="card-body">
+                            <h5 class="d-inline-block">@Model.editAdmin.first_name1 @Model.editAdmin.last_name1</h5>
+                            <div class="form-divider"></div>
+                            <div class="form-group row">
+
+                                <div id="img-fluid"  class="col-sm-3">
+                                    @if (Model.editAdmin.user_img != null)
+                                    {
+                                        <img src="~/Upload/User_Logo/@Model.editAdmin.user_img" alt="user-img" class="img-fluid" />
+                                    }
+                                    else
+                                    {
+                                        <img src="~/assets/images/user.svg" alt="user-img" class="img-fluid" />
+                                    }
+                                </div>
+
+
+                               
+                               <div class="col-sm-9">
+                                    <div class="input-group mt-2">
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input" id="inputGroupFile04" name="user_logo"
+                                                   data-toggle="tooltip"  />
+                                            <label class="custom-file-label" for="inputGroupFile04">Seleccionar Imagen a Editar</label>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <small class="form-text text-muted">Subir logo en formato jpg o png</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-divider"></div>
+                            <div class="form-group row">
+                                <label for="example-email-input" class="col-sm-3 col-form-label">Nombre</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" type="text" value="@Model.editAdmin.first_name1"
+                                           placeholder="Nombre" id="example-email-input" name="first_name1" required
+                                           data-toggle="tooltip" />
+                                    @*<small class="form-text text-muted">Nombre del Administrador</small>*@
+                                </div>
+                            </div>
+                            <div class="form-divider"></div>
+                            <div class="form-group row">
+                                <label for="example-email-input" class="col-sm-3 col-form-label">Apellido Paterno</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" type="text" value="@Model.editAdmin.last_name1"
+                                           placeholder="Apellido Paterno" id="example-email-input" name="last_name1" required
+                                           data-toggle="tooltip"  />
+                                    @*<small class="form-text text-muted">Apellido Paterno del Administrador</small>*@
+                                </div>
+                            </div>
+                            <div class="form-divider"></div>
+                            <div class="form-group row">
+                                <label for="example-email-input" class="col-sm-3 col-form-label">Apellido Materno</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" type="text" value="@Model.editAdmin.mother_last_name1"
+                                           placeholder="Apellido Materno" id="example-email-input" name="mother_last_name1"
+                                           data-toggle="tooltip" />
+                                   @* <small class="form-text text-muted">Apellido Materno del Administrador</small>*@
+                                </div>
+                            </div>
+                            <div class="form-divider"></div>
+                            <div class="form-group row">
+                                <label for="example-lastname1-input" class="col-sm-3 col-form-label">Email</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" type="email" value="@Model.editAdmin.email"
+                                           placeholder="Email" id="example-email-input" name="email"
+                                           data-toggle="tooltip" />
+                                   @* <small class="form-text text-muted">Email del Administrador</small>*@
+                                </div>
+                            </div>
+                            <div class="form-divider"></div>
+                            <div class="form-group row">
+                                <label for="example-password-input" class="col-sm-3 col-form-label">Contraseña</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" type="password" value="@Model.editPassword"
+                                           placeholder="Contraseña" id="example-password-input" name="password"
+                                           data-toggle="tooltip" />
+                                   @* <small class="form-text text-muted">Contraseña utilizada para ingresar al sistema</small>*@
+                                </div>
+                            </div>
+                            <div class="form-divider"></div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">Comunidad</label>
+                                <div class="col-sm-9">
+                                    <select class="form-control" name="communityID1" required
+                                            data-toggle="tooltip" >
+                                        @foreach (var item in Model.communityList)
+                                        {
+                                            if (Model.communityID1 == item.id)
+                                            {
+                                                <option value="@item.id" selected>@item.first_name</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@item.id">@item.first_name</option>
+                                            }
+                                        }
+                                    </select>
+                                    @*<small class="form-text text-muted">Categoría del suplidor</small>*@
+                                </div>
+                            </div>
+                            @*<div class="form-divider"></div>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">Comunidad</label>
+                                    <div class="col-sm-9">
+                                        <select class="form-control" name="communityID2" required
+                                                data-toggle="tooltip" title="Categoría del suplidor">
+                                            @foreach (var item in Model.communityList)
+                                            {
+                                                if (Model.communityID2 == item.id)
+                                                {
+                                                    <option value="@item.id" selected>@item.first_name</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@item.id">@item.first_name</option>
+                                                }
+                                            }
+                                        </select>
+                                        <small class="form-text text-muted">Categoría del suplidor</small>
+                                    </div>
+                                </div>*@
+                            <div class="form-divider"></div>
+                            <a href=""><button type="submit" class="btn btn-primary waves-effect waves-light">Guardar</button></a>
+                            <a href="javascript:history.back()"><button type="button" class="btn btn-danger waves-effect waves-light">Cancelar</button></a>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div><!-- end row -->
+        <!-- back button -->
+        <div class="row pb-4">
+            <div class="col-md-6">
+                <a href="javascript:history.back()"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+            </div>
+        </div>
+        <!-- end back button -->
+
+    </div><!-- container -->
+
+</div> <!-- Page content Wrapper -->
+
+
+<script type="text/javascript">
+
+    (function () {
+
+        function filePreview(input) {
+            if (input.files && input.files[0]) {
+
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+
+
+                    $('#img-fluid').html("<img class='garritas' src='" + e.target.result + "'/>");
+
+                }
+
+                reader.readAsDataURL(input.files[0]);
+
+            }
+
+        }
+        $('#inputGroupFile04').change(function () {
+
+            filePreview(this);
+        });
+
+    })();
+
+
+
+</script>

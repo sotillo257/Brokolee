@@ -1,0 +1,206 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <meta content="Software para administrar comunidades" name="description" />
+    <meta content="zerosystempr" name="author" />
+    <title>@Page.Title</title>
+    <link rel="shortcut icon" type="image/x-icon" href="~/assets/images/favicon.ico" />
+    <link href="~/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="~/assets/plugins/animate/animate.css" rel="stylesheet" type="text/css">
+    <link href="~/assets/css/icons.css" rel="stylesheet" type="text/css">
+    <link href="~/assets/css/style.css" rel="stylesheet" type="text/css">
+    <link href="~/assets/css/custom.css" rel="stylesheet" type="text/css">
+    <style>
+        .form-signin {
+            width: 100%;
+        }
+
+        .form-signin .btn {
+            font-size: 80%;
+            border-radius: 5rem;
+            letter-spacing: .1rem;
+            font-weight: bold;
+            padding: 1rem;
+            transition: all 0.2s;
+        }
+
+        .form-label-group {
+            position: relative;
+            margin-bottom: 1rem;
+        }
+
+        .form-label-group input {
+            height: auto;
+            border-radius: 2rem;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Begin page -->
+    <script type="text/javascript" src="~/assets/js/jquery.min.js"></script>
+    <script type="text/javascript" src="~/assets/js/popper.min.js"></script>
+    <script type="text/javascript" src="~/assets/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="~/assets/js/modernizr.min.js"></script>
+    <script type="text/javascript" src="~/assets/js/detect.js"></script>
+    <script type="text/javascript" src="~/assets/js/fastclick.js"></script>
+    <script type="text/javascript" src="~/assets/js/jquery.slimscroll.js"></script>
+    <script type="text/javascript" src="~/assets/js/jquery.blockUI.js"></script>
+    <script type="text/javascript" src="~/assets/js/waves.js"></script>
+    <script type="text/javascript" src="~/assets/js/jquery.nicescroll.js"></script>
+    <script type="text/javascript" src="~/assets/js/jquery.scrollTo.min.js"></script>
+    <!-- App js -->
+    <script src="~/assets/js/app.js"></script>
+    @RenderBody()
+    <script>
+        var loadMesgCount = 10;
+        var topPosition = 0;
+        var refreshId = null;
+        var chatHub = null;
+
+        $(function () {
+            // Declare a proxy to reference the hub.
+            chatHub = $.connection.chatHub;
+            $.connection.hub.url = "/signalr";
+            $.connection.hub.logging = true;
+
+            chatHub.client.sendPrivateMessage = function (username, message, email) {
+                //display the message
+                if (email === "Email") {
+                    $("<div><span>" + username + ': </span><a href="/Upload/Upload_Send/' + message + '">' + message + "</a></div>").appendTo("#chat_box");
+                } else {
+                    $("<div><span>" + username + ": </span><span>" + message + "</span></div>").appendTo("#chat_box");
+                }
+                $("#chat_box").animate({ scrollTop: 1000 }, "slow");
+            };
+
+            $.connection.hub.start({ transport: 'longPolling' }, function () {
+                console.log('connection started!');
+                $("#chat_box").animate({ scrollTop: 1000 }, "slow");
+                registerEvents(chatHub);
+            });
+
+        });
+
+
+        function onSelectChatUser(self) {
+            var selectUserId = $(self).data("id");
+            $("#hdToUserID").val(selectUserId);
+            var url = "@Url.Action("GetSelUser", "comunicaciones", new { area = "coadmin" })";
+
+            $.ajax({
+                url: url,
+                type: "post",
+                data: {
+                    userId: selectUserId,
+                },
+                success: function (result) {
+                    if (result.result === "error") {
+                        console.log('couln\'t get roles');
+                    } else {
+                        if (result.imgtype === 1) {
+                            document.getElementById("sel-user-img").src = "/assets/images/user.svg";
+                        } else {
+                            document.getElementById("sel-user-img").src = "/Upload/User_Logo/" + result.imgpath;
+                        }
+
+                        if (result.online == 1) {
+                            if ($("#sel-user-status").hasClass("text-grey") == true) {
+                                $("#sel-user-status").removeClass("text-grey");
+                            }
+
+                            if ($("#sel-user-status").hasClass("text-primary") == false) {
+                                $("#sel-user-status").addClass("text-primary");
+                            }
+
+                            if ($("#connect-user-status-" + result.selUserId).hasClass("text-grey") == true) {
+                                $("#connect-user-status-" + result.selUserId).removeClass("text-grey");
+                            }
+
+                            if ($("#connect-user-status-" + result.selUserId).hasClass("text-primary") == true) {
+                                $("#connect-user-status-" + result.selUserId).addClass("text-primary");
+                            }
+                        } else {
+                            if ($("#sel-user-status").hasClass("text-primary") == true) {
+                                $("#sel-user-status").removeClass("text-primary");
+                            }
+
+                            if ($("#sel-user-status").hasClass("text-grey") == false) {
+                                $("#sel-user-status").addClass("text-grey");
+                            }
+
+                            if ($("#connect-user-status-" + result.selUserId).hasClass("text-primary") == true) {
+                                $("#connect-user-status-" + result.selUserId).removeClass("text-primary");
+                            }
+
+                            if ($("#connect-user-status-" + result.selUserId).hasClass("text-grey") == true) {
+                                $("#connect-user-status-" + result.selUserId).addClass("text-grey");
+                            }
+                        }
+
+                        $("#id-sel-username").text(result.name);
+                        $("#hdToUserName").val(result.name);
+                        $("#chat_box").html(result.html);
+                    }
+                }
+            });
+        }
+
+        function registerEvents(chatHub) {
+            var selfUserId = $('#hdUserID').val();
+            if (selfUserId !== undefined) {
+                if (selfUserId.length > 0) {
+                    console.log("connected using user id");
+                    chatHub.server.connect(selfUserId);
+                }
+                else {
+                    alert("Please login to site");
+                }
+            }
+
+
+            $("#txtMessage").keypress(function (e) {
+                if (e.which === 13) {
+                    $('#btnSendMsg').click();
+                }
+            });
+
+            $('#btnSendMsg').click(function () {
+                var msg = $("#txtMessage").val();
+                if (msg.length > 0) {
+                    var userId = $('#hdToUserID').val();
+                    chatHub.server.sendPrivateMessage(userId, msg, 'Click', "No Email");
+                    $("#txtMessage").val('');
+                }
+
+                var sendFile = document.getElementById("send-file-3").files[0];
+                if (sendFile !== null && sendFile !== undefined) {
+                    var formData = new FormData();
+                    formData.append("sendFile", sendFile);
+                    var url = "@Url.Action("SendFile", "comunicaciones", new { area = "coadmin" })" ;
+
+                    $.ajax({
+                        url: url,
+                        type: "POST",
+                        data: formData,
+                        success: function (result) {
+                            if (result.result === "error") {
+                                console.log('couln\'t get roles');
+                            } else {
+                                var userId = $('#hdToUserID').val();
+                                var msg = result.fileName;
+                                chatHub.server.sendPrivateMessage(userId, msg, 'Click', "Email");         
+                            }
+                        },
+                        processData: false,
+                        contentType: false
+                    });
+                }
+            });
+        }
+    </script>
+</body>
+</html>

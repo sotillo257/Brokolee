@@ -1,0 +1,7 @@
+select * from [user]
+
+select * from chatmessage
+
+select * from onlineuser
+
+update onlineuser set  user_img=0x5468697320697320612074657374

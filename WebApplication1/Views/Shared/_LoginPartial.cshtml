@@ -1,0 +1,52 @@
+﻿@using Microsoft.AspNet.Identity
+
+@*@if (Request.IsAuthenticated)*@
+@if (Session["USER_ID"] != null)
+{
+<div>
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="height: 50px;">
+        @if (Session["USER_IMAGE"] == null)
+        {
+            <img src="~/admin-lte/img/user.svg" class="user-image" alt="User Image">
+        }
+        else
+        {
+            <img src="@Url.Action("ImageShow","Login")" class="user-image" alt="User Image">
+        }
+        <span class="hidden-xs user-name" id="id_user_name_span">@Session["USER_NAME"]</span>
+    </a>
+    <div class="dropdown-menu" style="left: 86% !important; right: 0 !important; width: 12% !important;">
+        <div class="col-md-4 col-xs-12 div-center">
+            @if (Session["USER_IMAGE"] == null)
+            {
+                <img src="~/admin-lte/img/user.svg" class="img-circle" alt="User Image" style="width: 100%!important; height: 100% !important;">
+            }
+            else
+            {
+                <img src="@Url.Action("ImageShow","Login")" class="user-profile-image" alt="User Image">
+            }
+            <p class="div-center">
+                <small>@Session["USER_NAME"]</small>
+            </p>
+        </div>
+
+        <div class="col-md-8 col-xs-12 text-center">
+            @using (Html.BeginForm("LogOut", "Login", FormMethod.Post, new { id = "logoutForm", @class = "" }))
+            {
+                @Html.AntiForgeryToken()
+                <div>
+                    <a class="btn" onclick="onManageAccount()" style="color: #444 !important;">Manage Account</a>
+                </div>
+
+                <div>
+                    <a class="btn" style="color: #444 !important;" onclick="onGotoSupport()" href="#">Support</a>
+                </div>
+
+                <div>
+                    <a href="javascript:document.getElementById('logoutForm').submit()" class="btn" style="color: #444 !important;">Sign out</a>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+}

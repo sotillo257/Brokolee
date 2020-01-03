@@ -1,0 +1,44 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout_Suscribe.cshtml";
+    ViewBag.Title = "Index";
+    Page.Title = "Suscribirse Iniciar sesión";
+}
+
+<div class="wrapper-page">
+    <div class="card">
+        <div class="card-body">
+            <h3 class="text-center mt-0">
+                Iniciar
+            </h3>
+
+            <form  method="post" action="@Url.Action("SubmitLogin", "suscribe")">
+                @if (Model.WarningMsg != "")
+                {
+                    <div class="alert alert-danger">
+                        <strong>Login Failed</strong> @Model.WarningMsg.
+                    </div>
+                }
+
+
+                <div class="form-label-group">
+                    <input type="email" id="inputEmail" class="form-control" name="Email" value="@Model.Email" placeholder="Email address" required autofocus />
+                    @*<label for="inputEmail">Email address</label>*@
+                </div>
+
+                <div class="form-label-group">
+                    <input type="password" id="inputPassword" class="form-control" name="Password" value="@Model.Password" placeholder="Password" required />
+                    @*<label for="inputPassword">Password</label>*@
+                </div>
+
+                <input type="hidden" name="PackageId" value="@Model.PackageId"/>
+
+                <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Iniciar</button>
+                <hr class="my-4">
+                <div class="text-center">
+                    <a href="@Url.Action("Register", "suscribe", new { packageId = Model.PackageId })">Register suscribe</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

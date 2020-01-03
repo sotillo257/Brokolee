@@ -1,0 +1,1419 @@
+﻿<!DOCTYPE html>
+<!--
+This is a starter template page. Use this page to start your new project from
+scratch. This page gets rid of all links and provides the needed markup only.
+-->
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <meta content="Software para administrar comunidades" name="description" />
+    <meta content="zerosystempr" name="author" />
+    <title>@Page.Title</title>
+    <link rel="shortcut icon" type="image/x-icon" href="~/assets/images/favicon.ico" />
+
+    <!--calendar css-->
+    <link rel="stylesheet" href="~/assets/plugins/fullcalendar/css/fullcalendar.min.css" type="text/css" />
+    <!-- DataTables -->
+    <link rel="stylesheet" href="~/assets/plugins/datatables/datatables.min.css" type="text/css" />
+    <!-- Responsive datatable examples -->
+    <link rel="stylesheet" href="~/assets/plugins/datatables/responsive.bootstrap4.min.js" type="text/css" />
+    <link rel="stylesheet" href="~/assets/plugins/datatables/jquery.dataTables.min.css" type="text/css" />
+    <!-- Bootstrap rating css -->
+    <link rel="stylesheet" href="~/assets/plugins/bootstrap-rating/bootstrap-rating.css" type="text/css" />
+
+    <link rel="stylesheet" href="~/assets/css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="~/assets/css/icons.css" type="text/css" />
+    <link rel="stylesheet" href="~/assets/css/style.css" type="text/css" />
+    <link rel="stylesheet" href="~/assets/css/custom.css" type="text/css" />
+    <style>
+        .search-form {
+            display: inline-flex;
+            width: 100%;
+        }
+
+        .text-grey {
+            color: #bec0c2;
+        }
+
+        .cur-user-span {
+            color: #ff0000;
+        }
+
+        .sel-user-span {
+            color: #00ff00;
+        }
+
+        #txtMessage {
+            background-color: lightgray;
+        }
+
+        .StripeElement {
+            background-color: white;
+            height: 40px;
+            padding: 10px 12px;
+            border-radius: 4px;
+            border: 1px solid transparent;
+            box-shadow: 0 1px 3px 0 #e6ebf1;
+            -webkit-transition: box-shadow 150ms ease;
+            transition: box-shadow 150ms ease;
+        }
+
+        .StripeElement--focus {
+            box-shadow: 0 1px 3px 0 #cfd7df;
+        }
+
+        .StripeElement--invalid {
+            border-color: #fa755a;
+        }
+
+        .StripeElement--webkit-autofill {
+            background-color: #fefde5 !important;
+        }
+
+        #menu {
+            width: 120px;
+            box-shadow: 0 4px 5px 3px rgba(0, 0, 0, 0.2);
+            position: relative;
+            display: none;
+            position: absolute;
+            background-color: white;
+        }
+
+        .menu-options {
+            list-style: none;
+            padding: 10px 0;
+            margin-bottom: 0;
+        }
+
+        .menu-option {
+            font-weight: 500;
+            font-size: 14px;
+            padding: 10px 40px 10px 20px;
+            cursor: pointer;
+        }
+
+        .menu-option:hover {
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        #dataTable-directorio-suplidores_filter {
+            display: none !important;
+        }
+
+        #dataTable-documentos-legales_filter {
+            display: none !important;
+        }
+
+        #dataTable-listado-tareas_filter {
+            display: none !important;
+        }
+    </style>
+</head>
+
+<body class="fixed-left">
+    <!-- Begin page -->
+    <div id="wrapper">
+
+        <!-- ========== Left Sidebar Start ========== -->
+        <div class="left side-menu">
+            <button type="button" class="button-menu-mobile button-menu-mobile-topbar open-left">
+                <i class="ion-close"></i>
+            </button>
+
+            <!-- LOGO -->
+            <div class="topbar-left m-b-10">
+                <div class="text-center p-b-10">
+                    <a href="@Url.Action("panel", "control")" class="logo"><img src="~/assets/images/logo.png" height="100" alt="logo Brokolee Software"></a>
+                </div>
+            </div>
+
+
+            <div class="sidebar-inner slimscrollleft" id="sidebar-main">
+
+                <!-- LOGO CONDOMINIO -->
+                <div class="m-b-10 title-condominio">
+                    <div class="text-center">
+                        <h6>@Model.curUser.first_name1 @Model.curUser.last_name1</h6>
+                        <a class="text-success" href="#">@Model.communityName<span class="waves-block">@Model.communityApart</span></a>
+                        <p class="text-primary text-uppercase"><sub><i class="mdi mdi-checkbox-blank-circle"></i> Activo</sub></p>
+                    </div>
+
+                </div>
+
+                <div id="sidebar-menu">
+                    <ul>
+
+                        <li>
+                            @if (Model.side_menu == "control")
+                            {
+                                <a href="@Url.Action("panel", "control")" class="waves-effect waves-light active">
+                                    <i class="mdi mdi-home-modern"></i>Panel de Control
+                                </a>
+
+                            }
+                            else
+                            {
+                                <a href="@Url.Action("panel", "control")" class="waves-effect waves-light">
+                                    <i class="mdi mdi-home-modern"></i>Panel de Control
+                                </a>
+                            }
+                        </li>
+
+
+                        <li class="has_sub">
+                            @if (Model.side_menu == "cuotas")
+                            {
+                                <a href="javascript:void(0);" class="waves-effect waves-light active"><i class="mdi mdi-coin"></i><span> Cuotas </span><span class="float-right"><i class="mdi mdi-chevron-right"></i></span></a>
+                                <ul class="list-unstyled">
+                                    <li>
+                                        @if (Model.side_sub_menu == "cuotas_balance")
+                                        {
+                                            <a href="@Url.Action("balance", "cuotas")" class="active">Balance Pendiente</a>
+                                        }
+                                        else
+                                        {
+                                            <a href="@Url.Action("balance", "cuotas")">Balance Pendiente</a>
+                                        }
+
+                                    </li>
+
+                                    <li>
+                                        @if (Model.side_sub_menu == "cuotas_estado")
+                                        {
+                                            <a href="@Url.Action("estado", "cuotas")" class="active">Estado de Cuenta</a>
+                                        }
+                                        else
+                                        {
+                                            <a href="@Url.Action("estado", "cuotas")">Estado de Cuenta</a>
+                                        }
+                                    </li>
+                                    <li>
+                                        @if (Model.side_sub_menu == "cuotas_agregar")
+                                        {
+                                            <a href="@Url.Action("agregar", "cuotas")" class="active">Agregar cuenta de Banco o CC</a>
+                                        }
+                                        else
+                                        {
+                                            <a href="@Url.Action("agregar", "cuotas")">Agregar cuenta de Banco o CC</a>
+                                        }
+                                    </li>
+                                </ul>
+                            }
+                            else
+                            {
+                                <a href="javascript:void(0);" class="waves-effect waves-light"><i class="mdi mdi-coin"></i><span> Cuotas y otros cargos </span><span class="float-right"><i class="mdi mdi-chevron-right"></i></span></a>
+                                <ul class="list-unstyled">
+                                    <li><a href="@Url.Action("balance", "cuotas")">Balance Pendiente</a></li>
+                                    <li><a href="@Url.Action("estado", "cuotas")">Estado de Cuenta</a></li>
+                                    <li><a href="@Url.Action("agregar", "cuotas")">Agregar cuenta de Banco o CC</a></li>
+                                </ul>
+                            }
+                        </li>
+
+                        <li>
+                            @if (Model.side_menu == "suppliers")
+                            {
+                                <a href="@Url.Action("listado", "suppliers")" class="waves-effect waves-light active">
+                                    <i class="mdi mdi-format-list-bulleted-type"></i>
+                                    <span> Directorio de suplidores </span>
+                                </a>
+                            }
+                            else
+                            {
+                                <a href="@Url.Action("listado", "suppliers")" class="waves-effect waves-light">
+                                    <i class="mdi mdi-format-list-bulleted-type"></i>
+                                    <span> Directorio de suplidores </span>
+                                </a>
+                            }
+
+                        </li>
+
+                        <li>
+                            @if (Model.side_menu == "eventos")
+                            {
+                                <a href="@Url.Action("calendario", "eventos")" class="waves-effect waves-light active">
+                                    <i class="mdi mdi-calendar"></i><span> Calendario de Eventos </span>
+                                </a>
+                            }
+                            else
+                            {
+                                <a href="@Url.Action("calendario", "eventos")" class="waves-effect waves-light">
+                                    <i class="mdi mdi-calendar"></i><span> Calendario de Eventos </span>
+                                </a>
+                            }
+                        </li>
+
+                        <li class="has_sub">
+                            @if (Model.side_menu == "documentos")
+                            {
+                                <a href="javascript:void(0);" class="waves-effect active">
+                                    <i class="mdi mdi-file-document"></i><span> Documentos </span>
+                                    <span class="float-right"><i class="mdi mdi-chevron-right"></i></span>
+                                </a>
+                                <ul class="list-unstyled">
+                                    @foreach (var item in Model.document_category_list)
+                                    {
+                                        <li>
+                                            @if (Model.side_sub_menu == "documentos_" + item.type_name)
+                                            {
+                                                <a href="@Url.Action("legales", "documentos", new { type_id = item.id })" class="active">@item.type_name</a>
+                                            }
+                                            else
+                                            {
+                                                <a href="@Url.Action("legales", "documentos", new { type_id = item.id })">@item.type_name</a>
+                                            }
+
+                                        </li>
+                                    }
+                                </ul>
+                            }
+                            else
+                            {
+                                <a href="javascript:void(0);" class="waves-effect">
+                                    <i class="mdi mdi-file-document"></i><span> Documentos </span>
+                                    <span class="float-right"><i class="mdi mdi-chevron-right"></i></span>
+                                </a>
+
+                                <ul class="list-unstyled">
+                                    @foreach (var item in Model.document_category_list)
+                                    {
+                                        <li>
+                                            <a href="@Url.Action("legales", "documentos", new { type_id = item.id })">@item.type_name</a>
+                                        </li>
+                                    }
+                                </ul>
+                            }
+                        </li>
+
+                        <li class="has_sub">
+                            @if (Model.side_menu == "tareas")
+                            {
+                                <a href="javascript:void(0);" class="waves-effect waves-light active">
+                                    <i class="mdi mdi-server"></i><span> Tareas en Proceso </span>
+                                    <span class="float-right">
+                                        <i class="mdi mdi-chevron-right"></i>
+                                    </span>
+                                </a>
+                                <ul class="list-unstyled">
+                                    <li>
+                                        @if (Model.side_sub_menu == "tareas_listado")
+                                        {
+                                            <a href="@Url.Action("listado", "tareas")" class="active">Listado de tareas</a>
+
+                                        }
+                                        else
+                                        {
+                                            <a href="@Url.Action("listado", "tareas")">Listado de tareas</a>
+                                        }
+                                    </li>
+                                    <li>
+                                        @if (Model.side_sub_menu == "tareas_completadas")
+                                        {
+                                            <a href="@Url.Action("completadas", "tareas")" class="active">Tareas completadas</a>
+                                        }
+                                        else
+                                        {
+                                            <a href="@Url.Action("completadas", "tareas")">Tareas completadas</a>
+                                        }
+                                    </li>
+                                </ul>
+                            }
+                            else
+                            {
+                                <a href="javascript:void(0);" class="waves-effect waves-light">
+                                    <i class="mdi mdi-server"></i><span> Tareas en Proceso </span>
+                                    <span class="float-right">
+                                        <i class="mdi mdi-chevron-right"></i>
+                                    </span>
+                                </a>
+                                <ul class="list-unstyled">
+                                    <li><a href="@Url.Action("listado", "tareas")">Listado de tareas</a></li>
+                                    <li><a href="@Url.Action("completadas", "tareas")">Tareas completadas</a></li>
+                                </ul>
+                            }
+                        </li>
+
+                        <li class="has_sub">
+                            @if (Model.side_menu == "comunicaciones")
+                            {
+                                <a href="javascript:void(0);" class="waves-effect waves-light active">
+                                    <i class="mdi mdi-wechat"></i> <span> Comunicaciones </span>
+                                    <span class="float-right"><i class="mdi mdi-chevron-right"></i></span>
+                                </a>
+                                <ul class="list-unstyled">
+                                    @if (Model.side_sub_menu == "comunicaciones_blog")
+                                    {
+                                        <li><a href="@Url.Action("blog", "comunicaciones")" class="active">Blog general de la comunidad</a></li>
+                                    }
+                                    else
+                                    {
+                                        <li><a href="@Url.Action("blog", "comunicaciones")">Blog general de la comunidad</a></li>
+                                    }
+
+                                    @if (Model.side_sub_menu == "comunicaciones_privados")
+                                    {
+                                        <li><a href="@Url.Action("privados", "comunicaciones")" class="active">Mensajes privados</a></li>
+                                    }
+                                    else
+                                    {
+                                        <li><a href="@Url.Action("privados", "comunicaciones")">Mensajes privados</a></li>
+                                    }
+                                </ul>
+                            }
+                            else
+                            {
+                                <a href="javascript:void(0);" class="waves-effect waves-light"><i class="mdi mdi-wechat"></i> <span> Comunicaciones </span> <span class="float-right"><i class="mdi mdi-chevron-right"></i></span></a>
+                                <ul class="list-unstyled">
+                                    <li><a href="@Url.Action("blog", "comunicaciones")">Blog general de la comunidad</a></li>
+                                    <li><a href="@Url.Action("privados", "comunicaciones")">Mensajes privados</a></li>
+                                </ul>
+                            }
+                        </li>
+
+
+                        <li class="has_sub">
+                            @if (Model.side_menu == "facilidades")
+                            {
+                                <a href="javascript:void(0);" class="waves-effect waves-light active">
+                                    <i class="mdi mdi-apps"></i><span> Facilidades </span>
+                                    <span class="float-right"><i class="mdi mdi-chevron-right"></i></span>
+                                </a>
+                                <ul class="list-unstyled">
+                                    <li>
+                                        @if (Model.side_sub_menu == "facilidades_disponibles")
+                                        {
+                                            <a href="@Url.Action("disponibles", "facilidades")" class="active">Facilidades disponibles</a>
+                                        }
+                                        else
+                                        {
+                                            <a href="@Url.Action("disponibles", "facilidades")">Facilidades disponibles</a>
+                                        }
+                                    </li>
+                                    <li>
+                                        @if (Model.side_sub_menu == "facilidades_reservas")
+                                        {
+                                            <a href="@Url.Action("reservas", "facilidades")" class="active">Status de Reservas</a>
+                                        }
+                                        else
+                                        {
+                                            <a href="@Url.Action("reservas", "facilidades")">Status de Reservas</a>
+                                        }
+                                    </li>
+                                </ul>
+                            }
+                            else
+                            {
+                                <a href="javascript:void(0);" class="waves-effect waves-light"><i class="mdi mdi-apps"></i><span> Facilidades </span> <span class="float-right"><i class="mdi mdi-chevron-right"></i></span></a>
+                                <ul class="list-unstyled">
+                                    <li><a href="@Url.Action("disponibles", "facilidades")">Facilidades disponibles</a></li>
+                                    <li><a href="@Url.Action("reservas", "facilidades")">Status de Reservas</a></li>
+                                </ul>
+                            }
+                        </li>
+
+                        <li>
+                            @if (Model.side_menu == "contacto")
+                            {
+                                <a href="@Url.Action("informacion", "contacto")" class="waves-effect waves-light active"><i class="mdi mdi-contact-mail"></i><span> Información de contacto </span></a>
+                            }
+                            else
+                            {
+                                <a href="@Url.Action("informacion", "contacto")" class="waves-effect waves-light"><i class="mdi mdi-contact-mail"></i><span> Información de contacto </span></a>
+                            }
+                        </li>
+
+                        <li>
+                            @if (Model.side_menu == "tecnico")
+                            {
+                                <a href="@Url.Action("soporte", "tecnico")" class="waves-effect waves-light active"><i class="mdi mdi-comment-processing"></i><span> Soporte Técnico </span></a>
+                            }
+                            else
+                            {
+                                <a href="@Url.Action("soporte", "tecnico")" class="waves-effect waves-light"><i class="mdi mdi-comment-processing"></i><span> Soporte Técnico </span></a>
+                            }
+                        </li>
+
+                        <li class="has_sub">
+                            @if (Model.side_menu == "uso")
+                            {
+                                <a href="javascript:void(0);" class="waves-effect waves-light active"><i class="mdi mdi-copyright"></i> <span> Políticas de Uso </span> <span class="float-right"><i class="mdi mdi-chevron-right"></i></span></a>
+                                <ul class="list-unstyled">
+                                    <li>
+                                        @if (Model.side_sub_menu == "uso_privacidad")
+                                        {
+                                            <a href="@Url.Action("privacidad", "uso")" class="active">Aviso de Privacidad</a>
+                                        }
+                                        else
+                                        {
+                                            <a href="@Url.Action("privacidad", "uso")">Aviso de Privacidad</a>
+                                        }
+                                    </li>
+                                    <li>
+                                        @if (Model.side_sub_menu == "uso_terminos")
+                                        {
+                                            <a href="@Url.Action("terminos", "uso")" class="active">Términos de Uso</a>
+
+                                        }
+                                        else
+                                        {
+                                            <a href="@Url.Action("terminos", "uso")">Términos de Uso</a>
+                                        }
+                                    </li>
+
+                                    <li>
+                                        @if (Model.side_sub_menu == "uso_derechos")
+                                        {
+                                            <a href="@Url.Action("derechos", "uso")" class="active">Derechos Reservados</a>
+                                        }
+                                        else
+                                        {
+                                            <a href="@Url.Action("derechos", "uso")">Derechos Reservados</a>
+                                        }
+                                    </li>
+                                </ul>
+                            }
+                            else
+                            {
+                                <a href="javascript:void(0);" class="waves-effect waves-light"><i class="mdi mdi-copyright"></i> <span> Políticas de Uso </span> <span class="float-right"><i class="mdi mdi-chevron-right"></i></span></a>
+                                <ul class="list-unstyled">
+                                    <li><a href="@Url.Action("privacidad", "uso")">Aviso de Privacidad</a></li>
+                                    <li><a href="@Url.Action("terminos", "uso")">Términos de Uso</a></li>
+                                    <li><a href="@Url.Action("derechos", "uso")">Derechos Reservados</a></li>
+                                </ul>
+                            }
+
+                        </li>
+                    </ul>
+                </div>
+                <div class="clearfix"></div>
+            </div> <!-- end sidebarinner -->
+        </div>
+        <!-- Left Sidebar End -->
+        <!-- Start right Content here -->
+
+        <div class="content-page">
+            <!-- Start content -->
+            <div class="content">
+
+                <!-- Top Bar Start -->
+                <div class="topbar">
+                    <nav class="navbar-custom">
+                        <ul class="list-inline float-right mb-0">
+                            <li class="list-inline-item dropdown notification-list" id="list-inline-item-1">
+                                <a class="nav-link dropdown-toggle arrow-none waves-effect waves-light" data-toggle="dropdown" href="#" role="button"
+                                   aria-haspopup="false" aria-expanded="false">
+                                    <i class="mdi mdi-wechat noti-icon"></i>
+                                    @if (Model.messageCount > 0)
+                                    {
+                                        <span class="badge badge-danger noti-icon-badge">@Model.messageCount</span>
+                                    }
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right dropdown-arrow dropdown-menu-lg">
+                                    <!-- item-->
+                                    <div class="dropdown-item noti-title">
+                                        <h5>
+                                            @if (Model.messageCount > 0)
+                                            {
+                                                <span class="badge badge-danger float-right">@Model.messageCount</span>
+                                            }
+                                            Mensajes Privados
+                                        </h5>
+                                    </div>
+                                    @foreach (var item in Model.pubMessageList)
+                                    {
+                                        <!-- item-->
+                                        <a href="@Url.Action("privados","comunicaciones")" class="dropdown-item notify-item">
+                                            <div class="notify-icon">
+                                                @if (item.image_path != null)
+                                                {
+                                                    <img src="~/Upload/User_Logo/@item.image_path" alt="user-img" class="img-fluid rounded-circle" />
+                                                }
+                                                else
+                                                {
+                                                    <img src="~/assets/images/user.svg" alt="user-img" class="img-fluid rounded-circle" />
+                                                }
+                                            </div>
+                                            <p class="notify-details"><b>@item.username</b><small class="">You have @item.count_message unread messages.</small></p>
+                                        </a>
+                                    }
+
+                                    <div class="dropdown-divider"></div>
+                                    <!-- All-->
+                                    <a href="@Url.Action("privados","comunicaciones")" class="dropdown-item notify-item">
+                                        Ver todos los mensajes
+                                    </a>
+                                </div>
+                            </li>
+
+                            <li class="list-inline-item dropdown notification-list">
+                                <a class="nav-link dropdown-toggle arrow-none waves-effect waves-light" data-toggle="dropdown" href="#" role="button"
+                                   aria-haspopup="false" aria-expanded="false">
+                                    <i class="mdi mdi-server noti-icon"></i>
+                                    @if (Model.pubTaskList.Count > 0)
+                                    {
+                                        <span class="badge badge-success noti-icon-badge">@Model.pubTaskList.Count</span>
+                                    }
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right dropdown-arrow dropdown-menu-lg">
+                                    <!-- item-->
+                                    <div class="dropdown-item noti-title">
+                                        <h5>
+                                            @if (Model.pubTaskList.Count > 0)
+                                            {
+                                                <span class="badge badge-success float-right">@Model.pubTaskList.Count</span>
+                                            }
+                                            Tareas en proceso
+                                        </h5>
+                                    </div>
+
+                                    @foreach (var taskitem in Model.pubTaskList)
+                                    {
+                                        <!-- item-->
+                                        <a href="@Url.Action("vertarea", "tareas", new { id=taskitem.id})" class="dropdown-item notify-item">
+                                            <p class="notify-details"><b>@taskitem.task_name</b></p>
+                                            @if (taskitem.status == 3)
+                                            {
+                                                <p class="notify-details"><small class="text-right">100%</small></p>
+                                                <div class="">
+                                                    <div class="progress">
+                                                        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%; border-radius: 50px;"></div>
+                                                    </div>
+                                                </div>
+                                            }
+                                            else if (taskitem.status == 2)
+                                            {
+                                                <p class="notify-details"><small class="text-right">50%</small></p>
+                                                <div class="">
+                                                    <div class="progress">
+                                                        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 50%; border-radius: 50px;"></div>
+                                                    </div>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <p class="notify-details"><small class="text-right">0%</small></p>
+                                                <div class="">
+                                                    <div class="progress">
+                                                        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%; border-radius: 50px;"></div>
+                                                    </div>
+                                                </div>
+                                            }
+
+                                        </a>
+                                    }
+
+                                    <div class="dropdown-divider"></div>
+                                    <!-- All-->
+                                    <a href="@Url.Action("listado", "tareas")" class="dropdown-item notify-item">
+                                        Ver todas las tareas
+                                    </a>
+                                </div>
+                            </li>
+
+                            <li class="list-inline-item dropdown notification-list">
+                                <a class="nav-link dropdown-toggle arrow-none waves-effect waves-light nav-user" data-toggle="dropdown" href="#" role="button"
+                                   aria-haspopup="false" aria-expanded="false">
+                                    @if (Model.curUser.user_img != null)
+                                    {
+                                        <img src="~/Upload/User_Logo/@Model.curUser.user_img" alt="user" class="rounded-circle">
+                                    }
+                                    else
+                                    {
+                                        <img src="~/assets/images/user.svg" alt="user" class="rounded-circle">
+                                    }
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
+                                    <!-- item-->
+                                    <div class="dropdown-item noti-title">
+                                        <h5>@Model.curUser.first_name1 @Model.curUser.last_name1</h5>
+                                    </div>
+                                    <a class="dropdown-item" href="@Url.Action("perfil","administrador")"><i class="mdi mdi-account-circle "></i> Perfil</a>
+                                    <div class="dropdown-divider"></div>
+                                    @using (Html.BeginForm(
+                                        "logout",
+                                        "administrador",
+                                        FormMethod.Post,
+                                        new
+                                        {
+                                            id = "logoutForm",
+                                            @class = ""
+                                        }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        <a class="dropdown-item text-danger" href="javascript:{}" onclick="document.getElementById('logoutForm').submit();"><i class="mdi mdi-power text-danger"></i> Cerrar sesión</a>
+                                    }
+
+                                </div>
+                            </li>
+                        </ul>
+
+                        <ul class="list-inline menu-left mb-0">
+                            <li class="float-left">
+                                <button class="button-menu-mobile open-left waves-light waves-effect">
+                                    <i class="mdi mdi-menu"></i>
+                                </button>
+                            </li>
+                            <li class="hide-phone app-search">
+
+                            </li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </nav>
+                </div>
+                <!-- Top Bar End -->
+                @RenderBody()
+
+            </div> <!-- content -->
+
+            <footer class="footer">
+                © @DateTime.Now.Year ZeroSystemPR.
+            </footer>
+
+        </div>
+        <!-- End Right content here -->
+        <div id="menu">
+            <ul class="menu-options">
+                <li class="menu-option" id="remove-menu-option">Remove</li>
+            </ul>
+        </div>
+    </div>
+    <!-- END wrapper -->
+    <!-- jQuery  -->
+    <script type="text/javascript" src="~/assets/js/jquery.min.js"></script>
+    <script type="text/javascript" src="~/assets/js/popper.min.js"></script>
+    <script type="text/javascript" src="~/assets/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="~/assets/js/modernizr.min.js"></script>
+    <script type="text/javascript" src="~/assets/js/detect.js"></script>
+    <script type="text/javascript" src="~/assets/js/fastclick.js"></script>
+    <script type="text/javascript" src="~/assets/js/jquery.slimscroll.js"></script>
+    <script type="text/javascript" src="~/assets/js/jquery.blockUI.js"></script>
+    <script type="text/javascript" src="~/assets/js/waves.js"></script>
+    <script type="text/javascript" src="~/assets/js/jquery.nicescroll.js"></script>
+    <script type="text/javascript" src="~/assets/js/jquery.scrollTo.min.js"></script>
+    <!-- Required datatable js -->
+    <script type="text/javascript" src="~/assets/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/assets/plugins/datatables/dataTables.bootstrap4.min.js"></script>
+    <script src="~/assets/plugins/datatables/json/Spanish.json"></script>
+    <!-- Responsive examples -->
+    <script type="text/javascript" src="~/assets/plugins/datatables/dataTables.responsive.min.js"></script>
+    <script type="text/javascript" src="~/assets/plugins/datatables/dataTables.bootstrap4.min.js"></script>
+    <!-- Jquery-Ui -->
+    @*<script type="text/javascript" src="~/assets/plugins/jquery-ui/jquery-ui.min.js"></script>*@
+    <script type="text/javascript" src="~/assets/plugins/moment/moment.js"></script>
+    <script type="text/javascript" src="~/assets/plugins/fullcalendar/js/fullcalendar.min.js"></script>
+    <script type="text/javascript" src="~/assets/plugins/fullcalendar/locale/es.js"></script>
+    @*<script type="text/javascript" src="~/assets/pages/calendar-init.js"></script>*@
+    <!-- Bootstrap rating js -->
+    <script type="text/javascript" src="~/assets/plugins/bootstrap-rating/bootstrap-rating.min.js"></script>
+    <script type="text/javascript" src="~/assets/plugins/emotion-rating/emotion-ratings.js"></script>
+    <script type="text/javascript" src="~/assets/pages/rating-init.js"></script>
+
+    <script type="text/javascript" src="~/assets/plugins/summernote/summernote-bs4.min.js"></script>
+    <script type="text/javascript" src="~/assets/pages/email-summernote.js"></script>
+    <!-- App js -->
+    <script type="text/javascript" src="~/assets/js/app.js"></script>
+    <!-- Custom js -->
+    <script type="text/javascript" src="~/assets/js/custom.js"></script>
+    <!--stripe js--->
+    <script src="https://checkout.stripe.com/checkout.js"></script>
+    <script src="https://js.stripe.com/v3/"></script>
+    <!---ACH js-->
+    <script src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"></script>
+    <!--Reference the SignalR library. -->
+    <script src="~/Scripts/jquery.signalR-2.3.0.js"></script>
+    <!--Reference the autogenerated SignalR hub script. -->
+    <script src="/signalr/hubs"></script>
+    <script src="https://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+    <script>
+        var ck_anim_element = null;
+        var childern_clicked = false;
+        var map = null;
+        var rectangle = null;
+        var loadMesgCount = 10;
+        var topPosition = 0;
+        var refreshId = null;
+        var chatHub = null;
+
+        function onAchPayment() {
+            var routing_number = $("#id_routing_number").val();
+            var account_number = $("#id_account_number").val();
+            var account_holder_name = $("#id_account_holder_name").val();
+            var account_holder_type = $("#id_account_holder_type").val();
+            var stripe = Stripe('pk_test_mG9wPyaBwZIBzBsPXU4sEfC3');
+            stripe.createToken('bank_account', {
+                country: 'US',
+                currency: 'usd',
+                routing_number: routing_number,//'110000000',
+                account_number: account_number,//'000123456789',
+                account_holder_name: account_holder_name,//'Jenny Rosen',
+                account_holder_type: account_holder_type//'individual',// company or individual
+            }).then(function (result1) {
+                // Handle result.error or result.token
+                var amount = parseInt(parseFloat($("#stripe_amount_input").val()));
+                var url = "@Url.Action("PaymentAch", "concepto")";
+                var formData = new FormData();
+                formData.append("bankToken", result1.token.id);
+                console.log(result1.token);
+                formData.append("amount", amount);
+
+                $.ajax({
+                    url: url,
+                    type: "post",
+                    data: formData,
+                    success: function (result) {
+                        $("#ck-body-loading-overlay").hide();
+                        if (result.result === "error") {
+                            console.log('couln\'t get roles');
+                        } else {
+                            $("#list-inline-item-1").html(result.html);
+                            //location.reload();
+                        }
+                    },
+                    processData: false,
+                    contentType: false
+                });
+            });
+        }
+
+        var handler = StripeCheckout.configure({
+            key: 'pk_test_mG9wPyaBwZIBzBsPXU4sEfC3',
+            image: 'https://stripe.com/img/documentation/checkout/marketplace.png',
+            locale: 'auto',
+            token: function (token) {
+                // You can access the token ID with `token.id`.
+                // Get the token ID to your server-side code for use.
+                var amount = parseInt(parseFloat($("#stripe_amount_input").val()));
+                var url = "@Url.Action("PaymentCredit", "concepto")";
+                var formData = new FormData();
+                formData.append("token", token.id);
+                formData.append("amount", amount);
+
+                $.ajax({
+                    url: url,
+                    type: "post",
+                    data: formData,
+                    success: function (result) {
+                        $("#ck-body-loading-overlay").hide();
+                        if (result.result === "error") {
+                            console.log('couln\'t get roles');
+                        } else {
+                            $("#list-inline-item-1").html(result.html);
+                            //location.reload();
+                        }
+                    },
+                    processData: false,
+                    contentType: false
+                });
+            }
+        });
+
+
+
+        $(function () {
+            $("#example-date-input").datepicker({
+                dateFormat: 'yy-mm-dd'
+            });
+
+            $("#example-date-input1").datepicker({
+                dateFormat: 'yy-mm-dd'
+            });
+            // Declare a proxy to reference the hub.
+            chatHub = $.connection.chatHub;
+            $.connection.hub.url = "/signalr";
+            $.connection.hub.logging = true;
+
+            chatHub.client.sendPrivateMessage = function (messageId, username, message, email) {
+                //display the message
+                if (message.indexOf("#&&#") != -1) {
+                    $('.message-div').filter(function () {
+                        return $(this).data('id') === messageId;
+                    }).remove();
+                } else {
+                    if (messageId === 0) {
+                        if (email === "Email") {
+                            $("<div class='message-div sel-user-div' data-id='" + messageId + "'><span class='sel-user-span'>" + username + ": </span> <a href='/Upload/Upload_Send/" + message + "'>" + message + "</a></div > ").appendTo("#chat_box");
+                        } else {
+                            $("<div class='message-div sel-user-div' data-id='" + messageId + "'><span class='sel-user-span'>" + username + ": </span> <span>" + message + "</span></div > ").appendTo("#chat_box");
+                        }
+                    } else {
+                        if (email === "Email") {
+                            $("<div class='message-div cur-user-div' data-id='" + messageId + "'><span class='cur-user-span'>" + username + ": </span><a href='/Upload/Upload_Send/" + message + "'>" + message + "</a></div>").appendTo("#chat_box");
+                        } else {
+                            $("<div class='message-div cur-user-div' data-id='" + messageId + "'><span class='cur-user-span'>" + username + ": </span><span>" + message + "</span></div>").appendTo("#chat_box");
+                        }
+                    }
+                }
+
+                $("#chat_box").animate({ scrollTop: 1000 }, "slow");
+            };
+
+            $.connection.hub.start({ transport: 'longPolling' }, function () {
+                console.log('connection started!');
+                $("#chat_box").animate({ scrollTop: 1000 }, "slow");
+                registerEvents(chatHub);
+            });
+
+            refreshContextEvent();
+        });
+
+        var menu = document.getElementById("menu");
+        var delMessageId = 0;
+
+        window.addEventListener("click", function (e) {
+            menu.style.display = "none";
+        })
+
+        function refreshContextEvent() {
+            $(".cur-user-div").on('contextmenu', function (e) {
+                e.preventDefault();
+                delMessageId = $(this).data('id');
+                menu.style.left = `${e.pageX}px`;
+                menu.style.top = `${e.pageY}px`;
+                menu.style.display = "block";
+                return false;
+            });
+
+            $("#remove-menu-option").on('click', function () {
+                var msg = delMessageId + ":#&&#";
+                var userId = $('#hdToUserID').val();
+                chatHub.server.sendPrivateMessage(userId, msg, 'Click', 'Not Email');
+            });
+        }
+
+        function onSelectChatUser(self) {
+            var selectUserId = $(self).data("id");
+            console.log("selectUserId", selectUserId);
+            $("#hdToUserID").val(selectUserId);
+
+            var url = "@Url.Action("GetSelUser", "comunicaciones")";
+
+
+            $.ajax({
+                url: url,
+                type: "post",
+                data: {
+                    userId: selectUserId
+                },
+                success: function (result) {
+                    console.log("result", result);
+                    if (result.result === "error") {
+                        //console.log('couln\'t get roles');
+                    } else {
+                        if (result.imgtype === 1) {
+                            document.getElementById("sel-user-img").src = "/assets/images/user.svg";
+                        } else {
+                            document.getElementById("sel-user-img").src = "/Upload/User_Logo/" + result.imgpath;
+                        }
+
+                        if (result.online == 1) {
+                            if ($("#sel-user-status").hasClass("text-grey") == true) {
+                                $("#sel-user-status").removeClass("text-grey");
+                            }
+
+                            if ($("#sel-user-status").hasClass("text-primary") == false) {
+                                $("#sel-user-status").addClass("text-primary");
+                            }
+
+                            if ($("#connect-user-status-" + result.selUserId).hasClass("text-grey") == true) {
+                                $("#connect-user-status-" + result.selUserId).removeClass("text-grey");
+                            }
+
+                            if ($("#connect-user-status-" + result.selUserId).hasClass("text-primary") == true) {
+                                $("#connect-user-status-" + result.selUserId).addClass("text-primary");
+                            }
+                        } else {
+                            if ($("#sel-user-status").hasClass("text-primary") == true) {
+                                $("#sel-user-status").removeClass("text-primary");
+                            }
+
+                            if ($("#sel-user-status").hasClass("text-grey") == false) {
+                                $("#sel-user-status").addClass("text-grey");
+                            }
+
+                            if ($("#connect-user-status-" + result.selUserId).hasClass("text-primary") == true) {
+                                $("#connect-user-status-" + result.selUserId).removeClass("text-primary");
+                            }
+
+                            if ($("#connect-user-status-" + result.selUserId).hasClass("text-grey") == true) {
+                                $("#connect-user-status-" + result.selUserId).addClass("text-grey");
+                            }
+                        }
+
+                        $("#id-sel-username").text(result.name);
+                        $("#hdToUserName").val(result.name);
+                        $("#chat_box").html(result.html);
+                        console.log("nnn")
+                        refreshContextEvent();
+                    }
+                }
+            });
+        }
+
+        function registerEvents(chatHub) {
+            var selfUserId = $('#hdUserID').val();
+            if (selfUserId !== undefined) {
+                if (selfUserId.length > 0) {
+                    console.log("connected using user id");
+                    chatHub.server.connect(selfUserId);
+                }
+                else {
+                    alert("Please login to site");
+                }
+            }
+
+
+            $("#txtMessage").keypress(function (e) {
+                if (e.which === 13) {
+                    $('#btnSendMsg').click();
+                }
+            });
+
+            $('#btnSendMsg').click(function () {
+                var msg = $("#txtMessage").val();
+                if (msg.length > 0) {
+
+                    var userId = $('#hdToUserID').val();
+                    var username = $("#hdUserName").val();
+                    chatHub.server.sendPrivateMessage(userId, msg, 'Click', 'Not Email');
+                    $("#txtMessage").val('');
+                }
+
+                var sendFile = document.getElementById("send-file-3").files[0];
+                if (sendFile !== null && sendFile !== undefined) {
+                    var formData = new FormData();
+                    formData.append("sendFile", sendFile);
+                    var url = "@Url.Action("SendFile", "comunicaciones")" ;
+
+                    $.ajax({
+                        url: url,
+                        type: "POST",
+                        data: formData,
+                        success: function (result) {
+                            if (result.result === "error") {
+                                console.log('couln\'t get roles');
+                            } else {
+                                var userId = $('#hdToUserID').val();
+                                var msg = result.fileName;
+                                chatHub.server.sendPrivateMessage(userId, msg, 'Click', "Email");
+                            }
+                        },
+                        processData: false,
+                        contentType: false
+                    });
+                }
+            });
+
+        }
+
+        function AddDivToContainer($div) {
+            $('#divContainer').prepend($div);
+            $div.draggable({
+                handle: ".header",
+                stop: function () {
+                }
+            });
+        }
+
+
+
+        function GenerateCalender(events) {
+            console.log(events);
+            /* initialize the calendar */
+            $('#calendar').fullCalendar({
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'month,basicWeek,basicDay'
+                },
+                editable: true,
+                eventLimit: true, // allow "more" link when too many events
+                droppable: true, // this allows things to be dropped onto the calendar !!!
+                drop: function (date, allDay) { // this function is called when something is dropped
+
+                    // retrieve the dropped element's stored Event Object
+                    var originalEventObject = $(this).data('eventObject');
+
+                    // we need to copy it, so that multiple events don't have a reference to the same object
+                    var copiedEventObject = $.extend({}, originalEventObject);
+
+                    // assign it the date that was reported
+                    copiedEventObject.start = date;
+                    copiedEventObject.allDay = allDay;
+
+                    // render the event on the calendar
+                    // the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
+                    $('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
+
+                    // is the "remove after drop" checkbox checked?
+                    if ($('#drop-remove').is(':checked')) {
+                        // if so, remove the element from the "Draggable Events" list
+                        $(this).remove();
+                    }
+
+                },
+                events: events
+            });
+
+            /*Add new event*/
+            // Form to add new event
+
+            $("#add_event_form").on('submit', function (ev) {
+                ev.preventDefault();
+
+                var $event = $(this).find('.new-event-form'),
+                    event_name = $event.val();
+
+                if (event_name.length >= 3) {
+
+                    var newid = "new" + "" + Math.random().toString(36).substring(7);
+                    // Create Event Entry
+                    $("#external-events").append(
+                        '<div id="' + newid + '" class="fc-event">' + event_name + '</div>'
+                    );
+
+
+                    var eventObject = {
+                        title: $.trim($("#" + newid).text()) // use the element's text as the event title
+                    };
+
+                    // store the Event Object in the DOM element so we can get to it later
+                    $("#" + newid).data('eventObject', eventObject);
+
+                    // Reset draggable
+                    $("#" + newid).draggable({
+                        revert: true,
+                        revertDuration: 0,
+                        zIndex: 999
+                    });
+
+                    // Reset input
+                    $event.val('').focus();
+                } else {
+                    $event.focus();
+                }
+            });
+        }
+
+
+
+        $(document).ready(function () {
+            // stripe part using ach
+            $(".bankButton").click(function (e) {
+                var self = this;
+                var id = $(self).data("id");
+                var amount = parseInt(parseFloat($("#creditAmount_" + id).val()) * 100);
+                $("#stripe_amount_input").val(amount);
+
+            });
+            // stripe part using credit
+            $(".customButton").click(function (e) {
+                var self = this;
+                var id = $(self).data("id");
+                var amount = parseInt(parseFloat($("#creditAmount_" + id).val()) * 100);
+                $("#stripe_amount_input").val(amount);
+                // Open Checkout with further options:
+                handler.open({
+                    name: 'Stripe.com',
+                    description: '2 widgets',
+                    zipCode: true,
+                    amount: amount
+                });
+                e.preventDefault();
+            });
+
+            // Close Checkout on page navigation:
+            window.addEventListener('popstate', function () {
+                handler.close();
+            });
+             //checking if plugin is available
+
+            $('#external-events .fc-event').each(function () {
+                // create an Event Object (http://arshaw.com/fullcalendar/docs/event_data/Event_Object/)
+                // it doesn't need to have a start or end
+                var eventObject = {
+                    title: $.trim($(this).text()) // use the element's text as the event title
+                };
+
+                // store the Event Object in the DOM element so we can get to it later
+                $(this).data('eventObject', eventObject);
+
+                // make the event draggable using jQuery UI
+                $(this).draggable({
+                    zIndex: 999,
+                    revert: true, // will cause the event to go back to its
+                    revertDuration: 0 //  original position after the drag
+                });
+
+            });
+
+            var events = [];
+            var url = "@Url.Action("GetEvents", "eventos")";
+            var searchStr = $("#search-event-input").val();
+            if (searchStr !== undefined) {
+                searchStr = "";
+            }
+
+            $.ajax({
+                type: "GET",
+                data: {
+                    searchStr: searchStr
+                },
+                url: url,
+                success: function (data) {
+                    $.each(data, function (i, v) {
+                        events.push({
+                            title: v.title,
+                            start: new Date(v.year, v.month, v.day, v.hour, v.minute),
+                            //end: v.dTskEnd != null ? moment(v.dTskEnd) : null,
+                            url: "registrado?id=" + v.id
+                        });
+                    });
+
+                    GenerateCalender(events);
+                },
+                error: function (error) {
+                    alert('failed');
+                }
+            });
+
+        });
+
+
+        function onSetForgotUserName() {
+            $("#forgotUsernameModal").modal("show");
+        }
+
+
+        function onSetForgotPassword() {
+            $("#forgotPasswordModal").modal("show");
+        }
+
+        jQuery(function ($) {
+            $('#searchSidenav').on('scroll', function () {
+                if ($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight) {
+                    console.log('end reached');
+                }
+            });
+        });
+
+        // user  image click event
+        $('#upload_user_btn').click(function (e) {
+            e.preventDefault();
+            $('#id_manage_user_file_image').trigger('click');
+        });
+
+
+        $('#upload_manage_asset_edit_btn').click(function (e) {
+            e.preventDefault();
+            $('#id_edit_manage_asset_file_image').trigger('click');
+        });
+
+        //New Tab Form
+        function newTabDialog(url, retFunc) {
+            var w = 1320;
+            var h = 800;
+            var l = (window.screen.width - 1320) / 2;
+            var t = (window.screen.height - 800) / 2;
+
+            var child = window.open(url, '_blank');
+            var timer = setInterval(checkChild, 500);
+
+            function checkChild() {
+                if (child.closed) {
+                    clearInterval(timer);
+                    retFunc();
+                }
+            }
+        }
+
+
+        //!---------------------- Suggest Task ------------------
+        function onSuggestTask() {
+            document.getElementById("newtaskForm").submit();
+        }
+
+
+        function onSearchSupplierCategory() {
+            $("#searchSupplierForm").submit();
+        }
+
+        function onSetRead() {
+            var toUserID = $("#hdUserID").val();
+            var fromUserID = $("#hdToUserID").val();
+            var formData = new FormData();
+            formData.append("toUserID", toUserID);
+            formData.append("fromUserID", fromUserID)
+
+            var url = "@Url.Action("SetRead", "comunicaciones")";
+
+            $.ajax({
+                url: url,
+                type: "post",
+                data: formData,
+                success: function (result) {
+                    $("#ck-body-loading-overlay").hide();
+                    if (result.result === "error") {
+                        console.log('couln\'t get roles');
+                    } else {
+                        $("#list-inline-item-1").html(result.html);
+                        //location.reload();
+                    }
+                },
+                processData: false,
+                contentType: false
+            });
+        }
+
+        function onOpenRatingModal(self) {
+            var id = $(self).data("id");
+            $('input:radio[name=rating]:checked').prop('checked', false);
+            $("#id_rating_supplier_id").val(id);
+        }
+
+        function onOpenCommentModal(self) {
+            var id = $(self).data("id");
+            $("#id_supplier_comment").text("");
+            $("id_supplier_comment").val("");
+            $("#id_comment_supplier_id").val(id);
+        }
+
+        function onSetCommentSupplier() {
+            var supplier_id = $("#id_comment_supplier_id").val();
+            var commentary = $("#id_supplier_comment").val();
+            var formData = new FormData();
+            formData.append("supplierID", supplier_id);
+            formData.append("commentary", commentary);
+
+            var url = "@Url.Action("SetCommentSupplier", "suppliers")";
+
+            $.ajax({
+                url: url,
+                type: "post",
+                data: formData,
+                success: function (result) {
+                    $("#ck-body-loading-overlay").hide();
+                    if (result.result === "error") {
+                        $("#id_p_result").text("No ha comentado");
+                    } else {
+                        $("#id_p_result").text("Comentado con éxito!");
+                    }
+                    $("#ModalComentar").modal("hide");
+                    $("#ModalResult").modal("show");
+                    location.reload();
+                },
+                processData: false,
+                contentType: false
+            });
+        }
+
+        function onSetRateSupplier() {
+            var supplier_id = $("#id_rating_supplier_id").val();
+            var rating = $('input:radio[name=rating]:checked').val();
+            console.log('rating' + rating);
+            var formData = new FormData();
+            formData.append("supplierID", supplier_id);
+            formData.append("rating", rating);
+
+            var url = "@Url.Action("SetRateSupplier", "suppliers")";
+
+            $.ajax({
+                url: url,
+                type: "post",
+                data: formData,
+                success: function (result) {
+                    $("#ck-body-loading-overlay").hide();
+                    if (result.result === "error") {
+                        $("#id_p_result").text("No clasificado");
+                    } else {
+                        $("#id_p_result").text("Clasificado con éxito!");
+                    }
+                    $("#ModalValorar").modal("hide");
+                    $("#ModalResult").modal("show");
+                    location.reload();
+                },
+                processData: false,
+                contentType: false
+            });
+        }
+
+        function onBankChange(self) {
+            if ($(self).prop('checked') == true) {
+                $('#id_radio_credit').prop('checked', false);
+                $(".banco").show();
+                $(".creditcard").hide();
+            } else {
+                $('#id_radio_credit').prop('checked', true);
+                $(".banco").hide();
+                $(".creditcard").show();
+            }
+        }
+
+        function onCreditChange(self) {
+            if ($(self).prop('checked') == true) {
+                $('#id_radio_bank').prop('checked', false);
+                $(".banco").hide();
+                $(".creditcard").show();
+            } else {
+                $('#id_radio_bank').prop('checked', true);
+                $(".banco").show();
+                $(".creditcard").hide();
+            }
+        }
+
+        window.setInterval(function () {
+            var selUserId;
+            if ($("#hdToUserID").length != 0) {
+                // Exist
+                selUserId = $("#hdToUserID").val();
+            } else {
+                // Does not exist
+                selUserId = 0;
+            }
+            var formData = new FormData();
+            formData.append("SessionTimout", "check");
+            formData.append("SelUserID", selUserId);
+
+
+            var url = "@Url.Action("CheckTimeout", "administrador", new { area = "coadmin" })";
+
+            $.ajax({
+                url: url,
+                type: "post",
+                data: formData,
+                success: function (result) {
+                    $("#ck-body-loading-overlay").hide();
+                    if (result.result === "error") {
+                        console.log('couln\'t get roles');
+                        if (result.connectedusers_html !== "") {
+                            $("#connected_users_list").html(result.connectedusers_html);
+                        }
+
+                        if ($("#sel-user-status").length != 0) {
+                            if (result.selLoginStatus == 1) {
+                                if ($("#sel-user-status").hasClass('text-grey')) {
+                                    $("#sel-user-status").removeClass('text-grey')
+                                }
+
+                                $("#sel-user-status").addClass('text-primary')
+                            } else {
+                                if ($("#sel-user-status").hasClass('text-primary')) {
+                                    $("#sel-user-status").removeClass('text-primary')
+                                }
+
+                                $("#sel-user-status").addClass('text-grey')
+                            }
+                        }
+                    } else {
+                        //document.getElementById('logoutForm').submit();
+                    }
+                },
+                processData: false,
+                contentType: false
+            });
+        }, 10000);
+    </script>
+</body>
+</html>

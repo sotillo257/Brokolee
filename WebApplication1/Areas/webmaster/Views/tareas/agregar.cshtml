@@ -1,0 +1,206 @@
+﻿
+@{
+    ViewBag.Title = "agregar";
+    Page.Title = "Agregar Tarea - Brokolee Software";
+}
+
+<div class="page-content-wrapper">
+
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="page-title-box">
+                    <div class="float-left">
+                        <div class="breadcrumb float-md-right">
+                            <h4 class="page-title">Agregar Tarea</h4>
+                        </div>
+                    </div>
+                    <div class="float-right">
+                        <ul class="breadcrumb float-md-right">
+                            <li class="breadcrumb-item"><a href="@Url.Action("panel", "control", new { area = "webmaster" })" class="text-success"><i class="mdi mdi-home-modern"></i> Panel de Control</a></li>
+                            <li class="breadcrumb-item active">Agregar Tarea</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end page title end breadcrumb -->
+        <!-- back button -->
+        <div class="row pb-4">
+            <div class="col-md-6">
+                <a href="javascript:history.back()"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+            </div>
+        </div>
+        <!-- end back button -->
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    @using (Html.BeginForm("newtask",
+                       "tareas", FormMethod.Post,
+                       new
+                       {
+                           id = "newtaskForm",
+                           @class = "",
+                           area = "webmaster"
+                       }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="card-body">
+                            <h5 class="d-inline-block">Nueva Tarea</h5>
+                            <div class="form-divider"></div>
+                            <div class="form-group row">
+                                <label for="example-email-input" class="col-sm-3 col-form-label">Nombre</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" type="text" value="" name="task_name" required
+                                           data-toggle="tooltip" title="Nombre de la tarea"
+                                           placeholder="Nombre" id="example-email-input">
+                                    <small class="form-text text-muted">Nombre de la tarea</small>
+                                </div>
+                            </div>
+                            <div class="form-divider"></div>
+                            <div class="form-group row">
+                                <label for="example-lastname1-input" class="col-sm-3 col-form-label">Descripción</label>
+                                <div class="col-sm-9">
+                                    <textarea class="form-control" rows="3" name="description" 
+                                              data-toggle="tooltip" title="Descripción de la tarea"
+                                              placeholder="Descripción"></textarea>
+                                    <small class="form-text text-muted">Descripción de la tarea</small>
+                                </div>
+                            </div>
+                            <div class="form-divider"></div>
+                            <div class="form-group row">
+                                <label for="example-lastname1-input" class="col-sm-3 col-form-label">Responsable</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" type="text" value="" name="responsable" required
+                                           data-toggle="tooltip" title="Nombre de la persona responsable"
+                                           placeholder="Responsable" id="example-lastname1-input">
+                                    <small class="form-text text-muted">Nombre de la persona responsable</small>
+                                </div>
+                            </div>
+                            <div class="form-divider"></div>
+                            <div class="form-group row">
+                                <label for="example-date-input" class="col-sm-3 col-form-label">Fecha</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" type="date" value="" name="task_date"
+                                           data-toggle="tooltip" title="Mes / día / año | Fecha de registro de la tarea"
+                                           id="example-date-input" required />
+                                    <small class="form-text text-muted">Mes / día / año | Fecha de registro de la tarea</small>
+                                </div>
+                            </div>
+                            <div class="form-divider"></div>
+                            <div class="form-group row">
+                                <label for="example-time-input" class="col-sm-3 col-form-label">Hora</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" type="time" name="task_time" required
+                                           data-toggle="tooltip" title="Hora de registro de la tarea"
+                                           value="" id="example-time-input">
+                                    <small class="form-text text-muted">Hora de registro de la tarea</small>
+                                </div>
+                            </div>
+                            <div class="form-divider"></div>
+                            <h6 class="mt-0 header-title">Estimado de tiempo</h6>
+                            <div class="form-group row">
+                                <label for="example-date-input" class="col-sm-3 col-form-label">Fecha</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" type="date" name="estimated_date" required
+                                           data-toggle="tooltip" title="Mes / día / año | Fecha de registro de la tarea"
+                                           value="" id="example-date-input">
+                                    <small class="form-text text-muted">Mes / día / año | Fecha de registro de la tarea</small>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="example-time-input" class="col-sm-3 col-form-label">Hora</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" type="time" name="estimated_time" required
+                                           data-toggle="tooltip" title="Hora de registro de la tarea"
+                                           value="" id="example-time-input">
+                                    <small class="form-text text-muted">Hora de registro de la tarea</small>
+                                </div>
+                            </div>
+                            <div class="form-divider"></div>
+                            <div class="form-group row">
+                                <label for="example-lastname1-input" class="col-sm-3 col-form-label">Comentarios</label>
+                                <div class="col-sm-9">
+                                    <textarea class="form-control" rows="3" name="comments" 
+                                              data-toggle="tooltip" title="Comentarios del administrador"
+                                              placeholder="Comentarios"></textarea>
+                                    <small class="form-text text-muted">Comentarios del administrador</small>
+                                </div>
+                            </div>
+                            <div class="form-divider"></div>
+                            <div class="form-group mb-0 row">
+                                <label class="col-md-3 my-2 control-label">Compartir / Privado</label>
+                                <div class="col-md-9">
+
+                                    <div class="form-check-inline my-2">
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" id="customCheck6"
+                                                   name="share" value="1" data-toggle="tooltip" title="General"
+                                                   data-parsley-multiple="groups" data-parsley-mincheck="2" checked>
+                                            <label class="custom-control-label" for="customCheck6">General</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-check-inline my-2">
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" id="customCheck7" 
+                                                   name="share" value="2" data-toggle="tooltip" title="Administradores"
+                                                   data-parsley-multiple="groups" data-parsley-mincheck="2">
+                                            <label class="custom-control-label" for="customCheck7">Administradores</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-divider"></div>
+                            <div class="form-group mb-0 row">
+                                <label class="col-md-3 my-2 control-label">Status</label>
+                                <div class="col-md-9">
+
+                                    <div class="form-check-inline my-2">
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" name="status" value="1"
+                                                   id="customCheck8" checked="" data-toggle="tooltip" title="Sin comenzar"
+                                                   data-parsley-multiple="groups" data-parsley-mincheck="2">
+                                            <label class="custom-control-label" for="customCheck8">Sin comenzar</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-check-inline my-2">
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" name="status"
+                                                   value="2" id="customCheck9" data-parsley-multiple="groups" 
+                                                   data-toggle="tooltip" title="En proceso"
+                                                   data-parsley-mincheck="4">
+                                            <label class="custom-control-label" for="customCheck9">En proceso</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-check-inline my-2">
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" name="status" value="3"
+                                                   data-toggle="tooltip" title="Completada"
+                                                   id="customCheck10" data-parsley-multiple="groups" data-parsley-mincheck="5">
+                                            <label class="custom-control-label" for="customCheck10">Completada</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-divider"></div>
+                            <a href=""><button type="submit" class="btn btn-primary waves-effect waves-light">Agregar Tarea</button></a>
+                            <a href=""><button type="button" class="btn btn-danger waves-effect waves-light">Cancelar</button></a>
+                        </div>
+                    }
+
+                </div>
+            </div>
+        </div><!-- end row -->
+        <!-- back button -->
+        <div class="row pb-4">
+            <div class="col-md-6">
+                <a href="javascript:history.back()"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+            </div>
+        </div>
+        <!-- end back button -->
+
+    </div><!-- container -->
+
+</div> <!-- Page content Wrapper -->

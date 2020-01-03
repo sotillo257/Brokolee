@@ -1,0 +1,587 @@
+﻿
+@{
+    ViewBag.Title = "agregar";
+    Page.Title = "Agregar Titular - Brokolee Software";
+}
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+<script src="~/Scripts/jquery-3.1.1.min.js"></script>
+
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+
+
+
+<style media="screen">
+    #inputGroupFile04 {
+        max-width: 150px;
+        margin: 0 auto;
+        height: 130px;
+    }
+
+
+    .garritas {
+        max-width: 150px;
+        height: 130px;
+        margin: 0 auto;
+    }
+</style>
+
+<style media="hola">
+    .example-name2-input {
+    background-color: var(--color-bg-btn);
+    color: white;
+    width: 170px;
+    text-align: center;
+    line-height: 22px;
+    }    
+</style>
+
+
+
+<div class="page-content-wrapper">
+
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="page-title-box">
+                    <div class="float-left">
+                        <div class="breadcrumb float-md-right">
+                            <h4 class="page-title">Agregar Titular</h4>
+                        </div>
+                    </div>
+                    <div class="float-right">
+                        <ul class="breadcrumb float-md-right">
+                            <li class="breadcrumb-item"><a href="@Url.Action("panel", "control", new { area = "webmaster" })" class="text-success"><i class="mdi mdi-home-modern"></i> Panel de Control</a></li>
+                            <li class="breadcrumb-item active">Agregar Titular</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end page title end breadcrumb -->
+        <!-- back button -->
+        <div class="row pb-4">
+            <div class="col-md-6">
+                <a href="javascript:history.back()"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+            </div>
+        </div>
+        <!-- end back button -->
+
+        <div class="row">
+
+            <div class="col-12">
+                <div class="card">
+                    @using (Html.BeginForm("newresident", "titulares",
+                        FormMethod.Post, new
+                        {
+                            id = "newresidentForm",
+                            @class = "",
+                            area = "coadmin",
+                            enctype = "multipart/form-data"
+                        }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="card-body">
+                            <h5 class="d-inline-block">Información del Titular</h5>
+
+                            <div class="form-divider"></div>
+                            <div class="form-group row">
+                                <div id="img-fluid" class="col-sm-3">
+                                </div>
+
+                                <div class="col-sm-9">
+                                    <div class="input-group mt-2">
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input" id="inputGroupFile04"
+                                                   data-toggle="tooltip" title="Subir logo en formato jpg o png" name="user_logo" />
+                                            <label class="custom-file-label" for="inputGroupFile04">Selecciona Tu Imagen</label>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <small class="form-text text-muted">Subir logo en formato jpg o png</small>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-divider"></div>
+                            <div class="form-group row">
+                                <label for="example-email-input" class="col-sm-3 col-form-label">Correo electrónico</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" type="email" value="" name="email"
+                                           data-toggle="tooltip" title="Base utilizada para identificar las unidades suscritas de varias comunidades adscritas."
+                                           placeholder="Correo electrónico del titular" id="example-email-input">
+                                    <small class="form-text text-muted">Base utilizada para identificar las unidades suscritas de varias comunidades adscritas.</small>
+                                </div>
+                            </div>
+                            <div class="form-divider"></div>
+                            <div class="form-group row">
+                                <label for="example-password-input" class="col-sm-3 col-form-label">Contraseña</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" type="password" value="" name="password"
+                                           data-toggle="tooltip" title="Contraseña utilizada para ingresar al sistema"
+                                           placeholder="Contraseña" id="example-password-input">
+                                    <small class="form-text text-muted">Contraseña utilizada para ingresar al sistema</small>
+                                </div>
+                            </div>
+                            <div class="form-divider"></div>
+                            <div class="form-group row">
+                                <label label="example-date-input" class="col-sm-3 col-form-label">Fecha de adquisición</label>
+                                <div class="col-sm-9">
+
+                                    <input name="acq_date"
+                                           id="fecha1" />
+                                    <small class="form-text text-muted">Mes / día / año</small>
+                                </div>
+                            </div>
+                            <div class="form-divider"></div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">Comunidad</label>
+                                <div class="col-sm-9">
+                                    <select class="form-control" name="communityID"
+                                            data-toggle="tooltip" title="Nombre de la Comunidad">
+                                        @foreach (var item in Model.communityList)
+                                        {
+                                            <option value="@item.id">@item.first_name</option>
+                                        }
+                                    </select>
+                                    <small class="form-text text-muted">Lista de Comunidades</small>
+                                </div>
+                            </div>
+
+
+
+
+                            <div class="form-divider"></div>
+                            <h6 class="mt-0 header-title">Nombre completo del Titular</h6>
+                            <p>Nombre del titular según aparece en la escritura de compraventa.</p>
+                            <div class="form-group row">
+                                <label for="example-name22-input" class="col-sm-3 col-form-label">Nombre</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" type="text" value="" name="first_name1"
+                                           data-toggle="tooltip" title="Nombre del Titular"
+                                           placeholder="Nombre" id="example-name22-input" />
+                                    <small class="form-text text-muted">Nombre del Titular</small>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="example-lastname2-input" class="col-sm-3 col-form-label">Apellido paterno</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" type="text" value="" name="last_name1"
+                                           data-toggle="tooltip" title="Apellido paterno del Titular"
+                                           placeholder="Apellido paterno" id="example-lastname22-input">
+                                    <small class="form-text text-muted">Apellido paterno del Titular</small>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="example-lastname22m-input" class="col-sm-3 col-form-label">Apellido materno</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" type="text" value="" name="mother_last_name1"
+                                           data-toggle="tooltip" title="Apellido materno del Titular"
+                                           placeholder="Apellido materno" id="example-lastname22m-input">
+                                    <small class="form-text text-muted">Apellido materno del Titular</small>
+                                </div>
+                            </div>
+                            <div class="form-divider"></div>
+                            <div class="form-group row">
+                                <label for="example-tel1-input" class="col-sm-3 col-form-label">Número de Teléfono</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" type="tel" value="" name="phone_number1"
+                                           data-toggle="tooltip" title="Número de teléfono del Titular"
+                                           placeholder="# Teléfono" id="example-tel1-input">
+                                    <small class="form-text text-muted">Número de teléfono del Titular</small>
+                                </div>
+                            </div>
+                            <div class="form-divider"></div>
+                            <div class="form-group row">
+                                <label for="example-address11-input" class="col-sm-3 col-form-label">Dirección Postal</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" type="text" value="" name="postal_address"
+                                           data-toggle="tooltip" title="Dirección postal del Titular"
+                                           placeholder="Dirección Postal" id="example-address11-input">
+                                    <small class="form-text text-muted">Dirección postal del Titular</small>
+                                </div>
+                            </div>
+                            <div class="form-divider"></div>
+                            <div class="form-group row">
+                                <label for="example-address2-inputt" class="col-sm-3 col-form-label">Dirección Residencial</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" type="text" value="" name="residential_address"
+                                           data-toggle="tooltip" title="Dirección residencial del Titular"
+                                           placeholder="Dirección Residencial" id="example-address2-inputt">
+                                    <small class="form-text text-muted">Dirección residencial del Titular-G1</small>
+                                </div>
+                            </div>
+                            <div class="form-divider"></div>
+                            <div class="form-group row">
+                                <label for="apartment-input" class="col-sm-3 col-form-label">Apartamento</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" type="text" value="" name="apartment"
+                                           data-toggle="tooltip" title="Apartamento del Titular"
+                                           placeholder="Apartamento" id="apartment-input">
+                                    <small class="form-text text-muted">Apartamento del Titular</small>
+                                </div>
+                            </div>
+                            <div class="form-divider"></div>
+                            <h6 class="mt-0 header-title">Escritura</h6>
+                            <p>Escritura de compra-venta.</p>
+                            <div class="form-group row">
+                                <label for="example-name2-input" class="col-sm-3 col-form-label">Subir Escritura</label>
+                                <div class="col-sm-9">
+                                    <div class="input-group mt-2">
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input" id="input-arch" name="writing_script" />
+                                            <label id="garras" class="custom-file-label" for="input-arch">Seleccionar archivo</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-divider"></div>
+                            <div class="form-group row">
+                                <label for="example-address1-input" class="col-sm-3 col-form-label">¿Está la propiedad arrendada?</label>
+                                <div class="col-sm-9">
+                                    <div class="form-check-inline my-2">
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" name="siono"
+                                                   data-parsley-multiple="groups" data-parsley-mincheck="2"
+                                                   data-toggle="tooltip" title="Si"
+                                                   id="customCheck6" value="boxyes">
+                                            <label class="custom-control-label" for="customCheck6">Si</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-check-inline my-2">
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" id="customCheck7"
+                                                   data-parsley-multiple="groups" data-parsley-mincheck="2"
+                                                   data-toggle="tooltip" title="No" checked
+                                                   class="custom-control-input" name="siono" value="boxno">
+                                            <label class="custom-control-label" for="customCheck7">No</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- View -->
+                            <div class="boxyes box">
+                                <div class="form-divider"></div>
+                                <h6 class="mt-0 header-title">Periodo de arrendamiento</h6>
+
+
+                                <div class="form-group row">
+                                    <label for="example-date-input" class="col-sm-3 col-form-label">Desde</label>
+                                    <div class="col-sm-9">
+                                        <input name="fecha2"
+                                               id="fecha2">
+                                        <small class="form-text text-muted">Mes / día / año</small>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="example-date-input" class="col-sm-3 col-form-label">Hasta</label>
+                                    <div class="col-sm-9">
+                                        <input name="fecha3"
+                                               id="fecha3">
+                                        <small class="form-text text-muted">Mes / día / año</small>
+                                    </div>
+                                </div>
+                                <div class="form-divider"></div>
+                                <h5 class="d-inline-block">Información del Arrendatario</h5>
+                                <div class="form-divider"></div>
+                                <h6 class="mt-0 header-title">Nombre completo del Arrendatario</h6>
+                                <p>Nombre del segundo arrendatario según aparece en contrato de arrendamiento.</p>
+                                <div class="form-group row">
+                                    <label for="example-name2-input" class="col-sm-3 col-form-label">Nombre</label>
+                                    <div class="col-sm-9">
+                                        <input class="form-control" type="text" value="" name="tenant_first_name1"
+                                               data-toggle="tooltip" title="Nombre del Arrendatario"
+                                               placeholder="Nombre" id="example-name2-input">
+                                        <small class="form-text text-muted">Nombre del Arrendatario</small>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="example-lastname2-input" class="col-sm-3 col-form-label">Apellido paterno</label>
+                                    <div class="col-sm-9">
+                                        <input class="form-control" type="text" value="" name="tenant_last_name1"
+                                               data-toggle="tooltip" title="Apellido paterno del Arrendatario"
+                                               placeholder="Apellido paterno" id="example-lastname2-input">
+                                        <small class="form-text text-muted">Apellido paterno del Arrendatario</small>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="example-lastname2m-input" class="col-sm-3 col-form-label">Apellido materno</label>
+                                    <div class="col-sm-9">
+                                        <input class="form-control" type="text" value="" name="tenant_last_name2" placeholder="Apellido materno"
+                                               data-toggle="tooltip" title="Apellido materno del Arrendatario"
+                                               id="example-lastname2m-input">
+                                        <small class="form-text text-muted">Apellido materno del Arrendatario</small>
+                                    </div>
+                                </div>
+                                <div class="form-divider"></div>
+                                <div class="form-group row">
+                                    <label for="example-address1-input" class="col-sm-3 col-form-label">Dirección Postal</label>
+                                    <div class="col-sm-9">
+                                        <input class="form-control" type="text" value="" name="tenant_mother_last_name1"
+                                               data-toggle="tooltip" title="Dirección postal del Arrendatario"
+                                               placeholder="Dirección Postal" id="example-address1-input">
+                                        <small class="form-text text-muted">Dirección postal del Arrendatario</small>
+                                    </div>
+                                </div>
+
+
+
+                                <div class="form-divider"></div>
+                                <div class="form-group row">
+                                    <label for="example-address2-input" class="col-sm-3 col-form-label">Dirección Residencial</label>
+                                    <div class="col-sm-9">
+                                        <input class="form-control" type="text" value="" placeholder="Dirección Residencial"
+                                               data-toggle="tooltip" title="Dirección residencial del Arrendatario"
+                                               id="example-address2-input">
+                                        <small class="form-text text-muted">Dirección residencial del Arrendatario-G2</small>
+                                    </div>
+                                </div>
+                                <div class="form-divider"></div>
+                                <h6 class="mt-0 header-title">Contrato</h6>
+                                <p>Contrato de arrendamiento.</p>
+                                <div class="form-group row">
+                                    <label for="example-name2-input" class="col-sm-3 col-form-label">Subir archivo</label>
+                                    <div class="col-sm-9">
+                                        <div class="input-group mt-2">
+                                            <div class="custom-file">
+                                                <input type="file" class="custom-file-input" id="input-arch-contra" name="contra_script" />
+                                                <label id="garras" class="custom-file-label" for="input-arch">Seleccionar archivo</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-divider"></div>
+                            </div>
+                            <!-- End View -->
+                            <div class="row form-material">
+                                <div class="col-md-12">
+                                    <h5 class="d-inline-block">Vehículos autorizados</h5>
+                                    <a href="#" class="text-bold"><button type="button" class="btn btn-primary waves-effect waves-light btn-sm"><i class="mdi mdi-plus"></i></button></a>
+                                </div>
+
+                            </div>
+
+                            <div class="form-divider"></div>
+                            <div class="form-group row">
+                                <label for="example-brand-input" class="col-sm-3 col-form-label">Marca</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" type="text" value="" name="brand"
+                                           data-toggle="tooltip" title="Marca del vehículo"
+                                           placeholder="Marca" id="example-brand-input">
+                                    <small class="form-text text-muted">Marca del vehículo</small>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="example-model-input" class="col-sm-3 col-form-label">Modelo</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" type="text" value="" placeholder="Modelo"
+                                           id="example-model-input" data-toggle="tooltip" title="Modelo del vehículo">
+                                    <small class="form-text text-muted">Modelo del vehículo</small>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="example-color-input" class="col-sm-3 col-form-label">Color</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" type="text" value="" name="colour"
+                                           data-toggle="tooltip" title="Color del vehículo"
+                                           placeholder="Color" id="example-color-input">
+                                    <small class="form-text text-muted">Color del vehículo</small>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="example-year-input" class="col-sm-3 col-form-label">Año</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" type="number" value=""
+                                           data-toggle="tooltip" title="Año del vehículo"
+                                           placeholder="Año" id="example-year-input">
+                                    <small class="form-text text-muted">Año del vehículo</small>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="example-cartable-input" class="col-sm-3 col-form-label">Tablilla</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" type="text" value="" name="clapboard"
+                                           data-toggle="tooltip" title="Tablilla del vehículo"
+                                           placeholder="Tablilla" id="example-cartable-input">
+                                    <small class="form-text text-muted">Tablilla del vehículo</small>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="example-numbercar-input" class="col-sm-3 col-form-label">Número de sello</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" type="text" value="" name="stamp_number"
+                                           data-toggle="tooltip" title="Número de sello del vehículo"
+                                           placeholder="Número de sello" id="example-numbercar-input">
+                                    <small class="form-text text-muted">Número de sello del vehículo</small>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary waves-effect waves-light" onclick=" GuardarTitular()">Guardar</button>
+                        </div>
+                    }
+                    </div>
+            </div>
+        </div>
+        <!-- end row -->
+        <!-- back button -->
+        <div class="row pb-4">
+            <div class="col-md-6">
+                <a href="javascript:history.back()"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+            </div>
+        </div>
+        <!-- end back button -->
+
+    </div><!-- container -->
+
+</div> <!-- Page content Wrapper -->
+
+
+<script type="text/javascript">
+
+    (function () {
+
+        function filePreview(input) {
+            if (input.files && input.files[0]) {
+
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+
+
+                    $('#img-fluid').html("<img class='garritas' src='" + e.target.result + "'/>");
+
+                }
+
+                reader.readAsDataURL(input.files[0]);
+
+            }
+
+        }
+        $('#inputGroupFile04').change(function () {
+
+            filePreview(this);
+        });
+
+    })();
+
+</script>
+
+
+<script type="text/javascript">
+    $.datepicker.regional['es'] = {
+        closeText: 'Cerrar',
+        prevText: '< Ant',
+        nextText: 'Sig >',
+        currentText: 'Hoy',
+        monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+        dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá'],
+        weekHeader: 'Sm',
+        dateFormat: 'mm/dd/yy',
+        firstDay: 1,
+        isRTL: false,
+        showMonthAfterYear: false,
+        yearSuffix: ''
+    };
+    $.datepicker.setDefaults($.datepicker.regional['es']);
+
+    $('#fecha1').datepicker({
+        dateFormat: 'mm/dd/yy',
+        changeMonth: true,
+        changeYear: true
+
+    });
+
+</script>
+
+
+<script type="text/javascript">
+    $.datepicker.regional['es'] = {
+        closeText: 'Cerrar',
+        prevText: '< Ant',
+        nextText: 'Sig >',
+        currentText: 'Hoy',
+        monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+        dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá'],
+        weekHeader: 'Sm',
+        dateFormat: 'mm/dd/yy',
+        firstDay: 1,
+        isRTL: false,
+        showMonthAfterYear: false,
+        yearSuffix: ''
+    };
+    $.datepicker.setDefaults($.datepicker.regional['es']);
+
+    $('#fecha2').datepicker({
+    dateFormat: 'mm/dd/yy',
+        changeMonth: true,
+        changeYear: true
+
+    });
+
+</script>
+
+
+<script type="text/javascript">
+    $.datepicker.regional['es'] = {
+        closeText: 'Cerrar',
+        prevText: '< Ant',
+        nextText: 'Sig >',
+        currentText: 'Hoy',
+        monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+        dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá'],
+        weekHeader: 'Sm',
+        dateFormat: 'dd/mm/yy',
+        firstDay: 1,
+        isRTL: false,
+        showMonthAfterYear: false,
+        yearSuffix: ''
+    };
+    $.datepicker.setDefaults($.datepicker.regional['es']);
+
+    $('#fecha3').datepicker({
+    dateFormat: 'mm/dd/yy',
+        changeMonth: true,
+        changeYear: true
+
+    });
+
+</script>
+
+
+
+<script type="text/javascript">
+  
+    (function () {
+
+     $('#input-arch').change(function () {
+
+          // $('#garras').prev().text($(this)[0].files[0].name);
+         //nombre del archivo cargado=$(this)[0].files[0].name
+         $('#garras').html($(this)[0].files[0].name);
+     });
+        function GuardarTitular() {
+            var compania = new Array();
+            var formData = new FormData();
+
+            if ($("#inputGroupFile04")[0].files.length > 0) {
+            formData.append('logo', $("#inputGroupFile04")[0].files[0], "lp");
+            }
+            if ($("#input-arch")[0].files.length > 0) {
+            formData.append('Escritura', $("#input-arch")[0].files[0], "lp");
+            }
+            if ($("#input-arch-contra")[0].files.length > 0) {
+            formData.append('Contrato', $("#input-arch-contra")[0].files[0], "lp");
+            }
+
+            console.log(formData);
+
+        }
+     
+         })();
+</script>

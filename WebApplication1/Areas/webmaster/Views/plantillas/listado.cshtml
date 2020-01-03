@@ -1,0 +1,157 @@
+﻿
+@{
+    ViewBag.Title = "listado";
+    Page.Title = "Plantillas de Email - Brokolee Software";
+}
+
+<div class="page-content-wrapper">
+
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="page-title-box">
+                    <div class="float-left">
+                        <div class="breadcrumb float-md-right">
+                            <h4 class="page-title">Plantillas de Email</h4>
+                        </div>
+                    </div>
+                    <div class="float-right">
+                        <ul class="breadcrumb float-md-right">
+                            <li class="breadcrumb-item"><a href="@Url.Action("panel", "control", new { area = "webmaster"  })" class="text-success"><i class="mdi mdi-home-modern"></i> Panel de Control</a></li>
+                            <li class="breadcrumb-item active">Plantillas de Email</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end page title end breadcrumb -->
+        <!-- back button -->
+        <div class="row pb-4">
+            <div class="col-md-6">
+                <a href="javascript:history.back()"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+            </div>
+        </div>
+        <!-- end back button -->
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <!-- Nav tabs -->
+                        @if (Model.list.Count > 0)
+                        {
+                            <ul class="nav nav-pills nav-justified" role="tablist">
+                                @for (int i = 0; i < Model.list.Count; i++)
+                                {
+                                    if (i == 0)
+                                    {
+                                        <li class="nav-item waves-effect waves-light">
+                                            <a class="nav-link active" data-toggle="tab" href="#plantilla-@Model.list[i].ID" data-id="@Model.list[i].ID" role="tab">@Model.list[i].TypeName</a>
+                                        </li>
+                                    }
+                                    else
+                                    {
+                                        <li class="nav-item waves-effect waves-light">
+                                            <a class="nav-link" data-toggle="tab" href="#plantilla-@Model.list[i].ID" data-id="@Model.list[i].ID" role="tab">@Model.list[i].TypeName</a>
+                                        </li>
+                                    }
+
+                                }
+                            </ul>
+                        }
+                        else
+                        {
+                            <p>No hay plantilla de correo electrónico.</p>
+                        }
+
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                            @for (int i = 0; i < Model.list.Count; i++)
+                            {
+                                if (i == 0)
+                                {
+                                    <div class="tab-pane  p-3 active" id="plantilla-@Model.list[i].ID" role="tabpanel">
+                                        @using (Html.BeginForm("EditEmailTheme", "plantillas",
+                                          FormMethod.Post,
+                                          new
+                                          {
+                                              @class = "",
+                                              area = "webmaster",
+                                              enctype = "multipart/form-data"
+                                          }))
+                                        {
+                                            @Html.AntiForgeryToken()
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <div class="form-group">
+                                                            <textarea name="content" rows="15" id="content-@Model.list[i].ID" class="tinymce">@Model.list[i].Content</textarea>
+                                                        </div>
+                                                        <input name="editID" type="hidden" value="@Model.list[i].ID" />
+                                                        <div id="summernote" class="mb-2">@Model.list[i].TypeName</div>
+                                                        <div class="form-group mb-0">
+                                                            <div class="my-3">
+                                                                <button class="btn btn-primary" onclick="onEditEmailTheme(this)" data-id="@Model.list[i].ID"> <span>Guardar</span></button>
+                                                                @*<a href=""><button type="button" class="btn btn-danger waves-effect waves-light">Cancelar</button></a>*@
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="tab-pane  p-3" id="plantilla-@Model.list[i].ID" role="tabpanel">
+                                        @using (Html.BeginForm("EditEmailTheme", "plantillas",
+                                          FormMethod.Post,
+                                          new
+                                          {
+                                              @class = "",
+                                              area = "webmaster",
+                                              enctype = "multipart/form-data"
+                                          }))
+                                        {
+                                            @Html.AntiForgeryToken()
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <div class="form-group">
+                                                            <textarea name="content" rows="15" id="content-@Model.list[i].ID" class="tinymce">@Model.list[i].Content</textarea>
+                                                        </div>
+                                                        <input name="editID" type="hidden" value="@Model.list[i].ID" />
+                                                        <div id="summernote" class="mb-2">@Model.list[i].TypeName</div>
+                                                        <div class="form-group mb-0">
+                                                            <div class="my-3">
+                                                                <button class="btn btn-primary" type="submit" data-id="@Model.list[i].ID"> <span>Guardar</span></button>
+                                                                @*<a href=""><button type="button" class="btn btn-danger waves-effect waves-light">Cancelar</button></a>*@
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                }
+
+                            }
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- end row -->
+        <!-- back button -->
+        <div class="row pb-4">
+            <div class="col-md-6">
+                <a href="javascript:history.back()"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+            </div>
+        </div>
+        <!-- end back button -->
+
+    </div><!-- container -->
+
+</div> <!-- Page content Wrapper -->

@@ -1,0 +1,123 @@
+﻿
+@{
+    ViewBag.Title = "listado";
+    Page.Title = "Listado de Tareas - Brokolee Software";
+}
+
+<div class="page-content-wrapper">
+
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="page-title-box">
+                    <div class="float-left">
+                        <div class="breadcrumb float-md-right">
+                            <h4 class="page-title">Listado de Tareas</h4>
+                        </div>
+                    </div>
+                    <div class="float-right">
+                        <ul class="breadcrumb float-md-right">
+                            <li class="breadcrumb-item"><a href="@Url.Action("panel", "control")" class="text-success"><i class="mdi mdi-home-modern"></i> Panel de Control</a></li>
+                            <li class="breadcrumb-item active">Listado de Tareas</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end page title end breadcrumb -->
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card m-b-30">
+                    <div class="card-body">
+                        <div class="input-group">
+                            <input type="text" id="search-input" name="searchStr" class="form-control" value="@Model.searchStr"
+                                   placeholder="Introduzca palabra clave">
+                            <span class="input-group-append">
+                                <button type="button" id="search-button" class="btn btn-effect-ripple btn-primary"><i class="fas fa-search"></i> Buscar </button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!--end row-->
+        <!-- back button -->
+        <div class="row pb-4">
+            <div class="col-md-6">
+                <a href="javascript:history.back()"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+            </div>
+        </div>
+        <!-- end back button -->
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card m-b-30">
+                    <div class="card-body">
+                        <div class="row form-material">
+                            <div class="col-md-6 mb-1">
+                                <h5 class="d-inline-block">Listado</h5>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table id="dataTable-listado-tareas" class="table table-striped table-bordered normal" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                <thead>
+                                    <tr>
+                                        <th class="f-b">Nombre de Tarea</th>
+                                        <th class="f-b">Responsable</th>
+                                        <th class="f-b">Fecha</th>
+                                        <th class="f-b">Fecha Estimada</th>
+                                        <th class="f-b">Status</th>
+                                        <th class="text-center f-b">Ver</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.taskList)
+                                    {
+                                    <tr>
+                                        <td>@item.task_name</td>
+                                        <td>@item.responsable</td>
+                                        <td class="text-center">@Convert.ToDateTime(item.task_date).ToString("MM/dd/yyyy")</td>
+                                        @if (item.estimated_date != null)
+                                        {
+                                            <td class="text-center">@Convert.ToDateTime(item.estimated_date).ToString("MM/dd/yyyy | hh:mm")</td>
+                                        } else
+                                        {
+                                            <td></td>
+                                        }
+
+                                            <td class="text-center">
+                                                @if (item.status == 3)
+                                                {
+                                                    <button type="button" class="btn btn-dark waves-effect waves-light btn-sm">Terminada</button>
+                                                }
+                                                else if (item.status == 2)
+                                                {
+                                                    <button type="button" class="btn btn-primary waves-effect waves-light btn-sm">En Proceso</button>
+                                                }
+                                                else
+                                                {
+                                                    <button type="button" class="btn btn-warning waves-effect waves-light btn-sm">Sin comenzar</button>
+                                                }
+
+                                            </td>
+                                        <td class="text-center"><a href="@Url.Action("vertarea", "tareas", new { id=item.id })"><button type="button" class="btn btn-success waves-effect waves-light btn-sm mr-1 mb-1" data-toggle="tooltip" data-placement="top" title="Ver"><i class="mdi mdi-eye"></i></button></a></td>
+                                    </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- end row -->
+        <!-- back button -->
+        <div class="row pb-4">
+            <div class="col-md-6">
+                <a href="javascript:history.back()"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+            </div>
+        </div>
+        <!-- end back button -->
+
+    </div><!-- container -->
+
+</div> <!-- Page content Wrapper -->

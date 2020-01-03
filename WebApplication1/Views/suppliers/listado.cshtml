@@ -1,0 +1,270 @@
+﻿
+@{
+    ViewBag.Title = "listado";
+    Page.Title = "Directorio de Suplidores - Brokolee Software";
+}
+
+<div class="page-content-wrapper">
+
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="page-title-box">
+                    <div class="float-left">
+                        <div class="breadcrumb float-md-right">
+                            <h4 class="page-title">Directorio de Suplidores</h4>
+                        </div>
+                    </div>
+                    <div class="float-right">
+                        <ul class="breadcrumb float-md-right">
+                            <li class="breadcrumb-item"><a href="@Url.Action("panel", "control")" class="text-success"><i class="mdi mdi-home-modern"></i> Panel de Control</a></li>
+                            <li class="breadcrumb-item active">Directorio de Suplidores</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end page title end breadcrumb -->
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card m-b-30">
+                    <div class="card-body">
+                        <div class="row form-material">
+                            @using (Html.BeginForm("SeacrhResult", "suppliers", FormMethod.Post,
+                               new
+                               {
+                                   id = "searchSupplierForm",
+                                   @class = "search-form",
+                                   enctype = "multipart/form-data"
+                               }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <div class="input-group col-md-6 mb-2">
+                                    <input type="text" id="example-input1-group2" name="searchStr" value="@Model.searchStr"
+                                           class="form-control" placeholder="Escribe palabra clave para la búsqueda">
+                                    <span class="input-group-append">
+                                        <button type="submit" class="btn btn-effect-ripple btn-primary"><i class="fas fa-search"></i> Buscar </button>
+                                    </span>
+                                </div>
+                                <div class="input-group col-md-6">
+                                    <label class="col-sm-6 col-md-4 col-form-label">Buscar por Categoría</label>
+                                    <div class="col-sm-6 col-md-8">
+                                        <select class="form-control" name="searchCategoryId"
+                                                id="id-search-category"
+                                                onchange="onSearchSupplierCategory()">
+                                            <option value="0">Elije una categoría</option>
+                                            @foreach (var item in Model.categoryList)
+                                            {
+                                                if (Model.searchCategoryId == item.Id)
+                                                {
+                                                    <option value="@item.Id" selected>@item.name</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@item.Id">@item.name</option>
+                                                }
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!--end row-->
+        <!-- back button -->
+        <div class="row pb-4">
+            <div class="col-md-6">
+                <a href="javascript:history.back()"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+            </div>
+        </div>
+        <!-- end back button -->
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card m-b-30">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="dataTable-directorio-suplidores" class="table table-striped table-bordered normal" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                <thead>
+                                    <tr>
+                                        <th>Logo</th>
+                                        <th>Suplidor</th>
+                                        <th>Municipio</th>
+                                        <th>Categoría</th>
+                                        <th>Descripción Breve</th>
+                                        <th>Valoración</th>
+                                        <th>Comentarios</th>
+                                        <th class="text-center">Ver</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.supplierList)
+                                    {
+                                        <tr>
+                                            <td class="text-center">
+                                                @if (item.logo != null)
+                                                {
+                                                    <img src="~/Upload/Supplier_Logo/@item.logo" alt="user-img" class="img-fluid" />
+                                                }
+                                                else
+                                                {
+                                                    <img src="~/assets/images/suplidores/logo-suplidor.jpg" alt="user-img" class="img-fluid" />
+                                                }
+
+                                            </td>
+                                            <td>@item.contact_name</td>
+                                            <td>@item.address</td>
+                                            <td>@Model.categoryDict[item.id]</td>
+                                            <td>@item.description</td>
+                                            <td class="text-center">
+                                                @switch (item.assessment)
+                                                {
+                                                    case 1:
+                                                        <i class="mdi mdi-star text-warning"></i>
+                                                        break;
+                                                    case 2:
+                                                        <i class="mdi mdi-star text-warning"></i>
+                                                        <i class="mdi mdi-star text-warning"></i>
+                                                        break;
+                                                    case 3:
+                                                        <i class="mdi mdi-star text-warning"></i>
+                                                        <i class="mdi mdi-star text-warning"></i>
+                                                        <i class="mdi mdi-star text-warning"></i>
+                                                        break;
+                                                    case 4:
+                                                        <i class="mdi mdi-star text-warning"></i>
+                                                        <i class="mdi mdi-star text-warning"></i>
+                                                        <i class="mdi mdi-star text-warning"></i>
+                                                        <i class="mdi mdi-star text-warning"></i>
+                                                        break;
+                                                    case 5:
+                                                        <i class="mdi mdi-star text-warning"></i>
+                                                        <i class="mdi mdi-star text-warning"></i>
+                                                        <i class="mdi mdi-star text-warning"></i>
+                                                        <i class="mdi mdi-star text-warning"></i>
+                                                        <i class="mdi mdi-star text-warning"></i>
+                                                        break;
+                                                    default:
+                                                        <i>No Rated</i>
+                                                        break;
+
+                                                }
+                                            </td>
+                                            <td>
+                                                
+                                                <button type="button" class="btn btn-warning waves-effect waves-light btn-sm mr-1 mb-1" 
+                                                        onclick="onOpenRatingModal(this)" data-id="@item.id"
+                                                        data-toggle="modal" data-target="#ModalValorar">
+                                                    Valorar
+                                                </button>
+                                                
+                                                
+                                                <button type="button" class="btn btn-success waves-effect waves-light btn-sm mr-1 mb-1"
+                                                        onclick="onOpenCommentModal(this)" data-id="@item.id"
+                                                        data-toggle="modal" data-target="#ModalComentar">
+                                                    Comentar
+                                                </button>
+                                                
+                                                <a href="@Url.Action("versuplidor", "suppliers", new { supplier_id  =item.id })">
+                                                    <button type="button" class="btn btn-info waves-effect waves-light btn-sm mb-1">Ver comentarios</button>
+                                                </a>
+                                            </td>
+                                            <td class="text-center"><a href="@Url.Action("versuplidor", "suppliers", new { supplier_id = item.id })"><button type="button" class="btn btn-success waves-effect waves-light btn-sm mr-1 mb-1" data-toggle="tooltip" data-placement="top" title="Ver suplidor"><i class="mdi mdi-eye"></i></button></a></td>
+                                            <!-- Modal Valorar -->
+                                            <div class="modal fade" id="ModalValorar" tabindex="-1" role="dialog" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLongTitle2">Valorar el servicio de <span class="text-primary">John Doe</span></h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true" class="text-dark">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <p class="font-20"><input type="radio" name="rating" value="1"/><i class="mdi mdi-star text-warning"></i><b> Muy malo</b></p>
+                                                            <p class="font-20"><input type="radio" name="rating" value="2"/><i class="mdi mdi-star text-warning"></i><i class="mdi mdi-star text-warning"></i><b> Malo</b></p>
+                                                            <p class="font-20"><input type="radio" name="rating" value="3"/><i class="mdi mdi-star text-warning"></i><i class="mdi mdi-star text-warning"></i><i class="mdi mdi-star text-warning"></i><b> Regular</b></p>
+                                                            <p class="font-20"><input type="radio" name="rating" value="4"/><i class="mdi mdi-star text-warning"></i><i class="mdi mdi-star text-warning"></i><i class="mdi mdi-star text-warning"></i><i class="mdi mdi-star text-warning"></i><b> Bueno</b></p>
+                                                            <p class="font-20"><input type="radio" name="rating" value="5"/><i class="mdi mdi-star text-warning"></i><i class="mdi mdi-star text-warning"></i><i class="mdi mdi-star text-warning"></i><i class="mdi mdi-star text-warning"></i><i class="mdi mdi-star text-warning"></i><b> Muy bueno</b></p>
+                                                        </div>
+                                                        <input type="hidden" id="id_select_rate" />
+                                                        <input type="hidden" id="id_rating_supplier_id"/>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-primary" onclick="onSetRateSupplier()">Guardar</button>
+                                                            <button type="button" class="btn btn-danger ml-2" data-dismiss="modal">Cerrar</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- End Modal Valorar -->
+                                            <!-- Modal Comentar -->
+                                            <div class="modal fade" id="ModalComentar" tabindex="-1" role="dialog" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLongTitle2">Comentar el servicio de <span class="text-primary">@Convert.ToString(Session["USER_NAME"])</span></h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true" class="text-dark">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <div class="col-md-12">
+                                                                <div class="input-group">
+                                                                    <textarea class="form-control" id="id_supplier_comment" aria-label="With textarea" placeholder="Escribe tu comentario"></textarea>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <input type="hidden" id="id_comment_supplier_id"/>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-primary" onclick="onSetCommentSupplier()">Guardar</button>
+                                                            <button type="button" class="btn btn-danger ml-2" data-dismiss="modal">Cerrar</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- End Modal Valorar -->
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- end row -->
+        <!-- back button -->
+        <div class="row pb-4">
+            <div class="col-md-6">
+                <a href="javascript:history.back()"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+            </div>
+        </div>
+        <!-- end back button -->
+        <div class="modal fade" id="ModalResult" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle2">Comentar el servicio de <span class="text-primary">John Doe</span></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true" class="text-dark">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="col-md-12">
+                            <div class="input-group">
+                                <p id="id_p_result"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary">Guardar</button>
+                        <button type="button" class="btn btn-danger ml-2" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!-- container -->
+
+</div> <!-- Page content Wrapper -->

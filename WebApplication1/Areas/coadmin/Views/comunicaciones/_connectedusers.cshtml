@@ -1,0 +1,27 @@
+﻿@foreach (var item in Model.onlineUserList)
+{
+    <div class="m-t-20">
+        <a class="arrow-none waves-effect waves-light nav-user-soporte" href="#"
+           onclick="onSelectChatUser(this)" data-id="@item.user_id">
+            @if (item.user_img == null)
+            {
+                <img src="~/assets/images/user.svg" alt="user" class="rounded-circle">
+            }
+            else
+            {
+                <img src="~/Upload/User_Logo/@item.user_img" alt="user" class="rounded-circle">
+            }
+
+            @if (item.is_online == true)
+            {
+                <i class="mdi mdi-checkbox-blank-circle text-primary" id="connect-user-status-@item.user_id"></i>
+            }
+            else
+            {
+                <i class="mdi mdi-checkbox-blank-circle text-grey" id="connect-user-status-@item.user_id"></i>
+            }
+
+            <strong>@item.first_name @item.last_name</strong>
+        </a>
+    </div>
+}

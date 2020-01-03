@@ -1,0 +1,45 @@
+﻿
+@{
+    ViewBag.Title = "_chatbox";
+}
+
+@if (Model.chatmessageList != null)
+{
+    foreach (var item in Model.chatmessageList)
+    {
+        if (item.from_user_id == Model.curUser.id)
+        {
+            if (item.is_email == true)
+            {
+    <div class="message-div cur-user-div" data-id="@item.id">
+        <span class="cur-user-span">@Model.curUser.first_name1 @Model.curUser.last_name1:</span>
+        <a href="~/Upload/Upload_Send/@item.message">@item.message</a>
+    </div>
+            }
+            else
+            {
+<div class="message-div cur-user-div" data-id="@item.id">
+    <span class="cur-user-span">@Model.curUser.first_name1 @Model.curUser.last_name1:</span>
+    <a href="~/Upload/Upload_Send/@item.message">@item.message</a>
+</div>
+            }
+        }
+        else
+        {
+            if (item.is_email == true)
+            {
+<div class="message-div sel-user-div" data-id="@item.user_id">
+    <span class="sel-user-span">@Model.selUser.first_name @Model.selUser.last_name:</span>
+    <span>@item.message</span>
+</div>
+            }
+            else
+            {
+<div class="message-div cur-user-div" data-id="@item.id">
+    <span class="cur-user-span">@Model.curUser.first_name1 @Model.curUser.last_name1:</span>
+    <a href="~/Upload/Upload_Send/@item.message">@item.message</a>
+</div>
+            }
+        }
+    }
+}

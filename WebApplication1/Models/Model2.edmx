@@ -1,0 +1,2692 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="pjrdev_condominiosModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="bank">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="account_name" Type="varchar" MaxLength="255" />
+          <Property Name="account_number" Type="varchar" MaxLength="255" />
+          <Property Name="bank_name" Type="varchar" MaxLength="255" />
+          <Property Name="route_number" Type="varchar" MaxLength="255" />
+          <Property Name="user_id" Type="bigint" />
+          <Property Name="created_at" Type="datetime" />
+          <Property Name="updated_at" Type="datetime" />
+        </EntityType>
+        <EntityType Name="blog">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="title" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="content" Type="text" />
+          <Property Name="author" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="blogdate" Type="datetime" Nullable="false" />
+          <Property Name="user_id" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="blogcomment">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="comment" Type="text" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="postdate" Type="datetime" Nullable="false" />
+          <Property Name="blog_id" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="book">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="first_name" Type="varchar" MaxLength="255" />
+          <Property Name="description" Type="text" />
+          <Property Name="start_time" Type="time" Precision="7" />
+          <Property Name="end_time" Type="time" Precision="7" />
+          <Property Name="requested_date" Type="datetime" />
+          <Property Name="cost_per_reservation" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="created_at" Type="datetime" />
+        </EntityType>
+        <EntityType Name="carpentry">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="255" />
+          <Property Name="created_at" Type="datetime" />
+          <Property Name="comment" Type="text" />
+          <Property Name="task_id" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="category">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="chatmessage">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="from_user_id" Type="bigint" Nullable="false" />
+          <Property Name="to_user_id" Type="bigint" Nullable="false" />
+          <Property Name="message" Type="text" Nullable="false" />
+          <Property Name="status" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="created_at" Type="datetime" Nullable="false" />
+          <Property Name="updated_at" Type="datetime" Nullable="false" />
+          <Property Name="viewed_at" Type="datetime" Nullable="false" />
+          <Property Name="is_active" Type="bit" Nullable="false" />
+          <Property Name="is_read" Type="bit" />
+          <Property Name="is_email" Type="bit" />
+        </EntityType>
+        <EntityType Name="comment">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="user_id" Type="bigint" Nullable="false" />
+          <Property Name="created_at" Type="datetime" />
+          <Property Name="commentary" Type="text" />
+          <Property Name="assessment" Type="int" />
+          <Property Name="supplier_id" Type="bigint" />
+          <Property Name="user_name" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="community">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="admin_email" Type="varchar" MaxLength="100" />
+          <Property Name="package_id" Type="bigint" />
+          <Property Name="description" Type="text" />
+          <Property Name="first_name" Type="varchar" MaxLength="255" />
+          <Property Name="created_at" Type="datetime" />
+          <Property Name="updated_at" Type="datetime" />
+          <Property Name="is_active" Type="bit" Nullable="false" />
+          <Property Name="apart" Type="varchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="communuser">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="user_id" Type="bigint" Nullable="false" />
+          <Property Name="commun_id" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="contactinfo">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="company_admin" Type="varchar" MaxLength="255" />
+          <Property Name="coordinator" Type="varchar" MaxLength="255" />
+          <Property Name="president" Type="varchar" MaxLength="255" />
+          <Property Name="vice_president" Type="varchar" MaxLength="255" />
+          <Property Name="treasurer" Type="varchar" MaxLength="255" />
+          <Property Name="secretary" Type="varchar" MaxLength="255" />
+          <Property Name="vocal1" Type="varchar" MaxLength="255" />
+          <Property Name="vocal2" Type="varchar" MaxLength="255" />
+          <Property Name="vocal3" Type="varchar" MaxLength="255" />
+          <Property Name="phy_address" Type="varchar" MaxLength="300" />
+          <Property Name="postal_address" Type="varchar" MaxLength="255" />
+          <Property Name="phone_number1" Type="varchar" MaxLength="255" />
+          <Property Name="phone_number2" Type="varchar" MaxLength="255" />
+          <Property Name="email" Type="varchar" MaxLength="255" />
+          <Property Name="created_at" Type="datetime" />
+          <Property Name="updated_at" Type="datetime" />
+          <Property Name="user_id" Type="bigint" />
+        </EntityType>
+        <EntityType Name="contract">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="first_name" Type="varchar" MaxLength="255" />
+          <Property Name="date_contract" Type="datetime" />
+          <Property Name="date_notification" Type="datetime" />
+          <Property Name="upload_contract" Type="varchar" MaxLength="255" />
+          <Property Name="description" Type="text" />
+          <Property Name="status" Type="int" />
+          <Property Name="created_at" Type="datetime" />
+          <Property Name="updated_at" Type="datetime" />
+        </EntityType>
+        <EntityType Name="creditcard">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="first_name" Type="varchar" MaxLength="255" />
+          <Property Name="surname" Type="varchar" MaxLength="255" />
+          <Property Name="card_number" Type="varchar" MaxLength="255" />
+          <Property Name="expiration_date" Type="datetime" />
+          <Property Name="ccv" Type="varchar" MaxLength="255" />
+          <Property Name="address" Type="varchar" MaxLength="255" />
+          <Property Name="country" Type="varchar" MaxLength="255" />
+          <Property Name="city" Type="varchar" MaxLength="255" />
+          <Property Name="phone" Type="varchar" MaxLength="255" />
+          <Property Name="state" Type="varchar" MaxLength="255" />
+          <Property Name="postal_code" Type="varchar" MaxLength="255" />
+          <Property Name="user_id" Type="bigint" Nullable="false" />
+          <Property Name="created_at" Type="datetime" />
+          <Property Name="updated_at" Type="datetime" />
+        </EntityType>
+        <EntityType Name="document">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="first_name" Type="varchar" MaxLength="255" />
+          <Property Name="uploaded_by" Type="varchar" MaxLength="255" />
+          <Property Name="created_at" Type="datetime" />
+          <Property Name="type_id" Type="int" Nullable="false" />
+          <Property Name="upload_document" Type="varchar" MaxLength="255" />
+          <Property Name="share" Type="int" />
+          <Property Name="notify_email" Type="bit" />
+          <Property Name="uploaded_date" Type="datetime" />
+          <Property Name="link" Type="varchar" MaxLength="255" />
+          <Property Name="updated_at" Type="datetime" />
+        </EntityType>
+        <EntityType Name="document_type">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="type_name" Type="varchar" MaxLength="255" />
+          <Property Name="share" Type="int" />
+        </EntityType>
+        <EntityType Name="efac">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="first_name" Type="varchar" MaxLength="255" />
+          <Property Name="description" Type="text" />
+          <Property Name="start_time" Type="time" Precision="7" />
+          <Property Name="end_time" Type="time" Precision="7" />
+          <Property Name="interval" Type="int" />
+          <Property Name="duration" Type="int" />
+          <Property Name="cost_reservation" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="created_at" Type="datetime" />
+          <Property Name="upload_regulation" Type="varchar" MaxLength="255" />
+          <Property Name="share" Type="int" />
+          <Property Name="status" Type="int" />
+        </EntityType>
+        <EntityType Name="emailtheme">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="user_id" Type="bigint" Nullable="false" />
+          <Property Name="htmcontent" Type="text" Nullable="false" />
+          <Property Name="type_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="emailtype">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="255" />
+          <Property Name="represent" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="event">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="created_at" Type="datetime" />
+          <Property Name="place" Type="varchar" MaxLength="255" />
+          <Property Name="description" Type="text" />
+          <Property Name="note" Type="text" />
+          <Property Name="name" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="event_date" Type="datetime" Nullable="false" />
+          <Property Name="updated_at" Type="datetime" />
+          <Property Name="share" Type="int" Nullable="false" />
+          <Property Name="is_active" Type="bit" />
+        </EntityType>
+        <EntityType Name="facsche">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="fac_id" Type="bigint" />
+          <Property Name="schedule_id" Type="int" />
+          <Property Name="status" Type="bit" />
+        </EntityType>
+        <EntityType Name="fee">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="cost" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="bank_id" Type="bigint" Nullable="false" />
+          <Property Name="merchant_account" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="created_at" Type="datetime" Nullable="false" />
+          <Property Name="user_id" Type="bigint" Nullable="false" />
+          <Property Name="tax_charge" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="penalty" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="friendmapping">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="request_userid" Type="bigint" Nullable="false" />
+          <Property Name="end_userid" Type="bigint" Nullable="false" />
+          <Property Name="request_status" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="created_at" Type="datetime" Nullable="false" />
+          <Property Name="updated_at" Type="datetime" Nullable="false" />
+          <Property Name="is_active" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="notification">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="to_userid" Type="bigint" Nullable="false" />
+          <Property Name="from_userid" Type="bigint" Nullable="false" />
+          <Property Name="noti_type" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="status" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="created_at" Type="datetime" Nullable="false" />
+          <Property Name="updated_at" Type="datetime" Nullable="false" />
+          <Property Name="is_active" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="onlineuser">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="user_id" Type="bigint" Nullable="false" />
+          <Property Name="connectionID" Type="varchar" MaxLength="400" Nullable="false" />
+          <Property Name="is_online" Type="bit" Nullable="false" />
+          <Property Name="created_at" Type="datetime" Nullable="false" />
+          <Property Name="updated_at" Type="datetime" Nullable="false" />
+          <Property Name="is_active" Type="bit" Nullable="false" />
+          <Property Name="user_img" Type="varchar" MaxLength="50" />
+          <Property Name="last_name" Type="varchar" MaxLength="50" />
+          <Property Name="first_name" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="package">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="first_name" Type="varchar" MaxLength="255" />
+          <Property Name="payment" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="description" Type="text" />
+          <Property Name="community" Type="varchar" MaxLength="255" />
+          <Property Name="admin_email" Type="varchar" MaxLength="100" />
+          <Property Name="created_at" Type="datetime" />
+          <Property Name="updated_at" Type="datetime" />
+          <Property Name="suscribe_link" Type="varchar" MaxLength="400" />
+        </EntityType>
+        <EntityType Name="payment">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="date_issue" Type="datetime" />
+          <Property Name="date_payment" Type="datetime" />
+          <Property Name="quantity" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="method" Type="varchar" MaxLength="100" />
+          <Property Name="state" Type="bit" />
+          <Property Name="user_id" Type="bigint" Nullable="false" />
+          <Property Name="to_user_id" Type="bigint" Nullable="false" />
+          <Property Name="first_name" Type="varchar" MaxLength="255" />
+          <Property Name="surname" Type="varchar" MaxLength="255" />
+          <Property Name="email" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="schedule">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="schedule" Type="varchar" MaxLength="255" />
+          <Property Name="from_time" Type="time" Precision="7" />
+          <Property Name="to_time" Type="time" Precision="7" />
+        </EntityType>
+        <EntityType Name="supplier">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="logo" Type="varchar" MaxLength="255" />
+          <Property Name="municipality" Type="varchar" MaxLength="255" />
+          <Property Name="category_id" Type="int" Nullable="false" />
+          <Property Name="description" Type="text" />
+          <Property Name="assessment" Type="int" />
+          <Property Name="company" Type="varchar" MaxLength="255" />
+          <Property Name="contact_name" Type="varchar" MaxLength="255" />
+          <Property Name="type_service" Type="varchar" MaxLength="255" />
+          <Property Name="address" Type="varchar" MaxLength="300" />
+          <Property Name="phone" Type="varchar" MaxLength="200" />
+          <Property Name="email" Type="varchar" MaxLength="200" />
+          <Property Name="supplier_from" Type="datetime" />
+          <Property Name="web_page" Type="varchar" MaxLength="255" />
+          <Property Name="created_at" Type="datetime" />
+          <Property Name="updated_at" Type="datetime" />
+        </EntityType>
+        <EntityType Name="suscribe">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="255" />
+          <Property Name="last_name" Type="varchar" MaxLength="255" />
+          <Property Name="community_name" Type="varchar" MaxLength="255" />
+          <Property Name="address" Type="varchar" MaxLength="255" />
+          <Property Name="phone_number" Type="varchar" MaxLength="255" />
+          <Property Name="email" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="password" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="created_at" Type="datetime" />
+          <Property Name="logged_in" Type="bit" />
+          <Property Name="package_id" Type="bigint" Nullable="false" />
+          <Property Name="is_paid" Type="bit" />
+          <Property Name="paid_at" Type="datetime" />
+        </EntityType>
+        <EntityType Name="task">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="task_name" Type="varchar" MaxLength="255" />
+          <Property Name="responsable" Type="varchar" MaxLength="255" />
+          <Property Name="created_at" Type="date" />
+          <Property Name="estimated_date" Type="datetime" />
+          <Property Name="status" Type="int" />
+          <Property Name="completed_date" Type="datetime" />
+          <Property Name="archived_date" Type="datetime" />
+          <Property Name="description" Type="text" />
+          <Property Name="comments" Type="text" />
+          <Property Name="task_date" Type="datetime" />
+          <Property Name="share" Type="int" />
+          <Property Name="updated_at" Type="datetime" />
+          <Property Name="is_read" Type="bit" />
+        </EntityType>
+        <EntityType Name="taskcomment">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="comment" Type="text" />
+          <Property Name="created_at" Type="datetime" Nullable="false" />
+          <Property Name="task_id" Type="bigint" Nullable="false" />
+          <Property Name="user_id" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="taskuser">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="user_id" Type="bigint" Nullable="false" />
+          <Property Name="task_list" Type="text" />
+        </EntityType>
+        <EntityType Name="tooltip">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="watch1" Type="varchar" MaxLength="255" />
+          <Property Name="edit1" Type="varchar" MaxLength="255" />
+          <Property Name="remove1" Type="varchar" MaxLength="255" />
+          <Property Name="reserve1" Type="varchar" MaxLength="255" />
+          <Property Name="watch2" Type="varchar" MaxLength="255" />
+          <Property Name="edit2" Type="varchar" MaxLength="255" />
+          <Property Name="remove2" Type="varchar" MaxLength="255" />
+          <Property Name="reserve2" Type="varchar" MaxLength="255" />
+          <Property Name="user_type" Type="int" />
+        </EntityType>
+        <EntityType Name="transaction">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="trans_id" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="date_info" Type="datetime" />
+          <Property Name="kind" Type="varchar" MaxLength="50" />
+          <Property Name="debit" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="credit" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="balance" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="state" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="first_name1" Type="varchar" MaxLength="255" />
+          <Property Name="last_name1" Type="varchar" MaxLength="255" />
+          <Property Name="email" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="password" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="is_admin" Type="bit" Nullable="false" />
+          <Property Name="is_logged" Type="bit" Nullable="false" />
+          <Property Name="first_name2" Type="varchar" MaxLength="255" />
+          <Property Name="last_name2" Type="varchar" MaxLength="255" />
+          <Property Name="mother_last_name1" Type="varchar" MaxLength="255" />
+          <Property Name="mother_last_name2" Type="varchar" MaxLength="255" />
+          <Property Name="phone_number1" Type="varchar" MaxLength="255" />
+          <Property Name="phone_number2" Type="varchar" MaxLength="255" />
+          <Property Name="postal_address" Type="varchar" MaxLength="255" />
+          <Property Name="residential_address" Type="varchar" MaxLength="255" />
+          <Property Name="upload_writing" Type="varchar" MaxLength="255" />
+          <Property Name="user_img" Type="varchar" MaxLength="255" />
+          <Property Name="brand" Type="varchar" MaxLength="255" />
+          <Property Name="model" Type="varchar" MaxLength="255" />
+          <Property Name="colour" Type="varchar" MaxLength="255" />
+          <Property Name="year" Type="int" />
+          <Property Name="clapboard" Type="varchar" MaxLength="255" />
+          <Property Name="stamp_number" Type="int" />
+          <Property Name="is_leased" Type="bit" />
+          <Property Name="since" Type="datetime" />
+          <Property Name="until" Type="datetime" />
+          <Property Name="tenant_first_name1" Type="varchar" MaxLength="255" />
+          <Property Name="tenant_last_name1" Type="varchar" MaxLength="255" />
+          <Property Name="tenant_mother_last_name1" Type="varchar" MaxLength="255" />
+          <Property Name="tenant_first_name2" Type="varchar" MaxLength="255" />
+          <Property Name="tenant_last_name2" Type="varchar" MaxLength="255" />
+          <Property Name="tenant_mother_last_name2" Type="varchar" MaxLength="255" />
+          <Property Name="leased_postal_address" Type="varchar" MaxLength="255" />
+          <Property Name="leased_residential_address" Type="varchar" MaxLength="255" />
+          <Property Name="leased_upload_file" Type="varchar" MaxLength="255" />
+          <Property Name="is_active" Type="bit" Nullable="false" />
+          <Property Name="role" Type="int" Nullable="false" />
+          <Property Name="acq_date" Type="datetime" Nullable="false" />
+          <Property Name="siono" Type="varchar" MaxLength="50" />
+          <Property Name="create_userid" Type="bigint" />
+          <Property Name="package_id" Type="bigint" />
+          <Property Name="is_paid" Type="bit" />
+          <Property Name="paid_at" Type="datetime" />
+          <Property Name="is_del" Type="bit" />
+          <Property Name="apartment" Type="varchar" MaxLength="50" />
+          <Property Name="Pais" Type="varchar" MaxLength="50" />
+          <Property Name="Ciudad" Type="varchar" MaxLength="50" />
+          <Property Name="Codigo_Postal" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="uso">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="aviso" Type="text" />
+          <Property Name="terminos" Type="text" />
+          <Property Name="reservados" Type="text" />
+          <Property Name="created_at" Type="datetime" Nullable="false" />
+          <Property Name="updated_at" Type="datetime" Nullable="false" />
+          <Property Name="create_userid" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Vehiculos">
+          <Key>
+            <PropertyRef Name="IdVehiculo" />
+          </Key>
+          <Property Name="IdVehiculo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdUser" Type="bigint" Nullable="false" />
+          <Property Name="Brand" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Model" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Color" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Year" Type="int" Nullable="false" />
+          <Property Name="ClapBoard" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="StampNumber" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_bank_user">
+          <End Role="user" Type="Self.user" Multiplicity="0..1" />
+          <End Role="bank" Type="Self.bank" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="bank">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_blog_user">
+          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="blog" Type="Self.blog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="blog">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_blogcomment_blogcomment">
+          <End Role="blog" Type="Self.blog" Multiplicity="1" />
+          <End Role="blogcomment" Type="Self.blogcomment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="blog">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="blogcomment">
+              <PropertyRef Name="blog_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_carpentry_task">
+          <End Role="task" Type="Self.task" Multiplicity="1" />
+          <End Role="carpentry" Type="Self.carpentry" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="task">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="carpentry">
+              <PropertyRef Name="task_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_chatmessage_user">
+          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="chatmessage" Type="Self.chatmessage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="chatmessage">
+              <PropertyRef Name="from_user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_chatmessage_user1">
+          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="chatmessage" Type="Self.chatmessage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="chatmessage">
+              <PropertyRef Name="to_user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_comment_supplier">
+          <End Role="supplier" Type="Self.supplier" Multiplicity="0..1" />
+          <End Role="comment" Type="Self.comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="supplier">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="comment">
+              <PropertyRef Name="supplier_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_community_package">
+          <End Role="package" Type="Self.package" Multiplicity="0..1" />
+          <End Role="community" Type="Self.community" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="package">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="community">
+              <PropertyRef Name="package_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_communuser_community">
+          <End Role="community" Type="Self.community" Multiplicity="1" />
+          <End Role="communuser" Type="Self.communuser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="community">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="communuser">
+              <PropertyRef Name="commun_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_communuser_user">
+          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="communuser" Type="Self.communuser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="communuser">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_creditcard_user">
+          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="creditcard" Type="Self.creditcard" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="creditcard">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_document_type">
+          <End Role="document_type" Type="Self.document_type" Multiplicity="1" />
+          <End Role="document" Type="Self.document" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="document_type">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="document">
+              <PropertyRef Name="type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_emailtheme_emailtype">
+          <End Role="emailtype" Type="Self.emailtype" Multiplicity="1" />
+          <End Role="emailtheme" Type="Self.emailtheme" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="emailtype">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="emailtheme">
+              <PropertyRef Name="type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_emailtheme_user">
+          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="emailtheme" Type="Self.emailtheme" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="emailtheme">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_fee_bank">
+          <End Role="bank" Type="Self.bank" Multiplicity="1" />
+          <End Role="fee" Type="Self.fee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="bank">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="fee">
+              <PropertyRef Name="bank_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_fee_user">
+          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="fee" Type="Self.fee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="fee">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_friendmapping_user">
+          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="friendmapping" Type="Self.friendmapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="friendmapping">
+              <PropertyRef Name="request_userid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_friendmapping_user1">
+          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="friendmapping" Type="Self.friendmapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="friendmapping">
+              <PropertyRef Name="end_userid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_onlineuser_user">
+          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="onlineuser" Type="Self.onlineuser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="onlineuser">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_payment_user">
+          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="payment" Type="Self.payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="payment">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_payment_user1">
+          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="payment" Type="Self.payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="payment">
+              <PropertyRef Name="to_user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_supplier_category">
+          <End Role="category" Type="Self.category" Multiplicity="1" />
+          <End Role="supplier" Type="Self.supplier" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="category">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="supplier">
+              <PropertyRef Name="category_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_suscribe_package">
+          <End Role="package" Type="Self.package" Multiplicity="1" />
+          <End Role="suscribe" Type="Self.suscribe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="package">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="suscribe">
+              <PropertyRef Name="package_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_task_taskcomment">
+          <End Role="task" Type="Self.task" Multiplicity="1" />
+          <End Role="taskcomment" Type="Self.taskcomment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="task">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="taskcomment">
+              <PropertyRef Name="task_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_taskcomment_user">
+          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="taskcomment" Type="Self.taskcomment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="taskcomment">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_taskuser_user">
+          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="taskuser" Type="Self.taskuser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="taskuser">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_uso_user">
+          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="uso" Type="Self.uso" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="uso">
+              <PropertyRef Name="create_userid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Vehiculos_user">
+          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="Vehiculos" Type="Self.Vehiculos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Vehiculos">
+              <PropertyRef Name="IdUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="pjrdev_condominiosModelStoreContainer">
+          <EntitySet Name="bank" EntityType="Self.bank" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="blog" EntityType="Self.blog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="blogcomment" EntityType="Self.blogcomment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="book" EntityType="Self.book" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="carpentry" EntityType="Self.carpentry" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="category" EntityType="Self.category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="chatmessage" EntityType="Self.chatmessage" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="comment" EntityType="Self.comment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="community" EntityType="Self.community" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="communuser" EntityType="Self.communuser" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="contactinfo" EntityType="Self.contactinfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="contract" EntityType="Self.contract" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="creditcard" EntityType="Self.creditcard" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="document" EntityType="Self.document" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="document_type" EntityType="Self.document_type" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="efac" EntityType="Self.efac" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="emailtheme" EntityType="Self.emailtheme" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="emailtype" EntityType="Self.emailtype" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="event" EntityType="Self.event" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="facsche" EntityType="Self.facsche" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="fee" EntityType="Self.fee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="friendmapping" EntityType="Self.friendmapping" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="notification" EntityType="Self.notification" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="onlineuser" EntityType="Self.onlineuser" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="package" EntityType="Self.package" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="payment" EntityType="Self.payment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="schedule" EntityType="Self.schedule" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="supplier" EntityType="Self.supplier" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="suscribe" EntityType="Self.suscribe" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="task" EntityType="Self.task" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="taskcomment" EntityType="Self.taskcomment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="taskuser" EntityType="Self.taskuser" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tooltip" EntityType="Self.tooltip" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="transaction" EntityType="Self.transaction" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="user" EntityType="Self.user" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="uso" EntityType="Self.uso" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Vehiculos" EntityType="Self.Vehiculos" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_bank_user" Association="Self.FK_bank_user">
+            <End Role="user" EntitySet="user" />
+            <End Role="bank" EntitySet="bank" />
+          </AssociationSet>
+          <AssociationSet Name="FK_blog_user" Association="Self.FK_blog_user">
+            <End Role="user" EntitySet="user" />
+            <End Role="blog" EntitySet="blog" />
+          </AssociationSet>
+          <AssociationSet Name="FK_blogcomment_blogcomment" Association="Self.FK_blogcomment_blogcomment">
+            <End Role="blog" EntitySet="blog" />
+            <End Role="blogcomment" EntitySet="blogcomment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_carpentry_task" Association="Self.FK_carpentry_task">
+            <End Role="task" EntitySet="task" />
+            <End Role="carpentry" EntitySet="carpentry" />
+          </AssociationSet>
+          <AssociationSet Name="FK_chatmessage_user" Association="Self.FK_chatmessage_user">
+            <End Role="user" EntitySet="user" />
+            <End Role="chatmessage" EntitySet="chatmessage" />
+          </AssociationSet>
+          <AssociationSet Name="FK_chatmessage_user1" Association="Self.FK_chatmessage_user1">
+            <End Role="user" EntitySet="user" />
+            <End Role="chatmessage" EntitySet="chatmessage" />
+          </AssociationSet>
+          <AssociationSet Name="FK_comment_supplier" Association="Self.FK_comment_supplier">
+            <End Role="supplier" EntitySet="supplier" />
+            <End Role="comment" EntitySet="comment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_community_package" Association="Self.FK_community_package">
+            <End Role="package" EntitySet="package" />
+            <End Role="community" EntitySet="community" />
+          </AssociationSet>
+          <AssociationSet Name="FK_communuser_community" Association="Self.FK_communuser_community">
+            <End Role="community" EntitySet="community" />
+            <End Role="communuser" EntitySet="communuser" />
+          </AssociationSet>
+          <AssociationSet Name="FK_communuser_user" Association="Self.FK_communuser_user">
+            <End Role="user" EntitySet="user" />
+            <End Role="communuser" EntitySet="communuser" />
+          </AssociationSet>
+          <AssociationSet Name="FK_creditcard_user" Association="Self.FK_creditcard_user">
+            <End Role="user" EntitySet="user" />
+            <End Role="creditcard" EntitySet="creditcard" />
+          </AssociationSet>
+          <AssociationSet Name="FK_document_type" Association="Self.FK_document_type">
+            <End Role="document_type" EntitySet="document_type" />
+            <End Role="document" EntitySet="document" />
+          </AssociationSet>
+          <AssociationSet Name="FK_emailtheme_emailtype" Association="Self.FK_emailtheme_emailtype">
+            <End Role="emailtype" EntitySet="emailtype" />
+            <End Role="emailtheme" EntitySet="emailtheme" />
+          </AssociationSet>
+          <AssociationSet Name="FK_emailtheme_user" Association="Self.FK_emailtheme_user">
+            <End Role="user" EntitySet="user" />
+            <End Role="emailtheme" EntitySet="emailtheme" />
+          </AssociationSet>
+          <AssociationSet Name="FK_fee_bank" Association="Self.FK_fee_bank">
+            <End Role="bank" EntitySet="bank" />
+            <End Role="fee" EntitySet="fee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_fee_user" Association="Self.FK_fee_user">
+            <End Role="user" EntitySet="user" />
+            <End Role="fee" EntitySet="fee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_friendmapping_user" Association="Self.FK_friendmapping_user">
+            <End Role="user" EntitySet="user" />
+            <End Role="friendmapping" EntitySet="friendmapping" />
+          </AssociationSet>
+          <AssociationSet Name="FK_friendmapping_user1" Association="Self.FK_friendmapping_user1">
+            <End Role="user" EntitySet="user" />
+            <End Role="friendmapping" EntitySet="friendmapping" />
+          </AssociationSet>
+          <AssociationSet Name="FK_onlineuser_user" Association="Self.FK_onlineuser_user">
+            <End Role="user" EntitySet="user" />
+            <End Role="onlineuser" EntitySet="onlineuser" />
+          </AssociationSet>
+          <AssociationSet Name="FK_payment_user" Association="Self.FK_payment_user">
+            <End Role="user" EntitySet="user" />
+            <End Role="payment" EntitySet="payment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_payment_user1" Association="Self.FK_payment_user1">
+            <End Role="user" EntitySet="user" />
+            <End Role="payment" EntitySet="payment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_supplier_category" Association="Self.FK_supplier_category">
+            <End Role="category" EntitySet="category" />
+            <End Role="supplier" EntitySet="supplier" />
+          </AssociationSet>
+          <AssociationSet Name="FK_suscribe_package" Association="Self.FK_suscribe_package">
+            <End Role="package" EntitySet="package" />
+            <End Role="suscribe" EntitySet="suscribe" />
+          </AssociationSet>
+          <AssociationSet Name="FK_task_taskcomment" Association="Self.FK_task_taskcomment">
+            <End Role="task" EntitySet="task" />
+            <End Role="taskcomment" EntitySet="taskcomment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_taskcomment_user" Association="Self.FK_taskcomment_user">
+            <End Role="user" EntitySet="user" />
+            <End Role="taskcomment" EntitySet="taskcomment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_taskuser_user" Association="Self.FK_taskuser_user">
+            <End Role="user" EntitySet="user" />
+            <End Role="taskuser" EntitySet="taskuser" />
+          </AssociationSet>
+          <AssociationSet Name="FK_uso_user" Association="Self.FK_uso_user">
+            <End Role="user" EntitySet="user" />
+            <End Role="uso" EntitySet="uso" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Vehiculos_user" Association="Self.FK_Vehiculos_user">
+            <End Role="user" EntitySet="user" />
+            <End Role="Vehiculos" EntitySet="Vehiculos" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="pjrdev_condominiosModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="bank">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="account_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="account_number" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="bank_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="route_number" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="user_id" Type="Int64" />
+          <Property Name="created_at" Type="DateTime" Precision="3" />
+          <Property Name="updated_at" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="user" Relationship="Self.FK_bank_user" FromRole="bank" ToRole="user" />
+          <NavigationProperty Name="fees" Relationship="Self.FK_fee_bank" FromRole="bank" ToRole="fee" />
+        </EntityType>
+        <EntityType Name="blog">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="title" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="content" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="author" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="blogdate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="user_id" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="user" Relationship="Self.FK_blog_user" FromRole="blog" ToRole="user" />
+          <NavigationProperty Name="blogcomments" Relationship="Self.FK_blogcomment_blogcomment" FromRole="blog" ToRole="blogcomment" />
+        </EntityType>
+        <EntityType Name="blogcomment">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="postdate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="blog_id" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="blog" Relationship="Self.FK_blogcomment_blogcomment" FromRole="blogcomment" ToRole="blog" />
+        </EntityType>
+        <EntityType Name="book">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="first_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="start_time" Type="Time" Precision="7" />
+          <Property Name="end_time" Type="Time" Precision="7" />
+          <Property Name="requested_date" Type="DateTime" Precision="3" />
+          <Property Name="cost_per_reservation" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="created_at" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="carpentry">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="created_at" Type="DateTime" Precision="3" />
+          <Property Name="comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="task_id" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="task" Relationship="Self.FK_carpentry_task" FromRole="carpentry" ToRole="task" />
+        </EntityType>
+        <EntityType Name="category">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="suppliers" Relationship="Self.FK_supplier_category" FromRole="category" ToRole="supplier" />
+        </EntityType>
+        <EntityType Name="chatmessage">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="from_user_id" Type="Int64" Nullable="false" />
+          <Property Name="to_user_id" Type="Int64" Nullable="false" />
+          <Property Name="message" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="status" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="created_at" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="updated_at" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="viewed_at" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="is_active" Type="Boolean" Nullable="false" />
+          <Property Name="is_read" Type="Boolean" />
+          <Property Name="is_email" Type="Boolean" />
+          <NavigationProperty Name="user" Relationship="Self.FK_chatmessage_user" FromRole="chatmessage" ToRole="user" />
+          <NavigationProperty Name="user1" Relationship="Self.FK_chatmessage_user1" FromRole="chatmessage" ToRole="user" />
+        </EntityType>
+        <EntityType Name="comment">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="user_id" Type="Int64" Nullable="false" />
+          <Property Name="created_at" Type="DateTime" Precision="3" />
+          <Property Name="commentary" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="assessment" Type="Int32" />
+          <Property Name="supplier_id" Type="Int64" />
+          <Property Name="user_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="supplier" Relationship="Self.FK_comment_supplier" FromRole="comment" ToRole="supplier" />
+        </EntityType>
+        <EntityType Name="community">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="admin_email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="package_id" Type="Int64" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="first_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="created_at" Type="DateTime" Precision="3" />
+          <Property Name="updated_at" Type="DateTime" Precision="3" />
+          <Property Name="is_active" Type="Boolean" Nullable="false" />
+          <Property Name="apart" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="package" Relationship="Self.FK_community_package" FromRole="community" ToRole="package" />
+          <NavigationProperty Name="communusers" Relationship="Self.FK_communuser_community" FromRole="community" ToRole="communuser" />
+        </EntityType>
+        <EntityType Name="communuser">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="user_id" Type="Int64" Nullable="false" />
+          <Property Name="commun_id" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="community" Relationship="Self.FK_communuser_community" FromRole="communuser" ToRole="community" />
+          <NavigationProperty Name="user" Relationship="Self.FK_communuser_user" FromRole="communuser" ToRole="user" />
+        </EntityType>
+        <EntityType Name="contactinfo">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="company_admin" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="coordinator" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="president" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="vice_president" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="treasurer" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="secretary" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="vocal1" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="vocal2" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="vocal3" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="phy_address" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="postal_address" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="phone_number1" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="phone_number2" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="created_at" Type="DateTime" Precision="3" />
+          <Property Name="updated_at" Type="DateTime" Precision="3" />
+          <Property Name="user_id" Type="Int64" />
+        </EntityType>
+        <EntityType Name="contract">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="first_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="date_contract" Type="DateTime" Precision="3" />
+          <Property Name="date_notification" Type="DateTime" Precision="3" />
+          <Property Name="upload_contract" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="status" Type="Int32" />
+          <Property Name="created_at" Type="DateTime" Precision="3" />
+          <Property Name="updated_at" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="creditcard">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="first_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="surname" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="card_number" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="expiration_date" Type="DateTime" Precision="3" />
+          <Property Name="ccv" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="address" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="country" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="city" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="phone" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="state" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="postal_code" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="user_id" Type="Int64" Nullable="false" />
+          <Property Name="created_at" Type="DateTime" Precision="3" />
+          <Property Name="updated_at" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="user" Relationship="Self.FK_creditcard_user" FromRole="creditcard" ToRole="user" />
+        </EntityType>
+        <EntityType Name="document">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="first_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="uploaded_by" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="created_at" Type="DateTime" Precision="3" />
+          <Property Name="type_id" Type="Int32" Nullable="false" />
+          <Property Name="upload_document" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="share" Type="Int32" />
+          <Property Name="notify_email" Type="Boolean" />
+          <Property Name="uploaded_date" Type="DateTime" Precision="3" />
+          <Property Name="link" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="updated_at" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="document_type" Relationship="Self.FK_document_type" FromRole="document" ToRole="document_type" />
+        </EntityType>
+        <EntityType Name="document_type">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="type_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="share" Type="Int32" />
+          <NavigationProperty Name="documents" Relationship="Self.FK_document_type" FromRole="document_type" ToRole="document" />
+        </EntityType>
+        <EntityType Name="efac">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="first_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="start_time" Type="Time" Precision="7" />
+          <Property Name="end_time" Type="Time" Precision="7" />
+          <Property Name="interval" Type="Int32" />
+          <Property Name="duration" Type="Int32" />
+          <Property Name="cost_reservation" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="created_at" Type="DateTime" Precision="3" />
+          <Property Name="upload_regulation" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="share" Type="Int32" />
+          <Property Name="status" Type="Int32" />
+        </EntityType>
+        <EntityType Name="emailtheme">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="user_id" Type="Int64" Nullable="false" />
+          <Property Name="htmcontent" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="type_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="emailtype" Relationship="Self.FK_emailtheme_emailtype" FromRole="emailtheme" ToRole="emailtype" />
+          <NavigationProperty Name="user" Relationship="Self.FK_emailtheme_user" FromRole="emailtheme" ToRole="user" />
+        </EntityType>
+        <EntityType Name="emailtype">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="represent" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="emailthemes" Relationship="Self.FK_emailtheme_emailtype" FromRole="emailtype" ToRole="emailtheme" />
+        </EntityType>
+        <EntityType Name="event">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="created_at" Type="DateTime" Precision="3" />
+          <Property Name="place" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="note" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="event_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="updated_at" Type="DateTime" Precision="3" />
+          <Property Name="share" Type="Int32" Nullable="false" />
+          <Property Name="is_active" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="facsche">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fac_id" Type="Int64" />
+          <Property Name="schedule_id" Type="Int32" />
+          <Property Name="status" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="fee">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="cost" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="bank_id" Type="Int64" Nullable="false" />
+          <Property Name="merchant_account" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="created_at" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="user_id" Type="Int64" Nullable="false" />
+          <Property Name="tax_charge" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="penalty" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <NavigationProperty Name="bank" Relationship="Self.FK_fee_bank" FromRole="fee" ToRole="bank" />
+          <NavigationProperty Name="user" Relationship="Self.FK_fee_user" FromRole="fee" ToRole="user" />
+        </EntityType>
+        <EntityType Name="friendmapping">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="request_userid" Type="Int64" Nullable="false" />
+          <Property Name="end_userid" Type="Int64" Nullable="false" />
+          <Property Name="request_status" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="created_at" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="updated_at" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="is_active" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="user" Relationship="Self.FK_friendmapping_user" FromRole="friendmapping" ToRole="user" />
+          <NavigationProperty Name="user1" Relationship="Self.FK_friendmapping_user1" FromRole="friendmapping" ToRole="user" />
+        </EntityType>
+        <EntityType Name="notification">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="to_userid" Type="Int64" Nullable="false" />
+          <Property Name="from_userid" Type="Int64" Nullable="false" />
+          <Property Name="noti_type" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="status" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="created_at" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="updated_at" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="is_active" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="onlineuser">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="user_id" Type="Int64" Nullable="false" />
+          <Property Name="connectionID" Type="String" MaxLength="400" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="is_online" Type="Boolean" Nullable="false" />
+          <Property Name="created_at" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="updated_at" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="is_active" Type="Boolean" Nullable="false" />
+          <Property Name="first_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="last_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="user_img" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="user" Relationship="Self.FK_onlineuser_user" FromRole="onlineuser" ToRole="user" />
+        </EntityType>
+        <EntityType Name="package">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="first_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="payment" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="community" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="admin_email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="created_at" Type="DateTime" Precision="3" />
+          <Property Name="updated_at" Type="DateTime" Precision="3" />
+          <Property Name="suscribe_link" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="communities" Relationship="Self.FK_community_package" FromRole="package" ToRole="community" />
+          <NavigationProperty Name="suscribes" Relationship="Self.FK_suscribe_package" FromRole="package" ToRole="suscribe" />
+        </EntityType>
+        <EntityType Name="payment">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="date_issue" Type="DateTime" Precision="3" />
+          <Property Name="date_payment" Type="DateTime" Precision="3" />
+          <Property Name="quantity" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="method" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="state" Type="Boolean" />
+          <Property Name="user_id" Type="Int64" Nullable="false" />
+          <Property Name="to_user_id" Type="Int64" Nullable="false" />
+          <Property Name="first_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="surname" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="user" Relationship="Self.FK_payment_user" FromRole="payment" ToRole="user" />
+          <NavigationProperty Name="user1" Relationship="Self.FK_payment_user1" FromRole="payment" ToRole="user" />
+        </EntityType>
+        <EntityType Name="schedule">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="schedule1" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="from_time" Type="Time" Precision="7" />
+          <Property Name="to_time" Type="Time" Precision="7" />
+        </EntityType>
+        <EntityType Name="supplier">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="logo" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="municipality" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="category_id" Type="Int32" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="assessment" Type="Int32" />
+          <Property Name="company" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="contact_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="type_service" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="address" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="phone" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="supplier_from" Type="DateTime" Precision="3" />
+          <Property Name="web_page" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="created_at" Type="DateTime" Precision="3" />
+          <Property Name="updated_at" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="category" Relationship="Self.FK_supplier_category" FromRole="supplier" ToRole="category" />
+          <NavigationProperty Name="comments" Relationship="Self.FK_comment_supplier" FromRole="supplier" ToRole="comment" />
+        </EntityType>
+        <EntityType Name="suscribe">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="last_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="community_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="address" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="phone_number" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="created_at" Type="DateTime" Precision="3" />
+          <Property Name="logged_in" Type="Boolean" />
+          <Property Name="package_id" Type="Int64" Nullable="false" />
+          <Property Name="is_paid" Type="Boolean" />
+          <Property Name="paid_at" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="package" Relationship="Self.FK_suscribe_package" FromRole="suscribe" ToRole="package" />
+        </EntityType>
+        <EntityType Name="task">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="task_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="responsable" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="created_at" Type="DateTime" Precision="0" />
+          <Property Name="estimated_date" Type="DateTime" Precision="3" />
+          <Property Name="status" Type="Int32" />
+          <Property Name="completed_date" Type="DateTime" Precision="3" />
+          <Property Name="archived_date" Type="DateTime" Precision="3" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="comments" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="task_date" Type="DateTime" Precision="3" />
+          <Property Name="share" Type="Int32" />
+          <Property Name="updated_at" Type="DateTime" Precision="3" />
+          <Property Name="is_read" Type="Boolean" />
+          <NavigationProperty Name="carpentries" Relationship="Self.FK_carpentry_task" FromRole="task" ToRole="carpentry" />
+          <NavigationProperty Name="taskcomments" Relationship="Self.FK_task_taskcomment" FromRole="task" ToRole="taskcomment" />
+        </EntityType>
+        <EntityType Name="taskcomment">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="created_at" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="task_id" Type="Int64" Nullable="false" />
+          <Property Name="user_id" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="task" Relationship="Self.FK_task_taskcomment" FromRole="taskcomment" ToRole="task" />
+          <NavigationProperty Name="user" Relationship="Self.FK_taskcomment_user" FromRole="taskcomment" ToRole="user" />
+        </EntityType>
+        <EntityType Name="taskuser">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="user_id" Type="Int64" Nullable="false" />
+          <Property Name="task_list" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="user" Relationship="Self.FK_taskuser_user" FromRole="taskuser" ToRole="user" />
+        </EntityType>
+        <EntityType Name="tooltip">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="watch1" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="edit1" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="remove1" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="reserve1" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="watch2" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="edit2" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="remove2" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="reserve2" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="user_type" Type="Int32" />
+        </EntityType>
+        <EntityType Name="transaction">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="trans_id" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="date_info" Type="DateTime" Precision="3" />
+          <Property Name="kind" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="debit" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="credit" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="balance" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="state" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="first_name1" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="last_name1" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="is_admin" Type="Boolean" Nullable="false" />
+          <Property Name="is_logged" Type="Boolean" Nullable="false" />
+          <Property Name="first_name2" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="last_name2" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="mother_last_name1" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="mother_last_name2" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="phone_number1" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="phone_number2" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="postal_address" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="residential_address" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="upload_writing" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="user_img" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="brand" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="model" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="colour" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="year" Type="Int32" />
+          <Property Name="clapboard" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="stamp_number" Type="Int32" />
+          <Property Name="is_leased" Type="Boolean" />
+          <Property Name="since" Type="DateTime" Precision="3" />
+          <Property Name="until" Type="DateTime" Precision="3" />
+          <Property Name="tenant_first_name1" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="tenant_last_name1" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="tenant_mother_last_name1" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="tenant_first_name2" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="tenant_last_name2" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="tenant_mother_last_name2" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="leased_postal_address" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="leased_residential_address" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="leased_upload_file" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="is_active" Type="Boolean" Nullable="false" />
+          <Property Name="role" Type="Int32" Nullable="false" />
+          <Property Name="acq_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="siono" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="create_userid" Type="Int64" />
+          <Property Name="package_id" Type="Int64" />
+          <Property Name="is_paid" Type="Boolean" />
+          <Property Name="paid_at" Type="DateTime" Precision="3" />
+          <Property Name="is_del" Type="Boolean" />
+          <Property Name="apartment" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="banks" Relationship="Self.FK_bank_user" FromRole="user" ToRole="bank" />
+          <NavigationProperty Name="blogs" Relationship="Self.FK_blog_user" FromRole="user" ToRole="blog" />
+          <NavigationProperty Name="chatmessages" Relationship="Self.FK_chatmessage_user" FromRole="user" ToRole="chatmessage" />
+          <NavigationProperty Name="chatmessages1" Relationship="Self.FK_chatmessage_user1" FromRole="user" ToRole="chatmessage" />
+          <NavigationProperty Name="communusers" Relationship="Self.FK_communuser_user" FromRole="user" ToRole="communuser" />
+          <NavigationProperty Name="creditcards" Relationship="Self.FK_creditcard_user" FromRole="user" ToRole="creditcard" />
+          <NavigationProperty Name="emailthemes" Relationship="Self.FK_emailtheme_user" FromRole="user" ToRole="emailtheme" />
+          <NavigationProperty Name="fees" Relationship="Self.FK_fee_user" FromRole="user" ToRole="fee" />
+          <NavigationProperty Name="friendmappings" Relationship="Self.FK_friendmapping_user" FromRole="user" ToRole="friendmapping" />
+          <NavigationProperty Name="friendmappings1" Relationship="Self.FK_friendmapping_user1" FromRole="user" ToRole="friendmapping" />
+          <NavigationProperty Name="onlineusers" Relationship="Self.FK_onlineuser_user" FromRole="user" ToRole="onlineuser" />
+          <NavigationProperty Name="payments" Relationship="Self.FK_payment_user" FromRole="user" ToRole="payment" />
+          <NavigationProperty Name="payments1" Relationship="Self.FK_payment_user1" FromRole="user" ToRole="payment" />
+          <NavigationProperty Name="taskcomments" Relationship="Self.FK_taskcomment_user" FromRole="user" ToRole="taskcomment" />
+          <NavigationProperty Name="taskusers" Relationship="Self.FK_taskuser_user" FromRole="user" ToRole="taskuser" />
+          <NavigationProperty Name="usoes" Relationship="Self.FK_uso_user" FromRole="user" ToRole="uso" />
+          <Property Name="Pais" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Ciudad" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Codigo_Postal" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Vehiculos" Relationship="pjrdev_condominiosModel.FK_Vehiculos_user" FromRole="user" ToRole="Vehiculo" />
+        </EntityType>
+        <EntityType Name="uso">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="aviso" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="terminos" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="reservados" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="created_at" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="updated_at" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="create_userid" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="user" Relationship="Self.FK_uso_user" FromRole="uso" ToRole="user" />
+        </EntityType>
+        <Association Name="FK_bank_user">
+          <End Role="user" Type="Self.user" Multiplicity="0..1" />
+          <End Role="bank" Type="Self.bank" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="bank">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_fee_bank">
+          <End Role="bank" Type="Self.bank" Multiplicity="1" />
+          <End Role="fee" Type="Self.fee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="bank">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="fee">
+              <PropertyRef Name="bank_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_blog_user">
+          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="blog" Type="Self.blog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="blog">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_blogcomment_blogcomment">
+          <End Role="blog" Type="Self.blog" Multiplicity="1" />
+          <End Role="blogcomment" Type="Self.blogcomment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="blog">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="blogcomment">
+              <PropertyRef Name="blog_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_carpentry_task">
+          <End Role="task" Type="Self.task" Multiplicity="1" />
+          <End Role="carpentry" Type="Self.carpentry" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="task">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="carpentry">
+              <PropertyRef Name="task_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_supplier_category">
+          <End Role="category" Type="Self.category" Multiplicity="1" />
+          <End Role="supplier" Type="Self.supplier" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="category">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="supplier">
+              <PropertyRef Name="category_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_chatmessage_user">
+          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="chatmessage" Type="Self.chatmessage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="chatmessage">
+              <PropertyRef Name="from_user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_chatmessage_user1">
+          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="chatmessage" Type="Self.chatmessage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="chatmessage">
+              <PropertyRef Name="to_user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_comment_supplier">
+          <End Role="supplier" Type="Self.supplier" Multiplicity="0..1" />
+          <End Role="comment" Type="Self.comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="supplier">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="comment">
+              <PropertyRef Name="supplier_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_community_package">
+          <End Role="package" Type="Self.package" Multiplicity="0..1" />
+          <End Role="community" Type="Self.community" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="package">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="community">
+              <PropertyRef Name="package_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_communuser_community">
+          <End Role="community" Type="Self.community" Multiplicity="1" />
+          <End Role="communuser" Type="Self.communuser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="community">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="communuser">
+              <PropertyRef Name="commun_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_communuser_user">
+          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="communuser" Type="Self.communuser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="communuser">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_creditcard_user">
+          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="creditcard" Type="Self.creditcard" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="creditcard">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_document_type">
+          <End Role="document_type" Type="Self.document_type" Multiplicity="1" />
+          <End Role="document" Type="Self.document" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="document_type">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="document">
+              <PropertyRef Name="type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_emailtheme_emailtype">
+          <End Role="emailtype" Type="Self.emailtype" Multiplicity="1" />
+          <End Role="emailtheme" Type="Self.emailtheme" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="emailtype">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="emailtheme">
+              <PropertyRef Name="type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_emailtheme_user">
+          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="emailtheme" Type="Self.emailtheme" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="emailtheme">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_fee_user">
+          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="fee" Type="Self.fee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="fee">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_friendmapping_user">
+          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="friendmapping" Type="Self.friendmapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="friendmapping">
+              <PropertyRef Name="request_userid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_friendmapping_user1">
+          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="friendmapping" Type="Self.friendmapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="friendmapping">
+              <PropertyRef Name="end_userid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_onlineuser_user">
+          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="onlineuser" Type="Self.onlineuser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="onlineuser">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_suscribe_package">
+          <End Role="package" Type="Self.package" Multiplicity="1" />
+          <End Role="suscribe" Type="Self.suscribe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="package">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="suscribe">
+              <PropertyRef Name="package_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_payment_user">
+          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="payment" Type="Self.payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="payment">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_payment_user1">
+          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="payment" Type="Self.payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="payment">
+              <PropertyRef Name="to_user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_task_taskcomment">
+          <End Role="task" Type="Self.task" Multiplicity="1" />
+          <End Role="taskcomment" Type="Self.taskcomment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="task">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="taskcomment">
+              <PropertyRef Name="task_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_taskcomment_user">
+          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="taskcomment" Type="Self.taskcomment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="taskcomment">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_taskuser_user">
+          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="taskuser" Type="Self.taskuser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="taskuser">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_uso_user">
+          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="uso" Type="Self.uso" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="uso">
+              <PropertyRef Name="create_userid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="pjrdev_condominiosEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="banks" EntityType="Self.bank" />
+          <EntitySet Name="blogs" EntityType="Self.blog" />
+          <EntitySet Name="blogcomments" EntityType="Self.blogcomment" />
+          <EntitySet Name="books" EntityType="Self.book" />
+          <EntitySet Name="carpentries" EntityType="Self.carpentry" />
+          <EntitySet Name="categories" EntityType="Self.category" />
+          <EntitySet Name="chatmessages" EntityType="Self.chatmessage" />
+          <EntitySet Name="comments" EntityType="Self.comment" />
+          <EntitySet Name="communities" EntityType="Self.community" />
+          <EntitySet Name="communusers" EntityType="Self.communuser" />
+          <EntitySet Name="contactinfoes" EntityType="Self.contactinfo" />
+          <EntitySet Name="contracts" EntityType="Self.contract" />
+          <EntitySet Name="creditcards" EntityType="Self.creditcard" />
+          <EntitySet Name="documents" EntityType="Self.document" />
+          <EntitySet Name="document_type" EntityType="Self.document_type" />
+          <EntitySet Name="efacs" EntityType="Self.efac" />
+          <EntitySet Name="emailthemes" EntityType="Self.emailtheme" />
+          <EntitySet Name="emailtypes" EntityType="Self.emailtype" />
+          <EntitySet Name="events" EntityType="Self.event" />
+          <EntitySet Name="facsches" EntityType="Self.facsche" />
+          <EntitySet Name="fees" EntityType="Self.fee" />
+          <EntitySet Name="friendmappings" EntityType="Self.friendmapping" />
+          <EntitySet Name="notifications" EntityType="Self.notification" />
+          <EntitySet Name="onlineusers" EntityType="Self.onlineuser" />
+          <EntitySet Name="packages" EntityType="Self.package" />
+          <EntitySet Name="payments" EntityType="Self.payment" />
+          <EntitySet Name="schedules" EntityType="Self.schedule" />
+          <EntitySet Name="suppliers" EntityType="Self.supplier" />
+          <EntitySet Name="suscribes" EntityType="Self.suscribe" />
+          <EntitySet Name="tasks" EntityType="Self.task" />
+          <EntitySet Name="taskcomments" EntityType="Self.taskcomment" />
+          <EntitySet Name="taskusers" EntityType="Self.taskuser" />
+          <EntitySet Name="tooltips" EntityType="Self.tooltip" />
+          <EntitySet Name="transactions" EntityType="Self.transaction" />
+          <EntitySet Name="users" EntityType="Self.user" />
+          <EntitySet Name="usoes" EntityType="Self.uso" />
+          <AssociationSet Name="FK_bank_user" Association="Self.FK_bank_user">
+            <End Role="user" EntitySet="users" />
+            <End Role="bank" EntitySet="banks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_fee_bank" Association="Self.FK_fee_bank">
+            <End Role="bank" EntitySet="banks" />
+            <End Role="fee" EntitySet="fees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_blog_user" Association="Self.FK_blog_user">
+            <End Role="user" EntitySet="users" />
+            <End Role="blog" EntitySet="blogs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_blogcomment_blogcomment" Association="Self.FK_blogcomment_blogcomment">
+            <End Role="blog" EntitySet="blogs" />
+            <End Role="blogcomment" EntitySet="blogcomments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_carpentry_task" Association="Self.FK_carpentry_task">
+            <End Role="task" EntitySet="tasks" />
+            <End Role="carpentry" EntitySet="carpentries" />
+          </AssociationSet>
+          <AssociationSet Name="FK_supplier_category" Association="Self.FK_supplier_category">
+            <End Role="category" EntitySet="categories" />
+            <End Role="supplier" EntitySet="suppliers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_chatmessage_user" Association="Self.FK_chatmessage_user">
+            <End Role="user" EntitySet="users" />
+            <End Role="chatmessage" EntitySet="chatmessages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_chatmessage_user1" Association="Self.FK_chatmessage_user1">
+            <End Role="user" EntitySet="users" />
+            <End Role="chatmessage" EntitySet="chatmessages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_comment_supplier" Association="Self.FK_comment_supplier">
+            <End Role="supplier" EntitySet="suppliers" />
+            <End Role="comment" EntitySet="comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_community_package" Association="Self.FK_community_package">
+            <End Role="package" EntitySet="packages" />
+            <End Role="community" EntitySet="communities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_communuser_community" Association="Self.FK_communuser_community">
+            <End Role="community" EntitySet="communities" />
+            <End Role="communuser" EntitySet="communusers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_communuser_user" Association="Self.FK_communuser_user">
+            <End Role="user" EntitySet="users" />
+            <End Role="communuser" EntitySet="communusers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_creditcard_user" Association="Self.FK_creditcard_user">
+            <End Role="user" EntitySet="users" />
+            <End Role="creditcard" EntitySet="creditcards" />
+          </AssociationSet>
+          <AssociationSet Name="FK_document_type" Association="Self.FK_document_type">
+            <End Role="document_type" EntitySet="document_type" />
+            <End Role="document" EntitySet="documents" />
+          </AssociationSet>
+          <AssociationSet Name="FK_emailtheme_emailtype" Association="Self.FK_emailtheme_emailtype">
+            <End Role="emailtype" EntitySet="emailtypes" />
+            <End Role="emailtheme" EntitySet="emailthemes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_emailtheme_user" Association="Self.FK_emailtheme_user">
+            <End Role="user" EntitySet="users" />
+            <End Role="emailtheme" EntitySet="emailthemes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_fee_user" Association="Self.FK_fee_user">
+            <End Role="user" EntitySet="users" />
+            <End Role="fee" EntitySet="fees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_friendmapping_user" Association="Self.FK_friendmapping_user">
+            <End Role="user" EntitySet="users" />
+            <End Role="friendmapping" EntitySet="friendmappings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_friendmapping_user1" Association="Self.FK_friendmapping_user1">
+            <End Role="user" EntitySet="users" />
+            <End Role="friendmapping" EntitySet="friendmappings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_onlineuser_user" Association="Self.FK_onlineuser_user">
+            <End Role="user" EntitySet="users" />
+            <End Role="onlineuser" EntitySet="onlineusers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_suscribe_package" Association="Self.FK_suscribe_package">
+            <End Role="package" EntitySet="packages" />
+            <End Role="suscribe" EntitySet="suscribes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_payment_user" Association="Self.FK_payment_user">
+            <End Role="user" EntitySet="users" />
+            <End Role="payment" EntitySet="payments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_payment_user1" Association="Self.FK_payment_user1">
+            <End Role="user" EntitySet="users" />
+            <End Role="payment" EntitySet="payments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_task_taskcomment" Association="Self.FK_task_taskcomment">
+            <End Role="task" EntitySet="tasks" />
+            <End Role="taskcomment" EntitySet="taskcomments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_taskcomment_user" Association="Self.FK_taskcomment_user">
+            <End Role="user" EntitySet="users" />
+            <End Role="taskcomment" EntitySet="taskcomments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_taskuser_user" Association="Self.FK_taskuser_user">
+            <End Role="user" EntitySet="users" />
+            <End Role="taskuser" EntitySet="taskusers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_uso_user" Association="Self.FK_uso_user">
+            <End Role="user" EntitySet="users" />
+            <End Role="uso" EntitySet="usoes" />
+          </AssociationSet>
+          <EntitySet Name="Vehiculos" EntityType="pjrdev_condominiosModel.Vehiculo" />
+          <AssociationSet Name="FK_Vehiculos_user" Association="pjrdev_condominiosModel.FK_Vehiculos_user">
+            <End Role="user" EntitySet="users" />
+            <End Role="Vehiculo" EntitySet="Vehiculos" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Vehiculo">
+          <Key>
+            <PropertyRef Name="IdVehiculo" />
+          </Key>
+          <Property Name="IdVehiculo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdUser" Type="Int64" Nullable="false" />
+          <Property Name="Brand" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Model" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Color" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Year" Type="Int32" Nullable="false" />
+          <Property Name="ClapBoard" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="StampNumber" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="user" Relationship="pjrdev_condominiosModel.FK_Vehiculos_user" FromRole="Vehiculo" ToRole="user" />
+        </EntityType>
+        <Association Name="FK_Vehiculos_user">
+          <End Type="pjrdev_condominiosModel.user" Role="user" Multiplicity="1" />
+          <End Type="pjrdev_condominiosModel.Vehiculo" Role="Vehiculo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Vehiculo">
+              <PropertyRef Name="IdUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="pjrdev_condominiosModelStoreContainer" CdmEntityContainer="pjrdev_condominiosEntities">
+          <EntitySetMapping Name="banks">
+            <EntityTypeMapping TypeName="pjrdev_condominiosModel.bank">
+              <MappingFragment StoreEntitySet="bank">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="account_name" ColumnName="account_name" />
+                <ScalarProperty Name="account_number" ColumnName="account_number" />
+                <ScalarProperty Name="bank_name" ColumnName="bank_name" />
+                <ScalarProperty Name="route_number" ColumnName="route_number" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="updated_at" ColumnName="updated_at" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="blogs">
+            <EntityTypeMapping TypeName="pjrdev_condominiosModel.blog">
+              <MappingFragment StoreEntitySet="blog">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="content" ColumnName="content" />
+                <ScalarProperty Name="author" ColumnName="author" />
+                <ScalarProperty Name="blogdate" ColumnName="blogdate" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="blogcomments">
+            <EntityTypeMapping TypeName="pjrdev_condominiosModel.blogcomment">
+              <MappingFragment StoreEntitySet="blogcomment">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="comment" ColumnName="comment" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="postdate" ColumnName="postdate" />
+                <ScalarProperty Name="blog_id" ColumnName="blog_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="books">
+            <EntityTypeMapping TypeName="pjrdev_condominiosModel.book">
+              <MappingFragment StoreEntitySet="book">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="first_name" ColumnName="first_name" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="start_time" ColumnName="start_time" />
+                <ScalarProperty Name="end_time" ColumnName="end_time" />
+                <ScalarProperty Name="requested_date" ColumnName="requested_date" />
+                <ScalarProperty Name="cost_per_reservation" ColumnName="cost_per_reservation" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="carpentries">
+            <EntityTypeMapping TypeName="pjrdev_condominiosModel.carpentry">
+              <MappingFragment StoreEntitySet="carpentry">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="comment" ColumnName="comment" />
+                <ScalarProperty Name="task_id" ColumnName="task_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="categories">
+            <EntityTypeMapping TypeName="pjrdev_condominiosModel.category">
+              <MappingFragment StoreEntitySet="category">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="chatmessages">
+            <EntityTypeMapping TypeName="pjrdev_condominiosModel.chatmessage">
+              <MappingFragment StoreEntitySet="chatmessage">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="from_user_id" ColumnName="from_user_id" />
+                <ScalarProperty Name="to_user_id" ColumnName="to_user_id" />
+                <ScalarProperty Name="message" ColumnName="message" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="updated_at" ColumnName="updated_at" />
+                <ScalarProperty Name="viewed_at" ColumnName="viewed_at" />
+                <ScalarProperty Name="is_active" ColumnName="is_active" />
+                <ScalarProperty Name="is_read" ColumnName="is_read" />
+                <ScalarProperty Name="is_email" ColumnName="is_email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="comments">
+            <EntityTypeMapping TypeName="pjrdev_condominiosModel.comment">
+              <MappingFragment StoreEntitySet="comment">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="commentary" ColumnName="commentary" />
+                <ScalarProperty Name="assessment" ColumnName="assessment" />
+                <ScalarProperty Name="supplier_id" ColumnName="supplier_id" />
+                <ScalarProperty Name="user_name" ColumnName="user_name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="communities">
+            <EntityTypeMapping TypeName="pjrdev_condominiosModel.community">
+              <MappingFragment StoreEntitySet="community">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="admin_email" ColumnName="admin_email" />
+                <ScalarProperty Name="package_id" ColumnName="package_id" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="first_name" ColumnName="first_name" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="updated_at" ColumnName="updated_at" />
+                <ScalarProperty Name="is_active" ColumnName="is_active" />
+                <ScalarProperty Name="apart" ColumnName="apart" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="communusers">
+            <EntityTypeMapping TypeName="pjrdev_condominiosModel.communuser">
+              <MappingFragment StoreEntitySet="communuser">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="commun_id" ColumnName="commun_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="contactinfoes">
+            <EntityTypeMapping TypeName="pjrdev_condominiosModel.contactinfo">
+              <MappingFragment StoreEntitySet="contactinfo">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="company_admin" ColumnName="company_admin" />
+                <ScalarProperty Name="coordinator" ColumnName="coordinator" />
+                <ScalarProperty Name="president" ColumnName="president" />
+                <ScalarProperty Name="vice_president" ColumnName="vice_president" />
+                <ScalarProperty Name="treasurer" ColumnName="treasurer" />
+                <ScalarProperty Name="secretary" ColumnName="secretary" />
+                <ScalarProperty Name="vocal1" ColumnName="vocal1" />
+                <ScalarProperty Name="vocal2" ColumnName="vocal2" />
+                <ScalarProperty Name="vocal3" ColumnName="vocal3" />
+                <ScalarProperty Name="phy_address" ColumnName="phy_address" />
+                <ScalarProperty Name="postal_address" ColumnName="postal_address" />
+                <ScalarProperty Name="phone_number1" ColumnName="phone_number1" />
+                <ScalarProperty Name="phone_number2" ColumnName="phone_number2" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="updated_at" ColumnName="updated_at" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="contracts">
+            <EntityTypeMapping TypeName="pjrdev_condominiosModel.contract">
+              <MappingFragment StoreEntitySet="contract">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="first_name" ColumnName="first_name" />
+                <ScalarProperty Name="date_contract" ColumnName="date_contract" />
+                <ScalarProperty Name="date_notification" ColumnName="date_notification" />
+                <ScalarProperty Name="upload_contract" ColumnName="upload_contract" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="updated_at" ColumnName="updated_at" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="creditcards">
+            <EntityTypeMapping TypeName="pjrdev_condominiosModel.creditcard">
+              <MappingFragment StoreEntitySet="creditcard">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="first_name" ColumnName="first_name" />
+                <ScalarProperty Name="surname" ColumnName="surname" />
+                <ScalarProperty Name="card_number" ColumnName="card_number" />
+                <ScalarProperty Name="expiration_date" ColumnName="expiration_date" />
+                <ScalarProperty Name="ccv" ColumnName="ccv" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="country" ColumnName="country" />
+                <ScalarProperty Name="city" ColumnName="city" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="state" ColumnName="state" />
+                <ScalarProperty Name="postal_code" ColumnName="postal_code" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="updated_at" ColumnName="updated_at" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="documents">
+            <EntityTypeMapping TypeName="pjrdev_condominiosModel.document">
+              <MappingFragment StoreEntitySet="document">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="first_name" ColumnName="first_name" />
+                <ScalarProperty Name="uploaded_by" ColumnName="uploaded_by" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="type_id" ColumnName="type_id" />
+                <ScalarProperty Name="upload_document" ColumnName="upload_document" />
+                <ScalarProperty Name="share" ColumnName="share" />
+                <ScalarProperty Name="notify_email" ColumnName="notify_email" />
+                <ScalarProperty Name="uploaded_date" ColumnName="uploaded_date" />
+                <ScalarProperty Name="link" ColumnName="link" />
+                <ScalarProperty Name="updated_at" ColumnName="updated_at" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="document_type">
+            <EntityTypeMapping TypeName="pjrdev_condominiosModel.document_type">
+              <MappingFragment StoreEntitySet="document_type">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="type_name" ColumnName="type_name" />
+                <ScalarProperty Name="share" ColumnName="share" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="efacs">
+            <EntityTypeMapping TypeName="pjrdev_condominiosModel.efac">
+              <MappingFragment StoreEntitySet="efac">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="first_name" ColumnName="first_name" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="start_time" ColumnName="start_time" />
+                <ScalarProperty Name="end_time" ColumnName="end_time" />
+                <ScalarProperty Name="interval" ColumnName="interval" />
+                <ScalarProperty Name="duration" ColumnName="duration" />
+                <ScalarProperty Name="cost_reservation" ColumnName="cost_reservation" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="upload_regulation" ColumnName="upload_regulation" />
+                <ScalarProperty Name="share" ColumnName="share" />
+                <ScalarProperty Name="status" ColumnName="status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="emailthemes">
+            <EntityTypeMapping TypeName="pjrdev_condominiosModel.emailtheme">
+              <MappingFragment StoreEntitySet="emailtheme">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="htmcontent" ColumnName="htmcontent" />
+                <ScalarProperty Name="type_id" ColumnName="type_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="emailtypes">
+            <EntityTypeMapping TypeName="pjrdev_condominiosModel.emailtype">
+              <MappingFragment StoreEntitySet="emailtype">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="represent" ColumnName="represent" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="events">
+            <EntityTypeMapping TypeName="pjrdev_condominiosModel.event">
+              <MappingFragment StoreEntitySet="event">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="place" ColumnName="place" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="note" ColumnName="note" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="event_date" ColumnName="event_date" />
+                <ScalarProperty Name="updated_at" ColumnName="updated_at" />
+                <ScalarProperty Name="share" ColumnName="share" />
+                <ScalarProperty Name="is_active" ColumnName="is_active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="facsches">
+            <EntityTypeMapping TypeName="pjrdev_condominiosModel.facsche">
+              <MappingFragment StoreEntitySet="facsche">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="fac_id" ColumnName="fac_id" />
+                <ScalarProperty Name="schedule_id" ColumnName="schedule_id" />
+                <ScalarProperty Name="status" ColumnName="status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="fees">
+            <EntityTypeMapping TypeName="pjrdev_condominiosModel.fee">
+              <MappingFragment StoreEntitySet="fee">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="cost" ColumnName="cost" />
+                <ScalarProperty Name="bank_id" ColumnName="bank_id" />
+                <ScalarProperty Name="merchant_account" ColumnName="merchant_account" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="tax_charge" ColumnName="tax_charge" />
+                <ScalarProperty Name="penalty" ColumnName="penalty" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="friendmappings">
+            <EntityTypeMapping TypeName="pjrdev_condominiosModel.friendmapping">
+              <MappingFragment StoreEntitySet="friendmapping">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="request_userid" ColumnName="request_userid" />
+                <ScalarProperty Name="end_userid" ColumnName="end_userid" />
+                <ScalarProperty Name="request_status" ColumnName="request_status" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="updated_at" ColumnName="updated_at" />
+                <ScalarProperty Name="is_active" ColumnName="is_active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="notifications">
+            <EntityTypeMapping TypeName="pjrdev_condominiosModel.notification">
+              <MappingFragment StoreEntitySet="notification">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="to_userid" ColumnName="to_userid" />
+                <ScalarProperty Name="from_userid" ColumnName="from_userid" />
+                <ScalarProperty Name="noti_type" ColumnName="noti_type" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="updated_at" ColumnName="updated_at" />
+                <ScalarProperty Name="is_active" ColumnName="is_active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="onlineusers">
+            <EntityTypeMapping TypeName="pjrdev_condominiosModel.onlineuser">
+              <MappingFragment StoreEntitySet="onlineuser">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="connectionID" ColumnName="connectionID" />
+                <ScalarProperty Name="is_online" ColumnName="is_online" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="updated_at" ColumnName="updated_at" />
+                <ScalarProperty Name="is_active" ColumnName="is_active" />
+                <ScalarProperty Name="first_name" ColumnName="first_name" />
+                <ScalarProperty Name="last_name" ColumnName="last_name" />
+                <ScalarProperty Name="user_img" ColumnName="user_img" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="packages">
+            <EntityTypeMapping TypeName="pjrdev_condominiosModel.package">
+              <MappingFragment StoreEntitySet="package">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="first_name" ColumnName="first_name" />
+                <ScalarProperty Name="payment" ColumnName="payment" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="community" ColumnName="community" />
+                <ScalarProperty Name="admin_email" ColumnName="admin_email" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="updated_at" ColumnName="updated_at" />
+                <ScalarProperty Name="suscribe_link" ColumnName="suscribe_link" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="payments">
+            <EntityTypeMapping TypeName="pjrdev_condominiosModel.payment">
+              <MappingFragment StoreEntitySet="payment">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="date_issue" ColumnName="date_issue" />
+                <ScalarProperty Name="date_payment" ColumnName="date_payment" />
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+                <ScalarProperty Name="method" ColumnName="method" />
+                <ScalarProperty Name="state" ColumnName="state" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="to_user_id" ColumnName="to_user_id" />
+                <ScalarProperty Name="first_name" ColumnName="first_name" />
+                <ScalarProperty Name="surname" ColumnName="surname" />
+                <ScalarProperty Name="email" ColumnName="email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="schedules">
+            <EntityTypeMapping TypeName="pjrdev_condominiosModel.schedule">
+              <MappingFragment StoreEntitySet="schedule">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="schedule1" ColumnName="schedule" />
+                <ScalarProperty Name="from_time" ColumnName="from_time" />
+                <ScalarProperty Name="to_time" ColumnName="to_time" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="suppliers">
+            <EntityTypeMapping TypeName="pjrdev_condominiosModel.supplier">
+              <MappingFragment StoreEntitySet="supplier">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="logo" ColumnName="logo" />
+                <ScalarProperty Name="municipality" ColumnName="municipality" />
+                <ScalarProperty Name="category_id" ColumnName="category_id" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="assessment" ColumnName="assessment" />
+                <ScalarProperty Name="company" ColumnName="company" />
+                <ScalarProperty Name="contact_name" ColumnName="contact_name" />
+                <ScalarProperty Name="type_service" ColumnName="type_service" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="supplier_from" ColumnName="supplier_from" />
+                <ScalarProperty Name="web_page" ColumnName="web_page" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="updated_at" ColumnName="updated_at" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="suscribes">
+            <EntityTypeMapping TypeName="pjrdev_condominiosModel.suscribe">
+              <MappingFragment StoreEntitySet="suscribe">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="last_name" ColumnName="last_name" />
+                <ScalarProperty Name="community_name" ColumnName="community_name" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="phone_number" ColumnName="phone_number" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="logged_in" ColumnName="logged_in" />
+                <ScalarProperty Name="package_id" ColumnName="package_id" />
+                <ScalarProperty Name="is_paid" ColumnName="is_paid" />
+                <ScalarProperty Name="paid_at" ColumnName="paid_at" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tasks">
+            <EntityTypeMapping TypeName="pjrdev_condominiosModel.task">
+              <MappingFragment StoreEntitySet="task">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="task_name" ColumnName="task_name" />
+                <ScalarProperty Name="responsable" ColumnName="responsable" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="estimated_date" ColumnName="estimated_date" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="completed_date" ColumnName="completed_date" />
+                <ScalarProperty Name="archived_date" ColumnName="archived_date" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="comments" ColumnName="comments" />
+                <ScalarProperty Name="task_date" ColumnName="task_date" />
+                <ScalarProperty Name="share" ColumnName="share" />
+                <ScalarProperty Name="updated_at" ColumnName="updated_at" />
+                <ScalarProperty Name="is_read" ColumnName="is_read" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="taskcomments">
+            <EntityTypeMapping TypeName="pjrdev_condominiosModel.taskcomment">
+              <MappingFragment StoreEntitySet="taskcomment">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="comment" ColumnName="comment" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="task_id" ColumnName="task_id" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="taskusers">
+            <EntityTypeMapping TypeName="pjrdev_condominiosModel.taskuser">
+              <MappingFragment StoreEntitySet="taskuser">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="task_list" ColumnName="task_list" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tooltips">
+            <EntityTypeMapping TypeName="pjrdev_condominiosModel.tooltip">
+              <MappingFragment StoreEntitySet="tooltip">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="watch1" ColumnName="watch1" />
+                <ScalarProperty Name="edit1" ColumnName="edit1" />
+                <ScalarProperty Name="remove1" ColumnName="remove1" />
+                <ScalarProperty Name="reserve1" ColumnName="reserve1" />
+                <ScalarProperty Name="watch2" ColumnName="watch2" />
+                <ScalarProperty Name="edit2" ColumnName="edit2" />
+                <ScalarProperty Name="remove2" ColumnName="remove2" />
+                <ScalarProperty Name="reserve2" ColumnName="reserve2" />
+                <ScalarProperty Name="user_type" ColumnName="user_type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="transactions">
+            <EntityTypeMapping TypeName="pjrdev_condominiosModel.transaction">
+              <MappingFragment StoreEntitySet="transaction">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="trans_id" ColumnName="trans_id" />
+                <ScalarProperty Name="date_info" ColumnName="date_info" />
+                <ScalarProperty Name="kind" ColumnName="kind" />
+                <ScalarProperty Name="debit" ColumnName="debit" />
+                <ScalarProperty Name="credit" ColumnName="credit" />
+                <ScalarProperty Name="balance" ColumnName="balance" />
+                <ScalarProperty Name="state" ColumnName="state" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="users">
+            <EntityTypeMapping TypeName="pjrdev_condominiosModel.user">
+              <MappingFragment StoreEntitySet="user">
+                <ScalarProperty Name="Codigo_Postal" ColumnName="Codigo_Postal" />
+                <ScalarProperty Name="Ciudad" ColumnName="Ciudad" />
+                <ScalarProperty Name="Pais" ColumnName="Pais" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="first_name1" ColumnName="first_name1" />
+                <ScalarProperty Name="last_name1" ColumnName="last_name1" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="is_admin" ColumnName="is_admin" />
+                <ScalarProperty Name="is_logged" ColumnName="is_logged" />
+                <ScalarProperty Name="first_name2" ColumnName="first_name2" />
+                <ScalarProperty Name="last_name2" ColumnName="last_name2" />
+                <ScalarProperty Name="mother_last_name1" ColumnName="mother_last_name1" />
+                <ScalarProperty Name="mother_last_name2" ColumnName="mother_last_name2" />
+                <ScalarProperty Name="phone_number1" ColumnName="phone_number1" />
+                <ScalarProperty Name="phone_number2" ColumnName="phone_number2" />
+                <ScalarProperty Name="postal_address" ColumnName="postal_address" />
+                <ScalarProperty Name="residential_address" ColumnName="residential_address" />
+                <ScalarProperty Name="upload_writing" ColumnName="upload_writing" />
+                <ScalarProperty Name="user_img" ColumnName="user_img" />
+                <ScalarProperty Name="brand" ColumnName="brand" />
+                <ScalarProperty Name="model" ColumnName="model" />
+                <ScalarProperty Name="colour" ColumnName="colour" />
+                <ScalarProperty Name="year" ColumnName="year" />
+                <ScalarProperty Name="clapboard" ColumnName="clapboard" />
+                <ScalarProperty Name="stamp_number" ColumnName="stamp_number" />
+                <ScalarProperty Name="is_leased" ColumnName="is_leased" />
+                <ScalarProperty Name="since" ColumnName="since" />
+                <ScalarProperty Name="until" ColumnName="until" />
+                <ScalarProperty Name="tenant_first_name1" ColumnName="tenant_first_name1" />
+                <ScalarProperty Name="tenant_last_name1" ColumnName="tenant_last_name1" />
+                <ScalarProperty Name="tenant_mother_last_name1" ColumnName="tenant_mother_last_name1" />
+                <ScalarProperty Name="tenant_first_name2" ColumnName="tenant_first_name2" />
+                <ScalarProperty Name="tenant_last_name2" ColumnName="tenant_last_name2" />
+                <ScalarProperty Name="tenant_mother_last_name2" ColumnName="tenant_mother_last_name2" />
+                <ScalarProperty Name="leased_postal_address" ColumnName="leased_postal_address" />
+                <ScalarProperty Name="leased_residential_address" ColumnName="leased_residential_address" />
+                <ScalarProperty Name="leased_upload_file" ColumnName="leased_upload_file" />
+                <ScalarProperty Name="is_active" ColumnName="is_active" />
+                <ScalarProperty Name="role" ColumnName="role" />
+                <ScalarProperty Name="acq_date" ColumnName="acq_date" />
+                <ScalarProperty Name="siono" ColumnName="siono" />
+                <ScalarProperty Name="create_userid" ColumnName="create_userid" />
+                <ScalarProperty Name="package_id" ColumnName="package_id" />
+                <ScalarProperty Name="is_paid" ColumnName="is_paid" />
+                <ScalarProperty Name="paid_at" ColumnName="paid_at" />
+                <ScalarProperty Name="is_del" ColumnName="is_del" />
+                <ScalarProperty Name="apartment" ColumnName="apartment" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="usoes">
+            <EntityTypeMapping TypeName="pjrdev_condominiosModel.uso">
+              <MappingFragment StoreEntitySet="uso">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="aviso" ColumnName="aviso" />
+                <ScalarProperty Name="terminos" ColumnName="terminos" />
+                <ScalarProperty Name="reservados" ColumnName="reservados" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="updated_at" ColumnName="updated_at" />
+                <ScalarProperty Name="create_userid" ColumnName="create_userid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Vehiculos">
+            <EntityTypeMapping TypeName="pjrdev_condominiosModel.Vehiculo">
+              <MappingFragment StoreEntitySet="Vehiculos">
+                <ScalarProperty Name="StampNumber" ColumnName="StampNumber" />
+                <ScalarProperty Name="ClapBoard" ColumnName="ClapBoard" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="Color" ColumnName="Color" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="Brand" ColumnName="Brand" />
+                <ScalarProperty Name="IdUser" ColumnName="IdUser" />
+                <ScalarProperty Name="IdVehiculo" ColumnName="IdVehiculo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

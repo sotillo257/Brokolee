@@ -1,0 +1,179 @@
+/*!
+ * ui-select
+ * http://github.com/angular-ui/ui-select
+ * Version: 0.14.8 - 2016-02-18T22:01:43.880Z
+ * License: MIT
+ */
+
+.top-view {
+    border: none;
+    border-bottom: 1px solid lightgrey !important;
+    padding: 0 50px;
+}
+
+.input-view {
+    border: none;
+    border-bottom: 1px solid lightgrey !important;
+    background-color: #f0f0f0;
+}
+
+.bottom-view {
+    border: none;
+    border-top: 1px solid lightgrey !important;
+    /*height:150px !important;*/
+}
+
+.input-view div h4 button {
+    border: none !important;
+    color: black;
+    padding: 0 5px !important;
+}
+
+    .input-view div h4 button:hover,
+    .input-view div h4 button:focus {
+        color: dodgerblue;
+        background: none;
+        border: none;
+    }
+
+select, input, textarea {
+    font-size: 16px;
+    width: 100%;
+    margin: 5px;
+    height: 30px;
+    border-radius: 3px;
+    border: 1px solid lightgrey;
+    padding: 0 10px;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+    padding: 0 5px;
+    cursor: pointer;
+    transition: all .2s ease-in-out;
+}
+
+    a:hover {
+        color: dodgerblue !important;
+    }
+
+.address-copy-btn:hover {
+    color: white !important;
+    background: limegreen !important;
+}
+
+
+i {
+    margin: 5px;
+    font-size: 16px;
+}
+
+.fa-search {
+    font-size: 16px;
+    position: absolute;
+    z-index: 3;
+    right: 10px;
+    top: 9px;
+}
+
+.fa-arrow-circle-o-up,
+.fa-file-text-o {
+    font-size: 25px !important;
+    padding: 3px;
+}
+
+.content-wrapper {
+    background-color: white !important;
+    margin-left: 115px;
+    min-height: calc(100vh -150) !important;
+}
+
+@media(min-width:768px) {
+    .sidebar-mini.sidebar-collapse .content-wrapper,
+    .sidebar-mini.sidebar-collapse .right-side,
+    .sidebar-mini.sidebar-collapse .main-footer {
+        margin-left: 25px !important;
+    }
+}
+
+.modal-dialog {
+    position: absolute;
+    left: 30%;
+    top: 10%;
+    z-index: 10000;
+}
+
+
+#wallet_address_input {
+    width: 60%;
+    box-shadow: none;
+    border-width: 1px !important;
+    padding: 0 10px;
+}
+
+.transaction-container {
+    max-height: 540px;
+    overflow-y: auto;
+}
+
+@media (max-width: 767px) {
+    .content-wrapper, .main-footer {
+        margin-left: 0;
+    }
+
+    .modal-dialog {
+        position: absolute;
+        width: 95%;
+        left: 0;
+        top: 8%;
+        z-index: 10000;
+    }
+
+    table td, table th {
+        font-size: 12px;
+    }
+
+    .transaction_table_address {
+        display: none;
+    }
+
+    .transaction_table_td1 {
+        width: 65px;
+    }
+
+    .transaction_table_td2 {
+        width: 90px;
+    }
+
+    .manage_wallet, .send_coin, .receive_coin {
+        font-size: 15px;
+        padding: 0 3px;
+    }
+
+    .amount_btc, .amount_usd {
+        width: 70% !important;
+    }
+
+    .col-xs-12 {
+        padding: 0;
+    }
+
+    h4 {
+        text-align: center;
+    }
+}
+
+.select2-container--default.select2-container--open {
+    z-index: 10000;
+}
+
+.select2-container--default.select2-container--focus .select2-selection--multiple,
+.select2-container--default .select2-selection--multiple {
+    border: 1px solid lightgrey !important;    
+    padding: 0 5px;
+}
+
+.select2-container .select2-search--inline .select2-search__field {
+    margin: 0 !important;
+}

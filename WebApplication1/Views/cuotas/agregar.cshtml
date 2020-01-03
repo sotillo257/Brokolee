@@ -1,0 +1,263 @@
+﻿
+@{
+    ViewBag.Title = "agregar";
+    Page.Title = "Agregar Cuenta - Brokolee Software";
+}
+
+<div class="page-content-wrapper">
+
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="page-title-box">
+                    <div class="float-left">
+                        <div class="breadcrumb float-md-right">
+                            <h4 class="page-title">Agregar Cuenta de Banco o CC</h4>
+                        </div>
+                    </div>
+                    <div class="float-right">
+                        <ul class="breadcrumb float-md-right">
+                            <li class="breadcrumb-item"><a href="index.html" class="text-success"><i class="mdi mdi-home-modern"></i> Panel de Control</a></li>
+                            <li class="breadcrumb-item active">Agregar Cuenta de Banco o CC</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end page title end breadcrumb -->
+        <!-- back button -->
+        <div class="row pb-4">
+            <div class="col-md-6">
+                <a href="javascript:history.back()"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+            </div>
+        </div>
+        <!-- end back button -->
+        <div class="row">
+
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="d-inline-block">Nueva Cuenta</h5>
+                        <div class="form-group row">
+                            <div class="form-divider"></div>
+                            <label for="example-address1-input" class="col-sm-3 col-form-label">Elija el tipo de cuenta</label>
+                            <div class="col-sm-9">
+                                <div class="form-check-inline my-2">
+                                    <div class="custom-control custom-checkbox">
+                                        <label><input type="radio" id="id_radio_bank" name="tipocuenta" value="banco" onchange="onBankChange(this)"> Banco</label>
+                                    </div>
+                                </div>
+                                <div class="form-check-inline my-2">
+                                    <div class="custom-control custom-checkbox">
+                                        <label><input type="radio" id="id_radio_credit" name="tipocuenta" value="creditcard" onchange="onCreditChange(this)"> Credit Card</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <form method="post" id="bancoForm" action="@Url.Action("addbank", "cuotas")">
+                            @Html.AntiForgeryToken()
+                            <div class="banco box">
+                                <div class="form-divider"></div>
+                                <h5 class="d-inline-block m-b-20">Información de la cuenta de Banco</h5>
+                                <div class="form-group row">
+                                    <label for="example-email-input" class="col-sm-3 col-form-label">Nombre de la Cuenta</label>
+                                    <div class="col-sm-9">
+                                        <input class="form-control" type="text" value="" 
+                                               name="account_name" required  data-toggle="tooltip"
+                                               title="Nombre de la Cuenta"
+                                               placeholder="Cuenta Personal" id="example-email-input">
+                                        <small class="form-text text-muted">Nombre de la Cuenta</small>
+                                    </div>
+                                </div>
+                                <div class="form-divider"></div>
+                                <div class="form-group row">
+                                    <label for="example-name1-input" class="col-sm-3 col-form-label">Número de Cuenta</label>
+                                    <div class="col-sm-9">
+                                        <input class="form-control" type="text" value="" 
+                                               name="account_number" required
+                                               data-toggle="tooltip" title="Número de Cuenta"
+                                               placeholder="XXX-XXXXXXXX-X-XX" id="example-name1-input">
+                                        <small class="form-text text-muted">Número de Cuenta</small>
+                                    </div>
+                                </div>
+                                <div class="form-divider"></div>
+                                <div class="form-group row">
+                                    <label for="example-name1-input" class="col-sm-3 col-form-label">Nombre del Banco</label>
+                                    <div class="col-sm-9">
+                                        <input class="form-control" type="text" value="" name="bank_name" required 
+                                               placeholder="Nombre del Banco" id="example-name1-input" 
+                                               data-toggle="tooltip" title="Nombre del Banco"
+                                               />
+                                        <small class="form-text text-muted">Nombre del Banco</small>
+                                    </div>
+                                </div>
+                                <div class="form-divider"></div>
+                                <div class="form-group row">
+                                    <label for="example-lastname1-input" class="col-sm-3 col-form-label">Número de Ruta</label>
+                                    <div class="col-sm-9">
+                                        <input class="form-control" type="text" value="" 
+                                               name="route_number" required  data-toggle="tooltip" title="Número de Ruta"
+                                               placeholder="XXX-XXXXXXXX-X-XX" id="example-lastname1-input">
+                                        <small class="form-text text-muted">Número de Ruta</small>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary waves-effect waves-light">Agregar Banco</button>
+                                <a href="@Url.Action("estado", "cuotas")"><button type="button" class="btn btn-danger waves-effect waves-light">Cancelar</button></a>
+                            </div>
+                        </form>
+                        
+                        <form method="post" id="creditForm" action="@Url.Action("addcredit", "cuotas")">
+                            @Html.AntiForgeryToken()
+                            <div class="creditcard box">
+                                <div class="form-divider"></div>
+                                <h5 class="d-inline-block m-b-20">Información de la Tarjeta</h5>
+                                <div class="row form-material">
+                                    <div class="form-group row col-md-6 mb-2">
+                                        <label for="example-email-input" class="col-sm-6 col-form-label">Nombre</label>
+                                        <div class="col-sm-6">
+                                            <input class="form-control" type="text" value="" name="first_name" required
+                                                   placeholder="Nombre en la tarjeta" id="example-email-input">
+                                        </div>
+                                    </div>
+                                    <div class="form-divider"></div>
+                                    <div class="form-group row col-md-6 mb-2">
+                                        <label for="example-name1-input" class="col-sm-3 col-form-label">Apellido</label>
+                                        <div class="col-sm-9">
+                                            <input class="form-control" type="text" value="" required name="surname"
+                                                   placeholder="Apellido en la tarjeta" id="example-name1-input">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-divider"></div>
+                                <div class="form-group row">
+                                    <label for="example-lastname1-input" class="col-sm-3 col-form-label">Número de tarjeta</label>
+                                    <div class="col-sm-9">
+                                        <input class="form-control" type="text" value="" name="card_number" required
+                                               placeholder="XXXX-XXXX-XXXX-XXXX-XXXX" id="example-lastname1-input">
+                                    </div>
+                                </div>
+                                <div class="form-divider"></div>
+                                <div class="row form-material">
+                                    <div class="form-group row col-md-6 mb-2">
+                                        <label class="col-sm-6 col-form-label">Fecha de vencimiento</label>
+                                        <div class="col-sm-3">
+                                            <select class="form-control" name="month"  required>
+                                                <option value="">Mes</option>
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5">5</option>
+                                                <option value="6">6</option>
+                                                <option value="7">7</option>
+                                                <option value="8">8</option>
+                                                <option value="9">9</option>
+                                                <option value="10">10</option>
+                                                <option value="11">11</option>
+                                                <option value="12">12</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <select class="form-control" name="year" required>
+                                                <option value="">Año</option>
+                                                <option value="2018">2018</option>
+                                                <option value="2019">2019</option>
+                                                <option value="2020">2020</option>
+                                                <option value="2021">2021</option>
+                                                <option value="2022">2022</option>
+                                                <option value="2023">2023</option>
+                                                <option value="2024">2024</option>
+                                                <option value="2025">2025</option>
+                                                <option value="2026">2026</option>
+                                                <option value="2027">2027</option>
+                                                <option value="2028">2028</option>
+                                                <option value="2029">2029</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-divider"></div>
+                                    <div class="form-group row col-md-6 mb-2">
+                                        <label for="example-name1-input" class="col-sm-3 col-form-label">CCV</label>
+                                        <div class="col-sm-9">
+                                            <input class="form-control" type="text" value="" name="ccv"
+                                                   placeholder="CCV" id="example-name1-input">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-divider"></div>
+                                <h5 class="d-inline-block m-b-20">Dirección de Facturación</h5>
+                                <div class="form-group row">
+                                    <label for="example-lastname1-input" class="col-sm-3 col-form-label">Dirección</label>
+                                    <div class="col-sm-9">
+                                        <input class="form-control" type="text" value="" name="address"
+                                               placeholder="Dirección" id="example-lastname1-input">
+                                    </div>
+                                </div>
+                                <div class="row form-material">
+                                    <div class="form-group row col-md-6 mb-2">
+                                        <label for="example-email-input" class="col-sm-6 col-form-label">País</label>
+                                        <div class="col-sm-6">
+                                            <input class="form-control" type="text" value="" name="country"
+                                                   placeholder="País" id="example-email-input">
+                                        </div>
+                                    </div>
+                                    <div class="form-divider"></div>
+                                    <div class="form-group row col-md-6 mb-2">
+                                        <label for="example-name1-input" class="col-sm-3 col-form-label">Estado</label>
+                                        <div class="col-sm-9">
+                                            <input class="form-control" type="text" value="" name="state"
+                                                   placeholder="Estado" id="example-name1-input">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-material">
+                                    <div class="form-group row col-md-6 mb-2">
+                                        <label for="example-email-input" class="col-sm-6 col-form-label">Ciudad</label>
+                                        <div class="col-sm-6">
+                                            <input class="form-control" type="text" value="" name="city"
+                                                   placeholder="Ciudad" id="example-email-input">
+                                        </div>
+                                    </div>
+                                    <div class="form-divider"></div>
+                                    <div class="form-group row col-md-6 mb-2">
+                                        <label for="example-name1-input" class="col-sm-3 col-form-label">Código Postal</label>
+                                        <div class="col-sm-9">
+                                            <input class="form-control" type="text" value="" name="postal_code"
+                                                   placeholder="Código Postal" id="example-name1-input">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-material">
+                                    <div class="form-group row col-md-6 mb-2">
+                                        <label for="example-email-input" class="col-sm-6 col-form-label">Teléfono</label>
+                                        <div class="col-sm-6">
+                                            <input class="form-control" type="text" value="" name="phone"
+                                                   placeholder="Teléfono" id="example-email-input">
+                                        </div>
+                                    </div>
+                                    <div class="form-divider"></div>
+                                    <div class="form-group row col-md-6 mb-2">
+
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary waves-effect waves-light">Agregar Tarjeta</button>
+                                <button type="button" class="btn btn-danger waves-effect waves-light">Cancelar</button>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div><!-- end row -->
+        <!-- back button -->
+        <div class="row pb-4">
+            <div class="col-md-6">
+                <a href="javascript:history.back()"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+            </div>
+        </div>
+        <!-- end back button -->
+
+    </div><!-- container -->
+
+</div> <!-- Page content Wrapper -->

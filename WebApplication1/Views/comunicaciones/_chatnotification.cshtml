@@ -1,0 +1,44 @@
+﻿<a class="nav-link dropdown-toggle arrow-none waves-effect waves-light" data-toggle="dropdown" href="#" role="button"
+   aria-haspopup="false" aria-expanded="false">
+    <i class="mdi mdi-wechat noti-icon"></i>
+    @if (Model.messageCount > 0)
+    {
+        <span class="badge badge-danger noti-icon-badge">@Model.messageCount</span>
+    }
+</a>
+<div class="dropdown-menu dropdown-menu-right dropdown-arrow dropdown-menu-lg">
+    <!-- item-->
+    <div class="dropdown-item noti-title">
+        <h5>
+            @if (Model.messageCount > 0)
+            {
+                <span class="badge badge-danger float-right">@Model.messageCount</span>
+            }
+
+            Mensajes Privados
+        </h5>
+    </div>
+    @foreach (var item in Model.pubMessageList)
+    {
+        <!-- item-->
+        <a href="javascript:void(0);" class="dropdown-item notify-item">
+            <div class="notify-icon">
+                @if (item.image_path != null)
+                {
+                    <img src="~/Upload/User_Logo/@item.image_path" alt="user-img" class="img-fluid rounded-circle" />
+                }
+                else
+                {
+                    <img src="~/assets/images/user.svg" alt="user-img" class="img-fluid rounded-circle" />
+                }
+            </div>
+            <p class="notify-details"><b>@item.username</b><small class="">You have @item.count_message unread messages.</small></p>
+        </a>
+    }
+
+    <div class="dropdown-divider"></div>
+    <!-- All-->
+    <a href="@Url.Action("privados","comunicaciones")" class="dropdown-item notify-item">
+        Ver todos los mensajes
+    </a>
+</div>

@@ -1,0 +1,47 @@
+﻿@{
+    ViewBag.Title = "panel";
+    Page.Title  = "Brokolee Software - Asistente Virtual para la Administración de Comunidades";
+}
+
+<div class="page-content-wrapper">
+
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="page-title-box">
+                    <div class="float-left">
+                        <div class="breadcrumb float-md-right">
+                            <h4 class="page-title">Panel de Control</h4>
+                        </div>
+                    </div>
+                    <div class="float-right">
+                        @if(Model.isPartial == true)
+                        {
+                              <ul></ul>
+                        }
+                        else
+                        {
+                            <ul class="breadcrumb float-md-right">
+                                <li class="breadcrumb-item"><a href="@Url.Action("panel", "control", new { area = "coadmin" })" class="text-success"><i class="mdi mdi-home-modern"></i> Panel de Control</a></li>
+                            </ul>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end page title end breadcrumb -->
+        <div class="row">
+
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+
+                    </div>
+                </div>
+            </div>
+        </div><!-- end row -->
+
+    </div><!-- container -->
+
+</div>
