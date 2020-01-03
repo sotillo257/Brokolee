@@ -171,10 +171,93 @@ namespace WebApplication1.Areas.webmaster.Controllers
         }
 
         [HttpPost]
-        public ActionResult InsertarTitular(user p_user) {
+        public ActionResult InsertarTitular(HttpPostedFileBase user_logo, string email, string password, string acq_date, string first_name1,
+           string last_name1, string mother_last_name1, string phone_number1, string postal_address, string residential_address, HttpPostedFileBase writing_script,
+           string siono, string since, string until, string tenant_first_name1, string tenant_last_name1, string tenant_mother_last_name1,
+           HttpPostedFileBase script_file, string leased_postal_address, string leased_residential_address, string apartment)
+        {
+            if (Session["USER_ID"] != null)
+            {
+                user newResident = CrearObjetoUser(user_logo, email, password, acq_date, first_name1, last_name1, mother_last_name1, 
+                                                   phone_number1, postal_address, residential_address, writing_script, siono, since, 
+                                                   until, tenant_first_name1, tenant_last_name1, tenant_mother_last_name1, script_file, 
+                                                   leased_postal_address, leased_residential_address, apartment);      
 
-            var x = p_user;
-                return Json(new { User = p_user });
+                if (entities.users.Where(x => x.email == newResident.email).ToList().Count > 0)
+                {
+                    return Redirect(Url.Action("agregar", "titulares", new { area = "webmaster" }));
+                }
+                else
+                {
+                    entities.users.Add(newResident);
+                    entities.SaveChanges();
+                    return Redirect(Url.Action("listado", "titulares", new { area = "webmaster" }));
+                }                   
+            }
+            else
+            {
+                return Redirect(Url.Action("agregar", "titulares", new { area = "webmaster" }));
+            }
+        }
+
+        private user CrearObjetoUser(HttpPostedFileBase user_logo, string email, string password, string acq_date, string first_name1,
+           string last_name1, string mother_last_name1, string phone_number1, string postal_address, string residential_address, HttpPostedFileBase writing_script,
+           string siono, string since, string until, string tenant_first_name1, string tenant_last_name1, string tenant_mother_last_name1,
+           HttpPostedFileBase script_file, string leased_postal_address, string leased_residential_address, string apartment) {
+            user newResident = new user();
+            long userId = (long)Session["USER_ID"];
+            newResident.user_img = GuardarArchivos(user_logo, "~/Upload/User_Logo");
+            newResident.upload_writing = GuardarArchivos(writing_script, "~/Upload/Upload_Writing");
+            newResident.leased_upload_file = GuardarArchivos(script_file, "~/Upload/Upload_Contrac");
+            newResident.email = email;
+            newResident.password = ep.Encrypt(password);
+            newResident.first_name1 = first_name1;
+            newResident.last_name1 = last_name1;
+            newResident.mother_last_name1 = mother_last_name1;
+            newResident.phone_number1 = phone_number1;
+            newResident.postal_address = postal_address;
+            newResident.apartment = apartment;
+            newResident.residential_address = residential_address;
+            newResident.is_leased = (siono == "boxyes") ? true : false;
+            newResident.acq_date = (ValidarFecha(acq_date) == null) ? DateTime.Now : (DateTime)ValidarFecha(acq_date);
+            newResident.since = ValidarFecha(since);
+            newResident.until = ValidarFecha(until);
+            newResident.tenant_first_name1 = tenant_first_name1;
+            newResident.tenant_last_name1 = tenant_last_name1;
+            newResident.tenant_mother_last_name1 = tenant_mother_last_name1;
+            newResident.leased_postal_address = leased_postal_address;
+            newResident.leased_residential_address = leased_residential_address;
+            newResident.role = 1;
+            newResident.create_userid = userId;
+            return newResident;
+        }
+
+        private DateTime? ValidarFecha(string fecha) {
+            if (fecha == "" || fecha == "0001-01-01" || fecha == null)
+            {
+                return null;
+            }
+            else
+            {
+                return DateTime.Parse(fecha);
+            }
+
+        }
+
+        private string GuardarArchivos(HttpPostedFileBase Archivo, string p_Path)
+        {
+            if (Archivo != null && Archivo.ContentLength > 0)
+            {
+                var fileName = Path.GetFileName(Archivo.FileName);
+                // store the file inside ~/App_Data/uploads folder
+                var path = Path.Combine(Server.MapPath(p_Path), fileName);
+                Archivo.SaveAs(path);
+                return fileName;
+            }
+            else
+            {
+                return null;
+            }
         }
 
         [HttpPost]
@@ -218,19 +301,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 {
                     newResident.user_img = null;
                 }
-
-               
-                
-
-
                 NewMethod(email, newResident); newResident.password = ep.Encrypt(password);
-
-                //convertidor
-                //DateTime acqDate = DateTime.ParseExact(acq_date, "yyyy-MM-dd",
-                //    System.Globalization.CultureInfo.InvariantCulture);
-
-
-                //newResident.acq_date = Convert.ToDateTime(acq_date);
 
                 newResident.acq_date = DateTime.Parse(acq_date);
                 newResident.first_name1 = first_name1;
@@ -313,25 +384,16 @@ namespace WebApplication1.Areas.webmaster.Controllers
 
                     return Redirect(Url.Action("listado", "titulares", new { area = "webmaster" }));
 
-                }
-               
-                //if (emailtheme != null)
-                //{
-                //    emailTemplate = emailtheme.htmcontent;
-                //} else
-                //{
-                //    string patialView = "~/Areas/webmaster/Views/titulares/emailing.cshtml";
-                //    emailingViewModel viewModel = new emailingViewModel();
-                //    emailTemplate = ViewRenderer.RenderPartialView(patialView, viewModel);
-                //}
-
-               
+                }              
             }
             else
             {
                 return Redirect(Url.Action("agregar", "titulares", new { area = "webmaster" }));
             }
         }
+
+
+       
 
         private static void NewMethod(string email, user newResident)
         {

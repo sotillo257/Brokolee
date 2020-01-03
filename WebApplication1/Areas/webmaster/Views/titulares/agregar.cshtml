@@ -77,7 +77,7 @@
 
             <div class="col-12">
                 <div class="card">
-                    @using (Html.BeginForm("newresident", "titulares",
+                    @using (Html.BeginForm("InsertarTitular", "titulares",
                         FormMethod.Post, new
                         {
                             id = "newresidentForm",
@@ -313,7 +313,7 @@
                                 <div class="form-group row">
                                     <label for="example-lastname2m-input" class="col-sm-3 col-form-label">Apellido materno</label>
                                     <div class="col-sm-9">
-                                        <input class="form-control" type="text" value="" name="tenant_last_name2" placeholder="Apellido materno"
+                                        <input class="form-control" type="text" value="" name="tenant_mother_last_name1" placeholder="Apellido materno"
                                                data-toggle="tooltip" title="Apellido materno del Arrendatario"
                                                id="example-lastname2m-input">
                                         <small class="form-text text-muted">Apellido materno del Arrendatario</small>
@@ -323,7 +323,7 @@
                                 <div class="form-group row">
                                     <label for="example-address1-input" class="col-sm-3 col-form-label">Dirección Postal</label>
                                     <div class="col-sm-9">
-                                        <input class="form-control" type="text" value="" name="tenant_mother_last_name1"
+                                        <input class="form-control" type="text" value="" name="leased_postal_address"
                                                data-toggle="tooltip" title="Dirección postal del Arrendatario"
                                                placeholder="Dirección Postal" id="example-address1-input">
                                         <small class="form-text text-muted">Dirección postal del Arrendatario</small>
@@ -337,7 +337,7 @@
                                     <label for="example-address2-input" class="col-sm-3 col-form-label">Dirección Residencial</label>
                                     <div class="col-sm-9">
                                         <input class="form-control" type="text" value="" placeholder="Dirección Residencial"
-                                               data-toggle="tooltip" title="Dirección residencial del Arrendatario"
+                                               data-toggle="tooltip" title="Dirección residencial del Arrendatario" name="leased_residential_address"
                                                id="example-address2-input">
                                         <small class="form-text text-muted">Dirección residencial del Arrendatario-G2</small>
                                     </div>
@@ -422,7 +422,7 @@
                                 </div>
                             </div>
 
-                            <button type="submit" class="btn btn-primary waves-effect waves-light" onclick=" GuardarTitular()">Guardar</button>
+                            <button type="submit" class="btn btn-primary waves-effect waves-light" >Guardar</button>
                         </div>
                     }
                     </div>
