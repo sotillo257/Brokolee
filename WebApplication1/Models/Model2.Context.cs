@@ -62,5 +62,6 @@ namespace WebApplication1.Models
         public virtual DbSet<user> users { get; set; }
         public virtual DbSet<uso> usoes { get; set; }
         public virtual DbSet<Vehiculo> Vehiculos { get; set; }
+        public virtual DbSet<Titulo> Titulos { get; set; }
     }
 }

@@ -712,6 +712,9 @@
     <Compile Include="Models\taskuser.cs">
       <DependentUpon>Model2.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Titulo.cs">
+      <DependentUpon>Model2.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\tooltip.cs">
       <DependentUpon>Model2.tt</DependentUpon>
     </Compile>
@@ -1477,6 +1480,8 @@
     <Content Include="Areas\coadmin\Views\contacto\listado.cshtml" />
     <Content Include="Areas\coadmin\Views\contacto\editar.cshtml" />
     <Content Include="Areas\webmaster\Views\webmaster\editar_perfil.cshtml" />
+    <Content Include="Areas\webmaster\Views\titulares\agregarVehiculo.cshtml" />
+    <Content Include="Areas\webmaster\Views\titulares\agregarTitulo.cshtml" />
     <None Include="Properties\PublishProfiles\Default Settings.pubxml" />
     <None Include="Properties\PublishProfiles\Default Settings1.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />

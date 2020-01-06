@@ -70,6 +70,8 @@
         <AssociationConnector Association="pjrdev_condominiosModel.FK_uso_user" ManuallyRouted="false" />
         <EntityTypeShape EntityType="pjrdev_condominiosModel.Vehiculo" Width="1.5" PointX="2.875" PointY="0.5" />
         <AssociationConnector Association="pjrdev_condominiosModel.FK_Vehiculos_user" />
+        <EntityTypeShape EntityType="pjrdev_condominiosModel.Titulo" Width="1.5" PointX="3" PointY="54.75" />
+        <AssociationConnector Association="pjrdev_condominiosModel.FK_Titulos_user" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

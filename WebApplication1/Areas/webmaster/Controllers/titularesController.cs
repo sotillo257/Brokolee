@@ -76,8 +76,58 @@ namespace WebApplication1.Areas.webmaster.Controllers
             }
         }
 
-        public ActionResult agregar()
+        public ActionResult agregar(string Error)
         {
+            if (Session["USER_ID"] != null)
+            {
+                long userId = (long)Session["USER_ID"];
+                user curUser = entities.users.Find(userId);
+                List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
+                agregarTitularesViewModel viewModel = new agregarTitularesViewModel();
+                viewModel.side_menu = "titulares";
+                viewModel.side_sub_menu = "titulares_agregar";
+                viewModel.document_category_list = entities.document_type.ToList();
+                viewModel.curUser = curUser;
+                viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
+                viewModel.pubMessageList = pubMessageList;
+                viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                viewModel.communityList = entities.communities.ToList();
+                ViewBag.msgError = Error;
+                return View(viewModel);
+            }
+            else
+            {
+                return Redirect(ep.GetLogoutUrl());
+            }
+        }
+
+        public ActionResult agregarVehiculo() {
+
+            if (Session["USER_ID"] != null)
+            {
+                long userId = (long)Session["USER_ID"];
+                user curUser = entities.users.Find(userId);
+                List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
+                agregarTitularesViewModel viewModel = new agregarTitularesViewModel();
+                viewModel.side_menu = "titulares";
+                viewModel.side_sub_menu = "titulares_agregar";
+                viewModel.document_category_list = entities.document_type.ToList();
+                viewModel.curUser = curUser;
+                viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
+                viewModel.pubMessageList = pubMessageList;
+                viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                viewModel.communityList = entities.communities.ToList();
+                return View(viewModel);
+            }
+            else
+            {
+                return Redirect(ep.GetLogoutUrl());
+            }
+        }
+
+        public ActionResult agregarTitulo()
+        {
+
             if (Session["USER_ID"] != null)
             {
                 long userId = (long)Session["USER_ID"];
@@ -171,64 +221,89 @@ namespace WebApplication1.Areas.webmaster.Controllers
         }
 
         [HttpPost]
-        public ActionResult InsertarTitular(HttpPostedFileBase user_logo, string email, string password, string acq_date, string first_name1,
-           string last_name1, string mother_last_name1, string phone_number1, string postal_address, string residential_address, HttpPostedFileBase writing_script,
-           string siono, string since, string until, string tenant_first_name1, string tenant_last_name1, string tenant_mother_last_name1,
-           HttpPostedFileBase script_file, string leased_postal_address, string leased_residential_address, string apartment)
+        public ActionResult InsertarTitular(HttpPostedFileBase user_logo, string email, string password, string first_name1,
+           string last_name1, string mother_last_name1, string phone_number1, string postal_address, string residential_address)
         {
             if (Session["USER_ID"] != null)
             {
-                user newResident = CrearObjetoUser(user_logo, email, password, acq_date, first_name1, last_name1, mother_last_name1, 
-                                                   phone_number1, postal_address, residential_address, writing_script, siono, since, 
-                                                   until, tenant_first_name1, tenant_last_name1, tenant_mother_last_name1, script_file, 
-                                                   leased_postal_address, leased_residential_address, apartment);      
+                try
+                {
+                    //Metodo que crea el objeto user
+                    user newResident = CrearObjetoUser(user_logo, email, password, first_name1, last_name1, mother_last_name1,
+                                                  phone_number1, postal_address, residential_address);
+                    //Condicion para validadr si el email ya existe en la base de datos
+                    if (entities.users.Where(x => x.email == newResident.email).ToList().Count > 0)
+                    {
+                        return Redirect(Url.Action("agregar", "titulares", new { area = "webmaster", Error = "El email ya existe" }));
+                    }
+                    else
+                    {
+                        entities.users.Add(newResident);
+                        entities.SaveChanges();                     
 
-                if (entities.users.Where(x => x.email == newResident.email).ToList().Count > 0)
-                {
-                    return Redirect(Url.Action("agregar", "titulares", new { area = "webmaster" }));
+                        return Redirect(Url.Action("listado", "titulares", new { area = "webmaster" }));
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
-                    entities.users.Add(newResident);
-                    entities.SaveChanges();
-                    return Redirect(Url.Action("listado", "titulares", new { area = "webmaster" }));
-                }                   
+                    return Redirect(Url.Action("agregar", "titulares", new { area = "webmaster", Error = "Intentando guardar Titular" + ex.Message }));
+                }
+                
+               
             }
             else
             {
-                return Redirect(Url.Action("agregar", "titulares", new { area = "webmaster" }));
+                return Redirect(ep.GetLogoutUrl());
             }
         }
 
-        private user CrearObjetoUser(HttpPostedFileBase user_logo, string email, string password, string acq_date, string first_name1,
-           string last_name1, string mother_last_name1, string phone_number1, string postal_address, string residential_address, HttpPostedFileBase writing_script,
-           string siono, string since, string until, string tenant_first_name1, string tenant_last_name1, string tenant_mother_last_name1,
-           HttpPostedFileBase script_file, string leased_postal_address, string leased_residential_address, string apartment) {
+        private void GuardarComunidadxUsuario(long newResidentID, List<string> communityID)
+        {
+            communuser communuser = new communuser();
+            communuser.user_id = newResidentID;
+            if (communityID.Count > 0)
+            {
+                foreach (var item in communityID)
+                {
+                    communuser.commun_id = int.Parse(item);
+                    entities.communusers.Add(communuser);
+                    entities.SaveChanges();
+                }
+            }
+
+        }
+
+        private user CrearObjetoUser(HttpPostedFileBase user_logo, string email, string password, string first_name1,
+           string last_name1, string mother_last_name1, string phone_number1, string postal_address, string residential_address)
+        {
             user newResident = new user();
             long userId = (long)Session["USER_ID"];
-            newResident.user_img = GuardarArchivos(user_logo, "~/Upload/User_Logo");
-            newResident.upload_writing = GuardarArchivos(writing_script, "~/Upload/Upload_Writing");
-            newResident.leased_upload_file = GuardarArchivos(script_file, "~/Upload/Upload_Contrac");
+            newResident.user_img = GuardarArchivos(user_logo, "~/Upload/User_Logo");          
             newResident.email = email;
             newResident.password = ep.Encrypt(password);
             newResident.first_name1 = first_name1;
             newResident.last_name1 = last_name1;
             newResident.mother_last_name1 = mother_last_name1;
             newResident.phone_number1 = phone_number1;
-            newResident.postal_address = postal_address;
-            newResident.apartment = apartment;
-            newResident.residential_address = residential_address;
-            newResident.is_leased = (siono == "boxyes") ? true : false;
-            newResident.acq_date = (ValidarFecha(acq_date) == null) ? DateTime.Now : (DateTime)ValidarFecha(acq_date);
-            newResident.since = ValidarFecha(since);
-            newResident.until = ValidarFecha(until);
-            newResident.tenant_first_name1 = tenant_first_name1;
-            newResident.tenant_last_name1 = tenant_last_name1;
-            newResident.tenant_mother_last_name1 = tenant_mother_last_name1;
-            newResident.leased_postal_address = leased_postal_address;
-            newResident.leased_residential_address = leased_residential_address;
+            newResident.postal_address = postal_address;            
+            newResident.residential_address = residential_address;           
             newResident.role = 1;
             newResident.create_userid = userId;
+            newResident.acq_date = DateTime.Now;
+            #region Titulos
+            //newResident.apartment = apartment;
+            //newResident.upload_writing = GuardarArchivos(writing_script, "~/Upload/Upload_Writing");
+            //newResident.leased_upload_file = GuardarArchivos(script_file, "~/Upload/Upload_Contrac");
+            //newResident.is_leased = (siono == "boxyes") ? true : false;
+            //newResident.acq_date = (ValidarFecha(acq_date) == null) ? DateTime.Now : (DateTime)ValidarFecha(acq_date);
+            //newResident.since = ValidarFecha(since);
+            //newResident.until = ValidarFecha(until);
+            //newResident.tenant_first_name1 = tenant_first_name1;
+            //newResident.tenant_last_name1 = tenant_last_name1;
+            //newResident.tenant_mother_last_name1 = tenant_mother_last_name1;
+            //newResident.leased_postal_address = leased_postal_address;
+            //newResident.leased_residential_address = leased_residential_address;
+            #endregion Titulos
             return newResident;
         }
 

@@ -427,6 +427,32 @@
           <Property Name="user_id" Type="bigint" Nullable="false" />
           <Property Name="task_list" Type="text" />
         </EntityType>
+        <EntityType Name="Titulos">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdUser" Type="bigint" Nullable="false" />
+          <Property Name="upload_writing" Type="varchar" MaxLength="255" />
+          <Property Name="user_img" Type="varchar" MaxLength="255" />
+          <Property Name="is_leased" Type="bit" />
+          <Property Name="since" Type="datetime" />
+          <Property Name="until" Type="datetime" />
+          <Property Name="tenant_first_name1" Type="varchar" MaxLength="255" />
+          <Property Name="tenant_last_name1" Type="varchar" MaxLength="255" />
+          <Property Name="tenant_mother_last_name1" Type="varchar" MaxLength="255" />
+          <Property Name="tenant_first_name2" Type="varchar" MaxLength="255" />
+          <Property Name="tenant_last_name2" Type="varchar" MaxLength="255" />
+          <Property Name="tenant_mother_last_name2" Type="varchar" MaxLength="255" />
+          <Property Name="leased_postal_address" Type="varchar" MaxLength="255" />
+          <Property Name="leased_residential_address" Type="varchar" MaxLength="255" />
+          <Property Name="leased_upload_file" Type="varchar" MaxLength="255" />
+          <Property Name="is_active" Type="bit" Nullable="false" />
+          <Property Name="siono" Type="varchar" MaxLength="50" />
+          <Property Name="create_userid" Type="bigint" />
+          <Property Name="apartment" Type="varchar" MaxLength="50" />
+          <Property Name="acq_date" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="tooltip">
           <Key>
             <PropertyRef Name="id" />
@@ -845,6 +871,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Titulos_user">
+          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="Titulos" Type="Self.Titulos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Titulos">
+              <PropertyRef Name="IdUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_uso_user">
           <End Role="user" Type="Self.user" Multiplicity="1" />
           <End Role="uso" Type="Self.uso" Multiplicity="*" />
@@ -902,6 +940,7 @@
           <EntitySet Name="task" EntityType="Self.task" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="taskcomment" EntityType="Self.taskcomment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="taskuser" EntityType="Self.taskuser" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Titulos" EntityType="Self.Titulos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tooltip" EntityType="Self.tooltip" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="transaction" EntityType="Self.transaction" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="user" EntityType="Self.user" Schema="dbo" store:Type="Tables" />
@@ -1010,6 +1049,10 @@
           <AssociationSet Name="FK_taskuser_user" Association="Self.FK_taskuser_user">
             <End Role="user" EntitySet="user" />
             <End Role="taskuser" EntitySet="taskuser" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Titulos_user" Association="Self.FK_Titulos_user">
+            <End Role="user" EntitySet="user" />
+            <End Role="Titulos" EntitySet="Titulos" />
           </AssociationSet>
           <AssociationSet Name="FK_uso_user" Association="Self.FK_uso_user">
             <End Role="user" EntitySet="user" />
@@ -1580,6 +1623,7 @@
           <Property Name="Ciudad" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Codigo_Postal" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Vehiculos" Relationship="pjrdev_condominiosModel.FK_Vehiculos_user" FromRole="user" ToRole="Vehiculo" />
+          <NavigationProperty Name="Titulos" Relationship="pjrdev_condominiosModel.FK_Titulos_user" FromRole="user" ToRole="Titulo" />
         </EntityType>
         <EntityType Name="uso">
           <Key>
@@ -2068,6 +2112,11 @@
             <End Role="user" EntitySet="users" />
             <End Role="Vehiculo" EntitySet="Vehiculos" />
           </AssociationSet>
+          <EntitySet Name="Titulos" EntityType="pjrdev_condominiosModel.Titulo" />
+          <AssociationSet Name="FK_Titulos_user" Association="pjrdev_condominiosModel.FK_Titulos_user">
+            <End Role="user" EntitySet="users" />
+            <End Role="Titulo" EntitySet="Titulos" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Vehiculo">
           <Key>
@@ -2091,6 +2140,45 @@
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="Vehiculo">
+              <PropertyRef Name="IdUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Titulo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdUser" Type="Int64" Nullable="false" />
+          <Property Name="upload_writing" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="user_img" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="is_leased" Type="Boolean" />
+          <Property Name="since" Type="DateTime" Precision="3" />
+          <Property Name="until" Type="DateTime" Precision="3" />
+          <Property Name="tenant_first_name1" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="tenant_last_name1" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="tenant_mother_last_name1" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="tenant_first_name2" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="tenant_last_name2" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="tenant_mother_last_name2" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="leased_postal_address" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="leased_residential_address" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="leased_upload_file" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="is_active" Type="Boolean" Nullable="false" />
+          <Property Name="siono" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="create_userid" Type="Int64" />
+          <Property Name="apartment" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="acq_date" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="user" Relationship="pjrdev_condominiosModel.FK_Titulos_user" FromRole="Titulo" ToRole="user" />
+        </EntityType>
+        <Association Name="FK_Titulos_user">
+          <End Type="pjrdev_condominiosModel.user" Role="user" Multiplicity="1" />
+          <End Type="pjrdev_condominiosModel.Titulo" Role="Titulo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Titulo">
               <PropertyRef Name="IdUser" />
             </Dependent>
           </ReferentialConstraint>
@@ -2663,6 +2751,33 @@
                 <ScalarProperty Name="Brand" ColumnName="Brand" />
                 <ScalarProperty Name="IdUser" ColumnName="IdUser" />
                 <ScalarProperty Name="IdVehiculo" ColumnName="IdVehiculo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Titulos">
+            <EntityTypeMapping TypeName="pjrdev_condominiosModel.Titulo">
+              <MappingFragment StoreEntitySet="Titulos">
+                <ScalarProperty Name="acq_date" ColumnName="acq_date" />
+                <ScalarProperty Name="apartment" ColumnName="apartment" />
+                <ScalarProperty Name="create_userid" ColumnName="create_userid" />
+                <ScalarProperty Name="siono" ColumnName="siono" />
+                <ScalarProperty Name="is_active" ColumnName="is_active" />
+                <ScalarProperty Name="leased_upload_file" ColumnName="leased_upload_file" />
+                <ScalarProperty Name="leased_residential_address" ColumnName="leased_residential_address" />
+                <ScalarProperty Name="leased_postal_address" ColumnName="leased_postal_address" />
+                <ScalarProperty Name="tenant_mother_last_name2" ColumnName="tenant_mother_last_name2" />
+                <ScalarProperty Name="tenant_last_name2" ColumnName="tenant_last_name2" />
+                <ScalarProperty Name="tenant_first_name2" ColumnName="tenant_first_name2" />
+                <ScalarProperty Name="tenant_mother_last_name1" ColumnName="tenant_mother_last_name1" />
+                <ScalarProperty Name="tenant_last_name1" ColumnName="tenant_last_name1" />
+                <ScalarProperty Name="tenant_first_name1" ColumnName="tenant_first_name1" />
+                <ScalarProperty Name="until" ColumnName="until" />
+                <ScalarProperty Name="since" ColumnName="since" />
+                <ScalarProperty Name="is_leased" ColumnName="is_leased" />
+                <ScalarProperty Name="user_img" ColumnName="user_img" />
+                <ScalarProperty Name="upload_writing" ColumnName="upload_writing" />
+                <ScalarProperty Name="IdUser" ColumnName="IdUser" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
