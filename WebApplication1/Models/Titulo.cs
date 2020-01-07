@@ -35,7 +35,10 @@ namespace WebApplication1.Models
         public Nullable<long> create_userid { get; set; }
         public string apartment { get; set; }
         public System.DateTime acq_date { get; set; }
+        public Nullable<bool> is_del { get; set; }
+        public long IdCommunity { get; set; }
     
         public virtual user user { get; set; }
+        public virtual community community { get; set; }
     }
 }

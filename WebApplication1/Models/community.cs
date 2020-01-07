@@ -18,6 +18,7 @@ namespace WebApplication1.Models
         public community()
         {
             this.communusers = new HashSet<communuser>();
+            this.Titulos = new HashSet<Titulo>();
         }
     
         public long id { get; set; }
@@ -33,5 +34,7 @@ namespace WebApplication1.Models
         public virtual package package { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<communuser> communusers { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Titulo> Titulos { get; set; }
     }
 }

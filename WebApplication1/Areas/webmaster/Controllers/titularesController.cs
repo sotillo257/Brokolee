@@ -124,24 +124,28 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 return Redirect(ep.GetLogoutUrl());
             }
         }
-
-        public ActionResult agregarTitulo()
+        #region TITULO
+        public ActionResult listadoTitulos(long? Id)
         {
-
-            if (Session["USER_ID"] != null)
+            if (Session["USER_ID"] != null && Id != null)
             {
                 long userId = (long)Session["USER_ID"];
                 user curUser = entities.users.Find(userId);
+                Dictionary<long, string> communityDict = new Dictionary<long, string>();
                 List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
-                agregarTitularesViewModel viewModel = new agregarTitularesViewModel();
+                List<Titulo> titulosList = new List<Titulo>();
+                titulosList = entities.Titulos.Where(x => x.is_del != true && x.IdUser == Id).ToList();
+               
+                listadoTitulosViewModel viewModel = new listadoTitulosViewModel();
                 viewModel.side_menu = "titulares";
-                viewModel.side_sub_menu = "titulares_agregar";
+                viewModel.side_sub_menu = "titulares_listado";
                 viewModel.document_category_list = entities.document_type.ToList();
+                viewModel.titulosList = titulosList;
+                viewModel.IdUserTitular = (int)Id;
                 viewModel.curUser = curUser;
                 viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                 viewModel.pubMessageList = pubMessageList;
                 viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                viewModel.communityList = entities.communities.ToList();
                 return View(viewModel);
             }
             else
@@ -150,6 +154,97 @@ namespace WebApplication1.Areas.webmaster.Controllers
             }
         }
 
+        public ActionResult agregarTitulo(long? Id, string Error)
+        {
+
+            if (Session["USER_ID"] != null && Id != null)
+            {
+                long userId = (long)Session["USER_ID"];
+                user curUser = entities.users.Find(userId);
+                List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
+                listadoTitulosViewModel viewModel = new listadoTitulosViewModel();
+                viewModel.side_menu = "titulares";
+                viewModel.side_sub_menu = "titulares_agregar";
+                viewModel.document_category_list = entities.document_type.ToList();
+                viewModel.curUser = curUser;
+                viewModel.IdUserTitular = (int)Id;
+                viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
+                viewModel.pubMessageList = pubMessageList;
+                viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                viewModel.communityList = entities.communities.ToList();
+                ViewBag.msgError = Error;
+                return View(viewModel);
+            }
+            else
+            {
+                return Redirect(ep.GetLogoutUrl());
+            }
+        }
+
+        [HttpPost]
+        public ActionResult InsertarTitulo(int IdUser, string siono, string since, string until, int IdCommunity,
+            string tenant_first_name1, string tenant_last_name1, string tenant_mother_last_name1, string apartment,
+            HttpPostedFileBase script_file, string leased_postal_address, string leased_residential_address, string acq_date, HttpPostedFileBase writing_script)
+        {
+            if (Session["USER_ID"] != null)
+            {
+                try
+                {
+                    if (writing_script != null)
+                    {
+                        Titulo titulo = CrearObjetoTitulo(IdUser, siono, since, until, IdCommunity,
+                                          tenant_first_name1, tenant_last_name1, tenant_mother_last_name1, apartment,
+                                          script_file, leased_postal_address, leased_residential_address, acq_date, writing_script);
+                        entities.Titulos.Add(titulo);
+                        entities.SaveChanges();
+                        return Redirect(Url.Action("listadoTitulos", "titulares", new { area = "webmaster" }));
+                    }
+                    else
+                    {
+                        return Redirect(Url.Action("agregarTitulo", "titulares", new { area = "webmaster", Id = IdUser, Error = "Debe cargar el titulo de propiedad" }));
+                    }
+                   
+                   
+                }
+                catch (Exception ex)
+                {
+                    return Redirect(Url.Action("agregarTitulo", "titulares", new { area = "webmaster", Id = IdUser, Error = "Intentando guardar Titulo" }));
+                }
+
+
+            }
+            else
+            {
+                return Redirect(ep.GetLogoutUrl());
+            }
+        }
+
+        private Titulo CrearObjetoTitulo(int IdUser, string siono, string since, string until, int IdCommunity,
+            string tenant_first_name1, string tenant_last_name1, string tenant_mother_last_name1, string apartment,
+            HttpPostedFileBase script_file, string leased_postal_address, string leased_residential_address, string acq_date, HttpPostedFileBase writing_script)
+        {
+            Titulo newTitulo = new Titulo();
+            long userId = (long)Session["USER_ID"];
+
+            newTitulo.IdUser = IdUser;
+            newTitulo.apartment = apartment;
+            newTitulo.upload_writing = GuardarArchivos(writing_script, "~/Upload/Upload_Writing");
+            newTitulo.leased_upload_file = GuardarArchivos(script_file, "~/Upload/Upload_Contrac");
+            newTitulo.is_leased = (siono == "boxyes") ? true : false;
+            newTitulo.acq_date = (ValidarFecha(acq_date) == null) ? DateTime.Now : (DateTime)ValidarFecha(acq_date);
+            newTitulo.since = ValidarFecha(since);
+            newTitulo.until = ValidarFecha(until);
+            newTitulo.tenant_first_name1 = tenant_first_name1;
+            newTitulo.tenant_last_name1 = tenant_last_name1;
+            newTitulo.tenant_mother_last_name1 = tenant_mother_last_name1;
+            newTitulo.leased_postal_address = leased_postal_address;
+            newTitulo.leased_residential_address = leased_residential_address;
+            newTitulo.IdCommunity = IdCommunity;
+
+
+            return newTitulo;
+        }
+        #endregion TITULO
         public ActionResult ver(long? id)
         {
             if (Session["USER_ID"] != null)
@@ -246,7 +341,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 }
                 catch (Exception ex)
                 {
-                    return Redirect(Url.Action("agregar", "titulares", new { area = "webmaster", Error = "Intentando guardar Titular" + ex.Message }));
+                    return Redirect(Url.Action("agregar", "titulares", new { area = "webmaster", Error = "Intentando guardar Titular" }));
                 }
                 
                

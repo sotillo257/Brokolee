@@ -546,6 +546,7 @@
     <Compile Include="Areas\webmaster\ViewModels\listadoPlantillasViewModel.cs" />
     <Compile Include="Areas\webmaster\ViewModels\listadoSuplidoresViewModel.cs" />
     <Compile Include="Areas\webmaster\ViewModels\listadoTareasViewModel.cs" />
+    <Compile Include="Areas\webmaster\ViewModels\listadoTitulosViewModel.cs" />
     <Compile Include="Areas\webmaster\ViewModels\listadoTitularesViewModel.cs" />
     <Compile Include="Areas\webmaster\ViewModels\listadoTooltipsViewModel.cs" />
     <Compile Include="Areas\webmaster\ViewModels\OnlineUserModel.cs" />
@@ -1482,6 +1483,7 @@
     <Content Include="Areas\webmaster\Views\webmaster\editar_perfil.cshtml" />
     <Content Include="Areas\webmaster\Views\titulares\agregarVehiculo.cshtml" />
     <Content Include="Areas\webmaster\Views\titulares\agregarTitulo.cshtml" />
+    <Content Include="Areas\webmaster\Views\titulares\listadoTitulos.cshtml" />
     <None Include="Properties\PublishProfiles\Default Settings.pubxml" />
     <None Include="Properties\PublishProfiles\Default Settings1.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />

@@ -452,6 +452,8 @@
           <Property Name="create_userid" Type="bigint" />
           <Property Name="apartment" Type="varchar" MaxLength="50" />
           <Property Name="acq_date" Type="datetime" Nullable="false" />
+          <Property Name="is_del" Type="bit" />
+          <Property Name="IdCommunity" Type="bigint" Nullable="false" />
         </EntityType>
         <EntityType Name="tooltip">
           <Key>
@@ -871,6 +873,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Titulos_community">
+          <End Role="community" Type="Self.community" Multiplicity="1" />
+          <End Role="Titulos" Type="Self.Titulos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="community">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Titulos">
+              <PropertyRef Name="IdCommunity" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Titulos_user">
           <End Role="user" Type="Self.user" Multiplicity="1" />
           <End Role="Titulos" Type="Self.Titulos" Multiplicity="*" />
@@ -1050,6 +1064,10 @@
             <End Role="user" EntitySet="user" />
             <End Role="taskuser" EntitySet="taskuser" />
           </AssociationSet>
+          <AssociationSet Name="FK_Titulos_community" Association="Self.FK_Titulos_community">
+            <End Role="community" EntitySet="community" />
+            <End Role="Titulos" EntitySet="Titulos" />
+          </AssociationSet>
           <AssociationSet Name="FK_Titulos_user" Association="Self.FK_Titulos_user">
             <End Role="user" EntitySet="user" />
             <End Role="Titulos" EntitySet="Titulos" />
@@ -1184,6 +1202,7 @@
           <Property Name="apart" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="package" Relationship="Self.FK_community_package" FromRole="community" ToRole="package" />
           <NavigationProperty Name="communusers" Relationship="Self.FK_communuser_community" FromRole="community" ToRole="communuser" />
+          <NavigationProperty Name="Titulos" Relationship="pjrdev_condominiosModel.FK_Titulos_community" FromRole="community" ToRole="Titulo" />
         </EntityType>
         <EntityType Name="communuser">
           <Key>
@@ -2117,6 +2136,10 @@
             <End Role="user" EntitySet="users" />
             <End Role="Titulo" EntitySet="Titulos" />
           </AssociationSet>
+          <AssociationSet Name="FK_Titulos_community" Association="pjrdev_condominiosModel.FK_Titulos_community">
+            <End Role="community" EntitySet="communities" />
+            <End Role="Titulo" EntitySet="Titulos" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Vehiculo">
           <Key>
@@ -2170,6 +2193,9 @@
           <Property Name="apartment" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="acq_date" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="user" Relationship="pjrdev_condominiosModel.FK_Titulos_user" FromRole="Titulo" ToRole="user" />
+          <Property Name="is_del" Type="Boolean" />
+          <Property Name="IdCommunity" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="community" Relationship="pjrdev_condominiosModel.FK_Titulos_community" FromRole="Titulo" ToRole="community" />
         </EntityType>
         <Association Name="FK_Titulos_user">
           <End Type="pjrdev_condominiosModel.user" Role="user" Multiplicity="1" />
@@ -2180,6 +2206,18 @@
             </Principal>
             <Dependent Role="Titulo">
               <PropertyRef Name="IdUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Titulos_community">
+          <End Type="pjrdev_condominiosModel.community" Role="community" Multiplicity="1" />
+          <End Type="pjrdev_condominiosModel.Titulo" Role="Titulo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="community">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Titulo">
+              <PropertyRef Name="IdCommunity" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2757,6 +2795,8 @@
           <EntitySetMapping Name="Titulos">
             <EntityTypeMapping TypeName="pjrdev_condominiosModel.Titulo">
               <MappingFragment StoreEntitySet="Titulos">
+                <ScalarProperty Name="IdCommunity" ColumnName="IdCommunity" />
+                <ScalarProperty Name="is_del" ColumnName="is_del" />
                 <ScalarProperty Name="acq_date" ColumnName="acq_date" />
                 <ScalarProperty Name="apartment" ColumnName="apartment" />
                 <ScalarProperty Name="create_userid" ColumnName="create_userid" />
