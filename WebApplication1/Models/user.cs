@@ -33,7 +33,6 @@ namespace WebApplication1.Models
             this.taskcomments = new HashSet<taskcomment>();
             this.taskusers = new HashSet<taskuser>();
             this.usoes = new HashSet<uso>();
-            this.Vehiculos = new HashSet<Vehiculo>();
             this.Titulos = new HashSet<Titulo>();
         }
     
@@ -118,8 +117,6 @@ namespace WebApplication1.Models
         public virtual ICollection<taskuser> taskusers { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<uso> usoes { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Vehiculo> Vehiculos { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Titulo> Titulos { get; set; }
     }

@@ -552,14 +552,15 @@
           <Key>
             <PropertyRef Name="IdVehiculo" />
           </Key>
-          <Property Name="IdVehiculo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="IdUser" Type="bigint" Nullable="false" />
+          <Property Name="IdVehiculo" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdTitulo" Type="bigint" Nullable="false" />
           <Property Name="Brand" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Model" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Color" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Year" Type="int" Nullable="false" />
           <Property Name="ClapBoard" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="StampNumber" Type="int" Nullable="false" />
+          <Property Name="StampNumber" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="is_del" Type="bit" />
         </EntityType>
         <Association Name="FK_bank_user">
           <End Role="user" Type="Self.user" Multiplicity="0..1" />
@@ -910,14 +911,14 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Vehiculos_user">
-          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="Titulos" Type="Self.Titulos" Multiplicity="1" />
           <End Role="Vehiculos" Type="Self.Vehiculos" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="user">
-              <PropertyRef Name="id" />
+            <Principal Role="Titulos">
+              <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Vehiculos">
-              <PropertyRef Name="IdUser" />
+              <PropertyRef Name="IdTitulo" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1077,7 +1078,7 @@
             <End Role="uso" EntitySet="uso" />
           </AssociationSet>
           <AssociationSet Name="FK_Vehiculos_user" Association="Self.FK_Vehiculos_user">
-            <End Role="user" EntitySet="user" />
+            <End Role="Titulos" EntitySet="Titulos" />
             <End Role="Vehiculos" EntitySet="Vehiculos" />
           </AssociationSet>
         </EntityContainer>
@@ -1641,7 +1642,6 @@
           <Property Name="Pais" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Ciudad" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Codigo_Postal" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Vehiculos" Relationship="pjrdev_condominiosModel.FK_Vehiculos_user" FromRole="user" ToRole="Vehiculo" />
           <NavigationProperty Name="Titulos" Relationship="pjrdev_condominiosModel.FK_Titulos_user" FromRole="user" ToRole="Titulo" />
         </EntityType>
         <EntityType Name="uso">
@@ -2126,11 +2126,6 @@
             <End Role="user" EntitySet="users" />
             <End Role="uso" EntitySet="usoes" />
           </AssociationSet>
-          <EntitySet Name="Vehiculos" EntityType="pjrdev_condominiosModel.Vehiculo" />
-          <AssociationSet Name="FK_Vehiculos_user" Association="pjrdev_condominiosModel.FK_Vehiculos_user">
-            <End Role="user" EntitySet="users" />
-            <End Role="Vehiculo" EntitySet="Vehiculos" />
-          </AssociationSet>
           <EntitySet Name="Titulos" EntityType="pjrdev_condominiosModel.Titulo" />
           <AssociationSet Name="FK_Titulos_user" Association="pjrdev_condominiosModel.FK_Titulos_user">
             <End Role="user" EntitySet="users" />
@@ -2140,33 +2135,12 @@
             <End Role="community" EntitySet="communities" />
             <End Role="Titulo" EntitySet="Titulos" />
           </AssociationSet>
+          <EntitySet Name="Vehiculos" EntityType="pjrdev_condominiosModel.Vehiculo" />
+          <AssociationSet Name="FK_Vehiculos_user" Association="pjrdev_condominiosModel.FK_Vehiculos_user">
+            <End Role="Titulo" EntitySet="Titulos" />
+            <End Role="Vehiculo" EntitySet="Vehiculos" />
+          </AssociationSet>
         </EntityContainer>
-        <EntityType Name="Vehiculo">
-          <Key>
-            <PropertyRef Name="IdVehiculo" />
-          </Key>
-          <Property Name="IdVehiculo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IdUser" Type="Int64" Nullable="false" />
-          <Property Name="Brand" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Model" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Color" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Year" Type="Int32" Nullable="false" />
-          <Property Name="ClapBoard" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="StampNumber" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="user" Relationship="pjrdev_condominiosModel.FK_Vehiculos_user" FromRole="Vehiculo" ToRole="user" />
-        </EntityType>
-        <Association Name="FK_Vehiculos_user">
-          <End Type="pjrdev_condominiosModel.user" Role="user" Multiplicity="1" />
-          <End Type="pjrdev_condominiosModel.Vehiculo" Role="Vehiculo" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="user">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Vehiculo">
-              <PropertyRef Name="IdUser" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="Titulo">
           <Key>
             <PropertyRef Name="Id" />
@@ -2196,6 +2170,7 @@
           <Property Name="is_del" Type="Boolean" />
           <Property Name="IdCommunity" Type="Int64" Nullable="false" />
           <NavigationProperty Name="community" Relationship="pjrdev_condominiosModel.FK_Titulos_community" FromRole="Titulo" ToRole="community" />
+          <NavigationProperty Name="Vehiculos" Relationship="pjrdev_condominiosModel.FK_Vehiculos_user" FromRole="Titulo" ToRole="Vehiculo" />
         </EntityType>
         <Association Name="FK_Titulos_user">
           <End Type="pjrdev_condominiosModel.user" Role="user" Multiplicity="1" />
@@ -2218,6 +2193,33 @@
             </Principal>
             <Dependent Role="Titulo">
               <PropertyRef Name="IdCommunity" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Vehiculo">
+          <Key>
+            <PropertyRef Name="IdVehiculo" />
+          </Key>
+          <Property Name="IdVehiculo" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdTitulo" Type="Int64" Nullable="false" />
+          <Property Name="Brand" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Model" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Color" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Year" Type="Int32" Nullable="false" />
+          <Property Name="ClapBoard" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="StampNumber" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="is_del" Type="Boolean" />
+          <NavigationProperty Name="Titulo" Relationship="pjrdev_condominiosModel.FK_Vehiculos_user" FromRole="Vehiculo" ToRole="Titulo" />
+        </EntityType>
+        <Association Name="FK_Vehiculos_user">
+          <End Type="pjrdev_condominiosModel.Titulo" Role="Titulo" Multiplicity="1" />
+          <End Type="pjrdev_condominiosModel.Vehiculo" Role="Vehiculo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Titulo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Vehiculo">
+              <PropertyRef Name="IdTitulo" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2778,20 +2780,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Vehiculos">
-            <EntityTypeMapping TypeName="pjrdev_condominiosModel.Vehiculo">
-              <MappingFragment StoreEntitySet="Vehiculos">
-                <ScalarProperty Name="StampNumber" ColumnName="StampNumber" />
-                <ScalarProperty Name="ClapBoard" ColumnName="ClapBoard" />
-                <ScalarProperty Name="Year" ColumnName="Year" />
-                <ScalarProperty Name="Color" ColumnName="Color" />
-                <ScalarProperty Name="Model" ColumnName="Model" />
-                <ScalarProperty Name="Brand" ColumnName="Brand" />
-                <ScalarProperty Name="IdUser" ColumnName="IdUser" />
-                <ScalarProperty Name="IdVehiculo" ColumnName="IdVehiculo" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Titulos">
             <EntityTypeMapping TypeName="pjrdev_condominiosModel.Titulo">
               <MappingFragment StoreEntitySet="Titulos">
@@ -2818,6 +2806,21 @@
                 <ScalarProperty Name="upload_writing" ColumnName="upload_writing" />
                 <ScalarProperty Name="IdUser" ColumnName="IdUser" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Vehiculos">
+            <EntityTypeMapping TypeName="pjrdev_condominiosModel.Vehiculo">
+              <MappingFragment StoreEntitySet="Vehiculos">
+                <ScalarProperty Name="is_del" ColumnName="is_del" />
+                <ScalarProperty Name="StampNumber" ColumnName="StampNumber" />
+                <ScalarProperty Name="ClapBoard" ColumnName="ClapBoard" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="Color" ColumnName="Color" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="Brand" ColumnName="Brand" />
+                <ScalarProperty Name="IdTitulo" ColumnName="IdTitulo" />
+                <ScalarProperty Name="IdVehiculo" ColumnName="IdVehiculo" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

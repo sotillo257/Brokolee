@@ -14,6 +14,12 @@ namespace WebApplication1.Models
     
     public partial class Titulo
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Titulo()
+        {
+            this.Vehiculos = new HashSet<Vehiculo>();
+        }
+    
         public long Id { get; set; }
         public long IdUser { get; set; }
         public string upload_writing { get; set; }
@@ -40,5 +46,7 @@ namespace WebApplication1.Models
     
         public virtual user user { get; set; }
         public virtual community community { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Vehiculo> Vehiculos { get; set; }
     }
 }

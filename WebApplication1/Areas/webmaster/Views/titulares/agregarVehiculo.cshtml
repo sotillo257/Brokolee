@@ -1,158 +1,182 @@
-﻿@model WebApplication1.Models.Vehiculo
-
+﻿
 @{
-    ViewBag.Title = "agregarVehiculo";
-    Layout = "~/Areas/webmaster/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "agregar";
+    Page.Title = "Agregar Titular - Brokolee Software";
 }
 
-<h2>agregarVehiculo</h2>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+<script src="~/Scripts/jquery-3.1.1.min.js"></script>
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        <h4>Vehiculo</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.IdVehiculo, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.IdVehiculo, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.IdVehiculo, "", new { @class = "text-danger" })
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+
+
+
+<style media="screen">
+    #inputGroupFile04 {
+        max-width: 150px;
+        margin: 0 auto;
+        height: 130px;
+    }
+
+
+    .garritas {
+        max-width: 150px;
+        height: 130px;
+        margin: 0 auto;
+    }
+</style>
+
+<style media="hola">
+    .example-name2-input {
+        background-color: var(--color-bg-btn);
+        color: white;
+        width: 170px;
+        text-align: center;
+        line-height: 22px;
+    }
+</style>
+
+
+
+<div class="page-content-wrapper">
+
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="page-title-box">
+                    <div class="float-left">
+                        <div class="breadcrumb float-md-right">
+                            <h4 class="page-title">Agregar Vehículos</h4>
+                        </div>
+                    </div>
+                    <div class="float-right">
+                        <ul class="breadcrumb float-md-right">
+                            <li class="breadcrumb-item"><a href="@Url.Action("panel", "control", new { area = "webmaster" })" class="text-success"><i class="mdi mdi-home-modern"></i> Panel de Control</a></li>
+                            <li class="breadcrumb-item active">Agregar Vehículos</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.IdUser, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.IdUser, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.IdUser, "", new { @class = "text-danger" })
+        <!-- end page title end breadcrumb -->
+        <!-- back button -->
+        <div class="row pb-4">
+            <div class="col-md-6">
+                <a href="javascript:history.back()"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
             </div>
         </div>
+        <!-- end back button -->
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Brand, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Brand, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Brand, "", new { @class = "text-danger" })
+        <div class="row">
+
+            @if (ViewBag.msgError != null)
+            {
+                <div class="col-12">
+                    <div class="alert alert-danger" role="alert">
+                        <strong>Error: </strong> @ViewBag.msgError
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+            }
+
+            <div class="col-12">
+                <div class="card">
+                    @using (Html.BeginForm("InsertarVehiculo", "titulares",
+                        FormMethod.Post, new
+                        {
+                            id = "newresidentForm",
+                            @class = "",
+                            area = "coadmin",
+                            enctype = "multipart/form-data"
+                        }))
+                    {
+                        @Html.AntiForgeryToken()
+                    <div class="card-body">
+                        <h5 class="d-inline-block">Vehículos autorizados</h5>
+                        <input type="hidden" value="@Model.IdTitulo" name="IdTitulo" />
+
+                      
+                        <div class="form-divider"></div>
+                        <div class="form-group row">
+                            <label for="example-brand-input" class="col-sm-3 col-form-label">Marca</label>
+                            <div class="col-sm-9">
+                                <input class="form-control" type="text" value="" name="brand"
+                                       data-toggle="tooltip" title="Marca del vehículo"
+                                       placeholder="Marca" id="example-brand-input">
+                                <small class="form-text text-muted">Marca del vehículo</small>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="example-model-input" class="col-sm-3 col-form-label">Modelo</label>
+                            <div class="col-sm-9">
+                                <input class="form-control" type="text" value="" placeholder="Modelo" name="model"
+                                       id="example-model-input" data-toggle="tooltip" title="Modelo del vehículo">
+                                <small class="form-text text-muted">Modelo del vehículo</small>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="example-color-input" class="col-sm-3 col-form-label">Color</label>
+                            <div class="col-sm-9">
+                                <input class="form-control" type="text" value="" name="colour"
+                                       data-toggle="tooltip" title="Color del vehículo"
+                                       placeholder="Color" id="example-color-input">
+                                <small class="form-text text-muted">Color del vehículo</small>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="example-year-input" class="col-sm-3 col-form-label">Año</label>
+                            <div class="col-sm-9">
+                                <input class="form-control" type="number" value="" name="year"
+                                       data-toggle="tooltip" title="Año del vehículo"
+                                       placeholder="Año" id="example-year-input">
+                                <small class="form-text text-muted">Año del vehículo</small>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="example-cartable-input" class="col-sm-3 col-form-label">Tablilla</label>
+                            <div class="col-sm-9">
+                                <input class="form-control" type="text" value="" name="clapboard"
+                                       data-toggle="tooltip" title="Tablilla del vehículo"
+                                       placeholder="Tablilla" id="example-cartable-input">
+                                <small class="form-text text-muted">Tablilla del vehículo</small>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="example-numbercar-input" class="col-sm-3 col-form-label">Número de sello</label>
+                            <div class="col-sm-9">
+                                <input class="form-control" type="text" value="" name="stamp_number"
+                                       data-toggle="tooltip" title="Número de sello del vehículo"
+                                       placeholder="Número de sello" id="example-numbercar-input">
+                                <small class="form-text text-muted">Número de sello del vehículo</small>
+                            </div>
+                        </div>
+
+                        <!-- View -->
+                        <!-- End View -->
+                        <button type="submit" class="btn btn-primary waves-effect waves-light">Guardar</button>
+                    </div>
+                    }
+                </div>
             </div>
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Model, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Model, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Model, "", new { @class = "text-danger" })
+        <!-- end row -->
+        <!-- back button -->
+        <div class="row pb-4">
+            <div class="col-md-6">
+                <a href="javascript:history.back()"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
             </div>
         </div>
+        <!-- end back button -->
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Color, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Color, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Color, "", new { @class = "text-danger" })
-            </div>
-        </div>
+    </div><!-- container -->
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Year, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Year, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Year, "", new { @class = "text-danger" })
-            </div>
-        </div>
+</div> <!-- Page content Wrapper -->
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.ClapBoard, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ClapBoard, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ClapBoard, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.StampNumber, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.StampNumber, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.StampNumber, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </div>
-    </div>
-
-
-
-
-    <div class="row form-material">
-        <div class="col-md-12">
-            <h5 class="d-inline-block">Vehículos autorizados</h5>
-            <a href="#" class="text-bold"><button type="button" class="btn btn-primary waves-effect waves-light btn-sm"><i class="mdi mdi-plus"></i></button></a>
-        </div>
-    </div>
-
-    <div class="form-divider"></div>
-    <div class="form-group row">
-        <label for="example-brand-input" class="col-sm-3 col-form-label">Marca</label>
-        <div class="col-sm-9">
-            <input class="form-control" type="text" value="" name="brand"
-                   data-toggle="tooltip" title="Marca del vehículo"
-                   placeholder="Marca" id="example-brand-input">
-            <small class="form-text text-muted">Marca del vehículo</small>
-        </div>
-    </div>
-    <div class="form-group row">
-        <label for="example-model-input" class="col-sm-3 col-form-label">Modelo</label>
-        <div class="col-sm-9">
-            <input class="form-control" type="text" value="" placeholder="Modelo"
-                   id="example-model-input" data-toggle="tooltip" title="Modelo del vehículo">
-            <small class="form-text text-muted">Modelo del vehículo</small>
-        </div>
-    </div>
-    <div class="form-group row">
-        <label for="example-color-input" class="col-sm-3 col-form-label">Color</label>
-        <div class="col-sm-9">
-            <input class="form-control" type="text" value="" name="colour"
-                   data-toggle="tooltip" title="Color del vehículo"
-                   placeholder="Color" id="example-color-input">
-            <small class="form-text text-muted">Color del vehículo</small>
-        </div>
-    </div>
-    <div class="form-group row">
-        <label for="example-year-input" class="col-sm-3 col-form-label">Año</label>
-        <div class="col-sm-9">
-            <input class="form-control" type="number" value=""
-                   data-toggle="tooltip" title="Año del vehículo"
-                   placeholder="Año" id="example-year-input">
-            <small class="form-text text-muted">Año del vehículo</small>
-        </div>
-    </div>
-    <div class="form-group row">
-        <label for="example-cartable-input" class="col-sm-3 col-form-label">Tablilla</label>
-        <div class="col-sm-9">
-            <input class="form-control" type="text" value="" name="clapboard"
-                   data-toggle="tooltip" title="Tablilla del vehículo"
-                   placeholder="Tablilla" id="example-cartable-input">
-            <small class="form-text text-muted">Tablilla del vehículo</small>
-        </div>
-    </div>
-    <div class="form-group row">
-        <label for="example-numbercar-input" class="col-sm-3 col-form-label">Número de sello</label>
-        <div class="col-sm-9">
-            <input class="form-control" type="text" value="" name="stamp_number"
-                   data-toggle="tooltip" title="Número de sello del vehículo"
-                   placeholder="Número de sello" id="example-numbercar-input">
-            <small class="form-text text-muted">Número de sello del vehículo</small>
-        </div>
-    </div>
-
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>

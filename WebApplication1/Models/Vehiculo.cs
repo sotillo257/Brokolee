@@ -14,15 +14,16 @@ namespace WebApplication1.Models
     
     public partial class Vehiculo
     {
-        public int IdVehiculo { get; set; }
-        public long IdUser { get; set; }
+        public long IdVehiculo { get; set; }
+        public long IdTitulo { get; set; }
         public string Brand { get; set; }
         public string Model { get; set; }
         public string Color { get; set; }
         public int Year { get; set; }
         public string ClapBoard { get; set; }
-        public int StampNumber { get; set; }
+        public string StampNumber { get; set; }
+        public Nullable<bool> is_del { get; set; }
     
-        public virtual user user { get; set; }
+        public virtual Titulo Titulo { get; set; }
     }
 }
