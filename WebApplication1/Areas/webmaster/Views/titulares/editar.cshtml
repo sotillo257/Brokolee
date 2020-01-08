@@ -86,7 +86,17 @@
         <!-- end back button -->
 
         <div class="row">
-
+            @if (ViewBag.msgError != null)
+            {
+                <div class="col-12">
+                    <div class="alert alert-danger" role="alert">
+                        <strong>Error: </strong> @ViewBag.msgError
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+            }
             <div class="col-12">
                 <div class="card">
                     @using (Html.BeginForm("EditarTitular",
@@ -118,7 +128,7 @@
                                     <div class="input-group mt-2">
                                         <div class="custom-file">
                                             <input type="file" class="custom-file-input" id="inputGroupFile04"
-                                                   data-toggle="tooltip"                              name="user_logo">
+                                                   data-toggle="tooltip" name="user_logo">
                                             <label class="custom-file-label" for="inputGroupFile04">Seleccionar Imagen del Titular</label>
                                         </div>
                                         <div class="col-sm-3">
@@ -129,29 +139,27 @@
                                 </div>
                             </div>
                             <div class="form-divider"></div>
+                            <div class="form-group row">
+                                <label for="example-email-input" class="col-sm-3 col-form-label">Correo electrónico</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" type="email" name="email" required value="@Model.editUser.email"
+                                           data-toggle="tooltip" 
+                                           placeholder="Correo electrónico del titular" id="example-email-input">
+                                    <small class="form-text text-muted">Base utilizada para identificar las unidades suscritas de varias comunidades adscritas.</small>
+                                </div>
+                            </div>
                             <div class="form-divider"></div>
                             <div class="form-group row">
                                 <label for="example-password-input" class="col-sm-3 col-form-label">Contraseña</label>
                                 <div class="col-sm-9">
                                     <input class="form-control" name="password"
-                                           type="password" data-toggle="tooltip" 
+                                           type="password" data-toggle="tooltip"
                                            value="@Model.password" required
                                            placeholder="Contraseña" id="example-password-input">
-                                   @* <small class="form-text text-muted">Contraseña utilizada para ingresar al sistema</small>*@
+                                    @* <small class="form-text text-muted">Contraseña utilizada para ingresar al sistema</small>*@
                                 </div>
                             </div>
-                            <div class="form-divider"></div>
-                            <div class="form-group row">
-                                <label label="example-date-input-acq-date" class="col-sm-3 col-form-label">Fecha de adquisición</label>
-                                <div class="col-sm-9">
-                                    <input required
-                                           id="fecha11"
-                                           name="acq_date"
-                                           value="@Convert.ToDateTime(Model.editUser.acq_date).ToString("dd-MM-yyyy")" />
 
-                                  @*  <small class="form-text text-muted">dia / Mes / año</small>*@
-                                </div>
-                            </div>
                             <div class="form-divider"></div>
                             <h6 class="mt-0 header-title">Nombre completo del Titular</h6>
                             <p>Nombre del titular según aparece en la escritura de compraventa.</p>
@@ -159,33 +167,33 @@
                                 <label for="example-name2-input-first-name" class="col-sm-3 col-form-label">Nombre</label>
                                 <div class="col-sm-9">
                                     <input class="form-control" name="first_name1"
-                                           type="text" data-toggle="tooltip" 
+                                           type="text" data-toggle="tooltip"
                                            value="@Model.editUser.first_name1"
                                            placeholder="Nombre"
                                            id="example-name2-input-first-name">
-                                  @*  <small class="form-text text-muted">Nombre del Titular</small>*@
+                                    @*  <small class="form-text text-muted">Nombre del Titular</small>*@
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="example-lastname2-input" class="col-sm-3 col-form-label">Apellido paterno</label>
                                 <div class="col-sm-9">
                                     <input class="form-control"
-                                           type="text" data-toggle="tooltip" 
+                                           type="text" data-toggle="tooltip"
                                            value="@Model.editUser.last_name1" name="last_name1"
                                            placeholder="Apellido paterno"
                                            id="example-lastname2-input">
-                                  @*  <small class="form-text text-muted">Apellido paterno del Titular</small>*@
+                                    @*  <small class="form-text text-muted">Apellido paterno del Titular</small>*@
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="example-lastname2m-input" class="col-sm-3 col-form-label">Apellido materno</label>
                                 <div class="col-sm-9">
                                     <input class="form-control"
-                                           type="text" data-toggle="tooltip" 
+                                           type="text" data-toggle="tooltip"
                                            value="@Model.editUser.mother_last_name1"
                                            placeholder="Apellido materno" name="mother_last_name1"
                                            id="example-lastname2m-input">
-                                  @*  <small class="form-text text-muted">Apellido materno del Titular</small>*@
+                                    @*  <small class="form-text text-muted">Apellido materno del Titular</small>*@
                                 </div>
                             </div>
                             <div class="form-divider"></div>
@@ -193,11 +201,11 @@
                                 <label for="example-tel1-input" class="col-sm-3 col-form-label">Número de Teléfono</label>
                                 <div class="col-sm-9">
                                     <input class="form-control" name="phone_number1"
-                                           type="tel" data-toggle="tooltip" 
+                                           type="tel" data-toggle="tooltip"
                                            value="@Model.editUser.phone_number1"
                                            placeholder="# Teléfono"
                                            id="example-tel1-input">
-                                   @* <small class="form-text text-muted">Número de teléfono del Titular</small>*@
+                                    @* <small class="form-text text-muted">Número de teléfono del Titular</small>*@
                                 </div>
                             </div>
                             <div class="form-divider"></div>
@@ -207,10 +215,10 @@
                                     <input class="form-control"
                                            type="text" name="postal_address"
                                            value="@Model.editUser.postal_address"
-                                           data-toggle="tooltip" 
+                                           data-toggle="tooltip"
                                            placeholder="Dirección Postal"
                                            id="example-address1-input-postal-address">
-                                   @* <small class="form-text text-muted">Dirección postal del Titular</small>*@
+                                    @* <small class="form-text text-muted">Dirección postal del Titular</small>*@
                                 </div>
                             </div>
                             <div class="form-divider"></div>
@@ -220,311 +228,14 @@
                                     <input class="form-control"
                                            type="text" name="residential_address"
                                            value="@Model.editUser.residential_address"
-                                           data-toggle="tooltip" 
+                                           data-toggle="tooltip"
                                            placeholder="Dirección Residencial"
                                            id="example-address2-input-residential-address">
-                                  @*  <small class="form-text text-muted">Dirección residencial del Titular</small>*@
-                                </div>
-                            </div>
-                            <div class="form-divider"></div>
-                            <div class="form-group row">
-                                <label for="apartment-input" class="col-sm-3 col-form-label">Apartamento</label>
-                                <div class="col-sm-9">
-                                    <input class="form-control" type="text" value="@Model.editUser.apartment"
-                                           name="apartment" required
-                                           data-toggle="tooltip"
-                                           placeholder="Apartamento" id="apartment-input">
-                                  @*  <small class="form-text text-muted">Apartamento del Titular</small>*@
+                                    @*  <small class="form-text text-muted">Dirección residencial del Titular</small>*@
                                 </div>
                             </div>
 
 
-
-                            <div class="form-divider"></div>
-                            <h6 class="mt-0 header-title">Escritura</h6>
-                            <p>Escritura de compra-venta.</p>
-                            <div class="form-group row">
-                                <label for="example-name2-input" class="col-sm-3 col-form-label">Subir Escritura</label>
-                                <div class="col-sm-9">
-                                    <div class="input-group mt-2">
-                                        <div class="custom-file">
-                                            <input type="file" class="custom-file-label" id="inputGroupFile04-script-file" name="script_file"  />
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-
-
-
-                            <div class="form-group row">
-                                <label for="example-name2-input" class="col-sm-3 col-form-label">Descargar archivo</label>
-                                <div class="col-sm-9">
-                                    <div class="input-group mt-2">
-                                        <div class="custom-file">
-                                            @if (Model.editUser.upload_writing != null)
-                                            {
-                                                <a href="~/Upload/Upload_Writing/@Model.editUser.upload_writing" download="">
-                                                    <button type="button" class="btn btn-info waves-effect waves-light">
-                                                        <i class="mdi mdi-cloud-download  m-r-5"></i> Descargar archivo
-                                                    </button>
-                                                </a>
-                                            }
-                                            else
-                                            {
-                                                <button type="button" class="btn btn-info waves-effect waves-light">
-                                                    <i class="mdi mdi-cloud-download  m-r-5"></i> Descargar archivo
-                                                </button>
-                                            }
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-divider"></div>
-                            <div class="form-group row">
-                                <label for="example-address1-input" class="col-sm-3 col-form-label">¿Está la propiedad arrendada?</label>
-                                <div class="col-sm-9">
-                                    <div class="form-check-inline my-2">
-                                        <div class="custom-control custom-checkbox">
-                                            @if (Model.editUser.is_leased == true)
-                                            {
-                                                <input type="checkbox" name="siono" value="boxyes" checked data-toggle="tooltip" title="Si"
-                                                       class="custom-control-input" id="customCheck6" data-parsley-multiple="groups" data-parsley-mincheck="2">
-                                            }
-                                            else
-                                            {
-                                                <input type="checkbox" n del Titular" data-toggle="tooltip" title="Si"
-                                                       class="custom-control-input" id="customCheck6" data-parsley-multiple="groups" data-parsley-mincheck="2">
-                                            }
-                                            <label class="custom-control-label" for="customCheck6"> Si</label>
-                                        </div>
-                                    </div>
-                                    <div class="form-check-inline my-2">
-                                        <div class="custom-control custom-checkbox">
-                                            @if (Model.editUser.is_leased == false)
-                                            {
-                                                <input type="checkbox" name="siono" value="boxno" checked data-toggle="tooltip" title="No"
-                                                       class="custom-control-input" id="customCheck7" data-parsley-multiple="groups" data-parsley-mincheck="2">
-                                            }
-                                            else
-                                            {
-                                                <input type="checkbox" name="siono" value="boxno" class="custom-control-input" data-toggle="tooltip" title="No"
-                                                       id="customCheck7" data-parsley-multiple="groups" data-parsley-mincheck="2">
-                                            }
-                                            <label class="custom-control-label" for="customCheck7"> No</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- View -->
-                            <div class="boxyes box">
-                                <div class="form-divider"></div>
-                                <h6 class="mt-0 header-title">Periodo de arrendamiento</h6>
-                                <div class="form-group row">
-                                    <label for="example-date-input-since" class="col-sm-3 col-form-label">Desde</label>
-                                    <div class="col-sm-9">
-                                        @if (Model.editUser.since != null)
-
-                                        {
-
-                                            <input required 
-
-                                                   value="@Convert.ToDateTime(Model.editUser.since).ToString("yyyy-MM-dd")"
-
-                                                   id="fecha22" name="since">
-                                        }
-                                        else
-                                        {
-
-                                            <input   id="fecha22" name="since" >
-
-                                        }
-                                      @*  <small class="form-text text-muted">dia / Mes / año</small>*@
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="example-date-input-until" class="col-sm-3 col-form-label">Hasta</label>
-                                    <div class="col-sm-9">
-                                        @if (Model.editUser.until != null)
-                                        {
-                                            <input required 
-                                                   value="@Convert.ToDateTime(Model.editUser.until).ToString("yyyy-MM-dd")"
-                                                   id="fecha33" name="until">
-                                        }
-                                        else
-                                        {
-                                            <input 
-                                                   id="fecha33" name="until">
-                                        }
-                                    @*<small class="form-text text-muted">dia / Mes / año</small>*@
-                                    </div>
-                                </div>
-                                <div class="form-divider"></div>
-                                <h5 class="d-inline-block">Información del Arrendatario</h5>
-                                <div class="form-divider"></div>
-                                <h6 class="mt-0 header-title">Nombre completo del Arrendatario</h6>
-                                <p>Nombre del segundo arrendatario según aparece en contrato de arrendamiento.</p>
-                                <div class="form-group row">
-                                    <label for="example-name2-input" class="col-sm-3 col-form-label">Nombre</label>
-                                    <div class="col-sm-9">
-                                        <input class="form-control"
-                                               type="text" data-toggle="tooltip"
-                                               value="@Model.editUser.tenant_first_name1"
-                                               placeholder="Nombre"
-                                               name="tenant_first_name1"
-                                               id="example-name2-input">
-                                        @*<small class="form-text text-muted">Nombre del Arrendatario</small>*@
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="example-lastname2-input-tenant-last-name" class="col-sm-3 col-form-label">Apellido paterno</label>
-                                    <div class="col-sm-9">
-                                        <input class="form-control"
-                                               type="text" data-toggle="tooltip" 
-                                               value="@Model.editUser.tenant_last_name1"
-                                               name="tenant_last_name1"
-                                               placeholder="Apellido paterno"
-                                               id="example-lastname2-input-tenant-last-name" />
-                                        @*<small class="form-text text-muted">Apellido paterno del Arrendatario</small>*@
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="example-lastname2m-input-tenant-mother-last-name" class="col-sm-3 col-form-label">Apellido materno</label>
-                                    <div class="col-sm-9">
-                                        <input class="form-control"
-                                               type="text" data-toggle="tooltip" 
-                                               value="@Model.editUser.tenant_mother_last_name1"
-                                               name="tenant_mother_last_name1"
-                                               placeholder="Apellido materno"
-                                               id="example-lastname2m-input-tenant-mother-last-name">
-                                    @*    <small class="form-text text-muted">Apellido materno del Arrendatario</small>*@
-                                    </div>
-                                </div>
-                                <div class="form-divider"></div>
-                                <div class="form-group row">
-                                    <label for="example-address1-input-leased-postal-address" class="col-sm-3 col-form-label">Dirección Postal</label>
-                                    <div class="col-sm-9">
-                                        <input class="form-control"
-                                               type="text" data-toggle="tooltip"
-                                               value="@Model.editUser.leased_postal_address"
-                                               name="leased_postal_address"
-                                               placeholder="Dirección Postal"
-                                               id="example-address1-input-leased-postal-address">
-                                    @*    <small class="form-text text-muted">Dirección postal del Arrendatario</small>*@
-                                    </div>
-                                </div>
-                                <div class="form-divider"></div>
-                                <div class="form-group row">
-                                    <label for="example-address2-input-leased-residential-address" class="col-sm-3 col-form-label">Dirección Residencial</label>
-                                    <div class="col-sm-9">
-                                        <input class="form-control"
-                                               type="text"
-                                               value="@Model.editUser.leased_residential_address"
-                                               data-toggle="tooltip" 
-                                               name="leased_residential_address"
-                                               placeholder="Dirección Residencial"
-                                               id="example-address2-input-leased-residential-address">
-                                     @*   <small class="form-text text-muted">Dirección residencial del Arrendatario</small>*@
-                                    </div>
-                                </div>
-                                <div class="form-divider"></div>
-                                <h6 class="mt-0 header-title">Contrato</h6>
-                                <p>Contrato de arrendamiento.</p>
-                                <div class="form-group row">
-                                    <label for="example-name2-input-contrato" class="col-sm-3 col-form-label">Descargar archivo</label>
-                                    <div class="col-sm-9">
-                                        <div class="input-group mt-2">
-                                            <div class="custom-file">
-                                                <button type="button" class="btn btn-info waves-effect waves-light">
-                                                    <i class="mdi mdi-cloud-download  m-r-5"></i> Descargar archivo
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-divider"></div>
-                            </div>
-                            <!-- End View -->
-                            <div class="row form-material">
-                                <div class="col-md-12">
-                                    <h5 class="d-inline-block">Vehículos autorizados</h5>
-                                    <a href="#" class="text-bold"><button type="button" class="btn btn-primary waves-effect waves-light btn-sm"><i class="mdi mdi-plus"></i></button></a>
-                                </div>
-
-                            </div>
-                            <div class="form-divider"></div>
-                            <div class="form-group row">
-                                <label for="example-brand-input" class="col-sm-3 col-form-label">Marca</label>
-                                <div class="col-sm-9">
-                                    <input class="form-control"
-                                           type="text" data-toggle="tooltip" 
-                                           value="@Model.editUser.brand"
-                                           name="brand"
-                                           placeholder="Marca"
-                                           id="example-brand-input">
-                                   @* <small class="form-text text-muted">Marca del vehículo</small>*@
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="example-model-input" class="col-sm-3 col-form-label">Modelo</label>
-                                <div class="col-sm-9">
-                                    <input class="form-control"
-                                           type="text"
-                                           value="@Model.editUser.model"
-                                           name="model" data-toggle="tooltip" 
-                                           placeholder="Modelo"
-                                           id="example-model-input">
-                                   @* <small class="form-text text-muted">Modelo del vehículo</small>*@
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="example-color-input" class="col-sm-3 col-form-label">Color</label>
-                                <div class="col-sm-9">
-                                    <input class="form-control"
-                                           type="text"
-                                           value="@Model.editUser.colour"
-                                           name="colour" data-toggle="tooltip" 
-                                           placeholder="Color"
-                                           id="example-color-input">
-                                   @* <small class="form-text text-muted">Color del vehículo</small>*@
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="example-year-input" class="col-sm-3 col-form-label">Año</label>
-                                <div class="col-sm-9">
-                                    <input class="form-control"
-                                           type="number" data-toggle="tooltip" 
-                                           value="@Model.editUser.year"
-                                           placeholder="Año"
-                                           id="example-year-input">
-                                  @*  <small class="form-text text-muted">Año del vehículo</small>*@
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="example-cartable-input" class="col-sm-3 col-form-label">Tablilla</label>
-                                <div class="col-sm-9">
-                                    <input class="form-control"
-                                           type="text" data-toggle="tooltip" 
-                                           value="@Model.editUser.clapboard"
-                                           name="clapboard"
-                                           placeholder="Tablilla"
-                                           id="example-cartable-input">
-                                   @* <small class="form-text text-muted">Tablilla del vehículo</small>*@
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="example-numbercar-input" class="col-sm-3 col-form-label">Número de sello</label>
-                                <div class="col-sm-9">
-                                    <input class="form-control"
-                                           type="number"
-                                           value="@Model.editUser.stamp_number"
-                                           name="stamp_number" data-toggle="tooltip" 
-                                           placeholder="Número de sello"
-                                           id="example-numbercar-input">
-                                   @* <small class="form-text text-muted">Número de sello del vehículo</small>*@
-                                </div>
-                            </div>
                             <a href="#"><button type="submit" class="btn btn-primary waves-effect waves-light">Guardar</button></a>
                         </div>
                     }
@@ -573,84 +284,5 @@
     })();
 
 
-
-</script>
-
-
-<script type="text/javascript">
-    $.datepicker.regional['es'] = {
-        closeText: 'Cerrar',
-        prevText: '< Ant',
-        nextText: 'Sig >',
-        currentText: 'Hoy',
-        monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
-        dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá'],
-        weekHeader: 'Sm',
-        dateFormat: 'dd/mm/yy',
-        firstDay: 1,
-        isRTL: false,
-        showMonthAfterYear: false,
-        yearSuffix: ''
-    };
-    $.datepicker.setDefaults($.datepicker.regional['es']);
-
-    $('#fecha11').datepicker({
-
-        changeMonth: true,
-        changeYear: true
-
-    });
-
-</script>
-
-<script type="text/javascript">
-    $.datepicker.regional['es'] = {
-        closeText: 'Cerrar',
-        prevText: '< Ant',
-        nextText: 'Sig >',
-        currentText: 'Hoy',
-        monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
-        dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá'],
-        weekHeader: 'Sm',
-        dateFormat: 'dd/mm/yy',
-        firstDay: 1,
-        isRTL: false,
-        showMonthAfterYear: false,
-        yearSuffix: ''
-    };
-    $.datepicker.setDefaults($.datepicker.regional['es']);
-
-    $('#fecha22').datepicker({
-
-        changeMonth: true,
-        changeYear: true
-
-    });
-
-</script>
-
-<script type="text/javascript">
-    $.datepicker.regional['es'] = {
-        closeText: 'Cerrar',
-        prevText: '< Ant',
-        nextText: 'Sig >',
-        currentText: 'Hoy',
-        monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
-        dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá'],
-        weekHeader: 'Sm',
-        dateFormat: 'dd/mm/yy',
-        firstDay: 1,
-        isRTL: false,
-        showMonthAfterYear: false,
-        yearSuffix: ''
-    };
-    $.datepicker.setDefaults($.datepicker.regional['es']);
-
-    $('#fecha33').datepicker({
-
-        changeMonth: true,
-        changeYear: true
-
-    });
 
 </script>

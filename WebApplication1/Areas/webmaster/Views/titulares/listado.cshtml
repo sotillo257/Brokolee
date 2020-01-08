@@ -80,7 +80,6 @@
                                         <th class="f-b">Nombre</th>
                                         <th class="f-b">Apellidos</th>
                                         <th class="f-b">Email</th>
-                                        <th class="f-b">Comunidades</th>
                                         <th class="f-b">Estado</th>
                                         <th class="text-center f-b">Opciones</th>
                                     </tr>
@@ -92,7 +91,7 @@
                                             <td>@item.first_name1</td>
                                             <td>@item.last_name1</td>
                                             <td>@item.email</td>
-                                            <td>@Model.communityDict[item.id]</td>
+                                           
                                             <td class="text-center">
                                                 @if (item.is_active == true)
                                                 {

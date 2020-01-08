@@ -431,6 +431,40 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 return Redirect(ep.GetLogoutUrl());
             }
         }
+        public ActionResult editar(long? id, string Error)
+        {
+
+            if (Session["USER_ID"] != null)
+            {
+                if (id != null)
+                {
+                    long userId = (long)Session["USER_ID"];
+                    user curUser = entities.users.Find(userId);
+                    List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
+                    user editUser = entities.users.Find(id);
+                    editarTitularesViewModel viewModel = new editarTitularesViewModel();
+                    viewModel.side_menu = "titulares";
+                    viewModel.side_sub_menu = "manage_edit_headlines";
+                    viewModel.document_category_list = entities.document_type.ToList();
+                    viewModel.editUser = editUser;
+                    viewModel.curUser = curUser;
+                    viewModel.password = ep.Decrypt(editUser.password);
+                    viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
+                    viewModel.pubMessageList = pubMessageList;
+                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                    ViewBag.msgError = Error;
+                    return View(viewModel);
+                }
+                else
+                {
+                    return Redirect(Url.Action("NotFound", "Error"));
+                }
+            }
+            else
+            {
+                return Redirect(ep.GetLogoutUrl());
+            }
+        }
 
         [HttpPost]
         public ActionResult InsertarTitular(HttpPostedFileBase user_logo, string email, string password, string first_name1,
@@ -481,16 +515,14 @@ namespace WebApplication1.Areas.webmaster.Controllers
                     //Metodo que crea el objeto user
                     editResident = CrearObjetoUser(user_logo, email, password, first_name1, last_name1, mother_last_name1,
                                                   phone_number1, postal_address, residential_address, editResident);
-                    //Condicion para validadr si el email ya existe en la base de datos
-                   
-                        entities.users.Add(editResident);
+                  //Se Guardan los cambias realizados a la entidad
                         entities.SaveChanges();
 
                         return Redirect(Url.Action("listado", "titulares", new { area = "webmaster" }));
                 }
                 catch (Exception ex)
                 {
-                    return Redirect(Url.Action("agregar", "titulares", new { area = "webmaster", Error = "Intentando guardar Titular" }));
+                    return Redirect(Url.Action("editar", "titulares", new { area = "webmaster",id = editID, Error = "Intentando guardar Titular"+ ex.Message }));
                 }
 
 
@@ -506,7 +538,15 @@ namespace WebApplication1.Areas.webmaster.Controllers
         {
           
             long userId = (long)Session["USER_ID"];
-            Titular.user_img = GuardarArchivos(user_logo, "~/Upload/User_Logo");
+            if (Titular.user_img != null)
+            {
+                string url = GuardarArchivos(user_logo, "~/Upload/User_Logo");
+                Titular.user_img = (url != null)? url: Titular.user_img;
+            }
+            else
+            {
+                Titular.user_img = GuardarArchivos(user_logo, "~/Upload/User_Logo");
+            }            
             Titular.email = email;
             Titular.password = ep.Encrypt(password);
             Titular.first_name1 = first_name1;
@@ -526,39 +566,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
 
 
 
-        public ActionResult editar(long? id)
-        {
-
-            if (Session["USER_ID"] != null)
-            {
-                if (id != null)
-                {
-                    long userId = (long)Session["USER_ID"];
-                    user curUser = entities.users.Find(userId);
-                    List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
-                    user editUser = entities.users.Find(id);
-                    editarTitularesViewModel viewModel = new editarTitularesViewModel();
-                    viewModel.side_menu = "titulares";
-                    viewModel.side_sub_menu = "manage_edit_headlines";
-                    viewModel.document_category_list = entities.document_type.ToList();
-                    viewModel.editUser = editUser;
-                    viewModel.curUser = curUser;
-                    viewModel.password = ep.Decrypt(editUser.password);
-                    viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
-                    viewModel.pubMessageList = pubMessageList;
-                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                    return View(viewModel);
-                }
-                else
-                {
-                    return Redirect(Url.Action("NotFound", "Error"));
-                }                
-            }
-            else
-            {
-                return Redirect(ep.GetLogoutUrl());
-            }
-        }
+       
 
         private void GuardarComunidadxUsuario(long newResidentID, List<string> communityID)
         {

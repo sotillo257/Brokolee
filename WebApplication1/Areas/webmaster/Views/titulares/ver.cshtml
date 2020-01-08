@@ -44,9 +44,9 @@
                                 <h5 class="d-inline-block">Información del Titular</h5>
                             </div>
                             @*<div class="col-md-6 mb-1">
-                                <a href="@Url.Action("editar", "titulares", new { area = "webmaster", id = Model.editUser.id })" class="mr-1"><button type="button" class="btn btn-success waves-effect waves-light float-xl-right float-lg-right float-md-left">Editar</button></a>
-                                <a href="@Url.Action("agregar", "titulares", new { area = "webmaster" })"><button type="button" class="btn btn-primary waves-effect waves-light float-xl-right float-lg-right float-md-left">Agregar nuevo</button></a>
-                            </div>*@
+                <a href="@Url.Action("editar", "titulares", new { area = "webmaster", id = Model.editUser.id })" class="mr-1"><button type="button" class="btn btn-success waves-effect waves-light float-xl-right float-lg-right float-md-left">Editar</button></a>
+                <a href="@Url.Action("agregar", "titulares", new { area = "webmaster" })"><button type="button" class="btn btn-primary waves-effect waves-light float-xl-right float-lg-right float-md-left">Agregar nuevo</button></a>
+            </div>*@
                         </div>
                         <div class="form-divider"></div>
                         <div class="form-group row">
@@ -66,20 +66,30 @@
                         </div>
                         <div class="form-divider"></div>
                         <div class="form-group row">
+                            <label for="example-email-input" class="col-sm-3 col-form-label">Correo electrónico</label>
+                            <div class="col-sm-9">
+                                <input class="form-control" type="email" name="email" required value="@Model.editUser.email" readonly
+                                       data-toggle="tooltip" 
+                                       placeholder="Correo electrónico del titular" id="example-email-input">
+                                <small class="form-text text-muted">Base utilizada para identificar las unidades suscritas de varias comunidades adscritas.</small>
+                            </div>
+                        </div>
+                        <div class="form-divider"></div>
+                        <div class="form-group row">
                             <label for="example-password-input" class="col-sm-3 col-form-label">Contraseña</label>
                             <div class="col-sm-9">
                                 <input class="form-control" type="password" value="@Model.editUser.password"
                                        placeholder="Contraseña" id="example-password-input" readonly
-                                       data-toggle="tooltip" title="Contraseña utilizada para ingresar al sistema" />
+                                       data-toggle="tooltip" />
                                 <small class="form-text text-muted">Contraseña utilizada para ingresar al sistema</small>
                             </div>
-                        </div>                        
-                        <div class="form-divider"></div>                                          
+                        </div>
+                        <div class="form-divider"></div>
                         <div class="form-group row">
                             <label for="example-name2-input" class="col-sm-3 col-form-label">Nombre</label>
                             <div class="col-sm-9">
                                 <input class="form-control" type="text" value="@Model.editUser.first_name1" readonly
-                                       placeholder="Nombre" id="example-name2-input" data-toggle="tooltip" title="Nombre del Titular" />
+                                       placeholder="Nombre" id="example-name2-input" data-toggle="tooltip" />
                                 <small class="form-text text-muted">Nombre del Titular</small>
                             </div>
                         </div>
@@ -88,7 +98,7 @@
                             <div class="col-sm-9">
                                 <input class="form-control" type="text" value="@Model.editUser.last_name1" readonly
                                        placeholder="Apellido paterno" id="example-lastname2-input"
-                                       data-toggle="tooltip" title="Apellido paterno del Titular" />
+                                       data-toggle="tooltip" />
                                 <small class="form-text text-muted">Apellido paterno del Titular</small>
                             </div>
                         </div>
@@ -97,7 +107,7 @@
                             <div class="col-sm-9">
                                 <input class="form-control" type="text" value="@Model.editUser.mother_last_name1" readonly
                                        placeholder="Apellido materno" id="example-lastname2m-input"
-                                       data-toggle="tooltip" title="Apellido materno del Titular" />
+                                       data-toggle="tooltip" />
                                 <small class="form-text text-muted">Apellido materno del Titular</small>
                             </div>
                         </div>
@@ -107,7 +117,7 @@
                             <div class="col-sm-9">
                                 <input class="form-control" type="tel" value="@Model.editUser.phone_number1"
                                        placeholder="# Teléfono" id="example-tel1-input" readonly
-                                       data-toggle="tooltip" title="Número de teléfono del Titular" />
+                                       data-toggle="tooltip"  />
                                 <small class="form-text text-muted">Número de teléfono del Titular</small>
                             </div>
                         </div>
@@ -117,7 +127,7 @@
                             <div class="col-sm-9">
                                 <input class="form-control" type="text" value="@Model.editUser.postal_address"
                                        placeholder="Dirección Postal" id="example-address1-input" readonly
-                                       data-toggle="tooltip" title="Dirección postal del Titular" />
+                                       data-toggle="tooltip"  />
                                 <small class="form-text text-muted">Dirección postal del Titular</small>
                             </div>
                         </div>
@@ -127,11 +137,11 @@
                             <div class="col-sm-9">
                                 <input class="form-control" type="text" value="@Model.editUser.residential_address"
                                        placeholder="Dirección Residencial" id="example-address2-input" readonly
-                                       data-toggle="tooltip" title="Dirección residencial del Titular" />
+                                       data-toggle="tooltip"  />
                                 <small class="form-text text-muted">Dirección residencial del Titular</small>
                             </div>
                         </div>
-                       
+
 
                     </div>
                 </div>
