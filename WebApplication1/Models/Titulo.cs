@@ -43,9 +43,10 @@ namespace WebApplication1.Models
         public System.DateTime acq_date { get; set; }
         public Nullable<bool> is_del { get; set; }
         public long IdCommunity { get; set; }
+        public Nullable<int> CarMax { get; set; }
     
-        public virtual user user { get; set; }
         public virtual community community { get; set; }
+        public virtual user user { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Vehiculo> Vehiculos { get; set; }
     }

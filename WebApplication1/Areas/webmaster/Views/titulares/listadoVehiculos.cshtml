@@ -43,10 +43,22 @@
                                 <h5 class="d-inline-block">Listado</h5>
                             </div>
                             <div class="col-md-6 mb-1">
-                                <a href="@Url.Action("agregarVehiculo", "titulares", new { area = "webmaster", id = Model.IdTitulo })" class="btn btn-primary waves-effect waves-light float-xl-right float-lg-right float-md-left mr-1 mb-1">
+                                @if ((Model.titulo.CarMax == null && 1 < Model.CantidadDeVehiculos) || Model.titulo.CarMax <= Model.CantidadDeVehiculos)
+                                {
 
-                                    Agregar nuevo
-                                </a>
+                                    <a href="#" class="btn btn-default waves-effect waves-light float-xl-right float-lg-right float-md-left mr-1 mb-1">
+
+                                        Agregar nuevo
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a href="@Url.Action("agregarVehiculo", "titulares", new { area = "webmaster", Id = Model.titulo.Id })" class="btn btn-primary waves-effect waves-light float-xl-right float-lg-right float-md-left mr-1 mb-1">
+
+                                        Agregar nuevo
+                                    </a>
+                                }
+
                             </div>
                         </div>
                         <div class="table-responsive">

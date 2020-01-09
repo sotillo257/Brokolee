@@ -37,14 +37,15 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                 List<Vehiculo> vehiculosLists = new List<Vehiculo>();
                 vehiculosLists = entities.Vehiculos.Where(x => x.is_del != true && x.IdTitulo == Id).ToList();
-
+                Titulo titulo = entities.Titulos.Find(Id);
                 listadoVehiculosViewModel viewModel = new listadoVehiculosViewModel();
+                viewModel.titulo = titulo;
                 viewModel.side_menu = "titulares";
                 viewModel.side_sub_menu = "titulares_listado";
                 viewModel.document_category_list = entities.document_type.ToList();
                 viewModel.vehiculosList = vehiculosLists;
-                viewModel.IdTitulo = (int)Id;
                 viewModel.curUser = curUser;
+                viewModel.CantidadDeVehiculos = vehiculosLists.Count();
                 viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                 viewModel.pubMessageList = pubMessageList;
                 viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
@@ -63,12 +64,13 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 long userId = (long)Session["USER_ID"];
                 user curUser = entities.users.Find(userId);
                 List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
+                Titulo titulo = entities.Titulos.Find(Id);
                 listadoVehiculosViewModel viewModel = new listadoVehiculosViewModel();
+                viewModel.titulo = titulo;
                 viewModel.side_menu = "titulares";
                 viewModel.side_sub_menu = "titulares_agregar";
                 viewModel.document_category_list = entities.document_type.ToList();
                 viewModel.curUser = curUser;
-                viewModel.IdTitulo = (int)Id;
                 viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                 viewModel.pubMessageList = pubMessageList;
                 viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);

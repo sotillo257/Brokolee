@@ -14,8 +14,9 @@ namespace WebApplication1.Areas.webmaster.ViewModels
         public string communityName { get; set; }
         public string communityApart { get; set; }
         public List<Vehiculo> vehiculosList { get; set; }
-        public long IdTitulo { get; set; }
+        public Titulo titulo { get; set; }
         public List<document_type> document_category_list { get; set; }
+        public int CantidadDeVehiculos { get; set; }
         public user curUser { get; set; }
         public int messageCount { get; set; }
         public string searchStr { get; set; }
