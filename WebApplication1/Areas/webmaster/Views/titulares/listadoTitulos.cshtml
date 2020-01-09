@@ -13,13 +13,13 @@
                 <div class="page-title-box">
                     <div class="float-left">
                         <div class="breadcrumb float-md-right">
-                            <h4 class="page-title">Listado de Titulos</h4>
+                            <h4 class="page-title">Listado de Títulos de Propiedad</h4>
                         </div>
                     </div>
                     <div class="float-right">
                         <ul class="breadcrumb float-md-right">
                             <li class="breadcrumb-item"><a href="@Url.Action("panel", "control", new { area = "webmaster" })" class="text-success"><i class="mdi mdi-home-modern"></i> Panel de Control</a></li>
-                            <li class="breadcrumb-item active">Listado de Titulos</li>
+                            <li class="breadcrumb-item active">Listado de Títulos de Propiedad</li>
                         </ul>
                     </div>
                 </div>
@@ -94,7 +94,7 @@
                                             }
                                         </td>
                                         <td class="text-center">
-                                            <a href="@Url.Action("ver", "titulares", new { area = "webmaster", id = item.Id })">
+                                            <a href="@Url.Action("verTitulo", "titulares", new { area = "webmaster", id = item.Id })">
                                                 <button type="button"
                                                         class="btn btn-success waves-effect waves-light btn-sm mr-1 mb-1"
                                                         data-toggle="tooltip"
@@ -103,7 +103,7 @@
                                                     <i class="mdi mdi-eye"></i>
                                                 </button>
                                             </a>
-                                            <a href="@Url.Action("editar", "titulares", new { area = "webmaster", id = item.Id })">
+                                            <a href="@Url.Action("editarTitulo", "titulares", new { area = "webmaster", id = item.Id })">
                                                 <button type="button"
                                                         class="btn btn-primary waves-effect waves-light btn-sm mr-1 mb-1"
                                                         data-toggle="tooltip" data-placement="top" title="Editar">
@@ -112,7 +112,7 @@
                                             </a>
                                             <a href="@Url.Action("listadoVehiculos", "titulares", new { area = "webmaster", id = item.Id })"
                                                class="btn btn-primary waves-effect waves-light btn-sm mr-1 mb-1"
-                                               data-toggle="tooltip" data-placement="top" title="Listado Vehiculos">
+                                               data-toggle="tooltip" data-placement="top" title="Listado Vehículos">
                                                 <i class="mdi mdi-car"></i>
                                             </a>
                                             <a href="#">

@@ -3,10 +3,8 @@
     ViewBag.Title = "editar";
     Page.Title = "Editar Titular - Brokolee Software";
 }
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
 <script src="~/Scripts/jquery-3.1.1.min.js"></script>
-
-
 
 
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -15,19 +13,13 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="~/Scripts/jquery.validate.min.js"></script>
 
+
+
 <style media="screen">
-    .custom-file-label {
-        height: 34px;
-        padding: 6px 12px;
-        border-radius: 17px;
-        background-color: var(--color-bg-btn);
-    }
-</style>
-    <style media="screen" >
     #inputGroupFile04 {
-        max-width: 130px;
+        max-width: 150px;
         margin: 0 auto;
-        height: 150px;
+        height: 130px;
     }
 
 
@@ -38,20 +30,13 @@
     }
 </style>
 
-<style media="screeen">
-    .file {
-        display: flex;
-        justify-content: flex-end;
-        flex-wrap: wrap;
-        margin-top: 10px;
-    }
-
-
-    #inputGroupFile04-script-file {
+<style media="hola">
+    .example-name2-input {
         background-color: var(--color-bg-btn);
-        color: #fff;
-        line-height: 22px;
+        color: white;
         width: 170px;
+        text-align: center;
+        line-height: 22px;
     }
 </style>
 
@@ -143,7 +128,7 @@
                                 <label for="example-email-input" class="col-sm-3 col-form-label">Correo electrónico</label>
                                 <div class="col-sm-9">
                                     <input class="form-control" type="email" name="email" required value="@Model.editUser.email"
-                                           data-toggle="tooltip" 
+                                           data-toggle="tooltip"
                                            placeholder="Correo electrónico del titular" id="example-email-input">
                                     <small class="form-text text-muted">Base utilizada para identificar las unidades suscritas de varias comunidades adscritas.</small>
                                 </div>

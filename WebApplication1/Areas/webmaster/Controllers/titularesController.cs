@@ -218,7 +218,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
             }
         }
 
-        public ActionResult editarTitulo(long? id)
+        public ActionResult editarTitulo(long? id,string Error)
         {
 
             if (Session["USER_ID"] != null)
@@ -226,18 +226,53 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 if (id != null)
                 {
                     long userId = (long)Session["USER_ID"];
-                    user curUser = entities.users.Find(userId);
+                    Titulo titulo = entities.Titulos.Find(id);
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
-                    user editUser = entities.users.Find(id);
-                    editarTitularesViewModel viewModel = new editarTitularesViewModel();
+                    user curUser = entities.users.Find(userId);
+                    editarTituloViewModel viewModel = new editarTituloViewModel();
                     viewModel.side_menu = "titulares";
                     viewModel.side_sub_menu = "manage_edit_headlines";
                     viewModel.document_category_list = entities.document_type.ToList();
-                    viewModel.editUser = editUser;
                     viewModel.curUser = curUser;
-                    viewModel.password = ep.Decrypt(editUser.password);
+                    viewModel.titulo = titulo;                   
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = pubMessageList;
+                    viewModel.communityList = entities.communities.ToList();
+                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                    ViewBag.msgError = Error;
+                    return View(viewModel);
+                }
+                else
+                {
+                    return Redirect(Url.Action("NotFound", "Error"));
+                }
+            }
+            else
+            {
+                return Redirect(ep.GetLogoutUrl());
+            }
+        }
+
+        public ActionResult verTitulo(long? id)
+        {
+
+            if (Session["USER_ID"] != null)
+            {
+                if (id != null)
+                {
+                    long userId = (long)Session["USER_ID"];
+                    Titulo titulo = entities.Titulos.Find(id);
+                    List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
+                    user curUser = entities.users.Find(userId);
+                    editarTituloViewModel viewModel = new editarTituloViewModel();
+                    viewModel.side_menu = "titulares";
+                    viewModel.side_sub_menu = "manage_edit_headlines";
+                    viewModel.document_category_list = entities.document_type.ToList();
+                    viewModel.curUser = curUser;
+                    viewModel.titulo = titulo;
+                    viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
+                    viewModel.pubMessageList = pubMessageList;
+                    viewModel.communityList = entities.communities.ToList();
                     viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
                     return View(viewModel);
                 }
@@ -253,7 +288,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
         }
 
         [HttpPost]
-        public ActionResult InsertarTitulo(int IdUser, string siono, string since, string until, int IdCommunity,
+        public ActionResult InsertarTitulo(long IdUser, string siono, string since, string until, int IdCommunity,
             string tenant_first_name1, string tenant_last_name1, string tenant_mother_last_name1, string apartment,
             HttpPostedFileBase script_file, string leased_postal_address, string leased_residential_address, string acq_date, HttpPostedFileBase writing_script)
         {
@@ -263,12 +298,13 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 {
                     if (writing_script != null)
                     {
-                        Titulo titulo = CrearObjetoTitulo(IdUser, siono, since, until, IdCommunity,
+                        Titulo titulo = new Titulo();
+                         titulo = CrearObjetoTitulo(IdUser, siono, since, until, IdCommunity,
                                           tenant_first_name1, tenant_last_name1, tenant_mother_last_name1, apartment,
-                                          script_file, leased_postal_address, leased_residential_address, acq_date, writing_script);
+                                          script_file, leased_postal_address, leased_residential_address, acq_date, writing_script, titulo);
                         entities.Titulos.Add(titulo);
                         entities.SaveChanges();
-                        return Redirect(Url.Action("listadoTitulos", "titulares", new { area = "webmaster" }));
+                        return Redirect(Url.Action("listadoTitulos", "titulares", new { area = "webmaster", Id = IdUser, }));
                     }
                     else
                     {
@@ -290,17 +326,60 @@ namespace WebApplication1.Areas.webmaster.Controllers
             }
         }
 
-        private Titulo CrearObjetoTitulo(int IdUser, string siono, string since, string until, int IdCommunity,
-            string tenant_first_name1, string tenant_last_name1, string tenant_mother_last_name1, string apartment,
-            HttpPostedFileBase script_file, string leased_postal_address, string leased_residential_address, string acq_date, HttpPostedFileBase writing_script)
+        [HttpPost]
+        public ActionResult EditarTitulo(long IdTitulo, long IdUser, string siono, string since, string until, int IdCommunity,
+           string tenant_first_name1, string tenant_last_name1, string tenant_mother_last_name1, string apartment,
+           HttpPostedFileBase script_file, string leased_postal_address, string leased_residential_address, string acq_date, HttpPostedFileBase writing_script)
         {
-            Titulo newTitulo = new Titulo();
-            long userId = (long)Session["USER_ID"];
+            if (Session["USER_ID"] != null)
+            {
+                try
+                {
+                    Titulo titulo = entities.Titulos.Find(IdTitulo);
+                   
+                        titulo = CrearObjetoTitulo(0, siono, since, until, IdCommunity,
+                                         tenant_first_name1, tenant_last_name1, tenant_mother_last_name1, apartment,
+                                         script_file, leased_postal_address, leased_residential_address, acq_date, writing_script, titulo);
+                       
+                        entities.SaveChanges();
+                        return Redirect(Url.Action("listadoTitulos", "titulares", new { area = "webmaster", Id = IdUser }));
 
-            newTitulo.IdUser = IdUser;
+
+
+                }
+                catch (Exception ex)
+                {
+                    return Redirect(Url.Action("editarTitulo", "titulares", new { area = "webmaster", Id = IdTitulo, Error = "Intentando guardar Titulo" + ex.Message }));
+                }
+
+
+            }
+            else
+            {
+                return Redirect(ep.GetLogoutUrl());
+            }
+        }
+
+        private Titulo CrearObjetoTitulo(long IdUser, string siono, string since, string until, int IdCommunity,
+            string tenant_first_name1, string tenant_last_name1, string tenant_mother_last_name1, string apartment,
+            HttpPostedFileBase script_file, string leased_postal_address, string leased_residential_address, string acq_date, HttpPostedFileBase writing_script, Titulo newTitulo)
+        {
+            if (IdUser > 0)
+            {
+                newTitulo.IdUser = IdUser;
+            }            
             newTitulo.apartment = apartment;
-            newTitulo.upload_writing = GuardarArchivos(writing_script, "~/Upload/Upload_Writing");
-            newTitulo.leased_upload_file = GuardarArchivos(script_file, "~/Upload/Upload_Contrac");
+            string urlW = GuardarArchivos(writing_script, "~/Upload/Upload_Writing");
+            if (urlW != null)
+            {
+                newTitulo.upload_writing = urlW;
+            }
+            string urlF = GuardarArchivos(script_file, "~/Upload/Upload_Contract");
+            if (urlF != null)
+            {
+                newTitulo.leased_upload_file = urlF;
+            }
+           
             newTitulo.is_leased = (siono == "boxyes") ? true : false;
             newTitulo.acq_date = (ValidarFecha(acq_date) == null) ? DateTime.Now : (DateTime)ValidarFecha(acq_date);
             newTitulo.since = ValidarFecha(since);

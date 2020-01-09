@@ -85,16 +85,7 @@
             }
             <div class="col-12">
                 <div class="card">
-                    @using (Html.BeginForm("EditarTitulo",
-                        "titulares", FormMethod.Post,
-                        new
-                        {
-                            id = "editresidentForm",
-                            @class = "",
-                            enctype = "multipart/form-data"
-                        }))
-                    {
-                        @Html.AntiForgeryToken()
+                 
                         <input type="hidden" value="@Model.titulo.Id" name="IdTitulo" />
                         <input type="hidden" value="@Model.titulo.IdUser" name="IdUser" />
                         <div class="card-body">
@@ -104,8 +95,8 @@
                             <div class="form-group row">
                                 <label label="example-date-input-acq-date" class="col-sm-3 col-form-label">Fecha de adquisición</label>
                                 <div class="col-sm-9">
-                                    <input required
-                                           id="fecha11"
+                                    <input required readonly
+                                           id="FechaVER"  class="form-control" type="text"
                                            name="acq_date"
                                            value="@Convert.ToDateTime(Model.titulo.acq_date).ToString("MM/dd/yyyy")" />
 
@@ -116,7 +107,7 @@
                             <div class="form-group row">
                                 <label class="col-sm-3 col-form-label">Comunidad</label>
                                 <div class="col-sm-9">
-                                    <select class="form-control" name="IdCommunity"
+                                    <select class="form-control" name="IdCommunity" readonly disabled
                                             data-toggle="tooltip" title="Nombre de la Comunidad" id="IdCommunity">
                                         @foreach (var item in Model.communityList)
                                         {
@@ -139,7 +130,7 @@
                                 <label for="apartment-input" class="col-sm-3 col-form-label">Apartamento</label>
                                 <div class="col-sm-9">
                                     <input class="form-control" type="text" value="@Model.titulo.apartment"
-                                           name="apartment" required
+                                           name="apartment" required readonly
                                            data-toggle="tooltip"
                                            placeholder="Apartamento" id="apartment-input">
                                     @*  <small class="form-text text-muted">Apartamento del Titular</small>*@
@@ -150,18 +141,7 @@
 
                             <div class="form-divider"></div>
                             <h6 class="mt-0 header-title">Escritura</h6>
-                            <p>Escritura de compra-venta.</p>
-                            <div class="form-group row">
-                                <label for="example-name2-input" class="col-sm-3 col-form-label">Subir Escritura</label>
-                                <div class="col-sm-9">
-                                    <div class="input-group mt-2">
-                                        <div class="custom-file">
-                                            <input type="file" class="custom-file-input" id="input-arch" name="writing_script" />
-                                            <label id="garras" class="custom-file-label" for="input-arch">Seleccionar archivo</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <p>Escritura de compra-venta.</p>                            
                             @if (Model.titulo.upload_writing != null)
                             {
                                 <div class="form-group row">
@@ -188,12 +168,12 @@
                                         <div class="custom-control custom-checkbox">
                                             @if (Model.titulo.is_leased == true)
                                             {
-                                                <input type="checkbox" name="siono" value="boxyes" checked data-toggle="tooltip" title="Si"
+                                                <input type="checkbox" name="siono" value="boxyes" checked data-toggle="tooltip" title="Si" readonly
                                                        class="custom-control-input" id="customCheck6" data-parsley-multiple="groups" data-parsley-mincheck="2">
                                             }
                                             else
                                             {
-                                                <input type="checkbox" name="siono" value="boxyes"   data-toggle="tooltip" title="Si"
+                                                <input type="checkbox" name="siono" value="boxyes" data-toggle="tooltip" title="Si" readonly
                                                        class="custom-control-input" id="customCheck6" data-parsley-multiple="groups" data-parsley-mincheck="2">
                                             }
                                             <label class="custom-control-label" for="customCheck6"> Si</label>
@@ -203,12 +183,12 @@
                                         <div class="custom-control custom-checkbox">
                                             @if (Model.titulo.is_leased == false)
                                             {
-                                                <input type="checkbox" name="siono" value="boxno" checked data-toggle="tooltip" title="No"
+                                                <input type="checkbox" name="siono" value="boxno" checked data-toggle="tooltip" title="No" readonly
                                                        class="custom-control-input" id="customCheck7" data-parsley-multiple="groups" data-parsley-mincheck="2">
                                             }
                                             else
                                             {
-                                                <input type="checkbox" name="siono" value="boxno" class="custom-control-input" data-toggle="tooltip" title="No"
+                                                <input type="checkbox" name="siono" value="boxno" class="custom-control-input" data-toggle="tooltip" title="No" readonly
                                                        id="customCheck7" data-parsley-multiple="groups" data-parsley-mincheck="2">
                                             }
                                             <label class="custom-control-label" for="customCheck7"> No</label>
@@ -227,14 +207,14 @@
 
                                         {
 
-                                            <input required
+                                            <input required readonly class="form-control" type="text"
                                                    value="@Convert.ToDateTime(Model.titulo.since).ToString("MM/dd/yyyy")"
-                                                   id="fecha22" name="since">
+                                                   id="FechaVER1" name="since">
                                         }
                                         else
                                         {
 
-                                            <input id="fecha22" name="since">
+                                            <input id="FechaVER1" class="form-control" type="text"  readonly name="since">
 
                                         }
                                         @*  <small class="form-text text-muted">dia / Mes / año</small>*@
@@ -245,13 +225,13 @@
                                     <div class="col-sm-9">
                                         @if (Model.titulo.until != null)
                                         {
-                                            <input required
+                                            <input required readonly class="form-control" type="text"
                                                    value="@Convert.ToDateTime(Model.titulo.until).ToString("MM/dd/yyyy")"
-                                                   id="fecha33" name="until">
+                                                   id="FechaVER2" name="until">
                                         }
                                         else
                                         {
-                                            <input id="fecha33" name="until">
+                                            <input id="FechaVER2" class="form-control" type="text" readonly name="until">
                                         }
                                         @*<small class="form-text text-muted">dia / Mes / año</small>*@
                                     </div>
@@ -260,11 +240,10 @@
                                 <h5 class="d-inline-block">Información del Arrendatario</h5>
                                 <div class="form-divider"></div>
                                 <h6 class="mt-0 header-title">Nombre completo del Arrendatario</h6>
-                                <p>Nombre del segundo arrendatario según aparece en contrato de arrendamiento.</p>
                                 <div class="form-group row">
                                     <label for="example-name2-input" class="col-sm-3 col-form-label">Nombre</label>
                                     <div class="col-sm-9">
-                                        <input class="form-control"
+                                        <input class="form-control" readonly
                                                type="text" data-toggle="tooltip"
                                                value="@Model.titulo.tenant_first_name1"
                                                placeholder="Nombre"
@@ -276,7 +255,7 @@
                                 <div class="form-group row">
                                     <label for="example-lastname2-input-tenant-last-name" class="col-sm-3 col-form-label">Apellido paterno</label>
                                     <div class="col-sm-9">
-                                        <input class="form-control"
+                                        <input class="form-control" readonly
                                                type="text" data-toggle="tooltip"
                                                value="@Model.titulo.tenant_last_name1"
                                                name="tenant_last_name1"
@@ -288,7 +267,7 @@
                                 <div class="form-group row">
                                     <label for="example-lastname2m-input-tenant-mother-last-name" class="col-sm-3 col-form-label">Apellido materno</label>
                                     <div class="col-sm-9">
-                                        <input class="form-control"
+                                        <input class="form-control" readonly
                                                type="text" data-toggle="tooltip"
                                                value="@Model.titulo.tenant_mother_last_name1"
                                                name="tenant_mother_last_name1"
@@ -301,7 +280,7 @@
                                 <div class="form-group row">
                                     <label for="example-address1-input-leased-postal-address" class="col-sm-3 col-form-label">Dirección Postal</label>
                                     <div class="col-sm-9">
-                                        <input class="form-control"
+                                        <input class="form-control" readonly
                                                type="text" data-toggle="tooltip"
                                                value="@Model.titulo.leased_postal_address"
                                                name="leased_postal_address"
@@ -314,7 +293,7 @@
                                 <div class="form-group row">
                                     <label for="example-address2-input-leased-residential-address" class="col-sm-3 col-form-label">Dirección Residencial</label>
                                     <div class="col-sm-9">
-                                        <input class="form-control"
+                                        <input class="form-control" readonly
                                                type="text"
                                                value="@Model.titulo.leased_residential_address"
                                                data-toggle="tooltip"
@@ -328,17 +307,7 @@
 
                                 <h6 class="mt-0 header-title">Contrato</h6>
                                 <p>Contrato de arrendamiento.</p>
-                                <div class="form-group row">
-                                    <label for="example-name2-input" class="col-sm-3 col-form-label">Subir Contrato</label>
-                                    <div class="col-sm-9">
-                                        <div class="input-group mt-2">
-                                            <div class="custom-file">
-                                                <input type="file" class="custom-file-input" id="input-arch" name="script_file" />
-                                                <label id="garras" class="custom-file-label" for="input-arch">Seleccionar archivo</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                
                                 @if (Model.titulo.leased_upload_file != null)
                                 {
                                     <div class="form-group row">
@@ -359,10 +328,8 @@
 
                             </div>
                             <!-- End View -->
-
-                            <a href="#"><button type="submit" class="btn btn-primary waves-effect waves-light">Guardar</button></a>
                         </div>
-                    }
+                  
                 </div>
             </div>
         </div><!-- end row -->
