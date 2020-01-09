@@ -528,6 +528,7 @@
     <Compile Include="Areas\webmaster\ViewModels\editarPaqViewModel.cs" />
     <Compile Include="Areas\webmaster\ViewModels\editarSuplidoresViewModel.cs" />
     <Compile Include="Areas\webmaster\ViewModels\editarTareasViewModel.cs" />
+    <Compile Include="Areas\webmaster\ViewModels\editarVehiculoViewModel.cs" />
     <Compile Include="Areas\webmaster\ViewModels\editarTituloViewModel.cs" />
     <Compile Include="Areas\webmaster\ViewModels\editarTitularesViewModel.cs" />
     <Compile Include="Areas\webmaster\ViewModels\editblogViewModel.cs" />
@@ -1490,6 +1491,7 @@
     <Content Include="Areas\webmaster\Views\titulares\editarTitulo.cshtml" />
     <Content Include="Areas\webmaster\Views\titulares\editarVehiculo.cshtml" />
     <Content Include="Areas\webmaster\Views\titulares\verTitulo.cshtml" />
+    <Content Include="Areas\webmaster\Views\titulares\verVehiculo.cshtml" />
     <None Include="Properties\PublishProfiles\Default Settings.pubxml" />
     <None Include="Properties\PublishProfiles\Default Settings1.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />

@@ -68,10 +68,10 @@
         <AssociationConnector Association="pjrdev_condominiosModel.FK_taskcomment_user" ManuallyRouted="false" />
         <AssociationConnector Association="pjrdev_condominiosModel.FK_taskuser_user" ManuallyRouted="false" />
         <AssociationConnector Association="pjrdev_condominiosModel.FK_uso_user" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="pjrdev_condominiosModel.Titulo" Width="1.5" PointX="3" PointY="54.75" />
-        <AssociationConnector Association="pjrdev_condominiosModel.FK_Titulos_user" />
-        <AssociationConnector Association="pjrdev_condominiosModel.FK_Titulos_community" />
         <EntityTypeShape EntityType="pjrdev_condominiosModel.Vehiculo" Width="1.5" PointX="5.25" PointY="56.25" />
+        <EntityTypeShape EntityType="pjrdev_condominiosModel.Titulo" Width="1.5" PointX="11" PointY="17" />
+        <AssociationConnector Association="pjrdev_condominiosModel.FK_Titulos_community" />
+        <AssociationConnector Association="pjrdev_condominiosModel.FK_Titulos_user" />
         <AssociationConnector Association="pjrdev_condominiosModel.FK_Vehiculos_user" />
       </Diagram>
     </edmx:Diagrams>

@@ -81,7 +81,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 return Redirect(ep.GetLogoutUrl());
             }
         }
-        public ActionResult editarVehiculo(long? id)
+        public ActionResult editarVehiculo(long? id, string Error)
         {
 
             if (Session["USER_ID"] != null)
@@ -91,14 +91,47 @@ namespace WebApplication1.Areas.webmaster.Controllers
                     long userId = (long)Session["USER_ID"];
                     user curUser = entities.users.Find(userId);
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
-                    user editUser = entities.users.Find(id);
-                    editarTitularesViewModel viewModel = new editarTitularesViewModel();
+                    Vehiculo vehiculo = entities.Vehiculos.Find(id);
+                    editarVehiculoViewModel viewModel = new editarVehiculoViewModel();
                     viewModel.side_menu = "titulares";
                     viewModel.side_sub_menu = "manage_edit_headlines";
                     viewModel.document_category_list = entities.document_type.ToList();
-                    viewModel.editUser = editUser;
+                    viewModel.vehiculo = vehiculo;
                     viewModel.curUser = curUser;
-                    viewModel.password = ep.Decrypt(editUser.password);
+                    viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
+                    viewModel.pubMessageList = pubMessageList;
+                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                    ViewBag.msgError = Error;
+                    return View(viewModel);
+                }
+                else
+                {
+                    return Redirect(Url.Action("NotFound", "Error"));
+                }
+            }
+            else
+            {
+                return Redirect(ep.GetLogoutUrl());
+            }
+        }
+
+        public ActionResult verVehiculo(long? id)
+        {
+
+            if (Session["USER_ID"] != null)
+            {
+                if (id != null)
+                {
+                    long userId = (long)Session["USER_ID"];
+                    user curUser = entities.users.Find(userId);
+                    List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
+                    Vehiculo vehiculo = entities.Vehiculos.Find(id);
+                    editarVehiculoViewModel viewModel = new editarVehiculoViewModel();
+                    viewModel.side_menu = "titulares";
+                    viewModel.side_sub_menu = "manage_edit_headlines";
+                    viewModel.document_category_list = entities.document_type.ToList();
+                    viewModel.vehiculo = vehiculo;
+                    viewModel.curUser = curUser;
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = pubMessageList;
                     viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
@@ -115,21 +148,22 @@ namespace WebApplication1.Areas.webmaster.Controllers
             }
         }
 
-        public ActionResult InsertarVehiculo(int IdTitulo, string brand, string model, string colour, string year, string clapboard,
+        public ActionResult InsertarVehiculo(long IdTitulo, string brand, string model, string colour, string year, string clapboard,
            string stamp_number)
         {
             if (Session["USER_ID"] != null)
             {
                 try
                 {
-                        Vehiculo vehiculo = CrearObjetoVehiculo(IdTitulo, brand, model, colour, year, clapboard, stamp_number);
+                    Vehiculo vehiculo = new Vehiculo();
+                        vehiculo = CrearObjetoVehiculo(IdTitulo, brand, model, colour, year, clapboard, stamp_number, vehiculo);
                         entities.Vehiculos.Add(vehiculo);
                         entities.SaveChanges();
                         return Redirect(Url.Action("listadoVehiculos", "titulares", new { area = "webmaster", Id = IdTitulo }));
                 }
                 catch (Exception ex)
                 {
-                    return Redirect(Url.Action("agregarTitulo", "titulares", new { area = "webmaster", Id = IdTitulo, Error = "Intentando guardar Vehiculo " + ex.Message }));
+                    return Redirect(Url.Action("agregarVehiculo", "titulares", new { area = "webmaster", Id = IdTitulo, Error = "Intentando guardar Vehiculo " + ex.Message }));
                 }
 
 
@@ -140,10 +174,34 @@ namespace WebApplication1.Areas.webmaster.Controllers
             }
         }
 
-        private Vehiculo CrearObjetoVehiculo(int IdTitulo, string brand, string model, string colour, string year, string clapboard,
-           string stamp_number)
+        public ActionResult ModificarVehiculo(long IdVehiculo, long IdTitulo, string brand, string model, string colour, string year, string clapboard,
+          string stamp_number)
         {
-            Vehiculo newVehiculo = new Vehiculo();
+            if (Session["USER_ID"] != null)
+            {
+                try
+                {
+                    Vehiculo vehiculo = entities.Vehiculos.Find(IdVehiculo);
+                    vehiculo = CrearObjetoVehiculo(IdTitulo, brand, model, colour, year, clapboard, stamp_number, vehiculo);
+                    entities.SaveChanges();
+                    return Redirect(Url.Action("listadoVehiculos", "titulares", new { area = "webmaster", Id = IdTitulo }));
+                }
+                catch (Exception ex)
+                {
+                    return Redirect(Url.Action("editarVehiculo", "titulares", new { area = "webmaster", Id = IdVehiculo, Error = "Intentando guardar Vehiculo " + ex.Message }));
+                }
+
+
+            }
+            else
+            {
+                return Redirect(ep.GetLogoutUrl());
+            }
+        }
+
+        private Vehiculo CrearObjetoVehiculo(long IdTitulo, string brand, string model, string colour, string year, string clapboard,
+           string stamp_number, Vehiculo newVehiculo)
+        {
             newVehiculo.Model = model;
             newVehiculo.Brand = brand;
             newVehiculo.Color = colour;
