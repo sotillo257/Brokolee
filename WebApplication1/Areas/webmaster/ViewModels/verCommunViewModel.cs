@@ -22,5 +22,6 @@ namespace WebApplication1.Areas.webmaster.ViewModels
         public List<task> pubTaskList { get; set; }
         public List<ShowMessage> pubMessageList { get; set; }
         public List<user> titularList { get; set; }
+        public List<user> coadminList { get; set; }
     }
 }

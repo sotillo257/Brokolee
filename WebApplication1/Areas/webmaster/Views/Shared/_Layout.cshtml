@@ -189,13 +189,13 @@
                         @if (Model.side_sub_menu == "titulares_listado")
                         {
                             <li class="active">
-                                <a href="@Url.Action("listado", "titulares", new { area = "webmaster" })" class="waves-effect waves-light active"><i class="mdi mdi-account-multiple"></i><span> Administrar Titulares </span></a>
+                                <a href="@Url.Action("listado", "titulares", new { area = "webmaster" })" class="waves-effect waves-light active"><i class="mdi mdi-account-multiple"></i><span>Titulares </span></a>
                             </li>
                         }
                         else
                         {
                             <li>
-                                <a href="@Url.Action("listado", "titulares", new { area = "webmaster" })" class="waves-effect waves-light"><i class="mdi mdi-account-multiple"></i><span> Administrar Titulares </span></a>
+                                <a href="@Url.Action("listado", "titulares", new { area = "webmaster" })" class="waves-effect waves-light"><i class="mdi mdi-account-multiple"></i><span>Titulares </span></a>
                             </li>
                         }
 
@@ -213,358 +213,34 @@
                         }
 
 
-                  
-
-                        @*<li class="has_sub">
-            @if (Model.side_menu == "cargos")
-            {
-                <a href="javascript:void(0);" class="waves-effect waves-light active"><i class="mdi mdi-coin"></i><span> Cuotas y otros cargos </span><span class="float-right"><i class="mdi mdi-chevron-right"></i></span></a>
-                <ul class="list-unstyled">
-                    @if (Model.side_sub_menu == "cargos_balance")
-                    {
-                        <li class="active">
-                            <a href="@Url.Action("balance", "cargos", new { area = "webmaster" })" class="active">Balance pendiente por concepto o general</a>
-                        </li>
-                    }
-                    else
-                    {
-                        <li>
-                            <a href="@Url.Action("balance", "cargos", new { area = "webmaster" })">Balance pendiente por concepto o general</a>
-                        </li>
-                    }
-
-
-                    @if (Model.side_sub_menu == "cargos_pago")
-                    {
-                        <li class="active">
-                            <a href="@Url.Action("pago", "cargos", new { area = "webmaster" })" class="active">Pago de cargos impuestos por la comunidad</a>
-                        </li>
-                    }
-                    else
-                    {
-                        <li>
-                            <a href="@Url.Action("pago", "cargos", new { area = "webmaster" })">Pago de cargos impuestos por la comunidad</a>
-                        </li>
-                    }
-
-                    @if (Model.side_sub_menu == "cargos_estado")
-                    {
-                        <li class="active">
-                            <a href="@Url.Action("estado", "cargos", new { area = "webmaster" })" class="active">Estado de cuenta por concepto</a>
-                        </li>
-                    }
-                    else
-                    {
-                        <li>
-                            <a href="@Url.Action("estado", "cargos", new { area = "webmaster" })">Estado de cuenta por concepto</a>
-                        </li>
-                    }
-
-                    @if (Model.side_sub_menu == "cargos_historial")
-                    {
-                        <li class="active">
-                            <a href="@Url.Action("historial", "cargos", new { area = "webmaster" })" class="active">Historial de transacciones por concepto</a>
-                        </li>
-                    }
-                    else
-                    {
-                        <li>
-                            <a href="@Url.Action("historial", "cargos", new { area = "webmaster" })">Historial de transacciones por concepto</a>
-                        </li>
-                    }
-                </ul>
-            }
-            else
-            {
-                <a href="javascript:void(0);" class="waves-effect waves-light"><i class="mdi mdi-coin"></i><span> Cuotas y otros cargos </span><span class="float-right"><i class="mdi mdi-chevron-right"></i></span></a>
-                <ul class="list-unstyled">
-                    <li><a href="@Url.Action("balance", "cargos", new { area = "webmaster" })">Balance pendiente por concepto o general</a></li>
-                    <li><a href="@Url.Action("pago", "cargos", new { area = "webmaster" })">Pago de cargos impuestos por la comunidad</a></li>
-                    <li><a href="@Url.Action("estado", "cargos", new { area = "webmaster" })">Estado de cuenta por concepto</a></li>
-                    <li><a href="@Url.Action("historial", "cargos", new { area = "webmaster" })">Historial de transacciones por concepto</a></li>
-                </ul>
-            }
-
-        </li>*@
-
-                        @*<li class="has_sub">
-            @if (Model.side_menu == "suplidores")
-            {
-                <a href="javascript:void(0);" class="waves-effect waves-light active"><i class="mdi mdi-format-list-bulleted-type"></i><span> Directorio de suplidores </span><span class="float-right"><i class="mdi mdi-chevron-right"></i></span></a>
-                <ul class="list-unstyled">
-                    @if (Model.side_sub_menu == "suplidores_listado")
-                    {
-                        <li class="active">
-                            <a href="@Url.Action("listado", "suplidores", new { area = "webmaster" })" class="active">Listado de suplidores</a>
-                        </li>
-                    }
-                    else
-                    {
-                        <li>
-                            <a href="@Url.Action("listado", "suplidores", new { area = "webmaster" })">Listado de suplidores</a>
-                        </li>
-                    }
-
-
-                    @if (Model.side_sub_menu == "suplidores_agregar")
-                    {
-                        <li class="active">
-                            <a href="@Url.Action("agregar", "suplidores", new { area = "webmaster" })" class="active">Agregar suplidor</a>
-                        </li>
-                    }
-                    else
-                    {
-                        <li>
-                            <a href="@Url.Action("agregar", "suplidores", new { area = "webmaster" })">Agregar suplidor</a>
-                        </li>
-                    }
-                </ul>
-            }
-            else
-            {
-                <a href="javascript:void(0);" class="waves-effect waves-light"><i class="mdi mdi-format-list-bulleted-type"></i><span> Directorio de suplidores </span><span class="float-right"><i class="mdi mdi-chevron-right"></i></span></a>
-                <ul class="list-unstyled">
-                    <li><a href="@Url.Action("listado", "suplidores", new { area = "webmaster" })">Listado de suplidores</a></li>
-                    <li><a href="@Url.Action("agregar", "suplidores", new { area = "webmaster" })">Agregar suplidor</a></li>
-                </ul>
-            }
-        </li>*@
-
-                        @*<li class="has_sub">
-            @if (Model.side_menu == "eventos")
-            {
-                <a href="javascript:void(0);" class="waves-effect waves-light active"><i class="mdi mdi-calendar"></i><span> Calendario de Eventos </span><span class="float-right"><i class="mdi mdi-chevron-right"></i></span></a>
-                <ul class="list-unstyled">
-                    @if (Model.side_sub_menu == "eventos_registrados")
-                    {
-                        <li class="active">
-                            <a href="@Url.Action("registrados", "eventos", new { area = "webmaster" })" class="active">Últimos eventos registrados</a>
-                        </li>
-                    }
-                    else
-                    {
-                        <li>
-                            <a href="@Url.Action("registrados", "eventos", new { area = "webmaster" })">Últimos eventos registrados</a>
-                        </li>
-                    }
-
-                    @if (Model.side_sub_menu == "eventos_otros")
-                    {
-                        <li class="active">
-                            <a href="@Url.Action("otros", "eventos", new { area = "webmaster" })" class="active">Otros eventos</a>
-                        </li>
-                    }
-                    else
-                    {
-                        <li><a href="@Url.Action("otros", "eventos", new { area = "webmaster" })">Otros eventos</a></li>
-                    }
-
-                    @if (Model.side_sub_menu == "eventos_agregar")
-                    {
-                        <li class="active">
-                            <a href="@Url.Action("agregar", "eventos", new { area = "webmaster" })" class="active">Agregar evento</a>
-                        </li>
-                    }
-                    else
-                    {
-                        <li><a href="@Url.Action("agregar", "eventos", new { area = "webmaster" })">Agregar evento</a></li>
-                    }
-
-                    @if (Model.side_sub_menu == "eventos_inactivos")
-                    {
-                        <li class="active">
-                            <a href="@Url.Action("inactivos", "eventos", new { area = "webmaster" })" class="active">Eventos inactivos</a>
-                        </li>
-                    }
-                    else
-                    {
-                        <li><a href="@Url.Action("inactivos", "eventos", new { area = "webmaster" })">Eventos inactivos</a></li>
-                    }
-                </ul>
-            }
-            else
-            {
-                <a href="javascript:void(0);" class="waves-effect waves-light"><i class="mdi mdi-calendar"></i><span> Calendario de Eventos </span><span class="float-right"><i class="mdi mdi-chevron-right"></i></span></a>
-                <ul class="list-unstyled">
-                    <li><a href="@Url.Action("registrados", "eventos", new { area = "webmaster" })">Últimos eventos registrados</a></li>
-                    <li><a href="@Url.Action("otros", "eventos", new { area = "webmaster" })">Otros eventos</a></li>
-                    <li><a href="@Url.Action("agregar", "eventos", new { area = "webmaster" })">Agregar evento</a></li>
-                    <li><a href="@Url.Action("inactivos", "eventos", new { area = "webmaster" })">Eventos inactivos</a></li>
-                </ul>
-            }
-        </li>
-
-        <li class="has_sub">
-            @if (Model.side_menu == "documentos")
-            {
-                <a href="javascript:void(0);" class="waves-effect active"><i class="mdi mdi-file-document"></i><span> Documentos </span> <span class="float-right"><i class="mdi mdi-chevron-right"></i></span></a>
-                <ul class="list-unstyled">
-                    @foreach (var item in Model.document_category_list)
-                    {
-                        if (Model.side_sub_menu == "documentos_" + item.type_name)
-                        {
-                            <li class="active">
-                                <a href="@Url.Action("listado", "documentos", new { area = "webmaster", id = item.id })" class="active">@item.type_name</a>
-                            </li>
-                        }
-                        else
-                        {
-                            <li>
-                                <a href="@Url.Action("listado", "documentos", new { area = "webmaster", id = item.id })">@item.type_name</a>
-                            </li>
-                        }
-                    }
-
-                    @if (Model.side_sub_menu == "documentos_categoria")
-                    {
-                        <li class="active">
-                            <a href="@Url.Action("categoria", "documentos", new { area = "webmaster" })" class="active">Crear Categoría</a>
-                        </li>
-                    }
-                    else
-                    {
-                        <li>
-                            <a href="@Url.Action("categoria", "documentos", new { area = "webmaster" })">Crear Categoría</a>
-                        </li>
-                    }
-
-                    @if (Model.side_sub_menu == "documentos_agregar")
-                    {
-                        <li class="active">
-                            <a href="@Url.Action("agregar", "documentos", new { area = "webmaster" })" class="active">Agregar Documento</a>
-                        </li>
-                    }
-                    else
-                    {
-                        <li>
-                            <a href="@Url.Action("agregar", "documentos", new { area = "webmaster" })">Agregar Documento</a>
-                        </li>
-                    }
-                </ul>
-            }
-            else
-            {
-                <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-file-document"></i><span> Documentos </span> <span class="float-right"><i class="mdi mdi-chevron-right"></i></span></a>
-                <ul class="list-unstyled">
-                    @foreach (var item in Model.document_category_list)
-                    {
-                        <li><a href="@Url.Action("listado", "documentos", new { area = "webmaster", id = item.id })">@item.type_name</a></li>
-                    }
-                    <li>
-                        <a href="@Url.Action("categoria", "documentos", new { area = "webmaster" })">Crear Categoría</a>
-                    </li>
-
-                    <li>
-                        <a href="@Url.Action("agregar", "documentos", new { area = "webmaster" })">Agregar Documento</a>
-                    </li>
-                </ul>
-            }
-        </li>
-
-        <li class="has_sub">
-            @if (Model.side_menu == "tareas")
-            {
-                <a href="javascript:void(0);" class="waves-effect waves-light active"><i class="mdi mdi-server"></i><span> Tareas en Proceso </span><span class="float-right"><i class="mdi mdi-chevron-right"></i></span></a>
-                <ul class="list-unstyled">
-                    @if (Model.side_sub_menu == "tareas_listado")
-                    {
-                        <li class="active">
-                            <a href="@Url.Action("listado", "tareas", new { area = "webmaster" })" class="active">Listado de tareas</a>
-                        </li>
-                    }
-                    else
-                    {
-                        <li>
-                            <a href="@Url.Action("listado", "tareas", new { area = "webmaster" })">Listado de tareas</a>
-                        </li>
-                    }
-
-                    @if (Model.side_sub_menu == "tareas_agregar")
-                    {
-                        <li class="active">
-                            <a href="@Url.Action("agregar", "tareas", new { area = "webmaster" })" class="active">Agregar tarea</a>
-                        </li>
-                    }
-                    else
-                    {
-                        <li>
-                            <a href="@Url.Action("agregar", "tareas", new { area = "webmaster" })">Agregar tarea</a>
-                        </li>
-                    }
-
-                    @if (Model.side_sub_menu == "tareas_completadas")
-                    {
-                        <li class="active">
-                            <a href="@Url.Action("completadas", "tareas", new { area = "webmaster" })" class="active">Tareas completadas</a>
-                        </li>
-                    }
-                    else
-                    {
-                        <li><a href="@Url.Action("completadas", "tareas", new { area = "webmaster" })">Tareas completadas</a></li>
-                    }
-                </ul>
-            }
-            else
-            {
-                <a href="javascript:void(0);" class="waves-effect waves-light"><i class="mdi mdi-server"></i><span> Tareas en Proceso </span><span class="float-right"><i class="mdi mdi-chevron-right"></i></span></a>
-                <ul class="list-unstyled">
-                    <li>
-                        <a href="@Url.Action("listado", "tareas", new { area = "webmaster" })">Listado de tareas</a>
-                    </li>
-                    <li>
-                        <a href="@Url.Action("agregar", "tareas", new { area = "webmaster" })">Agregar tarea</a>
-                    </li>
-                    <li><a href="@Url.Action("completadas", "tareas", new { area = "webmaster" })">Tareas completadas</a></li>
-                </ul>
-            }
-        </li>*@
-
-                        <li class="has_sub">
-                            @if (Model.side_menu == "comunicaciones")
-                            {
-                                <a href="javascript:void(0);" class="waves-effect waves-light active"><i class="mdi mdi-wechat"></i> <span> Comunicaciones </span> <span class="float-right"><i class="mdi mdi-chevron-right"></i></span></a>
-                                <ul class="list-unstyled">
+                 
                                     @if (Model.side_sub_menu == "comunicaciones_blog")
                                     {
                                         <li class="active">
-                                            <a href="@Url.Action("blog", "comunicaciones", new { area = "webmaster" })" class="active">Blog general de la comunidad</a>
+                                            <a href="@Url.Action("blog", "comunicaciones", new { area = "webmaster" })" class="active"><i class="mdi mdi-message-draw"></i>Blog General</a>
                                         </li>
                                     }
                                     else
                                     {
                                         <li>
-                                            <a href="@Url.Action("blog", "comunicaciones", new { area = "webmaster" })">Blog general de la comunidad</a>
+                                            <a href="@Url.Action("blog", "comunicaciones", new { area = "webmaster" })"><i class="mdi mdi-message-draw"></i>Blog General</a>
                                         </li>
                                     }
 
                                     @if (Model.side_sub_menu == "comunicaciones_privados")
                                     {
-                                        <li class="active">
-                                            <a href="@Url.Action("privados", "comunicaciones", new { area = "webmaster" })" class="active">Mensajes privados</a>
-                                        </li>
+                    <li class="active">
+                      
+                        <a href="@Url.Action("privados", "comunicaciones", new { area = "webmaster" })" class="active">  <i class="mdi mdi-message-text"></i> Mensajería</a>
+                    </li>
                                     }
                                     else
                                     {
                                         <li>
-                                            <a href="@Url.Action("privados", "comunicaciones", new { area = "webmaster" })">Mensajes privados</a>
+                                            <a href="@Url.Action("privados", "comunicaciones", new { area = "webmaster" })"><i class="mdi mdi-message-text"></i>Mensajería</a>
                                         </li>
                                     }
-                                </ul>
-                            }
-                            else
-                            {
-                                <a href="javascript:void(0);" class="waves-effect waves-light"><i class="mdi mdi-wechat"></i> <span> Comunicaciones </span> <span class="float-right"><i class="mdi mdi-chevron-right"></i></span></a>
-                                <ul class="list-unstyled">
-                                    <li>
-                                        <a href="@Url.Action("blog", "comunicaciones", new { area = "webmaster" })">Blog general de la comunidad</a>
-                                    </li>
-
-                                    <li>
-                                        <a href="@Url.Action("privados", "comunicaciones", new { area = "webmaster" })">Mensajes privados</a>
-                                    </li>
-                                </ul>
-                            }
-                        </li>
+                              
 
                         @*<li class="has_sub">
             @if (Model.side_menu == "facilidades")
@@ -1018,7 +694,7 @@
                                     <div class="dropdown-item noti-title">
                                         <h5>@Model.curUser.first_name1 @Model.curUser.last_name1</h5>
                                     </div>
-                                    <a class="dropdown-item" href="@Url.Action("editar_perfil", "webmaster", new { area = "webmaster" })"><i class="mdi mdi-account-circle "></i> Perfil</a>
+                                    <a class="dropdown-item" href="@Url.Action("editar", "webmaster", new { area = "webmaster", id = Model.curUser.id, Tipo = "Perfil" })"><i class="mdi mdi-account-circle "></i> Perfil</a>
                                     <div class="dropdown-divider"></div>
                                     @using (Html.BeginForm(
                                        "logout",

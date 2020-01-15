@@ -3,7 +3,9 @@
     ViewBag.Title = "editar";
     Page.Title = "Editar Comunidad - Brokolee Software";
 }
-
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link href="~/Content/Select-Multiple.css" rel="stylesheet" />
 <div class="page-content-wrapper">
 
     <div class="container-fluid">
@@ -47,7 +49,7 @@
                      }))
                     {
                         @Html.AntiForgeryToken()
-                        <input name="communityID" value="@Model.editCommunity.id" type="hidden"/>
+                        <input name="communityID" value="@Model.editCommunity.id" type="hidden" />
                         <div class="card-body">
                             <h5 class="d-inline-block">Nueva Comunidad</h5>
                             <div class="form-divider"></div>
@@ -55,19 +57,40 @@
                                 <label for="example-email-input" class="col-sm-3 col-form-label">Nombre</label>
                                 <div class="col-sm-9">
                                     <input class="form-control" type="text" value="@Model.editCommunity.first_name"
-                                           data-toggle="tooltip" 
+                                           data-toggle="tooltip"
                                            placeholder="Nombre" id="example-email-input" name="first_name" required>
-                                   @* <small class="form-text text-muted">Nombre de la Comunidad</small>*@
+                                    @* <small class="form-text text-muted">Nombre de la Comunidad</small>*@
                                 </div>
                             </div>
                             <div class="form-divider"></div>
                             <div class="form-group row">
                                 <label for="example-name1-input" class="col-sm-3 col-form-label">Administrador</label>
                                 <div class="col-sm-9">
-                                    <input class="form-control" type="email" value="@Model.editCommunity.admin_email"
-                                           data-toggle="tooltip"
-                                           placeholder="Administrador" id="example-name1-input" name="admin_email" required>
-                                   @* <small class="form-text text-muted">Email del Administrador</small>*@
+                                    <select class="form-control" id="AdminSelect" multiple="multiple" name="adminlist"
+                                            data-toggle="tooltip" title="Email del Administrador">
+
+                                        @foreach (var item in Model.coadminList)
+                                        {
+                                            bool bandera = true;
+                                            foreach (var CoUser in Model.editCommunity.communusers)
+                                            {
+
+                                                if (CoUser.user.id == item.id)
+                                                {
+                                                    bandera = false;
+                                                    <option value="@item.id" selected>@item.email</option>
+
+                                                }
+                                            }
+
+                                            if (bandera)
+                                            {
+                                                <option value="@item.id">@item.email</option>
+                                            }
+
+                                        }
+                                    </select>
+                                    @* <small class="form-text text-muted">Email del Administrador</small>*@
                                 </div>
                             </div>
                             <div class="form-divider"></div>
@@ -75,7 +98,7 @@
                                 <label class="col-sm-3 col-form-label">Paquete</label>
                                 <div class="col-sm-9">
                                     <select class="form-control" name="packageId"
-                                             data-toggle="tooltip">
+                                            data-toggle="tooltip">
                                         @foreach (var item in Model.packageList)
                                         {
                                             if (Model.editCommunity.package_id == item.id)
@@ -89,7 +112,17 @@
 
                                         }
                                     </select>
-                                   @* <small class="form-text text-muted">Paquete adquirido</small>*@
+                                    @* <small class="form-text text-muted">Paquete adquirido</small>*@
+                                </div>
+                            </div>
+                            <div class="form-divider"></div>
+                            <div class="form-group row">
+                                <label for="example-lastname1-input" class="col-sm-3 col-form-label">Dirección</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" name="apartment" placeholder="Dirección"
+                                           data-toggle="tooltip" title="Dirección" value="@Model.editCommunity.apart"
+                                           required />
+                                    @*<small class="form-text text-muted">Dirección</small>*@
                                 </div>
                             </div>
                             <div class="form-divider"></div>
@@ -97,7 +130,7 @@
                                 <label for="example-lastname1-input" class="col-sm-3 col-form-label">Descripción</label>
                                 <div class="col-sm-9">
                                     <textarea class="form-control" rows="3" placeholder="Descripción" name="description"
-                                              data-toggle="tooltip" >@Model.editCommunity.description</textarea>
+                                              data-toggle="tooltip">@Model.editCommunity.description</textarea>
                                     @*<small class="form-text text-muted">Descripción de la comunidad</small>*@
                                 </div>
                             </div>
@@ -120,3 +153,4 @@
     </div><!-- container -->
 
 </div> <!-- Page content Wrapper -->
+<script src="~/Scripts/Select-Multiple.js"></script>

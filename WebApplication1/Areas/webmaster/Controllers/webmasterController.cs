@@ -128,12 +128,20 @@ namespace WebApplication1.Areas.webmaster.Controllers
             }
         }
 
-        public ActionResult editar(long? id)
+        public ActionResult editar(long? id, string Tipo)
         {
             if (Session["USER_ID"] != null)
             {
                 if (id != null)
                 {
+                    if (Tipo == "Perfil")
+                    {
+                        ViewBag.TituloPagina = "Perfil WebMaster";
+                    }
+                    else
+                    {
+                        ViewBag.TituloPagina = "Editar Webmaster";
+                    }
                     long userId = (long)Session["USER_ID"];
                     user curUser = entities.users.Find(userId);
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);

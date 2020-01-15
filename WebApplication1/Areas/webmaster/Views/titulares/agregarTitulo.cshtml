@@ -265,7 +265,7 @@
                                         <div class="input-group mt-2">
                                             <div class="custom-file">
                                                 <input type="file" class="custom-file-input" id="input-arch-contra" name="script_file" />
-                                                <label id="garras" class="custom-file-label" for="input-arch">Seleccionar archivo</label>
+                                                <label id="garrasC" class="custom-file-label" for="input-arch">Seleccionar archivo</label>
                                             </div>
                                         </div>
                                     </div>
@@ -415,6 +415,12 @@
           // $('#garras').prev().text($(this)[0].files[0].name);
          //nombre del archivo cargado=$(this)[0].files[0].name
          $('#garras').html($(this)[0].files[0].name);
+     });
+         $('#input-arch-contra').change(function () {
+
+          // $('#garras').prev().text($(this)[0].files[0].name);
+         //nombre del archivo cargado=$(this)[0].files[0].name
+         $('#garrasC').html($(this)[0].files[0].name);
      });
         function GuardarTitular() {
             var compania = new Array();

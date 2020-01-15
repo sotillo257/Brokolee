@@ -3,7 +3,9 @@
     ViewBag.Title = "ver";
     Page.Title = "Comunidad 1 - Brokolee Software";
 }
-
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link href="~/Content/Select-Multiple.css" rel="stylesheet" />
 <div class="page-content-wrapper">
 
     <div class="container-fluid">
@@ -38,13 +40,44 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
+                        <div class="form-divider"></div>
+                        <div class="form-group row">
+                            <label for="example-email-input" class="col-sm-3 col-form-label">Nombre</label>
+                            <div class="col-sm-9">
+                                <input class="form-control" type="text" value="@Model.viewCommunity.first_name"
+                                       data-toggle="tooltip" readonly disabled
+                                       placeholder="Nombre" id="example-email-input" name="first_name" required>
+                                @* <small class="form-text text-muted">Nombre de la Comunidad</small>*@
+                            </div>
+                        </div>
+                        <div class="form-divider"></div>
                         <div class="form-group row">
                             <label for="example-name1-input" class="col-sm-3 col-form-label">Administrador</label>
                             <div class="col-sm-9">
-                                <input class="form-control" type="text" value="@Model.viewCommunity.admin_email"
-                                       data-toggle="tooltip" title="Email del Administrador"readonly
-                                       placeholder="jdelpueblo@dominio.com" id="example-name1-input">
-                                <small class="form-text text-muted">Email del Administrador</small>
+                                <select class="form-control disabled" id="AdminSelect" multiple="multiple" name="adminlist" disabled
+                                        data-toggle="tooltip" title="Email del Administrador">
+
+                                    @foreach (var item in Model.coadminList)
+                                    {
+                                        bool bandera = true;
+                                        foreach (var CoUser in Model.viewCommunity.communusers)
+                                        {
+
+                                            if (CoUser.user.id == item.id)
+                                            {
+                                                bandera = false;
+                                                <option value="@item.id" selected>@item.email</option>
+
+                                            }
+                                        }
+
+                                        if (bandera)
+                                        {
+                                            <option value="@item.id">@item.email</option>
+                                        }
+
+                                    }
+                                </select>
                             </div>
                         </div>
                         <div class="form-divider"></div>
@@ -52,26 +85,26 @@
                             <label class="col-sm-3 col-form-label">Paquete</label>
                             <div class="col-sm-9">
                                 <input class="form-control" type="text" value="@Model.package_name"
-                                       data-toggle="tooltip" title="Paquete adquirido"  readonly
+                                       data-toggle="tooltip" title="Paquete adquirido" readonly
                                        placeholder="Paquete 1" id="example-name1-input">
                                 <small class="form-text text-muted">Paquete adquirido</small>
                             </div>
                         </div>
                         <div class="form-divider"></div>
                         <div class="form-group row">
-                            <label for="example-lastname1-input" class="col-sm-3 col-form-label">Apartamento</label>
+                            <label for="example-lastname1-input" class="col-sm-3 col-form-label">Dirección</label>
                             <div class="col-sm-9">
-                                <input class="form-control" value="@Model.viewCommunity.apart" 
-                                       data-toggle="tooltip" title="Apartamento" readonly
-                                       placeholder="Apartamento 1"/>
-                                <small class="form-text text-muted">Apartamento</small>
+                                <input class="form-control" value="@Model.viewCommunity.apart"
+                                       data-toggle="tooltip" title="Dirección" readonly
+                                       placeholder="Dirección" />
+                                <small class="form-text text-muted">Dirección</small>
                             </div>
                         </div>
                         <div class="form-divider"></div>
                         <div class="form-group row">
                             <label for="example-lastname1-input" class="col-sm-3 col-form-label">Descripción</label>
                             <div class="col-sm-9">
-                                <textarea class="form-control" rows="3"  readonly
+                                <textarea class="form-control" rows="3" readonly
                                           data-toggle="tooltip" title="Descripción de la comunidad"
                                           placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.">@Model.viewCommunity.description</textarea>
                                 <small class="form-text text-muted">Descripción de la comunidad</small>
@@ -84,13 +117,13 @@
                                 @foreach (var item in Model.titularList)
                                 {
                                     <div class="input-group mt-2">
-                                        <input type="text" class="form-control" value="@item.first_name1 @item.last_name1" 
+                                        <input type="text" class="form-control" value="@item.first_name1 @item.last_name1"
                                                placeholder="Daniel González" aria-label="" readonly />
                                         <span class="input-group-append">
                                             <button class="btn btn-primary" type="button" oncli><i class="mdi mdi-close"></i></button>
                                         </span>
                                     </div>
-                                }                        
+                                }
                             </div>
                         </div>
                     </div>
@@ -108,3 +141,4 @@
     </div><!-- container -->
 
 </div> <!-- Page content Wrapper -->
+<script src="~/Scripts/Select-Multiple.js"></script>
