@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -29,6 +30,9 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 viewModel.document_category_list = entities.document_type.ToList();
                 viewModel.curUser = curUser;
                 viewModel.blogList = entities.blogs.Where(m => m.user_id == userId).ToList();
+                viewModel.Content = userId.ToString();
+                List<blog> blogs = entities.blogs.Where(m => m.user_id == userId).ToList();               
+              //  ViewBag.blogList = JsonConvert.SerializeObject(blogs);
                 viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                 viewModel.pubMessageList = pubMessageList;
                 viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
@@ -227,6 +231,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
         }
 
         [HttpPost]
+        [ValidateInput(false)]
         public ActionResult editblog(long editID, string title, string author, string content)
         {
             try
@@ -238,7 +243,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 blog.blogdate = DateTime.Now;
                 blog.author = author;
                 blog.user_id = userId;
-                entities.blogs.Add(blog);
+               // entities.blogs.Add(blog);
                 entities.SaveChanges();
                 return Redirect(Url.Action("blog", "comunicaciones", new { area="webmaster" }));
             }
@@ -249,6 +254,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
         }
 
         [HttpPost]
+        [ValidateInput(false)]
         public ActionResult newblog(string title, string author, string content)
         {
             try
@@ -268,6 +274,29 @@ namespace WebApplication1.Areas.webmaster.Controllers
             {
                 return Redirect(Url.Action("agregarblog", "comunicaciones"));
             }
+        }
+
+        [HttpPost]
+        public JsonResult ArmarBlogs(int ID) {
+            string content = "";
+            List<blog> blogs = entities.blogs.Where(m => m.user_id == ID).ToList();
+            foreach (var item in blogs)
+            {
+                
+                content += "<div class='Container'><div class='row'><div class='col-sm-12'><div class='single-blog caja'><p class='fecha'>" + item.author + " <span>";
+                content += "<td>" + Convert.ToDateTime(item.blogdate).ToString("dd/MM/yyyy HH:mm") + "</td></span></p><h2><a class='titulo' href='#'>" + item.title + "</a></h2>";
+                content += item.content.Replace('"', '\'');
+                content += "<p class='fecha'><a href='#' ><a href = '" + Url.Action("editarblog", "comunicaciones", new { area = "webmaster", blogID = item.id }).ToString() + "'><button type = 'button' class='btn btn-primary waves-effect waves-light btn-sm mr-1 mb-1'";
+                content += "data-toggle='tooltip' data-placement='top' title='Editar'><i class='mdi mdi-lead-pencil'></i></button></a>";
+                content += "<a href = '" + Url.Action("verblog", "comunicaciones", new { blogID = item.id, area = "webmaster" }).ToString() + "'>";
+                content += "<button type = 'button' class='btn btn-success waves-effect waves-light btn-sm mr-1 mb-1' data-toggle='tooltip' data-placement='top' title='Ver'>";
+                content += "<i class='mdi mdi-eye'></i></button></a></a><span><i class='fa fa-thumbs-o-up'></i> likes <i class='fa fa-comment-o'></i> Coments</span> </p></div></div></div></div>";
+
+
+            }
+
+
+            return Json(content);        
         }
 
         public JsonResult SetRead(long fromUserID, long toUserID)

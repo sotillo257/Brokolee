@@ -13,6 +13,7 @@ namespace WebApplication1.Areas.webmaster.ViewModels
         public string side_sub_menu { get; set; }
         public string communityName { get; set; }
         public string communityApart { get; set; }
+        public string Content { get; set; }
         public user curUser { get; set; }
         public List<blog> blogList { get; set; }
         public int messageCount { get; set; }

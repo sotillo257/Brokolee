@@ -201,7 +201,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpPost]        
         public ActionResult newcommunity(string first_name,
             string description,List<string> adminlist, long packageId, string apartment)
         {
