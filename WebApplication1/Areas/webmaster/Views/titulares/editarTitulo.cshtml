@@ -259,8 +259,7 @@
                                 <div class="form-divider"></div>
                                 <h5 class="d-inline-block">Información del Arrendatario</h5>
                                 <div class="form-divider"></div>
-                                <h6 class="mt-0 header-title">Nombre completo del Arrendatario</h6>
-                                <p>Nombre del segundo arrendatario según aparece en contrato de arrendamiento.</p>
+                                <h6 class="mt-0 header-title">Nombre completo del arrendatario</h6>
                                 <div class="form-group row">
                                     <label for="example-name2-input" class="col-sm-3 col-form-label">Nombre</label>
                                     <div class="col-sm-9">
@@ -299,7 +298,7 @@
                                 </div>
                                 <div class="form-divider"></div>
                                 <div class="form-group row">
-                                    <label for="example-address1-input-leased-postal-address" class="col-sm-3 col-form-label">Dirección Postal</label>
+                                    <label for="example-address1-input-leased-postal-address" class="col-sm-3 col-form-label">Dirección postal</label>
                                     <div class="col-sm-9">
                                         <input class="form-control"
                                                type="text" data-toggle="tooltip"
@@ -312,29 +311,28 @@
                                 </div>
                                 <div class="form-divider"></div>
                                 <div class="form-group row">
-                                    <label for="example-address2-input-leased-residential-address" class="col-sm-3 col-form-label">Dirección Residencial</label>
+                                    <label for="example-address2-input-leased-residential-address" class="col-sm-3 col-form-label">Dirección residencial</label>
                                     <div class="col-sm-9">
                                         <input class="form-control"
                                                type="text"
                                                value="@Model.titulo.leased_residential_address"
                                                data-toggle="tooltip"
                                                name="leased_residential_address"
-                                               placeholder="Dirección Residencial"
+                                               placeholder="Dirección residencial"
                                                id="example-address2-input-leased-residential-address">
                                         @*   <small class="form-text text-muted">Dirección residencial del Arrendatario</small>*@
                                     </div>
                                 </div>
                                 <div class="form-divider"></div>
 
-                                <h6 class="mt-0 header-title">Contrato</h6>
-                                <p>Contrato de arrendamiento.</p>
+                                <h6 class="mt-0 header-title">Contrato de arrendamiento</h6>
                                 <div class="form-group row">
-                                    <label for="example-name2-input" class="col-sm-3 col-form-label">Subir Contrato</label>
+                                    <label for="example-name2-input" class="col-sm-3 col-form-label">Subir contrato de arrendamiento</label>
                                     <div class="col-sm-9">
                                         <div class="input-group mt-2">
                                             <div class="custom-file">
-                                                <input type="file" class="custom-file-input" id="input-arch" name="script_file" />
-                                                <label id="garras" class="custom-file-label" for="input-arch">Seleccionar archivo</label>
+                                                <input type="file" class="custom-file-input" id="input-arch-contra" name="script_file" />
+                                                <label id="garrasC" class="custom-file-label" for="input-arch">Seleccionar archivo</label>
                                             </div>
                                         </div>
                                     </div>
@@ -382,7 +380,18 @@
 <script type="text/javascript">
 
     (function () {
+       $('#input-arch').change(function () {
 
+          // $('#garras').prev().text($(this)[0].files[0].name);
+         //nombre del archivo cargado=$(this)[0].files[0].name
+         $('#garras').html($(this)[0].files[0].name);
+     });
+         $('#input-arch-contra').change(function () {
+
+          // $('#garras').prev().text($(this)[0].files[0].name);
+         //nombre del archivo cargado=$(this)[0].files[0].name
+         $('#garrasC').html($(this)[0].files[0].name);
+     });
         function filePreview(input) {
             if (input.files && input.files[0]) {
 

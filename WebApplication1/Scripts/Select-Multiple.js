@@ -26,6 +26,7 @@
     select.wrap(div);
 
     $(document).on('click', '.selectMultiple ul li', function (e) {
+        e.stopPropagation();
         var select = $(this).parent().parent();
         var li = $(this);
         if (!select.hasClass('clicked')) {
@@ -62,6 +63,7 @@
     });
 
     $(document).on('click', '.selectMultiple > div a', function (e) {
+        e.stopPropagation();
         var select = $(this).parent().parent();
         if (select.children('div').children('span').children('select').hasClass("disabled") != true) {
 
@@ -98,8 +100,18 @@
     $(document).on('click', '.selectMultiple > div .arrow, .selectMultiple > div span', function (e) {
         var select = $(this).parent().parent();
         if (select.children('div').children('span').children('select').hasClass("disabled") != true) {
-            $(this).parent().parent().toggleClass('open');
+            $(this).parent().parent().addClass('open');
+            $("body").addClass("cerrarModal");
         }
     });
+
+    $(document).on("click", ".cerrarModal", function () {
+        var clase = $(".selectMultiple");
+        clase.removeClass('open');
+        $("body").removeClass("cerrarModal");
+        console.log(1);
+    });
+
+    
 
 });

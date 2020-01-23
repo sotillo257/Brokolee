@@ -36,8 +36,11 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-
-                    </div>
+                        @if (Convert.ToBoolean(Session["Active"]) == false)
+                        { 
+                        <h3>Su registro ha sido completado exitosamente pero se mantiene inactivo.  Proceda a revisar su correo electrónico para completar el mismo.</h3>
+                        }
+                        </div>
                 </div>
             </div>
         </div><!-- end row -->

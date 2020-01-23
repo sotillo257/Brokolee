@@ -158,12 +158,13 @@ namespace WebApplication1.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> SubmitRegister(string Name, string LastName, string CommunityName,
+        public async Task<ActionResult> SubmitRegister(string Name, string LastName, string LastNameMaterno, string CommunityName,
             string Address, string PhoneNumber, string Email, string Password, 
             string ConfirmPassword, long PackageId)
         {
             Session["Reg_Name"] = Name;
             Session["Reg_LastName"] = LastName;
+            Session["Reg_LastNameMaterno"] = LastNameMaterno;
             Session["Reg_CommunityName"] = CommunityName;
             Session["Reg_Address"] = Address;
             Session["Reg_PhoneNumber"] = PhoneNumber;
@@ -194,6 +195,7 @@ namespace WebApplication1.Controllers
                             user user1 = new user();
                             user1.first_name1 = Name;
                             user1.last_name1 = LastName;
+                            user1.mother_last_name1 = LastNameMaterno;
                             user1.first_name2 = CommunityName;
                             user1.postal_address = Address;
                             user1.phone_number1 = PhoneNumber;

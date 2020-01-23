@@ -20,65 +20,72 @@
                     </div>
                 }
 
-            <div class="form-group row">
-                <div class="col-12">
-                    <input type="text" id="inputName" class="form-control" name="Name" placeholder="Nombre" value="@Model.Name" required autofocus />
-                    @*<label for="inputName">Name</label>*@
+                <div class="form-group row">
+                    <div class="col-12">
+                        <input type="text" id="inputName" class="form-control" name="Name" placeholder="Nombre" value="@Model.Name" required autofocus />
+                        @*<label for="inputName">Name</label>*@
+                    </div>
                 </div>
-            </div>
 
-            <div class="form-group row">
-                <div class="col-12">
-                    <input type="text" id="inputLastName" class="form-control" name="LastName" value="@Model.LastName" placeholder="Apellido" required />
-                    @*<label for="inputLastName">Last Name</label>*@
+                <div class="form-group row">
+                    <div class="col-12">
+                        <input type="text" id="inputLastName" class="form-control" name="LastName" value="@Model.LastName" placeholder="Apellido paterno" required />
+                        @*<label for="inputLastName">Last Name</label>*@
+                    </div>
                 </div>
-            </div>
 
-            <div class="form-group row">
-                <div class="col-12">
-                    <input type="text" id="inputCommunityName" class="form-control" name="CommunityName" value="@Model.CommunityName" placeholder="Nombre de la Comunidad" required />
-                    @*<label for="inputCommunityName">Community Name</label>*@
+                <div class="form-group row">
+                    <div class="col-12">
+                        <input type="text" id="inputLastName" class="form-control" name="LastNameMaterno" value="@Model.LastName" placeholder="Apellido materno" required />
+                        @*<label for="inputLastName">Last Name</label>*@
+                    </div>
                 </div>
-            </div>
 
-            <div class="form-group row">
-                <div class="col-12">
-                    <input type="text" id="inputAddress" class="form-control" name="Address" value="@Model.Address" placeholder="Dirección" required />
-                    @*<label for="inputAddress">Address</label>*@
+                <div class="form-group row">
+                    <div class="col-12">
+                        <input type="text" id="inputCommunityName" class="form-control" name="CommunityName" value="@Model.CommunityName" placeholder="Nombre de la comunidad" required />
+                        @*<label for="inputCommunityName">Community Name</label>*@
+                    </div>
                 </div>
-            </div>
 
-            <div class="form-group row">
-                <div class="col-12">
-                    <input type="tel" id="inputPhone" class="form-control" name="PhoneNumber" value="@Model.PhoneNumber" placeholder="Numero de telefono" required />
-                    @*<label for="inputPhone">Phone Number</label>*@
+                <div class="form-group row">
+                    <div class="col-12">
+                        <input type="text" id="inputAddress" class="form-control" name="Address" value="@Model.Address" placeholder="Dirección" required />
+                        @*<label for="inputAddress">Address</label>*@
+                    </div>
                 </div>
-            </div>
 
-            <div class="form-group row">
-                <div class="col-12">
-                    <input type="email" id="inputEmail" class="form-control" name="Email" value="@Model.Email" placeholder="Correo Electronio" required />
-                    @*<label for="inputEmail">Email address</label>*@
+                <div class="form-group row">
+                    <div class="col-12">
+                        <input type="tel" id="inputPhone" class="form-control" name="PhoneNumber" value="@Model.PhoneNumber" placeholder="Número de teléfono" required />
+                        @*<label for="inputPhone">Phone Number</label>*@
+                    </div>
                 </div>
-            </div>
 
-            <div class="form-group row">
-                <div class="col-12">
-                    <input type="password" id="inputPassword" class="form-control" name="Password" value="@Model.Password" placeholder="Contraseña" required />
-                    @*<label for="inputPassword">Password</label>*@
+                <div class="form-group row">
+                    <div class="col-12">
+                        <input type="email" id="inputEmail" class="form-control" name="Email" value="@Model.Email" placeholder="Correo electrónico" required />
+                        @*<label for="inputEmail">Email address</label>*@
+                    </div>
                 </div>
-            </div>
 
-            <div class="form-group row">
-                <div class="col-12">
-                    <input type="password" id="inputConfirmPassword" class="form-control" name="ConfirmPassword" value="@Model.ConfirmPassword" placeholder="Confirmar contraseña" required />
-                    @*<label for="inputConfirmPassword">Confirm password</label>*@
+                <div class="form-group row">
+                    <div class="col-12">
+                        <input type="password" id="inputPassword" class="form-control" name="Password" value="@Model.Password" placeholder="Contraseña" required />
+                        @*<label for="inputPassword">Password</label>*@
+                    </div>
                 </div>
-            </div>
-                                        <input type="hidden" name="PackageId" value="@Model.PackageId" />
 
-                                        <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Registrarse</button>
-</form>
+                <div class="form-group row">
+                    <div class="col-12">
+                        <input type="password" id="inputConfirmPassword" class="form-control" name="ConfirmPassword" value="@Model.ConfirmPassword" placeholder="Confirmar contraseña" required />
+                        @*<label for="inputConfirmPassword">Confirm password</label>*@
+                    </div>
+                </div>
+                <input type="hidden" name="PackageId" value="@Model.PackageId" />
+
+                <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Registrarse</button>
+            </form>
             <hr class="my-4">
             <div class="text-center">
                 <a href="@Url.Action("Index", "suscribe", new { packageId = Model.PackageId })">Ingresar</a>
