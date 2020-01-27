@@ -18,7 +18,6 @@ namespace WebApplication1.Models
         public user()
         {
             this.banks = new HashSet<bank>();
-            this.blogs = new HashSet<blog>();
             this.chatmessages = new HashSet<chatmessage>();
             this.chatmessages1 = new HashSet<chatmessage>();
             this.communusers = new HashSet<communuser>();
@@ -34,6 +33,8 @@ namespace WebApplication1.Models
             this.taskusers = new HashSet<taskuser>();
             this.usoes = new HashSet<uso>();
             this.Titulos = new HashSet<Titulo>();
+            this.blogs = new HashSet<blog>();
+            this.BlogUserLikes = new HashSet<BlogUserLike>();
         }
     
         public long id { get; set; }
@@ -88,8 +89,6 @@ namespace WebApplication1.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<bank> banks { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<blog> blogs { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<chatmessage> chatmessages { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<chatmessage> chatmessages1 { get; set; }
@@ -119,5 +118,9 @@ namespace WebApplication1.Models
         public virtual ICollection<uso> usoes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Titulo> Titulos { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<blog> blogs { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BlogUserLike> BlogUserLikes { get; set; }
     }
 }

@@ -162,697 +162,533 @@
                         @if (Convert.ToBoolean(Session["Active"]) == true)
                         {
                             <li class="has_sub">
-                                @if (Model.side_menu == "titulares")
+
+                                @if (Model.side_sub_menu == "titulares_listado")
                                 {
-                                    <a href="javascript:void(0);" class="waves-effect waves-light active"><i class="mdi mdi-account-multiple"></i><span> Administrar Titulares </span><span class="float-right"><i class="mdi mdi-chevron-right"></i></span></a>
-                                    <ul class="list-unstyled">
+                                <li>
+                                    <a href="@Url.Action("listado", "titulares", new { area = "coadmin" })" class="waves-effect waves-light active"><i class="mdi mdi-account-key"></i><span> Administradores </span></a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li>
+                                    <a href="@Url.Action("listado", "titulares", new { area = "coadmin" })" class="waves-effect waves-light"><i class="mdi mdi-account-key"></i><span> Administradores </span></a>
+                                </li>
+                            }
 
-                                        @if (Model.side_sub_menu == "titulares_listado")
-                                        {
-                                            <li class="active">
-                                                <a href="@Url.Action("listado", "titulares", new{ area = "coadmin" })" class="active">Listado de Titulares</a>
-                                            </li>
-                                        }
-                                        else
-                                        {
-                                            <li>
-                                                <a href="@Url.Action("listado", "titulares", new{ area = "coadmin" })">Listado de Titulares</a>
-                                            </li>
-                                        }
+                                </li>
 
+                                <li class="has_sub">
+                                    @if (Model.side_menu == "cuotas")
+                                    {
+                                        <a href="javascript:void(0);" class="waves-effect waves-light active"><i class="mdi mdi-coin"></i><span>Cuotas</span><span class="float-right"><i class="mdi mdi-chevron-right"></i></span></a>
+                                        <ul class="list-unstyled">
 
-
-                                        @if (Model.side_sub_menu == "titulares_agregar")
-                                        {
-                                            <li class="active">
-                                                <a href="@Url.Action("agregar", "titulares", new{ area = "coadmin" })" class="active">Agregar titular</a>
-                                            </li>
-                                        }
-                                        else
-                                        {
-                                            <li>
-                                                <a href="@Url.Action("agregar", "titulares", new{ area = "coadmin" })">Agregar titular</a>
-                                            </li>
-                                        }
-
-                                    </ul>
-                                }
-                                else
-                                {
-                                    <a href="javascript:void(0);" class="waves-effect waves-light"><i class="mdi mdi-account-multiple"></i><span> Administrar titulares </span><span class="float-right"><i class="mdi mdi-chevron-right"></i></span></a>
-                                    <ul class="list-unstyled">
-                                        <li><a href="@Url.Action("listado","titulares", new { area = "coadmin" })">Listado de titulares</a></li>
-                                        <li><a href="@Url.Action("agregar", "titulares", new { area = "coadmin" })">Agregar titular</a></li>
-                                    </ul>
-                                }
-                            </li>
-
-                            <li class="has_sub">
-                                @if (Model.side_menu == "cuotas")
-                                {
-                                    <a href="javascript:void(0);" class="waves-effect waves-light active"><i class="mdi mdi-coin"></i><span>Cuotas</span><span class="float-right"><i class="mdi mdi-chevron-right"></i></span></a>
-                                    <ul class="list-unstyled">
-
-                                        @if (Model.side_sub_menu == "cuotas_listado")
-                                        {
-                                            <li class="active">
-                                                <a href="@Url.Action("listado", "cuotas", new { area = "coadmin" })" class="active">Listado de cuotas</a>
-                                            </li>
-                                        }
-                                        else
-                                        {
-                                            <li>
-                                                <a href="@Url.Action("listado", "cuotas", new { area = "coadmin" })" class="active">Listado de cuotas</a>
-                                            </li>
-                                        }
-
-                                        @if (Model.side_sub_menu == "cuotas_cuenta")
-                                        {
-                                            <li class="active">
-                                                <a href="@Url.Action("agregarcuenta", "cuotas", new { area = "coadmin" })">Agregar cuenta de Banco</a>
-                                            </li>
-                                        }
-                                        else
-                                        {
-                                            <a href="@Url.Action("agregarcuenta", "cuotas", new { area = "coadmin" })">Agregar cuenta de Banco</a>
-                                        }
-
-
-                                        @if (Model.side_sub_menu == "cuotas_pagos")
-                                        {
-                                            <li class="active">
-                                                <a href="@Url.Action("pagos","cuotas", new { area = "coadmin" })" class="active">Pagos</a>
-                                            </li>
-                                        }
-                                        else
-                                        {
-                                            <li>
-                                                <a href="@Url.Action("pagos","cuotas", new { area = "coadmin" })">Pagos</a>
-                                            </li>
-                                        }
-                                    </ul>
-                                }
-                                else
-                                {
-                                    <a href="javascript:void(0);" class="waves-effect waves-light"><i class="mdi mdi-coin"></i><span>Cuotas</span><span class="float-right"><i class="mdi mdi-chevron-right"></i></span></a>
-                                    <ul class="list-unstyled">
-                                        <li><a href="@Url.Action("listado", "cuotas", new { area = "coadmin" })">Listado de cuotas</a></li>
-                                        <li><a href="@Url.Action("agregarcuenta", "cuotas", new { area = "coadmin" })">Agregar cuenta de Banco</a></li>
-                                        <li><a href="@Url.Action("pagos","cuotas", new { area = "coadmin" })">Pagos</a></li>
-                                    </ul>
-                                }
-                            </li>
-
-                            <li class="has_sub">
-                                @if (Model.side_menu == "supplier_directory")
-                                {
-                                    <a href="javascript:void(0);" class="waves-effect waves-light active"><i class="mdi mdi-format-list-bulleted-type"></i><span> Directorio de suplidores </span><span class="float-right"><i class="mdi mdi-chevron-right"></i></span></a>
-                                    <ul class="list-unstyled">
-                                        @if (Model.side_sub_menu == "supplier_directory_listado")
-                                        {
-                                            <li class="active">
-                                                <a href="@Url.Action("listado", "suplidores", new { area = "coadmin" })" class="active">Listado de suplidores</a>
-                                            </li>
-                                        }
-                                        else
-                                        {
-                                            <li>
-                                                <a href="@Url.Action("listado", "suplidores", new { area = "coadmin" })">Listado de suplidores</a>
-                                            </li>
-                                        }
-
-                                        @if (Model.side_sub_menu == "supplier_directory_agregar")
-                                        {
-                                            <li class="active">
-                                                <a href="@Url.Action("agregar", "suplidores", new { area = "coadmin" })" class="active">Agregar suplidor</a>
-                                            </li>
-                                        }
-                                        else
-                                        {
-                                            <li>
-                                                <a href="@Url.Action("agregar", "suplidores", new { area = "coadmin" })">Agregar suplidor</a>
-                                            </li>
-                                        }
-                                    </ul>
-                                }
-                                else
-                                {
-                                    <a href="javascript:void(0);" class="waves-effect waves-light"><i class="mdi mdi-format-list-bulleted-type"></i><span> Directorio de suplidores </span><span class="float-right"><i class="mdi mdi-chevron-right"></i></span></a>
-                                    <ul class="list-unstyled">
-                                        <li><a href="@Url.Action("listado", "suplidores", new { area = "coadmin" })">Listado de suplidores</a></li>
-                                        <li><a href="@Url.Action("agregar", "suplidores", new { area = "coadmin" })">Agregar suplidor</a></li>
-                                    </ul>
-                                }
-                            </li>
-
-                            <li class="has_sub">
-                                @if (Model.side_menu == "event_calendar")
-                                {
-                                    <a href="@Url.Action("otros", "eventos")" class="waves-effect waves-light active"><i class="mdi mdi-calendar"></i><span> Calendario de Eventos </span><span class="float-right"><i class="mdi mdi-chevron-right"></i></span></a>
-                                    <ul class="list-unstyled">
-                                        @if (Model.side_sub_menu == "event_calendar_otros")
-                                        {
-                                            <li class="active">
-                                                <a href="@Url.Action("otros", "eventos", new { area = "coadmin" })" class="active">Eventos</a>
-                                            </li>
-                                        }
-                                        else
-                                        {
-                                            <li>
-                                                <a href="@Url.Action("otros", "eventos", new { area = "coadmin" })">Eventos</a>
-                                            </li>
-                                        }
-
-                                        @if (Model.side_sub_menu == "event_calendar_agregar")
-                                        {
-                                            <li class="active">
-                                                <a href="@Url.Action("agregar", "eventos", new { area = "coadmin" })" class="active">Agregar evento</a>
-                                            </li>
-
-                                        }
-                                        else
-                                        {
-                                            <li>
-                                                <a href="@Url.Action("agregar", "eventos", new { area = "coadmin" })">Agregar evento</a>
-                                            </li>
-                                        }
-
-                                        @*@if (Model.side_sub_menu == "event_calendar_inactivos")
-                        {
-                            <li class="active">
-                                <a href="@Url.Action("inactivos", "eventos", new { area = "coadmin" })" class="active">Eventos inactivos</a>1
-                            </li>
-                        }*@
-                                        @*else
-                        {
-                            <a href="@Url.Action("inactivos", "eventos", new { area = "coadmin" })">Eventos inactivos</a>
-                        }*@
-
-                                        @if (Model.side_sub_menu == "event_calendar_recorded")
-                                        {
-                                            <li class="active">
-                                                <a href="@Url.Action("registrados", "eventos", new { area = "coadmin" })" class="active">Lista de Eventos</a>
-                                            </li>
-                                        }
-                                        else
-                                        {
-                                            <li>
-                                                <a href="@Url.Action("registrados", "eventos", new { area = "coadmin" })">Lista de Eventos</a>
-                                            </li>
-                                        }
-
-
-                                    </ul>
-                                }
-                                else
-                                {
-                                    <a href="@Url.Action("otros", "eventos", new { area = "coadmin" })" class="waves-effect waves-light"><i class="mdi mdi-calendar"></i><span> Calendario de Eventos </span><span class="float-right"><i class="mdi mdi-chevron-right"></i></span></a>
-                                    <ul class="list-unstyled">
-                                        <li><a href="@Url.Action("otros", "eventos", new { area = "coadmin" })">Eventos</a></li>
-                                        <li><a href="@Url.Action("agregar", "eventos", new { area = "coadmin" })">Agregar evento</a></li>
-                                        @*<li><a href="@Url.Action("inactivos", "eventos", new { area = "coadmin" })">Eventos inactivos</a></li>*@
-                                        <li><a href="@Url.Action("registrados", "eventos", new { area = "coadmin" })">Lista de Eventos</a></li>
-                                    </ul>
-                                }
-                            </li>
-
-                            <li class="has_sub">
-                                @if (Model.side_menu == "documentos")
-                                {
-                                    <a href="javascript:void(0);" class="waves-effect active"><i class="mdi mdi-file-document"></i><span> Documentos </span> <span class="float-right"><i class="mdi mdi-chevron-right"></i></span></a>
-                                    <ul class="list-unstyled">
-                                        @if (Model.side_sub_menu == "documentos_agregar")
-                                        {
-                                            <li class="active">
-                                                <a href="@Url.Action("agregar", "documentos", new { area = "coadmin" })" class="active">Agregar Documento</a>
-                                            </li>
-                                        }
-                                        else
-                                        {
-                                            <li>
-                                                <a href="@Url.Action("agregar", "documentos", new { area = "coadmin" })">Agregar Documento</a>
-                                            </li>
-                                        }
-
-                                        @if (Model.side_sub_menu == "documentos_categoria")
-                                        {
-                                            <li class="active">
-                                                <a href="@Url.Action("categoria", "documentos", new { area = "coadmin" })" class="active">Crear Categoría</a>
-                                            </li>
-                                        }
-                                        else
-                                        {
-                                            <li>
-                                                <a href="@Url.Action("categoria", "documentos", new { area = "coadmin" })">Crear Categoría</a>
-                                            </li>
-                                        }
-                                        @foreach (var item in Model.document_category_list)
-                                        {
-                                            if (Model.side_sub_menu == "documentos_" + item.type_name)
+                                            @if (Model.side_sub_menu == "cuotas_listado")
                                             {
                                                 <li class="active">
-                                                    <a href="@Url.Action("listado", "documentos", new { area = "coadmin", id = item.id })" class="active">@item.type_name</a>
+                                                    <a href="@Url.Action("listado", "cuotas", new { area = "coadmin" })" class="active">Listado de cuotas</a>
                                                 </li>
                                             }
                                             else
                                             {
                                                 <li>
-                                                    <a href="@Url.Action("listado", "documentos", new { area = "coadmin", id = item.id })">@item.type_name</a>
+                                                    <a href="@Url.Action("listado", "cuotas", new { area = "coadmin" })" class="active">Listado de cuotas</a>
                                                 </li>
                                             }
-                                        }
-                                    </ul>
+
+                                            @if (Model.side_sub_menu == "cuotas_cuenta")
+                                            {
+                                                <li class="active">
+                                                    <a href="@Url.Action("agregarcuenta", "cuotas", new { area = "coadmin" })">Agregar cuenta de Banco</a>
+                                                </li>
+                                            }
+                                            else
+                                            {
+                                                <a href="@Url.Action("agregarcuenta", "cuotas", new { area = "coadmin" })">Agregar cuenta de Banco</a>
+                                            }
+
+
+                                            @if (Model.side_sub_menu == "cuotas_pagos")
+                                            {
+                                                <li class="active">
+                                                    <a href="@Url.Action("pagos","cuotas", new { area = "coadmin" })" class="active">Pagos</a>
+                                                </li>
+                                            }
+                                            else
+                                            {
+                                                <li>
+                                                    <a href="@Url.Action("pagos","cuotas", new { area = "coadmin" })">Pagos</a>
+                                                </li>
+                                            }
+                                        </ul>
+                                    }
+                                    else
+                                    {
+                                        <a href="javascript:void(0);" class="waves-effect waves-light"><i class="mdi mdi-coin"></i><span>Cuotas</span><span class="float-right"><i class="mdi mdi-chevron-right"></i></span></a>
+                                        <ul class="list-unstyled">
+                                            <li><a href="@Url.Action("listado", "cuotas", new { area = "coadmin" })">Listado de cuotas</a></li>
+                                            <li><a href="@Url.Action("agregarcuenta", "cuotas", new { area = "coadmin" })">Agregar cuenta de Banco</a></li>
+                                            <li><a href="@Url.Action("pagos","cuotas", new { area = "coadmin" })">Pagos</a></li>
+                                        </ul>
+                                    }
+                                </li>
+
+                                <li class="has_sub">
+                                    @if (Model.side_menu == "supplier_directory")
+                                    {
+
+                                        if (Model.side_sub_menu == "supplier_directory_listado")
+                                        {
+                                        <li class="active">
+                                            <a href="@Url.Action("listado", "suplidores", new { area = "coadmin" })" class="waves-effect waves-light active"><i class="mdi mdi-account-key"></i><span> Directorio de suplidores </span></a>
+
+                                        </li>
+                                    }
+                                    else
+                                    {
+                                        <li>
+                                            <a href="@Url.Action("listado", "suplidores", new { area = "coadmin" })" class="waves-effect waves-light"><i class="mdi mdi-account-key"></i><span> Directorio de suplidores </span></a>
+                                        </li>
+                                    }
+
+
                                 }
                                 else
                                 {
-                                    <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-file-document"></i><span> Documentos </span> <span class="float-right"><i class="mdi mdi-chevron-right"></i></span></a>
-                                    <ul class="list-unstyled">
-                                        <li><a href="@Url.Action("agregar", "documentos", new { area = "coadmin" })">Agregar Documento</a></li>
-                                        <li><a href="@Url.Action("categoria", "documentos", new { area = "coadmin" })">Crear Categoría</a></li>
-                                        @foreach (var item in Model.document_category_list)
-                                        {
-                                            <li><a href="@Url.Action("listado", "documentos", new { area = "coadmin", id = item.id })">@item.type_name</a></li>
-                                        }
-                                    </ul>
+                                    <li>
+                                        <a href="@Url.Action("listado", "suplidores", new { area = "coadmin" })" class="waves-effect waves-light"><i class="mdi mdi-account-key"></i><span> Directorio de suplidores </span></a>
+                                    </li>
                                 }
-                            </li>
+                                    </li>
 
-                            <li class="has_sub">
-                                @if (Model.side_menu == "task_process")
-                                {
-                                    <a href="javascript:void(0);" class="waves-effect waves-light active"><i class="mdi mdi-server"></i><span> Tareas en Proceso </span><span class="float-right"><i class="mdi mdi-chevron-right"></i></span></a>
-                                    <ul class="list-unstyled">
-                                        @if (Model.side_sub_menu == "task_process_listado")
+                                    <li class="has_sub">
+                                        @if (Model.side_menu == "event_calendar")
                                         {
+                                            <a href="@Url.Action("otros", "eventos")" class="waves-effect waves-light active"><i class="mdi mdi-calendar"></i><span> Calendario de Eventos </span><span class="float-right"><i class="mdi mdi-chevron-right"></i></span></a>
+                                            <ul class="list-unstyled">
+                                                @if (Model.side_sub_menu == "event_calendar_otros")
+                                                {
+                                                    <li class="active">
+                                                        <a href="@Url.Action("otros", "eventos", new { area = "coadmin" })" class="active">Eventos</a>
+                                                    </li>
+                                                }
+                                                else
+                                                {
+                                                    <li>
+                                                        <a href="@Url.Action("otros", "eventos", new { area = "coadmin" })">Eventos</a>
+                                                    </li>
+                                                }
+
+                                                @if (Model.side_sub_menu == "event_calendar_recorded")
+                                                {
+                                                    <li class="active">
+                                                        <a href="@Url.Action("registrados", "eventos", new { area = "coadmin" })" class="active">Lista de Eventos</a>
+                                                    </li>
+                                                }
+                                                else
+                                                {
+                                                    <li>
+                                                        <a href="@Url.Action("registrados", "eventos", new { area = "coadmin" })">Lista de Eventos</a>
+                                                    </li>
+                                                }
+
+
+                                            </ul>
+                                        }
+                                        else
+                                        {
+                                            <a href="@Url.Action("otros", "eventos", new { area = "coadmin" })" class="waves-effect waves-light"><i class="mdi mdi-calendar"></i><span> Calendario de Eventos </span><span class="float-right"><i class="mdi mdi-chevron-right"></i></span></a>
+                                            <ul class="list-unstyled">
+                                                <li><a href="@Url.Action("otros", "eventos", new { area = "coadmin" })">Eventos</a></li>
+                                                <li><a href="@Url.Action("registrados", "eventos", new { area = "coadmin" })">Lista de Eventos</a></li>
+                                            </ul>
+                                        }
+                                    </li>
+
+                                    <li class="has_sub">
+                                        @if (Model.side_menu == "documentos")
+                                        {
+                                            <a href="javascript:void(0);" class="waves-effect active"><i class="mdi mdi-file-document"></i><span> Documentos </span> <span class="float-right"><i class="mdi mdi-chevron-right"></i></span></a>
+                                            <ul class="list-unstyled">
+                                                @if (Model.side_sub_menu == "documentos_agregar")
+                                                {
+                                                    <li class="active">
+                                                        <a href="@Url.Action("agregar", "documentos", new { area = "coadmin" })" class="active">Agregar Documento</a>
+                                                    </li>
+                                                }
+                                                else
+                                                {
+                                                    <li>
+                                                        <a href="@Url.Action("agregar", "documentos", new { area = "coadmin" })">Agregar Documento</a>
+                                                    </li>
+                                                }
+
+                                                @if (Model.side_sub_menu == "documentos_categoria")
+                                                {
+                                                    <li class="active">
+                                                        <a href="@Url.Action("categoria", "documentos", new { area = "coadmin" })" class="active">Crear Categoría</a>
+                                                    </li>
+                                                }
+                                                else
+                                                {
+                                                    <li>
+                                                        <a href="@Url.Action("categoria", "documentos", new { area = "coadmin" })">Crear Categoría</a>
+                                                    </li>
+                                                }
+                                                @foreach (var item in Model.document_category_list)
+                                                {
+                                                    if (Model.side_sub_menu == "documentos_" + item.type_name)
+                                                    {
+                                                        <li class="active">
+                                                            <a href="@Url.Action("listado", "documentos", new { area = "coadmin", id = item.id })" class="active">@item.type_name</a>
+                                                        </li>
+                                                    }
+                                                    else
+                                                    {
+                                                        <li>
+                                                            <a href="@Url.Action("listado", "documentos", new { area = "coadmin", id = item.id })">@item.type_name</a>
+                                                        </li>
+                                                    }
+                                                }
+                                            </ul>
+                                        }
+                                        else
+                                        {
+                                            <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-file-document"></i><span> Documentos </span> <span class="float-right"><i class="mdi mdi-chevron-right"></i></span></a>
+                                            <ul class="list-unstyled">
+                                                <li><a href="@Url.Action("agregar", "documentos", new { area = "coadmin" })">Agregar Documento</a></li>
+                                                <li><a href="@Url.Action("categoria", "documentos", new { area = "coadmin" })">Crear Categoría</a></li>
+                                                @foreach (var item in Model.document_category_list)
+                                                {
+                                                    <li><a href="@Url.Action("listado", "documentos", new { area = "coadmin", id = item.id })">@item.type_name</a></li>
+                                                }
+                                            </ul>
+                                        }
+                                    </li>
+
+                                    <li class="has_sub">
+                                        @if (Model.side_menu == "task_process")
+                                        {
+                                            <a href="javascript:void(0);" class="waves-effect waves-light active"><i class="mdi mdi-server"></i><span> Tareas en Proceso </span><span class="float-right"><i class="mdi mdi-chevron-right"></i></span></a>
+                                            <ul class="list-unstyled">
+                                                @if (Model.side_sub_menu == "task_process_listado")
+                                                {
+                                                    <li class="active">
+                                                        <a href="@Url.Action("listado","tareas", new { area = "coadmin" })" class="active">Listado de tareas</a>
+                                                    </li>
+                                                }
+                                                else
+                                                {
+                                                    <li>
+                                                        <a href="@Url.Action("listado","tareas", new { area = "coadmin" })">Listado de tareas</a>
+                                                    </li>
+                                                }
+
+                                                @if (Model.side_sub_menu == "task_process_agregar")
+                                                {
+                                                    <li class="active">
+                                                        <a href="@Url.Action("agregar", "tareas", new { area = "coadmin" })" class="active"> Crear Tarea </a>
+                                                    </li>
+                                                }
+                                                else
+                                                {
+                                                    <li>
+                                                        <a href="@Url.Action("agregar", "tareas", new { area = "coadmin" })">Crear Tarea </a>
+                                                    </li>
+                                                }
+
+                                                @if (Model.side_sub_menu == "task_process_completadas")
+                                                {
+                                                    <li class="active">
+                                                        <a href="@Url.Action("completadas", "tareas", new { area = "coadmin" })" class="active">Tareas completadas</a>
+                                                    </li>
+                                                }
+                                                else
+                                                {
+                                                    <li>
+                                                        <a href="@Url.Action("completadas", "tareas", new { area = "coadmin" })">Tareas completadas</a>
+                                                    </li>
+                                                }
+                                            </ul>
+                                        }
+                                        else
+                                        {
+                                            <a href="javascript:void(0);" class="waves-effect waves-light"><i class="mdi mdi-server"></i><span> Tareas en Proceso </span><span class="float-right"><i class="mdi mdi-chevron-right"></i></span></a>
+                                            <ul class="list-unstyled">
+                                                <li><a href="@Url.Action("listado","tareas", new { area = "coadmin" })">Listado de tareas</a></li>
+                                                <li><a href="@Url.Action("agregar", "tareas", new { area = "coadmin" })">Tareas </a></li>
+                                                <li><a href="@Url.Action("completadas", "tareas", new { area = "coadmin" })">Tareas completadas</a></li>
+                                            </ul>
+                                        }
+                                    </li>
+
+                                    <li class="has_sub">
+                                        @if (Model.side_menu == "comunicaciones")
+                                        {
+
+                                            if (Model.side_sub_menu == "comunicaciones_blog")
+                                            {
                                             <li class="active">
-                                                <a href="@Url.Action("listado","tareas", new { area = "coadmin" })" class="active">Listado de tareas</a>
+                                                <a href="@Url.Action("blog", "comunicaciones", new { area = "coadmin" })" class="active"><i class="mdi mdi-message-draw"></i>Blog General</a>
                                             </li>
                                         }
                                         else
                                         {
                                             <li>
-                                                <a href="@Url.Action("listado","tareas", new { area = "coadmin" })">Listado de tareas</a>
+                                                <a href="@Url.Action("blog", "comunicaciones", new { area = "coadmin" })"><i class="mdi mdi-message-draw"></i>Blog General</a>
                                             </li>
                                         }
 
-                                        @if (Model.side_sub_menu == "task_process_agregar")
+                                        if (Model.side_sub_menu == "comunicaciones_privados")
                                         {
                                             <li class="active">
-                                                <a href="@Url.Action("agregar", "tareas", new { area = "coadmin" })" class="active"> Crear Tarea </a>
+
+                                                <a href="@Url.Action("privados", "comunicaciones", new { area = "coadmin" })" class="active">  <i class="mdi mdi-message-text"></i> Mensajería</a>
                                             </li>
                                         }
                                         else
                                         {
                                             <li>
-                                                <a href="@Url.Action("agregar", "tareas", new { area = "coadmin" })">Crear Tarea </a>
+                                                <a href="@Url.Action("privados", "comunicaciones", new { area = "coadmin" })"><i class="mdi mdi-message-text"></i>Mensajería</a>
                                             </li>
                                         }
+                                    }
+                                    else
+                                    {
 
-                                        @if (Model.side_sub_menu == "task_process_completadas")
-                                        {
-                                            <li class="active">
-                                                <a href="@Url.Action("completadas", "tareas", new { area = "coadmin" })" class="active">Tareas completadas</a>
-                                            </li>
-                                        }
-                                        else
-                                        {
-                                            <li>
-                                                <a href="@Url.Action("completadas", "tareas", new { area = "coadmin" })">Tareas completadas</a>
-                                            </li>
-                                        }
-                                    </ul>
-                                }
-                                else
-                                {
-                                    <a href="javascript:void(0);" class="waves-effect waves-light"><i class="mdi mdi-server"></i><span> Tareas en Proceso </span><span class="float-right"><i class="mdi mdi-chevron-right"></i></span></a>
-                                    <ul class="list-unstyled">
-                                        <li><a href="@Url.Action("listado","tareas", new { area = "coadmin" })">Listado de tareas</a></li>
-                                        <li><a href="@Url.Action("agregar", "tareas", new { area = "coadmin" })">Tareas </a></li>
-                                        <li><a href="@Url.Action("completadas", "tareas", new { area = "coadmin" })">Tareas completadas</a></li>
-                                    </ul>
-                                }
-                            </li>
+                                        <li>    <a href="@Url.Action("blog", "comunicaciones", new { area = "coadmin" })"><i class="mdi mdi-message-draw"></i>Blog General</a></li>
+                                        <li>  <a href="@Url.Action("privados", "comunicaciones", new { area = "coadmin" })"><i class="mdi mdi-message-text"></i>Mensajería</a></li>
+                                    }
+                                        </li>
 
-                            <li class="has_sub">
-                                @if (Model.side_menu == "comunicaciones")
-                                {
-                                    <a href="javascript:void(0);" class="waves-effect waves-light active"><i class="mdi mdi-wechat"></i> <span> Comunicaciones </span> <span class="float-right"><i class="mdi mdi-chevron-right"></i></span></a>
-                                    <ul class="list-unstyled">
-                                        @if (Model.side_sub_menu == "comunicaciones_blog")
-                                        {
-                                            <li class="active">
-                                                <a href="@Url.Action("blog", "comunicaciones", new { area = "coadmin" })" class="active">Blog general de la comunidad</a>
-                                            </li>
-                                        }
-                                        else
-                                        {
-                                            <li>
-                                                <a href="@Url.Action("blog", "comunicaciones", new { area = "coadmin" })">Blog general de la comunidad</a>
-                                            </li>
-                                        }
+                                        <li class="has_sub">
+                                            @if (Model.side_menu == "facilidades")
+                                            {
+                                                <a href="javascript:void(0);" class="waves-effect waves-light active"><i class="mdi mdi-apps"></i><span> Facilidades </span> <span class="float-right"><i class="mdi mdi-chevron-right"></i></span></a>
+                                                <ul class="list-unstyled">
+                                                    @if (Model.side_sub_menu == "facilidades_disponibles")
+                                                    {
+                                                        <li class="active">
+                                                            <a href="@Url.Action("disponibles", "facilidades", new { area = "coadmin" })" class="active">Facilidades disponibles</a>
+                                                        </li>
+                                                    }
+                                                    else
+                                                    {
+                                                        <li>
+                                                            <a href="@Url.Action("disponibles", "facilidades", new { area = "coadmin" })">Facilidades disponibles</a>
+                                                        </li>
+                                                    }
 
-                                        @if (Model.side_sub_menu == "comunicaciones_privados")
-                                        {
-                                            <li class="active">
-                                                <a href="@Url.Action("privados", "comunicaciones", new { area = "coadmin" })" class="active">Mensajes privados</a>
-                                            </li>
-                                        }
-                                        else
-                                        {
-                                            <a href="@Url.Action("privados", "comunicaciones", new { area = "coadmin" })">Mensajes privados</a>
-                                        }
-                                    </ul>
-                                }
-                                else
-                                {
-                                    <a href="javascript:void(0);" class="waves-effect waves-light"><i class="mdi mdi-wechat"></i> <span> Comunicaciones </span> <span class="float-right"><i class="mdi mdi-chevron-right"></i></span></a>
-                                    <ul class="list-unstyled">
-                                        <li><a href="@Url.Action("blog", "comunicaciones", new { area = "coadmin" })">Blog general de la comunidad</a></li>
-                                        <li><a href="@Url.Action("privados", "comunicaciones", new { area = "coadmin" })">Mensajes privados</a></li>
-                                    </ul>
-                                }
-                            </li>
+                                                    @if (Model.side_menu == "facilidades_agregar")
+                                                    {
+                                                        <li class="active">
+                                                            <a href="@Url.Action("agregar", "facilidades", new { area = "coadmin" })" class="active">Agregar Facilidad</a>
+                                                        </li>
+                                                    }
+                                                    else
+                                                    {
+                                                        <li>
+                                                            <a href="@Url.Action("agregar", "facilidades", new { area = "coadmin" })">Agregar Facilidad</a>
+                                                        </li>
+                                                    }
 
-                            <li class="has_sub">
-                                @if (Model.side_menu == "facilidades")
-                                {
-                                    <a href="javascript:void(0);" class="waves-effect waves-light active"><i class="mdi mdi-apps"></i><span> Facilidades </span> <span class="float-right"><i class="mdi mdi-chevron-right"></i></span></a>
-                                    <ul class="list-unstyled">
-                                        @if (Model.side_sub_menu == "facilidades_disponibles")
-                                        {
-                                            <li class="active">
-                                                <a href="@Url.Action("disponibles", "facilidades", new { area = "coadmin" })" class="active">Facilidades disponibles</a>
-                                            </li>
-                                        }
-                                        else
-                                        {
-                                            <li>
-                                                <a href="@Url.Action("disponibles", "facilidades", new { area = "coadmin" })">Facilidades disponibles</a>
-                                            </li>
-                                        }
+                                                    @if (Model.side_sub_menu == "facilidades_reservartwo")
+                                                    {
+                                                        <li class="active">
+                                                            <a href="@Url.Action("reservartwo", "facilidades", new { area = "coadmin" })" class="active">Reservar Facilidad</a>
+                                                        </li>
+                                                    }
+                                                    else
+                                                    {
+                                                        <li>
+                                                            <a href="@Url.Action("reservartwo", "facilidades", new { area = "coadmin" })">Reservar Facilidad</a>
+                                                        </li>
+                                                    }
 
-                                        @if (Model.side_menu == "facilidades_agregar")
-                                        {
-                                            <li class="active">
-                                                <a href="@Url.Action("agregar", "facilidades", new { area = "coadmin" })" class="active">Agregar Facilidad</a>
-                                            </li>
-                                        }
-                                        else
-                                        {
-                                            <li>
-                                                <a href="@Url.Action("agregar", "facilidades", new { area = "coadmin" })">Agregar Facilidad</a>
-                                            </li>
-                                        }
+                                                    @if (Model.side_sub_menu == "facilidades_solicitudes")
+                                                    {
+                                                        <li class="active">
+                                                            <a href="@Url.Action("solicitudes", "facilidades", new { area = "coadmin" })" class="active">Solicitudes de Aprobación</a>
+                                                        </li>
 
-                                        @if (Model.side_sub_menu == "facilidades_reservartwo")
-                                        {
-                                            <li class="active">
-                                                <a href="@Url.Action("reservartwo", "facilidades", new { area = "coadmin" })" class="active">Reservar Facilidad</a>
-                                            </li>
-                                        }
-                                        else
-                                        {
-                                            <li>
-                                                <a href="@Url.Action("reservartwo", "facilidades", new { area = "coadmin" })">Reservar Facilidad</a>
-                                            </li>
-                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        <li>
+                                                            <a href="@Url.Action("solicitudes", "facilidades", new { area = "coadmin" })">Solicitudes de Aprobación</a>
+                                                        </li>
+                                                    }
+                                                </ul>
+                                            }
+                                            else
+                                            {
+                                                <a href="javascript:void(0);" class="waves-effect waves-light"><i class="mdi mdi-apps"></i><span> Facilidades </span> <span class="float-right"><i class="mdi mdi-chevron-right"></i></span></a>
+                                                <ul class="list-unstyled">
+                                                    <li><a href="@Url.Action("disponibles", "facilidades", new { area = "coadmin" })">Facilidades disponibles</a></li>
+                                                    <li><a href="@Url.Action("agregar", "facilidades", new { area = "coadmin" })">Agregar Facilidad</a></li>
+                                                    <li><a href="@Url.Action("reservartwo", "facilidades", new { area = "coadmin" })">Reservar Facilidad</a></li>
+                                                    <li><a href="@Url.Action("solicitudes", "facilidades", new { area = "coadmin" })">Solicitudes de Aprobación</a></li>
+                                                </ul>
+                                            }
+                                        </li>
 
-                                        @if (Model.side_sub_menu == "facilidades_solicitudes")
-                                        {
-                                            <li class="active">
-                                                <a href="@Url.Action("solicitudes", "facilidades", new { area = "coadmin" })" class="active">Solicitudes de Aprobación</a>
-                                            </li>
+                                        <li class="has_sub">
+                                            @if (Model.side_menu == "contratos")
+                                            {
+                                                <a href="javascript:void(0);" class="waves-effect waves-light active"><i class="mdi mdi-file-multiple"></i> <span> Contratos </span> <span class="float-right"><i class="mdi mdi-chevron-right"></i></span></a>
+                                                <ul class="list-unstyled">
+                                                    @if (Model.side_sub_menu == "contratos_listado")
+                                                    {
+                                                        <li class="active">
+                                                            <a href="@Url.Action("listado", "contratos", new { area = "coadmin" })" class="active">Listado de Contratos</a>
+                                                        </li>
+                                                    }
+                                                    else
+                                                    {
+                                                        <li>
+                                                            <a href="@Url.Action("listado", "contratos", new { area = "coadmin" })">Listado de Contratos</a>
+                                                        </li>
+                                                    }
 
-                                        }
-                                        else
-                                        {
-                                            <li>
-                                                <a href="@Url.Action("solicitudes", "facilidades", new { area = "coadmin" })">Solicitudes de Aprobación</a>
-                                            </li>
-                                        }
-                                    </ul>
-                                }
-                                else
-                                {
-                                    <a href="javascript:void(0);" class="waves-effect waves-light"><i class="mdi mdi-apps"></i><span> Facilidades </span> <span class="float-right"><i class="mdi mdi-chevron-right"></i></span></a>
-                                    <ul class="list-unstyled">
-                                        <li><a href="@Url.Action("disponibles", "facilidades", new { area = "coadmin" })">Facilidades disponibles</a></li>
-                                        <li><a href="@Url.Action("agregar", "facilidades", new { area = "coadmin" })">Agregar Facilidad</a></li>
-                                        <li><a href="@Url.Action("reservartwo", "facilidades", new { area = "coadmin" })">Reservar Facilidad</a></li>
-                                        <li><a href="@Url.Action("solicitudes", "facilidades", new { area = "coadmin" })">Solicitudes de Aprobación</a></li>
-                                    </ul>
-                                }
-                            </li>
 
-                            <li class="has_sub">
-                                @if (Model.side_menu == "contratos")
-                                {
-                                    <a href="javascript:void(0);" class="waves-effect waves-light active"><i class="mdi mdi-file-multiple"></i> <span> Contratos </span> <span class="float-right"><i class="mdi mdi-chevron-right"></i></span></a>
-                                    <ul class="list-unstyled">
-                                        @if (Model.side_sub_menu == "contratos_listado")
-                                        {
-                                            <li class="active">
-                                                <a href="@Url.Action("listado", "contratos", new { area = "coadmin" })" class="active">Listado de Contratos</a>
-                                            </li>
-                                        }
-                                        else
-                                        {
-                                            <li>
-                                                <a href="@Url.Action("listado", "contratos", new { area = "coadmin" })">Listado de Contratos</a>
-                                            </li>
-                                        }
 
-                                        @if (Model.side_sub_menu == "contratos_agregar")
-                                        {
-                                            <li class="active">
-                                                <a href="@Url.Action("agregar", "contratos", new { area = "coadmin" })" class="active">Agregar Contrato</a>
-                                            </li>
+                                                    @if (Model.side_sub_menu == "contratos_archivados")
+                                                    {
+                                                        <li class="active">
+                                                            <a href="@Url.Action("archivados", "contratos", new { area = "coadmin" })" class="active">Contratos Archivados</a>
+                                                        </li>
+                                                    }
+                                                    else
+                                                    {
+                                                        <li>
+                                                            <a href="@Url.Action("archivados", "contratos", new { area = "coadmin" })">Contratos Archivados</a>
+                                                        </li>
+                                                    }
+                                                </ul>
+                                            }
+                                            else
+                                            {
+                                                <a href="javascript:void(0);" class="waves-effect waves-light"><i class="mdi mdi-file-multiple"></i> <span> Contratos </span> <span class="float-right"><i class="mdi mdi-chevron-right"></i></span></a>
+                                                <ul class="list-unstyled">
+                                                    <li><a href="@Url.Action("listado", "contratos", new { area = "coadmin" })">Listado de Contratos</a></li>
+                                                    <li><a href="@Url.Action("archivados", "contratos", new { area = "coadmin" })">Contratos Archivados</a></li>
+                                                </ul>
+                                            }
+                                        </li>
+
+                                        // ***********
+
+                                        <li class="has_sub">
+                                            @if (Model.side_menu == "contacto")
+                                            {
+
+
+                                                if (Model.side_sub_menu == "contacto_listado")
+                                                {
+                                                <li class="active">
+                                                    <a href="@Url.Action("listado", "contacto", new { area = "coadmin" })" class="waves-effect waves-light active"><i class="mdi mdi-contact-mail"></i> <span> Contactos </span></a>
+                                                </li>
+                                            }
+                                            else
+                                            {
+                                                <li>
+                                                    <a href="@Url.Action("listado", "contacto", new { area = "coadmin" })" class="waves-effect waves-light"><i class="mdi mdi-contact-mail"></i> <span> Contactos </span></a>
+                                                </li>
+                                            }
+
 
                                         }
                                         else
                                         {
                                             <li>
-                                                <a href="@Url.Action("agregar", "contratos", new { area = "coadmin" })">Agregar Contrato</a>
+                                                <a href="@Url.Action("listado", "contacto", new { area = "coadmin" })" class="waves-effect waves-light"><i class="mdi mdi-contact-mail"></i> <span> Contactos </span></a>
                                             </li>
                                         }
+                                            </li>                            
 
-                                        @if (Model.side_sub_menu == "contratos_archivados")
-                                        {
-                                            <li class="active">
-                                                <a href="@Url.Action("archivados", "contratos", new { area = "coadmin" })" class="active">Contratos Archivados</a>
-                                            </li>
-                                        }
-                                        else
-                                        {
-                                            <li>
-                                                <a href="@Url.Action("archivados", "contratos", new { area = "coadmin" })">Contratos Archivados</a>
-                                            </li>
-                                        }
-                                    </ul>
-                                }
-                                else
-                                {
-                                    <a href="javascript:void(0);" class="waves-effect waves-light"><i class="mdi mdi-file-multiple"></i> <span> Contratos </span> <span class="float-right"><i class="mdi mdi-chevron-right"></i></span></a>
-                                    <ul class="list-unstyled">
-                                        <li><a href="@Url.Action("listado", "contratos", new { area = "coadmin" })">Listado de Contratos</a></li>
-                                        <li><a href="@Url.Action("agregar", "contratos", new { area = "coadmin" })">Agregar Contrato</a></li>
-                                        <li><a href="@Url.Action("archivados", "contratos", new { area = "coadmin" })">Contratos Archivados</a></li>
-                                    </ul>
-                                }
-                            </li>
+                                            <li class="has_sub">
+                                                @if (Model.side_menu == "plantillas")
+                                                {
+                                                <li class="active">
+                                                    <a href="@Url.Action("listado", "plantillas", new { area = "coadmin" })" class="waves-effect waves-light active"><i class="mdi mdi-contact-mail"></i> <span> Contactos </span></a>
+                                                </li>
+                                            }
+                                            else
+                                            {
+                                                <li>
+                                                    <a href="@Url.Action("listado", "plantillas", new { area = "coadmin" })" class="waves-effect waves-light"><i class="mdi mdi-contact-mail"></i> <span> Contactos </span></a>
+                                                </li>
+                                            }
+                                                </li>
 
-                            // ***********
+                                                <li>
+                                                    @if (Model.side_menu == "tecnico")
+                                                    {
+                                                        <a href="@Url.Action("soporte", "tecnico", new { area = "coadmin" })" class="waves-effect waves-light active"><i class="mdi mdi-comment-processing"></i><span> Soporte Técnico </span></a>
+                                                    }
+                                                    else
+                                                    {
+                                                        <a href="@Url.Action("soporte", "tecnico", new { area = "coadmin" })" class="waves-effect waves-light"><i class="mdi mdi-comment-processing"></i><span> Soporte Técnico </span></a>
+                                                    }
+                                                </li>
 
-                            <li class="has_sub">
-                                @if (Model.side_menu == "contacto")
-                                {
-                                    <a href="javascript:void(0);" class="waves-effect waves-light active"><i class="mdi mdi-contact-mail"></i> <span> Contactos </span> <span class="float-right"><i class="mdi mdi-chevron-right"></i></span></a>
-                                    <ul class="list-unstyled">
-                                        @if (Model.side_sub_menu == "contacto_listado")
-                                        {
-                                            <li class="active">
-                                                <a href="@Url.Action("listado", "contacto", new { area = "coadmin" })" class="active">Listado de Contactos</a>
-                                            </li>
-                                        }
-                                        else
-                                        {
-                                            <li>
-                                                <a href="@Url.Action("listado", "contacto", new { area = "coadmin" })">Listado de Contactos</a>
-                                            </li>
-                                        }
+                                                <li class="has_sub">
+                                                    @if (Model.side_menu == "uso")
+                                                    {
+                                                        <a href="javascript:void(0);" class="waves-effect waves-light active"><i class="mdi mdi-copyright"></i> <span> Políticas de Uso </span> <span class="float-right"><i class="mdi mdi-chevron-right"></i></span></a>
+                                                        <ul class="list-unstyled">
+                                                            @if (Model.side_sub_menu == "uso_aviso")
+                                                            {
+                                                                <li class="active">
+                                                                    <a href="@Url.Action("aviso", "uso", new { area = "coadmin" })" class="active">Aviso de Privacidad</a>
+                                                                </li>
+                                                            }
+                                                            else
+                                                            {
+                                                                <li>
+                                                                    <a href="@Url.Action("aviso", "uso", new { area = "coadmin" })">Aviso de Privacidad</a>
+                                                                </li>
+                                                            }
 
-                                        @if (Model.side_sub_menu == "contacto_informacion")
-                                        {
-                                            <li class="active">
-                                                <a href="@Url.Action("informacion", "contacto", new { area = "coadmin" })" class="active">Agregar Contactos</a>
-                                            </li>
+                                                            @if (Model.side_sub_menu == "uso_terminos")
+                                                            {
+                                                                <li class="active">
+                                                                    <a href="@Url.Action("terminos", "uso", new { area = "coadmin" })" class="active">Términos de Uso</a>
+                                                                </li>
+                                                            }
+                                                            else
+                                                            {
+                                                                <li>
+                                                                    <a href="@Url.Action("terminos", "uso", new { area = "coadmin" })">Términos de Uso</a>
+                                                                </li>
+                                                            }
 
-                                        }
-                                        else
-                                        {
-                                            <li>
-                                                <a href="@Url.Action("informacion", "contacto", new { area = "coadmin" })">Agregar Contacto</a>
-                                            </li>
-                                        }
-
-                                     
-                                    </ul>
-                                }
-                                else
-                                {
-                                    <a href="javascript:void(0);" class="waves-effect waves-light"><i class="mdi mdi-contact-mail"></i> <span> Contactos </span> <span class="float-right"><i class="mdi mdi-chevron-right"></i></span></a>
-                                    <ul class="list-unstyled">
-                                        <li><a href="@Url.Action("listado", "contacto", new { area = "coadmin" })">Listado de Contactos</a></li>
-                                        <li><a href="@Url.Action("informacion", "contacto", new { area = "coadmin" })">Agregar Contactos</a></li>
-                                
-                                    </ul>
-                                }
-                            </li>
-
-
-
-
-
-                            //*******
-
-
-
-
-                            @*if (Model.side_menu == "contacto")
-            {
-                <li class="active">
-                    <a href="@Url.Action("informacion", "contacto", new { area = "coadmin" })" class="waves-effect waves-light active"><i class="mdi mdi-contact-mail"></i><span> Información de contacto </span></a>
-                </li>
-            }
-            else
-            {
-                <li>
-                    <a href="@Url.Action("informacion", "contacto", new { area = "coadmin" })" class="waves-effect waves-light"><i class="mdi mdi-contact-mail"></i><span> Información de contacto </span></a>
-                </li>
-            }*@
-
-
-
-
-
-
-
-
-                            <li class="has_sub">
-                                @if (Model.side_menu == "plantillas")
-                                {
-                                    <a href="javascript:void(0);" class="waves-effect waves-light active">
-                                        <i class="mdi mdi-email-open"></i>
-                                        <span> Plantillas de Email </span>
-                                        <span class="float-right">
-                                            <i class="mdi mdi-chevron-right"></i>
-                                        </span>
-                                    </a>
-                                    <ul class="list-unstyled">
-                                        @if (Model.side_sub_menu == "plantillas_listado")
-                                        {
-                                            <li class="active">
-                                                <a href="@Url.Action("listado", "plantillas", new { area = "coadmin" })" class="active">Listado de Plantillas</a>
-                                            </li>
-                                        }
-                                        else
-                                        {
-                                            <li>
-                                                <a href="@Url.Action("listado", "plantillas", new { area = "coadmin" })">Listado de Plantillas</a>
-                                            </li>
-                                        }
-
-                                        @if (Model.side_sub_menu == "plantillas_crear")
-                                        {
-                                            <li class="active">
-                                                <a href="@Url.Action("crear", "plantillas", new { area = "coadmin" })" class="active">Crear Plantilla</a>
-                                            </li>
-                                        }
-                                        else
-                                        {
-                                            <li>
-                                                <a href="@Url.Action("crear", "plantillas", new { area = "coadmin" })">Crear Plantilla</a>
-                                            </li>
-                                        }
-                                    </ul>
-                                }
-                                else
-                                {
-                                    <a href="javascript:void(0);" class="waves-effect waves-light"><i class="mdi mdi-email-open"></i> <span> Plantillas de Email </span> <span class="float-right"><i class="mdi mdi-chevron-right"></i></span></a>
-                                    <ul class="list-unstyled">
-                                        <li><a href="@Url.Action("listado", "plantillas", new { area = "coadmin" })">Listado de Plantillas</a></li>
-                                        <li><a href="@Url.Action("crear", "plantillas", new { area = "coadmin" })">Crear Plantilla</a></li>
-                                    </ul>
-                                }
-                            </li>
-
-                            <li>
-                                @if (Model.side_menu == "tecnico")
-                                {
-                                    <a href="@Url.Action("soporte", "tecnico", new { area = "coadmin" })" class="waves-effect waves-light active"><i class="mdi mdi-comment-processing"></i><span> Soporte Técnico </span></a>
-                                }
-                                else
-                                {
-                                    <a href="@Url.Action("soporte", "tecnico", new { area = "coadmin" })" class="waves-effect waves-light"><i class="mdi mdi-comment-processing"></i><span> Soporte Técnico </span></a>
-                                }
-                            </li>
-
-                            <li class="has_sub">
-                                @if (Model.side_menu == "uso")
-                                {
-                                    <a href="javascript:void(0);" class="waves-effect waves-light active"><i class="mdi mdi-copyright"></i> <span> Políticas de Uso </span> <span class="float-right"><i class="mdi mdi-chevron-right"></i></span></a>
-                                    <ul class="list-unstyled">
-                                        @if (Model.side_sub_menu == "uso_aviso")
-                                        {
-                                            <li class="active">
-                                                <a href="@Url.Action("aviso", "uso", new { area = "coadmin" })" class="active">Aviso de Privacidad</a>
-                                            </li>
-                                        }
-                                        else
-                                        {
-                                            <li>
-                                                <a href="@Url.Action("aviso", "uso", new { area = "coadmin" })">Aviso de Privacidad</a>
-                                            </li>
-                                        }
-
-                                        @if (Model.side_sub_menu == "uso_terminos")
-                                        {
-                                            <li class="active">
-                                                <a href="@Url.Action("terminos", "uso", new { area = "coadmin" })" class="active">Términos de Uso</a>
-                                            </li>
-                                        }
-                                        else
-                                        {
-                                            <li>
-                                                <a href="@Url.Action("terminos", "uso", new { area = "coadmin" })">Términos de Uso</a>
-                                            </li>
-                                        }
-
-                                        @if (Model.side_sub_menu == "uso_derechos")
-                                        {
-                                            <li class="active">
-                                                <a href="@Url.Action("derechos", "uso", new { area = "coadmin" })" class="active">Derechos Reservados</a>
-                                            </li>
-                                        }
-                                        else
-                                        {
-                                            <li>
-                                                <a href="@Url.Action("derechos", "uso", new { area = "coadmin" })">Derechos Reservados</a>
-                                            </li>
-                                        }
-                                    </ul>
-                                }
-                                else
-                                {
-                                    <a href="javascript:void(0);" class="waves-effect waves-light"><i class="mdi mdi-copyright"></i> <span> Políticas de Uso </span> <span class="float-right"><i class="mdi mdi-chevron-right"></i></span></a>
-                                    <ul class="list-unstyled">
-                                        <li><a href="@Url.Action("aviso", "uso", new { area = "coadmin" })">Aviso de Privacidad</a></li>
-                                        <li><a href="@Url.Action("terminos", "uso", new { area = "coadmin" })">Términos de Uso</a></li>
-                                        <li><a href="@Url.Action("derechos", "uso", new { area = "coadmin" })">Derechos Reservados</a></li>
-                                    </ul>
-                                }
-                            </li>
-                        }
+                                                            @if (Model.side_sub_menu == "uso_derechos")
+                                                            {
+                                                                <li class="active">
+                                                                    <a href="@Url.Action("derechos", "uso", new { area = "coadmin" })" class="active">Derechos Reservados</a>
+                                                                </li>
+                                                            }
+                                                            else
+                                                            {
+                                                                <li>
+                                                                    <a href="@Url.Action("derechos", "uso", new { area = "coadmin" })">Derechos Reservados</a>
+                                                                </li>
+                                                            }
+                                                        </ul>
+                                                    }
+                                                    else
+                                                    {
+                                                        <a href="javascript:void(0);" class="waves-effect waves-light"><i class="mdi mdi-copyright"></i> <span> Políticas de Uso </span> <span class="float-right"><i class="mdi mdi-chevron-right"></i></span></a>
+                                                        <ul class="list-unstyled">
+                                                            <li><a href="@Url.Action("aviso", "uso", new { area = "coadmin" })">Aviso de Privacidad</a></li>
+                                                            <li><a href="@Url.Action("terminos", "uso", new { area = "coadmin" })">Términos de Uso</a></li>
+                                                            <li><a href="@Url.Action("derechos", "uso", new { area = "coadmin" })">Derechos Reservados</a></li>
+                                                        </ul>
+                                                    }
+                                                </li>
+                                            }
                     </ul>
                 </div>
                 <div class="clearfix"></div>

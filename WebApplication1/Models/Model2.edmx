@@ -28,6 +28,7 @@
           <Property Name="author" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="blogdate" Type="datetime" Nullable="false" />
           <Property Name="user_id" Type="bigint" Nullable="false" />
+          <Property Name="CantLike" Type="int" />
         </EntityType>
         <EntityType Name="blogcomment">
           <Key>
@@ -38,6 +39,15 @@
           <Property Name="name" Type="varchar" MaxLength="150" Nullable="false" />
           <Property Name="postdate" Type="datetime" Nullable="false" />
           <Property Name="blog_id" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BlogUserLikes">
+          <Key>
+            <PropertyRef Name="IDBlog" />
+            <PropertyRef Name="IDUser" />
+          </Key>
+          <Property Name="IDBlog" Type="bigint" Nullable="false" />
+          <Property Name="IDUser" Type="bigint" Nullable="false" />
+          <Property Name="Fecha" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="book">
           <Key>
@@ -599,6 +609,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_BlogUserLikes_blog">
+          <End Role="blog" Type="Self.blog" Multiplicity="1" />
+          <End Role="BlogUserLikes" Type="Self.BlogUserLikes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="blog">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="BlogUserLikes">
+              <PropertyRef Name="IDBlog" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BlogUserLikes_user">
+          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="BlogUserLikes" Type="Self.BlogUserLikes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="BlogUserLikes">
+              <PropertyRef Name="IDUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_carpentry_task">
           <End Role="task" Type="Self.task" Multiplicity="1" />
           <End Role="carpentry" Type="Self.carpentry" Multiplicity="*" />
@@ -927,6 +961,7 @@
           <EntitySet Name="bank" EntityType="Self.bank" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="blog" EntityType="Self.blog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="blogcomment" EntityType="Self.blogcomment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BlogUserLikes" EntityType="Self.BlogUserLikes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="book" EntityType="Self.book" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="carpentry" EntityType="Self.carpentry" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="category" EntityType="Self.category" Schema="dbo" store:Type="Tables" />
@@ -973,6 +1008,14 @@
           <AssociationSet Name="FK_blogcomment_blogcomment" Association="Self.FK_blogcomment_blogcomment">
             <End Role="blog" EntitySet="blog" />
             <End Role="blogcomment" EntitySet="blogcomment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BlogUserLikes_blog" Association="Self.FK_BlogUserLikes_blog">
+            <End Role="blog" EntitySet="blog" />
+            <End Role="BlogUserLikes" EntitySet="BlogUserLikes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BlogUserLikes_user" Association="Self.FK_BlogUserLikes_user">
+            <End Role="user" EntitySet="user" />
+            <End Role="BlogUserLikes" EntitySet="BlogUserLikes" />
           </AssociationSet>
           <AssociationSet Name="FK_carpentry_task" Association="Self.FK_carpentry_task">
             <End Role="task" EntitySet="task" />
@@ -1102,19 +1145,6 @@
           <NavigationProperty Name="user" Relationship="Self.FK_bank_user" FromRole="bank" ToRole="user" />
           <NavigationProperty Name="fees" Relationship="Self.FK_fee_bank" FromRole="bank" ToRole="fee" />
         </EntityType>
-        <EntityType Name="blog">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="title" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="content" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="author" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="blogdate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="user_id" Type="Int64" Nullable="false" />
-          <NavigationProperty Name="user" Relationship="Self.FK_blog_user" FromRole="blog" ToRole="user" />
-          <NavigationProperty Name="blogcomments" Relationship="Self.FK_blogcomment_blogcomment" FromRole="blog" ToRole="blogcomment" />
-        </EntityType>
         <EntityType Name="blogcomment">
           <Key>
             <PropertyRef Name="id" />
@@ -1124,7 +1154,7 @@
           <Property Name="name" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="postdate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="blog_id" Type="Int64" Nullable="false" />
-          <NavigationProperty Name="blog" Relationship="Self.FK_blogcomment_blogcomment" FromRole="blogcomment" ToRole="blog" />
+          <NavigationProperty Name="blog" Relationship="pjrdev_condominiosModel.FK_blogcomment_blogcomment" FromRole="blogcomment" ToRole="blog" />
         </EntityType>
         <EntityType Name="book">
           <Key>
@@ -1625,7 +1655,6 @@
           <Property Name="is_del" Type="Boolean" />
           <Property Name="apartment" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="banks" Relationship="Self.FK_bank_user" FromRole="user" ToRole="bank" />
-          <NavigationProperty Name="blogs" Relationship="Self.FK_blog_user" FromRole="user" ToRole="blog" />
           <NavigationProperty Name="chatmessages" Relationship="Self.FK_chatmessage_user" FromRole="user" ToRole="chatmessage" />
           <NavigationProperty Name="chatmessages1" Relationship="Self.FK_chatmessage_user1" FromRole="user" ToRole="chatmessage" />
           <NavigationProperty Name="communusers" Relationship="Self.FK_communuser_user" FromRole="user" ToRole="communuser" />
@@ -1644,7 +1673,9 @@
           <Property Name="Ciudad" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Codigo_Postal" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Titulos" Relationship="pjrdev_condominiosModel.FK_Titulos_user" FromRole="user" ToRole="Titulo" />
-        </EntityType>
+          <NavigationProperty Name="blogs" Relationship="pjrdev_condominiosModel.FK_blog_user" FromRole="user" ToRole="blog" />
+          <NavigationProperty Name="BlogUserLikes" Relationship="pjrdev_condominiosModel.FK_BlogUserLikes_user" FromRole="user" ToRole="BlogUserLike" />
+          </EntityType>
         <EntityType Name="uso">
           <Key>
             <PropertyRef Name="id" />
@@ -1679,30 +1710,6 @@
             </Principal>
             <Dependent Role="fee">
               <PropertyRef Name="bank_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_blog_user">
-          <End Role="user" Type="Self.user" Multiplicity="1" />
-          <End Role="blog" Type="Self.blog" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="user">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="blog">
-              <PropertyRef Name="user_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_blogcomment_blogcomment">
-          <End Role="blog" Type="Self.blog" Multiplicity="1" />
-          <End Role="blogcomment" Type="Self.blogcomment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="blog">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="blogcomment">
-              <PropertyRef Name="blog_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1984,7 +1991,6 @@
         </Association>
         <EntityContainer Name="pjrdev_condominiosEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="banks" EntityType="Self.bank" />
-          <EntitySet Name="blogs" EntityType="Self.blog" />
           <EntitySet Name="blogcomments" EntityType="Self.blogcomment" />
           <EntitySet Name="books" EntityType="Self.book" />
           <EntitySet Name="carpentries" EntityType="Self.carpentry" />
@@ -2026,14 +2032,6 @@
           <AssociationSet Name="FK_fee_bank" Association="Self.FK_fee_bank">
             <End Role="bank" EntitySet="banks" />
             <End Role="fee" EntitySet="fees" />
-          </AssociationSet>
-          <AssociationSet Name="FK_blog_user" Association="Self.FK_blog_user">
-            <End Role="user" EntitySet="users" />
-            <End Role="blog" EntitySet="blogs" />
-          </AssociationSet>
-          <AssociationSet Name="FK_blogcomment_blogcomment" Association="Self.FK_blogcomment_blogcomment">
-            <End Role="blog" EntitySet="blogs" />
-            <End Role="blogcomment" EntitySet="blogcomments" />
           </AssociationSet>
           <AssociationSet Name="FK_carpentry_task" Association="Self.FK_carpentry_task">
             <End Role="task" EntitySet="tasks" />
@@ -2141,7 +2139,25 @@
             <End Role="Titulo" EntitySet="Titulos" />
             <End Role="Vehiculo" EntitySet="Vehiculos" />
           </AssociationSet>
-        </EntityContainer>
+          <EntitySet Name="blogs" EntityType="pjrdev_condominiosModel.blog" />
+          <EntitySet Name="BlogUserLikes" EntityType="pjrdev_condominiosModel.BlogUserLike" />
+          <AssociationSet Name="FK_blog_user" Association="pjrdev_condominiosModel.FK_blog_user">
+            <End Role="user" EntitySet="users" />
+            <End Role="blog" EntitySet="blogs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_blogcomment_blogcomment" Association="pjrdev_condominiosModel.FK_blogcomment_blogcomment">
+            <End Role="blog" EntitySet="blogs" />
+            <End Role="blogcomment" EntitySet="blogcomments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BlogUserLikes_blog" Association="pjrdev_condominiosModel.FK_BlogUserLikes_blog">
+            <End Role="blog" EntitySet="blogs" />
+            <End Role="BlogUserLike" EntitySet="BlogUserLikes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BlogUserLikes_user" Association="pjrdev_condominiosModel.FK_BlogUserLikes_user">
+            <End Role="user" EntitySet="users" />
+            <End Role="BlogUserLike" EntitySet="BlogUserLikes" />
+          </AssociationSet>
+          </EntityContainer>
         <EntityType Name="Vehiculo">
           <Key>
             <PropertyRef Name="IdVehiculo" />
@@ -2225,7 +2241,81 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        <EntityType Name="blog">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="title" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="content" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="author" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="blogdate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="user_id" Type="Int64" Nullable="false" />
+          <Property Name="CantLike" Type="Int32" />
+          <NavigationProperty Name="user" Relationship="pjrdev_condominiosModel.FK_blog_user" FromRole="blog" ToRole="user" />
+          <NavigationProperty Name="blogcomments" Relationship="pjrdev_condominiosModel.FK_blogcomment_blogcomment" FromRole="blog" ToRole="blogcomment" />
+          <NavigationProperty Name="BlogUserLikes" Relationship="pjrdev_condominiosModel.FK_BlogUserLikes_blog" FromRole="blog" ToRole="BlogUserLike" />
+        </EntityType>
+        <EntityType Name="BlogUserLike">
+          <Key>
+            <PropertyRef Name="IDBlog" />
+            <PropertyRef Name="IDUser" />
+          </Key>
+          <Property Name="IDBlog" Type="Int64" Nullable="false" />
+          <Property Name="IDUser" Type="Int64" Nullable="false" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="blog" Relationship="pjrdev_condominiosModel.FK_BlogUserLikes_blog" FromRole="BlogUserLike" ToRole="blog" />
+          <NavigationProperty Name="user" Relationship="pjrdev_condominiosModel.FK_BlogUserLikes_user" FromRole="BlogUserLike" ToRole="user" />
+        </EntityType>
+        <Association Name="FK_blog_user">
+          <End Type="pjrdev_condominiosModel.user" Role="user" Multiplicity="1" />
+          <End Type="pjrdev_condominiosModel.blog" Role="blog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="blog">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_blogcomment_blogcomment">
+          <End Type="pjrdev_condominiosModel.blog" Role="blog" Multiplicity="1" />
+          <End Type="pjrdev_condominiosModel.blogcomment" Role="blogcomment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="blog">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="blogcomment">
+              <PropertyRef Name="blog_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BlogUserLikes_blog">
+          <End Type="pjrdev_condominiosModel.blog" Role="blog" Multiplicity="1" />
+          <End Type="pjrdev_condominiosModel.BlogUserLike" Role="BlogUserLike" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="blog">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="BlogUserLike">
+              <PropertyRef Name="IDBlog" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BlogUserLikes_user">
+          <End Type="pjrdev_condominiosModel.user" Role="user" Multiplicity="1" />
+          <End Type="pjrdev_condominiosModel.BlogUserLike" Role="BlogUserLike" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="BlogUserLike">
+              <PropertyRef Name="IDUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -2242,18 +2332,6 @@
                 <ScalarProperty Name="user_id" ColumnName="user_id" />
                 <ScalarProperty Name="created_at" ColumnName="created_at" />
                 <ScalarProperty Name="updated_at" ColumnName="updated_at" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="blogs">
-            <EntityTypeMapping TypeName="pjrdev_condominiosModel.blog">
-              <MappingFragment StoreEntitySet="blog">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="title" ColumnName="title" />
-                <ScalarProperty Name="content" ColumnName="content" />
-                <ScalarProperty Name="author" ColumnName="author" />
-                <ScalarProperty Name="blogdate" ColumnName="blogdate" />
-                <ScalarProperty Name="user_id" ColumnName="user_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2824,6 +2902,28 @@
                 <ScalarProperty Name="upload_writing" ColumnName="upload_writing" />
                 <ScalarProperty Name="IdUser" ColumnName="IdUser" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="blogs">
+            <EntityTypeMapping TypeName="pjrdev_condominiosModel.blog">
+              <MappingFragment StoreEntitySet="blog">
+                <ScalarProperty Name="CantLike" ColumnName="CantLike" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="blogdate" ColumnName="blogdate" />
+                <ScalarProperty Name="author" ColumnName="author" />
+                <ScalarProperty Name="content" ColumnName="content" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BlogUserLikes">
+            <EntityTypeMapping TypeName="pjrdev_condominiosModel.BlogUserLike">
+              <MappingFragment StoreEntitySet="BlogUserLikes">
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="IDUser" ColumnName="IDUser" />
+                <ScalarProperty Name="IDBlog" ColumnName="IDBlog" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

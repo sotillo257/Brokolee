@@ -4,9 +4,8 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="0529729252834e46bf2772763b8b1817" Name="Diagram1" ZoomLevel="111">
+      <Diagram DiagramId="0529729252834e46bf2772763b8b1817" Name="Diagram1" ZoomLevel="94">
         <EntityTypeShape EntityType="pjrdev_condominiosModel.bank" Width="1.5" PointX="3" PointY="7.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="pjrdev_condominiosModel.blog" Width="1.5" PointX="3" PointY="11.125" IsExpanded="true" />
         <EntityTypeShape EntityType="pjrdev_condominiosModel.blogcomment" Width="1.5" PointX="5.25" PointY="11.25" IsExpanded="true" />
         <EntityTypeShape EntityType="pjrdev_condominiosModel.book" Width="1.5" PointX="7.75" PointY="11.75" IsExpanded="true" />
         <EntityTypeShape EntityType="pjrdev_condominiosModel.carpentry" Width="1.5" PointX="8" PointY="29.75" IsExpanded="true" />
@@ -43,8 +42,6 @@
         <EntityTypeShape EntityType="pjrdev_condominiosModel.uso" Width="1.5" PointX="3" PointY="46.5" IsExpanded="true" />
         <AssociationConnector Association="pjrdev_condominiosModel.FK_bank_user" ManuallyRouted="false" />
         <AssociationConnector Association="pjrdev_condominiosModel.FK_fee_bank" ManuallyRouted="false" />
-        <AssociationConnector Association="pjrdev_condominiosModel.FK_blog_user" ManuallyRouted="false" />
-        <AssociationConnector Association="pjrdev_condominiosModel.FK_blogcomment_blogcomment" ManuallyRouted="false" />
         <AssociationConnector Association="pjrdev_condominiosModel.FK_carpentry_task" ManuallyRouted="false" />
         <AssociationConnector Association="pjrdev_condominiosModel.FK_supplier_category" ManuallyRouted="false" />
         <AssociationConnector Association="pjrdev_condominiosModel.FK_chatmessage_user" ManuallyRouted="false" />
@@ -73,7 +70,13 @@
         <AssociationConnector Association="pjrdev_condominiosModel.FK_Titulos_community" />
         <AssociationConnector Association="pjrdev_condominiosModel.FK_Titulos_user" />
         <AssociationConnector Association="pjrdev_condominiosModel.FK_Vehiculos_user" />
-      </Diagram>
+        <EntityTypeShape EntityType="pjrdev_condominiosModel.blog" Width="1.5" PointX="3" PointY="0.75" />
+        <EntityTypeShape EntityType="pjrdev_condominiosModel.BlogUserLike" Width="1.5" PointX="5.25" PointY="9.875" />
+        <AssociationConnector Association="pjrdev_condominiosModel.FK_blog_user" />
+        <AssociationConnector Association="pjrdev_condominiosModel.FK_blogcomment_blogcomment" />
+        <AssociationConnector Association="pjrdev_condominiosModel.FK_BlogUserLikes_blog" />
+        <AssociationConnector Association="pjrdev_condominiosModel.FK_BlogUserLikes_user" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

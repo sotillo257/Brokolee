@@ -18,6 +18,7 @@ namespace WebApplication1.Models
         public blog()
         {
             this.blogcomments = new HashSet<blogcomment>();
+            this.BlogUserLikes = new HashSet<BlogUserLike>();
         }
     
         public long id { get; set; }
@@ -26,9 +27,12 @@ namespace WebApplication1.Models
         public string author { get; set; }
         public System.DateTime blogdate { get; set; }
         public long user_id { get; set; }
+        public Nullable<int> CantLike { get; set; }
     
         public virtual user user { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<blogcomment> blogcomments { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BlogUserLike> BlogUserLikes { get; set; }
     }
 }

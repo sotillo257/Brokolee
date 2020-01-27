@@ -103,7 +103,7 @@
     console.log('@Model.Content');
 
 
-                var url = "@Url.Action("ArmarBlogs", "comunicaciones", new { area = "webmaster" })";
+       var url = "@Url.Action("ArmarBlogs", "comunicaciones", new { area = "webmaster" })";
      var compania = new Array();
     var formData = new FormData();
 
@@ -119,18 +119,65 @@
                 },
                 processData: false,
                 contentType: false
-            });
+    });
+    //.ToString()
 
-    //var content = '';
-    // content += "<div class='Container'><div class='row'><div class='col-sm-12'><div class='single-blog'><p class='fecha'>" + item.author + "<span>";
-    //            content += "<td>" + Convert.ToDateTime(item.blogdate).ToString("dd/MM/yyyy HH:mm") + "</td></span></p><h2><a class='titulo' href='#'>" + item.title + "</a></h2>";
-    //            content += item.content.Replace('"','\'');
-    //            content += "<p><a href='#' ><a href = '" + Url.Action("editarblog", "comunicaciones", new { area = "webmaster", blogID = item.id }).ToString() + "'><button type = 'button' class='btn btn-primary waves-effect waves-light btn-sm mr-1 mb-1'";
-    //            content += "data-toggle='tooltip' data-placement='top' title='Editar'><i class='mdi mdi-lead-pencil'></i></button></a>";
-    //            content += "<a href = '" + Url.Action("verblog", "comunicaciones", new { blogID = item.id, area = "webmaster" }).ToString() + "'>";
-    //            content += "<button type = 'button' class='btn btn-success waves-effect waves-light btn-sm mr-1 mb-1' data-toggle='tooltip' data-placement='top' title='Ver'>";
-    //            content += "<i class='mdi mdi-eye'></i></button></a></a>< span>< i class='fa fa-thumbs - o - up'></i> likes < i class='fa fa-comment-o'></i> Coments</span> </p></div></div></div></div>";
-    //    $("#divContenido").append(cont);
+       
+
+    $(document).ready(function () {
+          $(".Eliminar").on('click', function () {
+            var url = "@Url.Action("eliminarBlog", "comunicaciones", new { area = "webmaster"})";
+             var compania = new Array();
+          var formData = new FormData();
+
+         
+             var id = $(".Eliminar").attr('data-id');
+            formData.append('blogID',  id);
+
+            compania.push(formData);
+            $.ajax({
+                url: url,
+                type: "post",
+                data: compania[0],
+                        success: function (result) {
+                            if (result.result == "success") {
+                                location.reload();
+                            } else {
+                                alert("Error al eliminar el blog: "+ result.exception);
+                            }
+                        },
+                        processData: false,
+                        contentType: false
+            });
+        });
+
+         $(".Like").on('click', function () {
+            var url = "@Url.Action("AgregarLikeblog", "comunicaciones", new { area = "webmaster" })";
+             var compania = new Array();
+          var formData = new FormData();
+
+         
+             var id = $(".Like").attr('data-id');
+            formData.append('ID',  id);
+
+            compania.push(formData);
+            $.ajax({
+                url: url,
+                type: "post",
+                data: compania[0],
+                        success: function (result) {
+                            //  $("#divContenido").append(result);
+                            console.log(result);
+                        },
+                        processData: false,
+                        contentType: false
+            });
+        });
+
+    });
+     
+
+
 
 </script>
 

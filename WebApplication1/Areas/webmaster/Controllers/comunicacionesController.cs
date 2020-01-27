@@ -9,6 +9,7 @@ using WebApplication1.Areas.webmaster.ViewModels;
 using WebApplication1.Concrete;
 using WebApplication1.Models;
 using Westwind.Web.Mvc;
+using Microsoft.AspNet.SignalR;
 
 namespace WebApplication1.Areas.webmaster.Controllers
 {
@@ -255,6 +256,50 @@ namespace WebApplication1.Areas.webmaster.Controllers
 
         [HttpPost]
         [ValidateInput(false)]
+        public JsonResult AgregarLikeblog(long ID)
+        {
+            try
+            {
+                long userId = (long)Session["USER_ID"];
+                BlogUserLike blogUserLikee = entities.BlogUserLikes.Where(x => x.IDBlog == ID && x.IDUser == userId).ToList().FirstOrDefault();
+                if (blogUserLikee == null)
+                {
+                    BlogUserLike blogUserLike = new BlogUserLike();
+                    blogUserLike.IDBlog = ID;
+                    blogUserLike.IDUser = userId;
+                    blogUserLike.Fecha = DateTime.Now;
+                    entities.BlogUserLikes.Add(blogUserLike);
+                    entities.SaveChanges();
+                    List<BlogUserLike> listBlogLikes = entities.BlogUserLikes.Where(x => x.IDBlog == ID).ToList();
+                    blog blog = entities.blogs.Find(ID);
+                    if (blog.CantLike == null)
+                    {
+                        blog.CantLike = 1;
+                    }
+                    else
+                    {
+                        blog.CantLike = listBlogLikes.Count();
+                    }
+
+                    entities.SaveChanges();
+                }                
+                return Json(new
+                {
+                    result = "success"
+                });
+            }
+            catch (Exception ex)
+            {
+                return Json(new
+                {
+                    result = "error",
+                    exception = ex.Message
+                });
+            }
+        }
+
+        [HttpPost]
+        [ValidateInput(false)]
         public ActionResult newblog(string title, string author, string content)
         {
             try
@@ -277,7 +322,37 @@ namespace WebApplication1.Areas.webmaster.Controllers
         }
 
         [HttpPost]
-        public JsonResult ArmarBlogs(int ID) {
+        [ValidateInput(false)]
+        public JsonResult eliminarBlog(long blogID)
+        {
+            try
+            {
+                long userId = (long)Session["USER_ID"];
+                blog blog = entities.blogs.Find(blogID);
+                List<BlogUserLike> listBlog = entities.BlogUserLikes.Where( x => x.IDBlog == blog.id).ToList();
+                entities.BlogUserLikes.RemoveRange(listBlog);
+                entities.SaveChanges();
+                List<blogcomment> listBlogCome = entities.blogcomments.Where(x => x.blog_id == blog.id).ToList();
+                entities.blogcomments.RemoveRange(listBlogCome);
+                entities.blogs.Remove(blog);
+                entities.SaveChanges();
+                return Json(new
+                {
+                    result = "success"
+                });
+            }
+            catch (Exception ex)
+            {
+                return Json(new
+                {
+                    result = "error",
+                    exception = ex.Message
+                });
+            }
+        }
+
+        [HttpPost]
+        public JsonResult ArmarBlogs(long ID) {
             string content = "";
             List<blog> blogs = entities.blogs.Where(m => m.user_id == ID).ToList();
             foreach (var item in blogs)
@@ -288,9 +363,15 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 content += item.content.Replace('"', '\'');
                 content += "<p class='fecha'><a href='#' ><a href = '" + Url.Action("editarblog", "comunicaciones", new { area = "webmaster", blogID = item.id }).ToString() + "'><button type = 'button' class='btn btn-primary waves-effect waves-light btn-sm mr-1 mb-1'";
                 content += "data-toggle='tooltip' data-placement='top' title='Editar'><i class='mdi mdi-lead-pencil'></i></button></a>";
+               
                 content += "<a href = '" + Url.Action("verblog", "comunicaciones", new { blogID = item.id, area = "webmaster" }).ToString() + "'>";
                 content += "<button type = 'button' class='btn btn-success waves-effect waves-light btn-sm mr-1 mb-1' data-toggle='tooltip' data-placement='top' title='Ver'>";
-                content += "<i class='mdi mdi-eye'></i></button></a></a><span><i class='fa fa-thumbs-o-up'></i> likes <i class='fa fa-comment-o'></i> Coments</span> </p></div></div></div></div>";
+                content += "<i class='mdi mdi-eye'></i></button></a></a>";
+                     content += "<a href = '#' class='Eliminar'  data-id='" + item.id + "' ><button type = 'button' class='btn btn-danger waves-effect waves-light btn-sm mr-1 mb-1'";
+                content += "data-toggle='tooltip' data-placement='top' title='Eliminar'><i class='mdi mdi-close'></i></button></a>" +
+                "<a href='#' class='Like' data-id='" + item.id + "' ><span><i class='fa fa-thumbs-o-up'></i> like "+item.CantLike+"</span> </a>" +
+                    "<a href = '" + Url.Action("agregarcomentario", "comunicaciones", new { area = "webmaster", blogID = item.id }).ToString() + "'><span style='padding-right: 18px;'> <i class='fa fa-comment-o'></i> Comentar </span> </a>" +
+                    "</p></div></div></div></div>";
 
 
             }
