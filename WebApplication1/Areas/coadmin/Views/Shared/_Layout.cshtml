@@ -179,15 +179,63 @@
                                 </li>
 
                                 <li class="has_sub">
-                                    @if (Model.side_menu == "supplier_directory")
+                                    @if (Model.side_menu == "comunicaciones")
                                     {
 
-                                        if (Model.side_sub_menu == "supplier_directory_listado")
+                                        if (Model.side_sub_menu == "comunicaciones_blog")
                                         {
                                         <li class="active">
-                                            <a href="@Url.Action("listado", "suplidores", new { area = "coadmin" })" class="waves-effect waves-light active"><i class="mdi mdi-account-key"></i><span> Directorio de suplidores </span></a>
-
+                                            <a href="@Url.Action("blog", "comunicaciones", new { area = "coadmin" })" class="active"><i class="mdi mdi-message-draw"></i>Blog General</a>
                                         </li>
+                                    }
+                                    else
+                                    {
+                                        <li>
+                                            <a href="@Url.Action("blog", "comunicaciones", new { area = "coadmin" })"><i class="mdi mdi-message-draw"></i>Blog General</a>
+                                        </li>
+                                    }
+
+                                    if (Model.side_sub_menu == "comunicaciones_privados")
+                                    {
+                                        <li class="active">
+
+                                            <a href="@Url.Action("privados", "comunicaciones", new { area = "coadmin" })" class="active">  <i class="mdi mdi-message-text"></i> Mensajería</a>
+                                        </li>
+                                    }
+                                    else
+                                    {
+                                        <li>
+                                            <a href="@Url.Action("privados", "comunicaciones", new { area = "coadmin" })"><i class="mdi mdi-message-text"></i>Mensajería</a>
+                                        </li>
+                                    }
+                                }
+                                else
+                                {
+
+                                    <li>    <a href="@Url.Action("blog", "comunicaciones", new { area = "coadmin" })"><i class="mdi mdi-message-draw"></i>Blog General</a></li>
+                                    <li>  <a href="@Url.Action("privados", "comunicaciones", new { area = "coadmin" })"><i class="mdi mdi-message-text"></i>Mensajería</a></li>
+                                }
+                                    </li>
+
+                                    <li class="has_sub">
+                                        @if (Model.side_menu == "supplier_directory")
+                                        {
+
+                                            if (Model.side_sub_menu == "supplier_directory_listado")
+                                            {
+                                            <li class="active">
+                                                <a href="@Url.Action("listado", "suplidores", new { area = "coadmin" })" class="waves-effect waves-light active"><i class="mdi mdi-account-key"></i><span> Directorio de suplidores </span></a>
+
+                                            </li>
+                                        }
+                                        else
+                                        {
+                                            <li>
+                                                <a href="@Url.Action("listado", "suplidores", new { area = "coadmin" })" class="waves-effect waves-light"><i class="mdi mdi-account-key"></i><span> Directorio de suplidores </span></a>
+                                            </li>
+                                        }
+
+
                                     }
                                     else
                                     {
@@ -195,55 +243,9 @@
                                             <a href="@Url.Action("listado", "suplidores", new { area = "coadmin" })" class="waves-effect waves-light"><i class="mdi mdi-account-key"></i><span> Directorio de suplidores </span></a>
                                         </li>
                                     }
-
-
-                                }
-                                else
-                                {
-                                    <li>
-                                        <a href="@Url.Action("listado", "suplidores", new { area = "coadmin" })" class="waves-effect waves-light"><i class="mdi mdi-account-key"></i><span> Directorio de suplidores </span></a>
-                                    </li>
-                                }
-                                    </li>
-
-                                    <li class="has_sub">
-                                        @if (Model.side_menu == "comunicaciones")
-                                        {
-
-                                            if (Model.side_sub_menu == "comunicaciones_blog")
-                                            {
-                                            <li class="active">
-                                                <a href="@Url.Action("blog", "comunicaciones", new { area = "coadmin" })" class="active"><i class="mdi mdi-message-draw"></i>Blog General</a>
-                                            </li>
-                                        }
-                                        else
-                                        {
-                                            <li>
-                                                <a href="@Url.Action("blog", "comunicaciones", new { area = "coadmin" })"><i class="mdi mdi-message-draw"></i>Blog General</a>
-                                            </li>
-                                        }
-
-                                        if (Model.side_sub_menu == "comunicaciones_privados")
-                                        {
-                                            <li class="active">
-
-                                                <a href="@Url.Action("privados", "comunicaciones", new { area = "coadmin" })" class="active">  <i class="mdi mdi-message-text"></i> Mensajería</a>
-                                            </li>
-                                        }
-                                        else
-                                        {
-                                            <li>
-                                                <a href="@Url.Action("privados", "comunicaciones", new { area = "coadmin" })"><i class="mdi mdi-message-text"></i>Mensajería</a>
-                                            </li>
-                                        }
-                                    }
-                                    else
-                                    {
-
-                                        <li>    <a href="@Url.Action("blog", "comunicaciones", new { area = "coadmin" })"><i class="mdi mdi-message-draw"></i>Blog General</a></li>
-                                        <li>  <a href="@Url.Action("privados", "comunicaciones", new { area = "coadmin" })"><i class="mdi mdi-message-text"></i>Mensajería</a></li>
-                                    }
                                         </li>
+
+
 
                                         <li class="has_sub">
                                             @if (Model.side_menu == "contacto")
@@ -273,16 +275,6 @@
                                         }
                                             </li>
 
-                                            <li>
-                                                @if (Model.side_menu == "tecnico")
-                                                {
-                                                    <a href="@Url.Action("soporte", "tecnico", new { area = "coadmin" })" class="waves-effect waves-light active"><i class="mdi mdi-comment-processing"></i><span> Soporte Técnico </span></a>
-                                                }
-                                                else
-                                                {
-                                                    <a href="@Url.Action("soporte", "tecnico", new { area = "coadmin" })" class="waves-effect waves-light"><i class="mdi mdi-comment-processing"></i><span> Soporte Técnico </span></a>
-                                                }
-                                            </li>
 
                                             <li class="has_sub">
                                                 @if (Model.side_menu == "cuotas")
@@ -637,6 +629,16 @@
                                             }
                                                 </li>
 
+                                                <li>
+                                                    @if (Model.side_menu == "tecnico")
+                                                    {
+                                                        <a href="@Url.Action("soporte", "tecnico", new { area = "coadmin" })" class="waves-effect waves-light active"><i class="mdi mdi-comment-processing"></i><span> Soporte Técnico </span></a>
+                                                    }
+                                                    else
+                                                    {
+                                                        <a href="@Url.Action("soporte", "tecnico", new { area = "coadmin" })" class="waves-effect waves-light"><i class="mdi mdi-comment-processing"></i><span> Soporte Técnico </span></a>
+                                                    }
+                                                </li>
 
                                                 <li class="has_sub">
                                                     @if (Model.side_menu == "uso")

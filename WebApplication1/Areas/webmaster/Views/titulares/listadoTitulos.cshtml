@@ -158,7 +158,7 @@
             formData.append("delID", id);
 
             var url = "@Url.Action("DeleteTitulo", "titulares", new { area = "webmaster" })";
-         var respuesta = confirm("estas seguro que deseas eliminar el título");
+         var respuesta = confirm("¿Estás seguro que deseas eliminar el título?");
                 if (respuesta == true) {
                     $.ajax({
                         url: url,

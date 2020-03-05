@@ -11,6 +11,536 @@ using Westwind.Web.Mvc;
 
 namespace WebApplication1.Areas.coadmin.Controllers
 {
+    //public class comunicacionesController : Controller
+    //{
+    //    pjrdev_condominiosEntities entities = new pjrdev_condominiosEntities();
+    //    EFPublicRepository ep = new EFPublicRepository();
+    //    // GET: coadmin/comunicaciones
+    //    public ActionResult blog()
+    //    {
+    //        if (Session["USER_ID"] != null)
+    //        {
+    //            long userId = (long)Session["USER_ID"];
+    //            user curUser = entities.users.Find(userId);
+    //            List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
+    //            List<document_type> document_category_list = entities.document_type.ToList();
+    //            comunicacionesViewModel viewModel = new comunicacionesViewModel();
+    //            viewModel.side_menu = "comunicaciones";
+    //            viewModel.side_sub_menu = "comunicaciones_blog";
+    //            viewModel.document_category_list = document_category_list;
+    //            viewModel.curUser = curUser;
+    //            viewModel.blogList = entities.blogs.Where(m => m.user_id == userId).ToList();
+    //            viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
+    //            viewModel.pubMessageList = pubMessageList;
+    //            viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+    //            viewModel.communityName = ep.GetCommunityInfo(userId)[0];
+    //            viewModel.communityApart = ep.GetCommunityInfo(userId)[1];
+    //            return View(viewModel);
+    //        } else
+    //        {
+    //            return Redirect(ep.GetLogoutUrl());
+    //        }
+    //    }
+
+    //    public ActionResult agregarblog()
+    //    {
+    //        if (Session["USER_ID"] != null)
+    //        {
+    //            long userId = (long)Session["USER_ID"];
+    //            user curUser = entities.users.Find(userId);
+    //            List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
+    //            agregarBlogViewModel viewModel = new agregarBlogViewModel();
+    //            viewModel.side_menu = "comunicaciones";
+    //            viewModel.side_sub_menu = "comunicaciones_agregarblog";
+    //            viewModel.document_category_list = entities.document_type.ToList();
+    //            viewModel.curUser = curUser;
+    //            viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
+    //            viewModel.pubMessageList = pubMessageList;
+    //            viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+    //            viewModel.communityName = ep.GetCommunityInfo(userId)[0];
+    //            viewModel.communityApart = ep.GetCommunityInfo(userId)[1];
+    //            return View(viewModel);
+    //        }
+    //        else
+    //        {
+    //            return Redirect(ep.GetLogoutUrl());
+    //        }
+
+    //    }
+
+    //    public ActionResult agregarcomentario(long? blogID)
+    //    {
+    //        if (Session["USER_ID"] != null)
+    //        {
+    //            if (blogID != null)
+    //            {
+    //                long userId = (long)Session["USER_ID"];
+    //                user curUser = entities.users.Find(userId);
+    //                List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
+    //                agregarComentarioViewModel viewModel = new agregarComentarioViewModel();
+    //                viewModel.side_menu = "comunicaciones";
+    //                viewModel.side_sub_menu = "comunicaciones_agregarcomentario";
+    //                viewModel.document_category_list = entities.document_type.ToList();
+    //                viewModel.curUser = curUser;
+    //                viewModel.blogID = Convert.ToInt64(blogID);
+    //                viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
+    //                viewModel.pubMessageList = pubMessageList;
+    //                viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+    //                viewModel.communityName = ep.GetCommunityInfo(userId)[0];
+    //                viewModel.communityApart = ep.GetCommunityInfo(userId)[1];
+    //                return View(viewModel);
+    //            }
+    //            else
+    //            {
+    //                return Redirect(Url.Action("NotFound", "Error"));
+    //            }               
+    //        }
+    //        else
+    //        {
+    //            return Redirect(ep.GetLogoutUrl());
+    //        }
+    //    }
+
+    //    public ActionResult susprivados()
+    //    {
+    //        if (Session["SUS_USER_ID"] != null)
+    //        {
+    //            long userId = (long)Session["SUS_USER_ID"];
+    //            user curUser = entities.users.Find(userId);
+    //            long suscribeID = (long)Session["SUS_ID"];
+    //            user susUser = entities.users.Find(suscribeID);
+    //            List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
+    //            List<onlineuser> onlineUserList = entities.onlineusers
+    //                .Where(m => m.user_id != userId).ToList();
+                
+    //            List<document_type> document_category_list = entities.document_type.ToList();
+    //            comunicacionesViewModel viewModel = new comunicacionesViewModel();
+    //            viewModel.side_menu = "comunicaciones_susprivados";
+    //            viewModel.side_sub_menu = "comunicaciones_susprivados";
+    //            viewModel.document_category_list = document_category_list;
+    //            viewModel.curUser = curUser;
+    //            viewModel.susUser = susUser;
+    //            viewModel.onlineUserList = onlineUserList;
+    //            if (onlineUserList.Count > 0)
+    //            {
+    //                onlineuser selUser = onlineUserList.First();
+    //                viewModel.selUser = selUser;
+    //                long selUserID = selUser.id;
+    //                viewModel.chatmessageList = entities.chatmessages.Where(
+    //                    m => (m.from_user_id == userId && m.to_user_id == selUserID)
+    //                    || (m.from_user_id == selUserID && m.to_user_id == userId)).ToList();
+    //            }
+    //            else
+    //            {
+    //                viewModel.selUser = null;
+    //                viewModel.chatmessageList = null;
+    //            }
+    //            viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
+    //            viewModel.pubMessageList = pubMessageList;
+    //            viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+    //            viewModel.communityName = ep.GetCommunityInfo(userId)[0];
+    //            viewModel.communityApart = ep.GetCommunityInfo(userId)[1];
+    //            return View(viewModel);
+    //        }
+    //        else
+    //        {
+    //            return Redirect(ep.GetLogoutUrl());
+    //        }
+    //    }
+
+    //    public ActionResult privados()
+    //    {
+    //        if (Session["USER_ID"] != null)
+    //        {
+    //            long userId = (long)Session["USER_ID"];
+    //            user curUser = entities.users.Find(userId);
+    //            List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
+    //            List<onlineuser> onlineUserList = entities.onlineusers
+    //                .Where(m => m.user_id != userId && m.is_online == true).ToList();
+    //            List<document_type> document_category_list = entities.document_type.ToList();
+    //            comunicacionesViewModel viewModel = new comunicacionesViewModel();
+    //            viewModel.side_menu = "comunicaciones";
+    //            viewModel.side_sub_menu = "comunicaciones_privados";
+    //            viewModel.document_category_list = document_category_list;
+    //            viewModel.curUser = curUser;
+    //            viewModel.onlineUserList = onlineUserList;
+    //            if (onlineUserList.Count > 0)
+    //            {
+    //                onlineuser selUser = onlineUserList.First();
+    //                viewModel.selUser = selUser;
+    //                long selUserID = selUser.user_id;
+    //                viewModel.chatmessageList = entities.chatmessages.Where(
+    //                    m => (m.from_user_id == userId && m.to_user_id == selUserID)
+    //                    || (m.from_user_id == selUserID && m.to_user_id == userId)).ToList();
+    //            }
+    //            else
+    //            {
+    //                viewModel.selUser = null;
+    //                viewModel.chatmessageList = null;
+    //            }
+    //            viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
+    //            viewModel.pubMessageList = pubMessageList;
+    //            viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+    //            viewModel.communityName = ep.GetCommunityInfo(userId)[0];
+    //            viewModel.communityApart = ep.GetCommunityInfo(userId)[1];
+    //            return View(viewModel);
+    //        } else
+    //        {
+    //            return Redirect(ep.GetLogoutUrl());
+    //        }
+    //    }
+
+    //    public ActionResult editarblog(long? blogID)
+    //    {
+    //        if (Session["USER_ID"] != null)
+    //        {
+    //            if (blogID != null)
+    //            {
+    //                long userId = (long)Session["USER_ID"];
+    //                editarblogViewModel viewModel = new editarblogViewModel();
+    //                List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
+    //                user curUser = entities.users.Find(userId);
+    //                blog blog = entities.blogs.Find(blogID);
+    //                viewModel.side_menu = "comunicaciones";
+    //                viewModel.side_sub_menu = "comunicaciones";
+    //                viewModel.document_category_list = entities.document_type.ToList();
+    //                viewModel.curUser = curUser;
+    //                viewModel.editBlog = blog;
+    //                viewModel.blogID = Convert.ToInt64(blogID);
+    //                viewModel.blogcommentList = entities.blogcomments.Where(m => m.blog_id == blogID).ToList();
+    //                viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
+    //                viewModel.pubMessageList = pubMessageList;
+    //                viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+    //                viewModel.communityName = ep.GetCommunityInfo(userId)[0];
+    //                viewModel.communityApart = ep.GetCommunityInfo(userId)[1];
+    //                return View(viewModel);
+    //            }
+    //            else
+    //            {
+    //                return Redirect(Url.Action("NotFound", "Error"));
+    //            }                
+    //        }
+    //        else
+    //        {
+    //            return Redirect(ep.GetLogoutUrl());
+    //        }
+    //    }
+
+    //    public ActionResult verblog(long? blogID)
+    //    {
+    //        if (Session["USER_ID"] != null)
+    //        {
+    //            if (blogID != null)
+    //            {
+    //                long userId = (long)Session["USER_ID"];
+    //                List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
+    //                user curUser = entities.users.Find(userId);
+    //                blog blog = entities.blogs.Find(blogID);
+    //                verblogViewModel viewModel = new verblogViewModel();
+    //                viewModel.side_menu = "comunicaciones";
+    //                viewModel.side_sub_menu = "comunicaciones";
+    //                viewModel.document_category_list = entities.document_type.ToList();
+    //                viewModel.curUser = curUser;
+    //                viewModel.viewBlog = blog;
+    //                viewModel.blogID = Convert.ToInt64(blogID);
+    //                viewModel.blogcommentList = entities.blogcomments.Where(m => m.blog_id == blogID).ToList();
+    //                viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
+    //                viewModel.pubMessageList = pubMessageList;
+    //                viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+    //                viewModel.communityName = ep.GetCommunityInfo(userId)[0];
+    //                viewModel.communityApart = ep.GetCommunityInfo(userId)[1];
+    //                return View(viewModel);
+    //            }
+    //            else
+    //            {
+    //                return Redirect(Url.Action("NotFound", "Error"));
+    //            }              
+    //        }
+    //        else
+    //        {
+    //            return Redirect(ep.GetLogoutUrl());
+    //        }
+    //    }
+
+    //    [HttpPost]
+    //    public ActionResult newblogcomentario(string name, string comment, long blogID)
+    //    {
+    //        try
+    //        {
+    //            blogcomment blogcomment = new blogcomment();
+    //            blogcomment.name = name;
+    //            blogcomment.comment = comment;
+    //            blogcomment.blog_id = blogID;
+    //            blogcomment.postdate = DateTime.Now;
+    //            entities.blogcomments.Add(blogcomment);
+    //            entities.SaveChanges();
+    //            return Redirect(Url.Action("verblog", "comunicaciones",
+    //                new { blogID = blogID, area = "coadmin" }));
+    //        }
+    //        catch (Exception)
+    //        {
+    //            return Redirect(Url.Action("agregarcomentario", "comunicaciones", 
+    //                new { blogID = blogID, area = "coadmin" }));
+    //        }
+    //    }
+
+    //    [HttpPost]
+    //    public ActionResult editblog(long editID, string title, string author, string content)
+    //    {
+    //        try
+    //        {
+    //            blog editBlog = entities.blogs.Find(editID);
+    //            editBlog.title = title;
+    //            editBlog.author = author;
+    //            editBlog.content = content;
+    //            entities.SaveChanges();
+    //            return Redirect(Url.Action("blog", "comunicaciones", new { area = "coadmin" }));
+    //        }
+    //        catch
+    //        {
+    //            return Redirect(Url.Action("editarblog", "comunicaciones", 
+    //                new {
+    //                    area = "coadmin",
+    //                    blogID = editID
+    //                }));
+    //        }
+    //    }
+
+    //    [HttpPost]
+    //    public ActionResult newblog(string title, string author, string content)
+    //    {
+    //        try
+    //        {
+    //            long userId = (long)Session["USER_ID"];
+    //            blog blog = new blog();
+    //            blog.title = title;
+    //            blog.content = content;
+    //            blog.blogdate = DateTime.Now;
+    //            blog.author = author;
+    //            blog.user_id = userId;
+    //            entities.blogs.Add(blog);
+    //            entities.SaveChanges();
+    //            return Redirect(Url.Action("blog", "comunicaciones", new { area = "coadmin" }));
+    //        }
+    //        catch (Exception)
+    //        {
+    //            return Redirect(Url.Action("agregarblog", "comunicaciones", new { area = "coadmin" }));
+    //        }
+    //    }
+
+
+    //    public JsonResult SendFile(HttpPostedFileBase sendFile)
+    //    {
+    //        try
+    //        {
+    //            string fileLink = "";
+    //            string fileName = "";
+    //            if (sendFile != null && sendFile.ContentLength > 0)
+    //            {
+    //                fileName = Path.GetFileName(sendFile.FileName);
+    //                if (!Directory.Exists(Path.Combine(Server.MapPath("~/"), "Upload")))
+    //                {
+    //                    Directory.CreateDirectory(Path.Combine(Server.MapPath("~/"), "Upload"));
+    //                }
+
+    //                if (!Directory.Exists(Path.Combine(Server.MapPath("~/Upload/"), "Upload_Send")))
+    //                {
+    //                    Directory.CreateDirectory(Path.Combine(Server.MapPath("~/Upload/"), "Upload_Send"));
+    //                }
+    //                var path = Path.Combine(Server.MapPath("~/Upload/Upload_Send"), fileName);
+    //                sendFile.SaveAs(path);
+    //                fileLink = "~/Upload/Upload_Send/" + fileName;
+    //                return Json(new {
+    //                    result = "success",
+    //                    fileLink = fileLink,
+    //                    fileName = fileName
+    //                });
+    //            } else
+    //            {
+    //                return Json(new
+    //                {
+    //                    result = "error"
+    //                });
+    //            }
+    //        } catch(Exception ex)
+    //        {
+    //            return Json(new { result = "error", exception = ex.Message });
+    //        }
+    //    }
+
+    //    public JsonResult SetRead(long fromUserID, long toUserID)
+    //    {
+    //        try
+    //        {
+    //            List<chatmessage> chatmessageList = entities.chatmessages.Where(m => m.from_user_id == fromUserID
+    //                                 && m.to_user_id == toUserID && m.is_read != true).ToList();
+
+    //            foreach (var item in chatmessageList)
+    //            {
+    //                item.is_read = true;
+    //            }
+    //            entities.SaveChanges();
+
+    //            long userId = (long)Session["USER_ID"];
+    //            List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
+    //            ChatNotificationViewModel viewModel = new ChatNotificationViewModel();
+    //            viewModel.pubMessageList = pubMessageList;
+    //            viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+    //            string patialView = "~/Areas/coadmin/Views/comunicaciones/_chatnotification.cshtml";
+    //            string postsHtml = ViewRenderer.RenderPartialView(patialView, viewModel);
+    //            return Json(new
+    //            {
+    //                result = "success",
+    //                html = postsHtml
+    //            });
+    //        }
+    //        catch (Exception ex)
+    //        {
+    //            return Json(new
+    //            {
+    //                result = "error",
+    //                exception = ex.Message
+    //            });
+    //        }
+    //    }
+
+    //    public JsonResult DeleteMessage(long selUserId, long messageId)
+    //    {
+    //        long uID = selUserId;
+    //        long curId = (long)Session["USER_ID"];
+    //        List<chatmessage> chatmessageList = new List<chatmessage>();
+    //        selUserViewModel viewModel = new selUserViewModel();
+    //        try
+    //        {
+    //            chatmessage chatmessage = entities.chatmessages.Find(messageId);
+    //            entities.chatmessages.Remove(chatmessage);
+    //            entities.SaveChanges();                    
+    //            user curUser = entities.users.Find(curId);
+    //            onlineuser selUser = entities.onlineusers.Where(m => m.user_id == uID).FirstOrDefault();
+    //            chatmessageList = entities.chatmessages.Where(
+    //                    m => (m.from_user_id == curId && m.to_user_id == uID)
+    //                    || (m.from_user_id == uID && m.to_user_id == curId)).ToList();
+    //            viewModel.chatmessageList = chatmessageList;
+    //            viewModel.curUser = curUser;
+    //            viewModel.selUser = selUser;
+    //            string patialView = "~/Areas/coadmin/Views/comunicaciones/_chatbox.cshtml";
+    //            string postsHtml = ViewRenderer.RenderPartialView(patialView, viewModel);
+    //            return Json(new
+    //            {
+    //                result = "success",
+    //                html = postsHtml,
+    //            });
+    //        }
+    //        catch (Exception ex)
+    //        {
+    //            user curUser = entities.users.Find(curId);
+    //            onlineuser selUser = entities.onlineusers.Where(m => m.user_id == uID).FirstOrDefault();
+    //            chatmessageList = entities.chatmessages.Where(
+    //                    m => (m.from_user_id == curId && m.to_user_id == uID)
+    //                    || (m.from_user_id == uID && m.to_user_id == curId)).ToList();
+    //            viewModel.chatmessageList = chatmessageList;
+    //            viewModel.curUser = curUser;
+    //            viewModel.selUser = selUser;
+    //            string patialView = "~/Areas/coadmin/Views/comunicaciones/_chatbox.cshtml";
+    //            string postsHtml = ViewRenderer.RenderPartialView(patialView, viewModel);
+    //            return Json(new
+    //            {
+    //                result = "error",
+    //                html = postsHtml,
+    //                exception = ex.Message
+    //            });
+    //        }
+    //    }
+
+    //    [HttpPost]
+    //    public JsonResult ArmarBlogs(long ID)
+    //    {
+    //        string content = "";
+    //        List<blog> blogs = entities.blogs.Where(m => m.user_id == ID).ToList();
+    //        foreach (var item in blogs)
+    //        {
+
+    //            content += "<div class='Container'><div class='row'><div class='col-sm-12'><div class='single-blog caja'><p class='fecha'>" + item.author + " <span>";
+    //            content += "<td>" + Convert.ToDateTime(item.blogdate).ToString("dd/MM/yyyy HH:mm") + "</td></span></p><h2><a class='titulo' href='#'>" + item.title + "</a></h2>";
+    //            content += item.content.Replace('"', '\'');
+    //            content += "<p class='fecha'><a href='#' ><a href = '" + Url.Action("editarblog", "comunicaciones", new { area = "coadmin", blogID = item.id }).ToString() + "'><button type = 'button' class='btn btn-primary waves-effect waves-light btn-sm mr-1 mb-1'";
+    //            content += "data-toggle='tooltip' data-placement='top' title='Editar'><i class='mdi mdi-lead-pencil'></i></button></a>";
+
+    //            content += "<a href = '" + Url.Action("verblog", "comunicaciones", new { blogID = item.id, area = "coadmin" }).ToString() + "'>";
+    //            content += "<button type = 'button' class='btn btn-success waves-effect waves-light btn-sm mr-1 mb-1' data-toggle='tooltip' data-placement='top' title='Ver'>";
+    //            content += "<i class='mdi mdi-eye'></i></button></a></a>";
+    //            content += "<a href = '#' class='Eliminar'  data-id='" + item.id + "' ><button type = 'button' class='btn btn-danger waves-effect waves-light btn-sm mr-1 mb-1'";
+    //            content += "data-toggle='tooltip' data-placement='top' title='Eliminar'><i class='mdi mdi-close'></i></button></a>" +
+    //            "<a href='#' class='Like' data-id='" + item.id + "' ><span><i class='fa fa-thumbs-o-up'></i> like " + item.CantLike + "</span> </a>" +
+    //                "<a href = '" + Url.Action("agregarcomentario", "comunicaciones", new { area = "coadmin", blogID = item.id }).ToString() + "'><span style='padding-right: 18px;'> <i class='fa fa-comment-o'></i> Comentar </span> </a>" +
+    //                "</p></div></div></div></div>";
+
+
+    //        }
+
+
+    //        return Json(content);
+    //    }
+
+    //    public JsonResult GetSelUser(string userId)
+    //    {
+    //        //try
+    //        //{
+    //            int imgtype = 1;
+    //            int online = 1;
+    //            string imgpath = "user.svg";
+    //            long uID = Convert.ToInt64(userId);
+    //            onlineuser selUser = entities.onlineusers.Where(m => m.user_id == uID).FirstOrDefault();
+    //            if (selUser.user_img != null)
+    //            {
+    //                imgpath = selUser.user_img;
+    //                imgtype = 2;
+    //            }
+
+    //            if (selUser.is_online == false)
+    //            {
+    //                online = 0;
+    //            }
+
+    //            List<chatmessage> chatmessageList = new List<chatmessage>();
+
+    //            long curId = (long)Session["USER_ID"];
+    //            user curUser = entities.users.Find(curId);
+
+    //            chatmessageList = entities.chatmessages.Where(
+    //                    m => (m.from_user_id == curId && m.to_user_id == uID)
+    //                    || (m.from_user_id == uID && m.to_user_id == curId)).ToList();
+
+    //            selUserViewModel viewModel = new selUserViewModel();
+    //            viewModel.chatmessageList = chatmessageList;
+    //            viewModel.curUser = curUser;
+    //            viewModel.selUser = selUser;
+    //            string patialView = "~/Areas/coadmin/Views/comunicaciones/_chatbox.cshtml";
+    //            string postsHtml = ViewRenderer.RenderPartialView(patialView, viewModel);
+    //            return Json(new
+    //            {
+    //                result = "success",
+    //                imgpath = imgpath,
+    //                imgtype = imgtype,
+    //                html = postsHtml,
+    //                online = online,
+    //                selUserId = uID.ToString(),
+    //                name = selUser.first_name + " " + selUser.last_name+":Graras4"
+    //            });
+
+    //        //}
+    //        //catch (Exception ex)
+    //        //{
+    //        //    return Json(new
+    //        //    {
+    //        //        result = "error",
+    //        //        exception = ex.Message
+    //        //    });
+    //        //}
+    //    }
+
+    //}
+
     public class comunicacionesController : Controller
     {
         pjrdev_condominiosEntities entities = new pjrdev_condominiosEntities();
@@ -23,23 +553,26 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 long userId = (long)Session["USER_ID"];
                 user curUser = entities.users.Find(userId);
                 List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
-                List<document_type> document_category_list = entities.document_type.ToList();
                 comunicacionesViewModel viewModel = new comunicacionesViewModel();
                 viewModel.side_menu = "comunicaciones";
                 viewModel.side_sub_menu = "comunicaciones_blog";
-                viewModel.document_category_list = document_category_list;
+                viewModel.document_category_list = entities.document_type.ToList();
                 viewModel.curUser = curUser;
                 viewModel.blogList = entities.blogs.Where(m => m.user_id == userId).ToList();
+                viewModel.Content = userId.ToString();
+                List<blog> blogs = entities.blogs.Where(m => m.user_id == userId).ToList();
+                //  ViewBag.blogList = JsonConvert.SerializeObject(blogs);
                 viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                 viewModel.pubMessageList = pubMessageList;
                 viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                viewModel.communityName = ep.GetCommunityInfo(userId)[0];
-                viewModel.communityApart = ep.GetCommunityInfo(userId)[1];
                 return View(viewModel);
-            } else
+            }
+            else
             {
                 return Redirect(ep.GetLogoutUrl());
+
             }
+
         }
 
         public ActionResult agregarblog()
@@ -50,15 +583,13 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 user curUser = entities.users.Find(userId);
                 List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                 agregarBlogViewModel viewModel = new agregarBlogViewModel();
-                viewModel.side_menu = "comunicaciones";
-                viewModel.side_sub_menu = "comunicaciones_agregarblog";
+                viewModel.side_menu = "agregarblog";
+                viewModel.side_sub_menu = "agregarblog";
                 viewModel.document_category_list = entities.document_type.ToList();
                 viewModel.curUser = curUser;
                 viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                 viewModel.pubMessageList = pubMessageList;
                 viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                viewModel.communityName = ep.GetCommunityInfo(userId)[0];
-                viewModel.communityApart = ep.GetCommunityInfo(userId)[1];
                 return View(viewModel);
             }
             else
@@ -78,69 +609,20 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     user curUser = entities.users.Find(userId);
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                     agregarComentarioViewModel viewModel = new agregarComentarioViewModel();
-                    viewModel.side_menu = "comunicaciones";
-                    viewModel.side_sub_menu = "comunicaciones_agregarcomentario";
+                    viewModel.side_menu = "agregarcomentario";
+                    viewModel.side_sub_menu = "agregarcomentario";
                     viewModel.document_category_list = entities.document_type.ToList();
                     viewModel.curUser = curUser;
                     viewModel.blogID = Convert.ToInt64(blogID);
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = pubMessageList;
                     viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                    viewModel.communityName = ep.GetCommunityInfo(userId)[0];
-                    viewModel.communityApart = ep.GetCommunityInfo(userId)[1];
                     return View(viewModel);
                 }
                 else
                 {
                     return Redirect(Url.Action("NotFound", "Error"));
-                }               
-            }
-            else
-            {
-                return Redirect(ep.GetLogoutUrl());
-            }
-        }
-
-        public ActionResult susprivados()
-        {
-            if (Session["SUS_USER_ID"] != null)
-            {
-                long userId = (long)Session["SUS_USER_ID"];
-                user curUser = entities.users.Find(userId);
-                long suscribeID = (long)Session["SUS_ID"];
-                user susUser = entities.users.Find(suscribeID);
-                List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
-                List<onlineuser> onlineUserList = entities.onlineusers
-                    .Where(m => m.user_id != userId).ToList();
-                
-                List<document_type> document_category_list = entities.document_type.ToList();
-                comunicacionesViewModel viewModel = new comunicacionesViewModel();
-                viewModel.side_menu = "comunicaciones_susprivados";
-                viewModel.side_sub_menu = "comunicaciones_susprivados";
-                viewModel.document_category_list = document_category_list;
-                viewModel.curUser = curUser;
-                viewModel.susUser = susUser;
-                viewModel.onlineUserList = onlineUserList;
-                if (onlineUserList.Count > 0)
-                {
-                    onlineuser selUser = onlineUserList.First();
-                    viewModel.selUser = selUser;
-                    long selUserID = selUser.id;
-                    viewModel.chatmessageList = entities.chatmessages.Where(
-                        m => (m.from_user_id == userId && m.to_user_id == selUserID)
-                        || (m.from_user_id == selUserID && m.to_user_id == userId)).ToList();
                 }
-                else
-                {
-                    viewModel.selUser = null;
-                    viewModel.chatmessageList = null;
-                }
-                viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
-                viewModel.pubMessageList = pubMessageList;
-                viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                viewModel.communityName = ep.GetCommunityInfo(userId)[0];
-                viewModel.communityApart = ep.GetCommunityInfo(userId)[1];
-                return View(viewModel);
             }
             else
             {
@@ -156,12 +638,11 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 user curUser = entities.users.Find(userId);
                 List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                 List<onlineuser> onlineUserList = entities.onlineusers
-                    .Where(m => m.user_id != userId && m.is_online == true).ToList();
-                List<document_type> document_category_list = entities.document_type.ToList();
+                    .Where(m => m.user_id != userId).ToList();
                 comunicacionesViewModel viewModel = new comunicacionesViewModel();
                 viewModel.side_menu = "comunicaciones";
                 viewModel.side_sub_menu = "comunicaciones_privados";
-                viewModel.document_category_list = document_category_list;
+                viewModel.document_category_list = entities.document_type.ToList();
                 viewModel.curUser = curUser;
                 viewModel.onlineUserList = onlineUserList;
                 if (onlineUserList.Count > 0)
@@ -181,10 +662,9 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                 viewModel.pubMessageList = pubMessageList;
                 viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                viewModel.communityName = ep.GetCommunityInfo(userId)[0];
-                viewModel.communityApart = ep.GetCommunityInfo(userId)[1];
                 return View(viewModel);
-            } else
+            }
+            else
             {
                 return Redirect(ep.GetLogoutUrl());
             }
@@ -197,10 +677,10 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 if (blogID != null)
                 {
                     long userId = (long)Session["USER_ID"];
-                    editarblogViewModel viewModel = new editarblogViewModel();
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                     user curUser = entities.users.Find(userId);
                     blog blog = entities.blogs.Find(blogID);
+                    editarblogViewModel viewModel = new editarblogViewModel();
                     viewModel.side_menu = "comunicaciones";
                     viewModel.side_sub_menu = "comunicaciones";
                     viewModel.document_category_list = entities.document_type.ToList();
@@ -211,14 +691,12 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = pubMessageList;
                     viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                    viewModel.communityName = ep.GetCommunityInfo(userId)[0];
-                    viewModel.communityApart = ep.GetCommunityInfo(userId)[1];
                     return View(viewModel);
                 }
                 else
                 {
                     return Redirect(Url.Action("NotFound", "Error"));
-                }                
+                }
             }
             else
             {
@@ -247,14 +725,12 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = pubMessageList;
                     viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                    viewModel.communityName = ep.GetCommunityInfo(userId)[0];
-                    viewModel.communityApart = ep.GetCommunityInfo(userId)[1];
                     return View(viewModel);
                 }
                 else
                 {
                     return Redirect(Url.Action("NotFound", "Error"));
-                }              
+                }
             }
             else
             {
@@ -263,50 +739,97 @@ namespace WebApplication1.Areas.coadmin.Controllers
         }
 
         [HttpPost]
-        public ActionResult newblogcomentario(string name, string comment, long blogID)
+        public ActionResult newblogcomentario(string comment, long blogID)
         {
             try
             {
                 blogcomment blogcomment = new blogcomment();
-                blogcomment.name = name;
+                blog blog = entities.blogs.Find(blogID);
+                blogcomment.name = blog.author;
                 blogcomment.comment = comment;
                 blogcomment.blog_id = blogID;
                 blogcomment.postdate = DateTime.Now;
                 entities.blogcomments.Add(blogcomment);
                 entities.SaveChanges();
                 return Redirect(Url.Action("verblog", "comunicaciones",
-                    new { blogID = blogID, area = "coadmin" }));
+                    new { blogID = blogID }));
             }
             catch (Exception)
             {
-                return Redirect(Url.Action("agregarcomentario", "comunicaciones", 
-                    new { blogID = blogID, area = "coadmin" }));
+                return Redirect(Url.Action("agregarcomentario", "comunicaciones",
+                    new { blogID = blogID }));
             }
         }
 
         [HttpPost]
+        [ValidateInput(false)]
         public ActionResult editblog(long editID, string title, string author, string content)
         {
             try
             {
-                blog editBlog = entities.blogs.Find(editID);
-                editBlog.title = title;
-                editBlog.author = author;
-                editBlog.content = content;
+                long userId = (long)Session["USER_ID"];
+                blog blog = entities.blogs.Find(editID);
+                blog.title = title;
+                blog.content = content;
+                blog.blogdate = DateTime.Now;
+                blog.author = author;
+                blog.user_id = userId;
+                // entities.blogs.Add(blog);
                 entities.SaveChanges();
                 return Redirect(Url.Action("blog", "comunicaciones", new { area = "coadmin" }));
             }
-            catch
+            catch (Exception ex)
             {
-                return Redirect(Url.Action("editarblog", "comunicaciones", 
-                    new {
-                        area = "coadmin",
-                        blogID = editID
-                    }));
+                return Redirect(Url.Action("editarblog", "comunicaciones", new { area = "coadmin" }));
             }
         }
 
         [HttpPost]
+        [ValidateInput(false)]
+        public JsonResult AgregarLikeblog(long ID)
+        {
+            try
+            {
+                long userId = (long)Session["USER_ID"];
+                BlogUserLike blogUserLikee = entities.BlogUserLikes.Where(x => x.IDBlog == ID && x.IDUser == userId).ToList().FirstOrDefault();
+                if (blogUserLikee == null)
+                {
+                    BlogUserLike blogUserLike = new BlogUserLike();
+                    blogUserLike.IDBlog = ID;
+                    blogUserLike.IDUser = userId;
+                    blogUserLike.Fecha = DateTime.Now;
+                    entities.BlogUserLikes.Add(blogUserLike);
+                    entities.SaveChanges();
+                    List<BlogUserLike> listBlogLikes = entities.BlogUserLikes.Where(x => x.IDBlog == ID).ToList();
+                    blog blog = entities.blogs.Find(ID);
+                    if (blog.CantLike == null)
+                    {
+                        blog.CantLike = 1;
+                    }
+                    else
+                    {
+                        blog.CantLike = listBlogLikes.Count();
+                    }
+
+                    entities.SaveChanges();
+                }
+                return Json(new
+                {
+                    result = "success"
+                });
+            }
+            catch (Exception ex)
+            {
+                return Json(new
+                {
+                    result = "error",
+                    exception = ex.Message
+                });
+            }
+        }
+
+        [HttpPost]
+        [ValidateInput(false)]
         public ActionResult newblog(string title, string author, string content)
         {
             try
@@ -320,52 +843,72 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 blog.user_id = userId;
                 entities.blogs.Add(blog);
                 entities.SaveChanges();
-                return Redirect(Url.Action("blog", "comunicaciones", new { area = "coadmin" }));
+                return Redirect(Url.Action("blog", "comunicaciones"));
             }
             catch (Exception)
             {
-                return Redirect(Url.Action("agregarblog", "comunicaciones", new { area = "coadmin" }));
+                return Redirect(Url.Action("agregarblog", "comunicaciones"));
             }
         }
 
-
-        public JsonResult SendFile(HttpPostedFileBase sendFile)
+        [HttpPost]
+        [ValidateInput(false)]
+        public JsonResult eliminarBlog(long blogID)
         {
             try
             {
-                string fileLink = "";
-                string fileName = "";
-                if (sendFile != null && sendFile.ContentLength > 0)
+                long userId = (long)Session["USER_ID"];
+                blog blog = entities.blogs.Find(blogID);
+                List<BlogUserLike> listBlog = entities.BlogUserLikes.Where(x => x.IDBlog == blog.id).ToList();
+                entities.BlogUserLikes.RemoveRange(listBlog);
+                entities.SaveChanges();
+                List<blogcomment> listBlogCome = entities.blogcomments.Where(x => x.blog_id == blog.id).ToList();
+                entities.blogcomments.RemoveRange(listBlogCome);
+                entities.blogs.Remove(blog);
+                entities.SaveChanges();
+                return Json(new
                 {
-                    fileName = Path.GetFileName(sendFile.FileName);
-                    if (!Directory.Exists(Path.Combine(Server.MapPath("~/"), "Upload")))
-                    {
-                        Directory.CreateDirectory(Path.Combine(Server.MapPath("~/"), "Upload"));
-                    }
-
-                    if (!Directory.Exists(Path.Combine(Server.MapPath("~/Upload/"), "Upload_Send")))
-                    {
-                        Directory.CreateDirectory(Path.Combine(Server.MapPath("~/Upload/"), "Upload_Send"));
-                    }
-                    var path = Path.Combine(Server.MapPath("~/Upload/Upload_Send"), fileName);
-                    sendFile.SaveAs(path);
-                    fileLink = "~/Upload/Upload_Send/" + fileName;
-                    return Json(new {
-                        result = "success",
-                        fileLink = fileLink,
-                        fileName = fileName
-                    });
-                } else
-                {
-                    return Json(new
-                    {
-                        result = "error"
-                    });
-                }
-            } catch(Exception ex)
-            {
-                return Json(new { result = "error", exception = ex.Message });
+                    result = "success"
+                });
             }
+            catch (Exception ex)
+            {
+                return Json(new
+                {
+                    result = "error",
+                    exception = ex.Message
+                });
+            }
+        }
+
+        [HttpPost]
+        public JsonResult ArmarBlogs(long ID)
+        {
+            string content = "";
+            List<blog> blogs = entities.blogs.Where(m => m.user_id == ID).ToList();
+            foreach (var item in blogs)
+            {
+
+                content += "<div class='Container'><div class='row'><div class='col-sm-12'><div class='single-blog caja'><p class='fecha'>" + item.author + " <span>";
+                content += "<td>" + Convert.ToDateTime(item.blogdate).ToString("dd/MM/yyyy HH:mm") + "</td></span></p><h2><a class='titulo' href='#'>" + item.title + "</a></h2>";
+                content += item.content.Replace('"', '\'');
+                content += "<p class='fecha'><a href='#' ><a href = '" + Url.Action("editarblog", "comunicaciones", new { area = "coadmin", blogID = item.id }).ToString() + "'><button type = 'button' class='btn btn-primary waves-effect waves-light btn-sm mr-1 mb-1'";
+                content += "data-toggle='tooltip' data-placement='top' title='Editar'><i class='mdi mdi-lead-pencil'></i></button></a>";
+
+                content += "<a href = '" + Url.Action("verblog", "comunicaciones", new { blogID = item.id, area = "coadmin" }).ToString() + "'>";
+                content += "<button type = 'button' class='btn btn-success waves-effect waves-light btn-sm mr-1 mb-1' data-toggle='tooltip' data-placement='top' title='Ver'>";
+                content += "<i class='mdi mdi-eye'></i></button></a></a>";
+                content += "<a href = '#' class='Eliminar'  data-id='" + item.id + "' ><button type = 'button' class='btn btn-danger waves-effect waves-light btn-sm mr-1 mb-1'";
+                content += "data-toggle='tooltip' data-placement='top' title='Eliminar'><i class='mdi mdi-close'></i></button></a>" +
+                "<a href='#' class='Like' data-id='" + item.id + "' ><span><i class='fa fa-thumbs-o-up'></i> like " + item.CantLike + "</span> </a>" +
+                    "<a href = '" + Url.Action("agregarcomentario", "comunicaciones", new { area = "coadmin", blogID = item.id }).ToString() + "'><span style='padding-right: 18px;'> <i class='fa fa-comment-o'></i> Comentar </span> </a>" +
+                    "</p></div></div></div></div>";
+
+
+            }
+
+
+            return Json(content);
         }
 
         public JsonResult SetRead(long fromUserID, long toUserID)
@@ -404,6 +947,48 @@ namespace WebApplication1.Areas.coadmin.Controllers
             }
         }
 
+        public JsonResult SendFile(HttpPostedFileBase sendFile)
+        {
+            try
+            {
+                string fileLink = "";
+                string fileName = "";
+                if (sendFile != null && sendFile.ContentLength > 0)
+                {
+                    fileName = Path.GetFileName(sendFile.FileName);
+                    if (!Directory.Exists(Path.Combine(Server.MapPath("~/"), "Upload")))
+                    {
+                        Directory.CreateDirectory(Path.Combine(Server.MapPath("~/"), "Upload"));
+                    }
+
+                    if (!Directory.Exists(Path.Combine(Server.MapPath("~/Upload/"), "Upload_Send")))
+                    {
+                        Directory.CreateDirectory(Path.Combine(Server.MapPath("~/Upload/"), "Upload_Send"));
+                    }
+                    var path = Path.Combine(Server.MapPath("~/Upload/Upload_Send"), fileName);
+                    sendFile.SaveAs(path);
+                    fileLink = "~/Upload/Upload_Send/" + fileName;
+                    return Json(new
+                    {
+                        result = "success",
+                        fileLink = fileLink,
+                        fileName = fileName
+                    });
+                }
+                else
+                {
+                    return Json(new
+                    {
+                        result = "error"
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                return Json(new { result = "error", exception = ex.Message });
+            }
+        }
+
         public JsonResult DeleteMessage(long selUserId, long messageId)
         {
             long uID = selUserId;
@@ -414,7 +999,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
             {
                 chatmessage chatmessage = entities.chatmessages.Find(messageId);
                 entities.chatmessages.Remove(chatmessage);
-                entities.SaveChanges();                    
+                entities.SaveChanges();
                 user curUser = entities.users.Find(curId);
                 onlineuser selUser = entities.onlineusers.Where(m => m.user_id == uID).FirstOrDefault();
                 chatmessageList = entities.chatmessages.Where(
@@ -456,58 +1041,84 @@ namespace WebApplication1.Areas.coadmin.Controllers
         {
             //try
             //{
-                int imgtype = 1;
-                int online = 1;
-                string imgpath = "user.svg";
-                long uID = Convert.ToInt64(userId);
-                onlineuser selUser = entities.onlineusers.Where(m => m.user_id == uID).FirstOrDefault();
-                if (selUser.user_img != null)
-                {
-                    imgpath = selUser.user_img;
-                    imgtype = 2;
-                }
+            int imgtype = 1;
+            int online = 1;
+            string imgpath = "user.svg";
+            long uID = Convert.ToInt64(userId);
+            onlineuser selUser = entities.onlineusers.Where(m => m.user_id == uID).FirstOrDefault();
+            if (selUser.user_img != null)
+            {
+                imgpath = selUser.user_img;
+                imgtype = 2;
+            }
 
-                if (selUser.is_online == false)
-                {
-                    online = 0;
-                }
+            if (selUser.is_online == false)
+            {
+                online = 0;
+            }
 
-                List<chatmessage> chatmessageList = new List<chatmessage>();
+            List<chatmessage> chatmessageList = new List<chatmessage>();
+            long curId = (long)Session["USER_ID"];
+            user curUser = entities.users.Find(curId);
 
-                long curId = (long)Session["USER_ID"];
-                user curUser = entities.users.Find(curId);
+            chatmessageList = entities.chatmessages.Where(
+                    m => (m.from_user_id == curId && m.to_user_id == uID)
+                    || (m.from_user_id == uID && m.to_user_id == curId)).ToList();
 
-                chatmessageList = entities.chatmessages.Where(
-                        m => (m.from_user_id == curId && m.to_user_id == uID)
-                        || (m.from_user_id == uID && m.to_user_id == curId)).ToList();
+            selUserViewModel viewModel = new selUserViewModel();
+            viewModel.chatmessageList = chatmessageList;
+            viewModel.curUser = curUser;
+            viewModel.selUser = selUser;
+            string patialView = "~/Areas/coadmin/Views/comunicaciones/_chatbox.cshtml";
+            string postsHtml = ViewRenderer.RenderPartialView(patialView, viewModel);
+            return Json(new
+            {
+                result = "success",
+                imgpath = imgpath,
+                imgtype = imgtype,
+                online = online,
+                html = postsHtml,
+                name = selUser.first_name + " " + selUser.last_name
+            });
+            //    }
+            //        catch (Exception ex)
+            //        {
+            //            return Json(new {
+            //                result = "error",
+            //                exception = ex.Message
+            //});
+            //        }
+        }
 
-                selUserViewModel viewModel = new selUserViewModel();
-                viewModel.chatmessageList = chatmessageList;
-                viewModel.curUser = curUser;
-                viewModel.selUser = selUser;
-                string patialView = "~/Areas/coadmin/Views/comunicaciones/_chatbox.cshtml";
-                string postsHtml = ViewRenderer.RenderPartialView(patialView, viewModel);
-                return Json(new
-                {
-                    result = "success",
-                    imgpath = imgpath,
-                    imgtype = imgtype,
-                    html = postsHtml,
-                    online = online,
-                    selUserId = uID.ToString(),
-                    name = selUser.first_name + " " + selUser.last_name+":Graras4"
-                });
+        public JsonResult DeleteBlog(long id)
+        {
+            //try
+            //{
 
+            //List<communuser> communusers = entities.communusers.Where(m => m.commun_id == id).ToList();
+            //entities.communusers.RemoveRange(communusers);
+
+
+            //community delCommunity = entities.communities.Find(id);
+            //entities.communities.Remove(delCommunity);
+            //blogcomment blogcom = entities.blogcomments.Find(id);
+            //entities.blogcomments.Remove(blogcom);
+            List<blogcomment> blogcomments = entities.blogcomments.Where(m => m.blog_id == id).ToList();
+            entities.blogcomments.RemoveRange(blogcomments);
+            blog blogger = entities.blogs.Find(id);
+            entities.blogs.Remove(blogger);
+
+            entities.SaveChanges();
+            return Json(new { result = "success" });
             //}
             //catch (Exception ex)
             //{
-            //    return Json(new
-            //    {
-            //        result = "error",
-            //        exception = ex.Message
-            //    });
+            return Json(new
+            {
+                result = "error",
+                //exception = ex.Message
+            });
             //}
         }
-
     }
 }

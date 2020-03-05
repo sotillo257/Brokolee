@@ -4,6 +4,12 @@
     Page.Title = "Blog Agregar - Brokolee Software";
 }
 
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
+<!-- include summernote css/js -->
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote-lite.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote-lite.min.js"></script>
+
 <div class="page-content-wrapper">
 
     <div class="container-fluid">
@@ -74,14 +80,14 @@
                             <div class="form-group row">
                                 <label for="example-email-input-3" class="col-sm-3 col-form-label">Contenido</label>
                                 <div class="col-sm-9">
-                                    <textarea class="form-control" name="content" data-toggle="tooltip"  required
+                                    <textarea class="form-control" name="content" data-toggle="tooltip" id="tbxContenido"
                                               title="Contenido descriptivo del blog"></textarea>
                                     <small class="form-text text-muted">Contenido descriptivo del blog</small>
                                 </div>
                             </div>
                             <div class="form-divider"></div>
-                            <a href=""><button type="submit" class="btn btn-primary waves-effect waves-light">Guardar</button></a>
-                            <a href="@Url.Action("blog", "comunicaciones", new { area = "coadmin" })"><button type="button" class="btn btn-danger waves-effect waves-light">Cancelar</button></a>
+                            <a href=""><button type="submit" class="btn btn-primary waves-effect waves-light">Agregar Blog</button></a>
+                            <a href="@Url.Action("blog", "comunicaciones", new { area="coadmin" })"><button type="button" class="btn btn-danger waves-effect waves-light">Cancelar</button></a>
                         </div>
                     }
                 </div>
@@ -98,3 +104,9 @@
     </div><!-- container -->
 
 </div> <!-- Page content Wrapper -->
+
+<script>
+
+            $('#tbxContenido').summernote();
+
+</script>

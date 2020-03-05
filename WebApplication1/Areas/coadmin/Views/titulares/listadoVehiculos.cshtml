@@ -18,7 +18,7 @@
                     </div>
                     <div class="float-right">
                         <ul class="breadcrumb float-md-right">
-                            <li class="breadcrumb-item"><a href="@Url.Action("panel", "control", new { area = "webmaster" })" class="text-success"><i class="mdi mdi-home-modern"></i> Panel de Control</a></li>
+                            <li class="breadcrumb-item"><a href="@Url.Action("panel", "control", new { area = "coadmin" })" class="text-success"><i class="mdi mdi-home-modern"></i> Panel de Control</a></li>
                             <li class="breadcrumb-item active">Listado de Vehículos</li>
                         </ul>
                     </div>
@@ -64,7 +64,7 @@
                                 }
                                 else
                                 {
-                                    <a href="@Url.Action("agregarVehiculo", "titulares", new { area = "webmaster", Id = Model.titulo.Id })" class="btn btn-primary waves-effect waves-light float-xl-right float-lg-right float-md-left mr-1 mb-1">
+                                    <a href="@Url.Action("agregarVehiculo", "titulares", new { area = "coadmin", Id = Model.titulo.Id })" class="btn btn-primary waves-effect waves-light float-xl-right float-lg-right float-md-left mr-1 mb-1">
 
                                         Agregar nuevo
                                     </a>
@@ -97,7 +97,7 @@
                                             <td>@item.StampNumber</td>
 
                                             <td class="text-center">
-                                                <a href="@Url.Action("verVehiculo", "titulares", new { area = "webmaster", id = item.IdVehiculo })">
+                                                <a href="@Url.Action("verVehiculo", "titulares", new { area = "coadmin", id = item.IdVehiculo })">
                                                     <button type="button"
                                                             class="btn btn-success waves-effect waves-light btn-sm mr-1 mb-1"
                                                             data-toggle="tooltip"
@@ -106,7 +106,7 @@
                                                         <i class="mdi mdi-eye"></i>
                                                     </button>
                                                 </a>
-                                                <a href="@Url.Action("editarVehiculo", "titulares", new { area = "webmaster", id = item.IdVehiculo })">
+                                                <a href="@Url.Action("editarVehiculo", "titulares", new { area = "coadmin", id = item.IdVehiculo })">
                                                     <button type="button"
                                                             class="btn btn-primary waves-effect waves-light btn-sm mr-1 mb-1"
                                                             data-toggle="tooltip" data-placement="top" title="Editar">
@@ -163,7 +163,7 @@
             var formData = new FormData();
             formData.append("delID", id);
 
-            var url = "@Url.Action("DeleteVehiculo", "titulares", new { area = "webmaster" })";
+            var url = "@Url.Action("DeleteVehiculo", "titulares", new { area = "coadmin" })";
  var respuesta = confirm("¿Estás seguro que deseas eliminar el vehículo?");
                 if (respuesta == true) {
                     $.ajax({

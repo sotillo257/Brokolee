@@ -24,23 +24,480 @@ namespace WebApplication1.Areas.coadmin.Controllers
         pjrdev_condominiosEntities entities = new pjrdev_condominiosEntities();
         EFPublicRepository ep = new EFPublicRepository();
         // GET: coadmin/titulares
+
+        #region VEHICULO
+        public ActionResult listadoVehiculos(long? Id)
+        {
+            if (Session["USER_ID"] != null && Id != null)
+            {
+                long userId = (long)Session["USER_ID"];
+                user curUser = entities.users.Find(userId);
+                Dictionary<long, string> communityDict = new Dictionary<long, string>();
+                List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
+                List<Vehiculo> vehiculosLists = new List<Vehiculo>();
+                vehiculosLists = entities.Vehiculos.Where(x => x.is_del != true && x.IdTitulo == Id).ToList();
+                Titulo titulo = entities.Titulos.Find(Id);
+                listadoVehiculosViewModel viewModel = new listadoVehiculosViewModel();
+                viewModel.titulo = titulo;
+                viewModel.side_menu = "titulares";
+                viewModel.side_sub_menu = "titulares_listado";
+                viewModel.document_category_list = entities.document_type.ToList();
+                viewModel.vehiculosList = vehiculosLists;
+                viewModel.curUser = curUser;
+                viewModel.CantidadDeVehiculos = vehiculosLists.Count();
+                viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
+                viewModel.pubMessageList = pubMessageList;
+                viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                return View(viewModel);
+            }
+            else
+            {
+                return Redirect(ep.GetLogoutUrl());
+            }
+        }
+        public ActionResult agregarVehiculo(long? Id, string Error)
+        {
+
+            if (Session["USER_ID"] != null)
+            {
+                long userId = (long)Session["USER_ID"];
+                user curUser = entities.users.Find(userId);
+                List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
+                Titulo titulo = entities.Titulos.Find(Id);
+                listadoVehiculosViewModel viewModel = new listadoVehiculosViewModel();
+                viewModel.titulo = titulo;
+                viewModel.side_menu = "titulares";
+                viewModel.side_sub_menu = "titulares_agregar";
+                viewModel.document_category_list = entities.document_type.ToList();
+                viewModel.curUser = curUser;
+                viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
+                viewModel.pubMessageList = pubMessageList;
+                viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                viewModel.communityList = entities.communities.ToList();
+                ViewBag.msgError = Error;
+                return View(viewModel);
+            }
+            else
+            {
+                return Redirect(ep.GetLogoutUrl());
+            }
+        }
+        public ActionResult editarVehiculo(long? id, string Error)
+        {
+
+            if (Session["USER_ID"] != null)
+            {
+                if (id != null)
+                {
+                    long userId = (long)Session["USER_ID"];
+                    user curUser = entities.users.Find(userId);
+                    List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
+                    Vehiculo vehiculo = entities.Vehiculos.Find(id);
+                    editarVehiculoViewModel viewModel = new editarVehiculoViewModel();
+                    viewModel.side_menu = "titulares";
+                    viewModel.side_sub_menu = "manage_edit_headlines";
+                    viewModel.document_category_list = entities.document_type.ToList();
+                    viewModel.vehiculo = vehiculo;
+                    viewModel.curUser = curUser;
+                    viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
+                    viewModel.pubMessageList = pubMessageList;
+                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                    ViewBag.msgError = Error;
+                    return View(viewModel);
+                }
+                else
+                {
+                    return Redirect(Url.Action("NotFound", "Error"));
+                }
+            }
+            else
+            {
+                return Redirect(ep.GetLogoutUrl());
+            }
+        }
+        public ActionResult verVehiculo(long? id)
+        {
+
+            if (Session["USER_ID"] != null)
+            {
+                if (id != null)
+                {
+                    long userId = (long)Session["USER_ID"];
+                    user curUser = entities.users.Find(userId);
+                    List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
+                    Vehiculo vehiculo = entities.Vehiculos.Find(id);
+                    editarVehiculoViewModel viewModel = new editarVehiculoViewModel();
+                    viewModel.side_menu = "titulares";
+                    viewModel.side_sub_menu = "manage_edit_headlines";
+                    viewModel.document_category_list = entities.document_type.ToList();
+                    viewModel.vehiculo = vehiculo;
+                    viewModel.curUser = curUser;
+                    viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
+                    viewModel.pubMessageList = pubMessageList;
+                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                    return View(viewModel);
+                }
+                else
+                {
+                    return Redirect(Url.Action("NotFound", "Error"));
+                }
+            }
+            else
+            {
+                return Redirect(ep.GetLogoutUrl());
+            }
+        }
+
+        public ActionResult InsertarVehiculo(long IdTitulo, string brand, string model, string colour, string year, string clapboard,
+           string stamp_number)
+        {
+            if (Session["USER_ID"] != null)
+            {
+                try
+                {
+                    Vehiculo vehiculo = new Vehiculo();
+                    vehiculo = CrearObjetoVehiculo(IdTitulo, brand, model, colour, year, clapboard, stamp_number, vehiculo);
+                    entities.Vehiculos.Add(vehiculo);
+                    entities.SaveChanges();
+                    return Redirect(Url.Action("listadoVehiculos", "titulares", new { area = "coadmin", Id = IdTitulo }));
+                }
+                catch (Exception ex)
+                {
+                    return Redirect(Url.Action("agregarVehiculo", "titulares", new { area = "coadmin", Id = IdTitulo, Error = "Intentando guardar Vehiculo " + ex.Message }));
+                }
+
+
+            }
+            else
+            {
+                return Redirect(ep.GetLogoutUrl());
+            }
+        }
+
+        public ActionResult ModificarVehiculo(long IdVehiculo, long IdTitulo, string brand, string model, string colour, string year, string clapboard,
+          string stamp_number)
+        {
+            if (Session["USER_ID"] != null)
+            {
+                try
+                {
+                    Vehiculo vehiculo = entities.Vehiculos.Find(IdVehiculo);
+                    vehiculo = CrearObjetoVehiculo(IdTitulo, brand, model, colour, year, clapboard, stamp_number, vehiculo);
+                    entities.SaveChanges();
+                    return Redirect(Url.Action("listadoVehiculos", "titulares", new { area = "coadmin", Id = IdTitulo }));
+                }
+                catch (Exception ex)
+                {
+                    return Redirect(Url.Action("editarVehiculo", "titulares", new { area = "coadmin", Id = IdVehiculo, Error = "Intentando guardar Vehiculo " + ex.Message }));
+                }
+
+
+            }
+            else
+            {
+                return Redirect(ep.GetLogoutUrl());
+            }
+        }
+        public ActionResult DeleteVehiculo(long delID)
+        {
+            try
+            {
+                Vehiculo titulo = entities.Vehiculos.Find(delID);
+
+                entities.Vehiculos.Remove(titulo);
+                entities.SaveChanges();
+                return Json(new { result = "success" });
+            }
+            catch (Exception ex)
+            {
+                return Json(new
+                {
+                    result = "error",
+                    exception = ex.HResult
+                });
+            }
+        }
+        private Vehiculo CrearObjetoVehiculo(long IdTitulo, string brand, string model, string colour, string year, string clapboard,
+           string stamp_number, Vehiculo newVehiculo)
+        {
+            newVehiculo.Model = model;
+            newVehiculo.Brand = brand;
+            newVehiculo.Color = colour;
+            newVehiculo.IdTitulo = IdTitulo;
+            newVehiculo.StampNumber = stamp_number;
+            newVehiculo.Year = (year == null) ? 0 : int.Parse(year);
+            newVehiculo.ClapBoard = clapboard;
+
+
+
+
+
+            return newVehiculo;
+        }
+
+        #endregion VEHICULO
+
+        #region TITULO
+        public ActionResult listadoTitulos(long? Id)
+        {
+            if (Session["USER_ID"] != null && Id != null)
+            {
+                long userId = (long)Session["USER_ID"];
+                user curUser = entities.users.Find(userId);
+                Dictionary<long, string> communityDict = new Dictionary<long, string>();
+                List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
+                List<Titulo> titulosList = new List<Titulo>();
+                titulosList = entities.Titulos.Where(x => x.is_del != true && x.IdUser == Id).ToList();
+
+                listadoTitulosViewModel viewModel = new listadoTitulosViewModel();
+                viewModel.side_menu = "titulares";
+                viewModel.side_sub_menu = "titulares_listado";
+                viewModel.document_category_list = entities.document_type.ToList();
+                viewModel.titulosList = titulosList;
+                viewModel.IdUserTitular = (int)Id;
+                viewModel.curUser = curUser;
+                viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
+                viewModel.pubMessageList = pubMessageList;
+                viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                return View(viewModel);
+            }
+            else
+            {
+                return Redirect(ep.GetLogoutUrl());
+            }
+        }
+
+        public ActionResult agregarTitulo(long? Id, string Error)
+        {
+
+            if (Session["USER_ID"] != null && Id != null)
+            {
+                long userId = (long)Session["USER_ID"];
+                user curUser = entities.users.Find(userId);
+                List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
+                listadoTitulosViewModel viewModel = new listadoTitulosViewModel();
+                viewModel.side_menu = "titulares";
+                viewModel.side_sub_menu = "titulares_agregar";
+                viewModel.document_category_list = entities.document_type.ToList();
+                viewModel.curUser = curUser;
+                viewModel.IdUserTitular = (int)Id;
+                viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
+                viewModel.pubMessageList = pubMessageList;
+                viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                viewModel.communityList = entities.communities.ToList();
+                ViewBag.msgError = Error;
+                return View(viewModel);
+            }
+            else
+            {
+                return Redirect(ep.GetLogoutUrl());
+            }
+        }
+
+        public ActionResult editarTitulo(long? id, string Error)
+        {
+
+            if (Session["USER_ID"] != null)
+            {
+                if (id != null)
+                {
+                    long userId = (long)Session["USER_ID"];
+                    Titulo titulo = entities.Titulos.Find(id);
+                    List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
+                    user curUser = entities.users.Find(userId);
+                    editarTituloViewModel viewModel = new editarTituloViewModel();
+                    viewModel.side_menu = "titulares";
+                    viewModel.side_sub_menu = "manage_edit_headlines";
+                    viewModel.document_category_list = entities.document_type.ToList();
+                    viewModel.curUser = curUser;
+                    viewModel.titulo = titulo;
+                    viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
+                    viewModel.pubMessageList = pubMessageList;
+                    viewModel.communityList = entities.communities.ToList();
+                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                    ViewBag.msgError = Error;
+                    return View(viewModel);
+                }
+                else
+                {
+                    return Redirect(Url.Action("NotFound", "Error"));
+                }
+            }
+            else
+            {
+                return Redirect(ep.GetLogoutUrl());
+            }
+        }
+
+        public ActionResult verTitulo(long? id)
+        {
+
+            if (Session["USER_ID"] != null)
+            {
+                if (id != null)
+                {
+                    long userId = (long)Session["USER_ID"];
+                    Titulo titulo = entities.Titulos.Find(id);
+                    List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
+                    user curUser = entities.users.Find(userId);
+                    editarTituloViewModel viewModel = new editarTituloViewModel();
+                    viewModel.side_menu = "titulares";
+                    viewModel.side_sub_menu = "manage_edit_headlines";
+                    viewModel.document_category_list = entities.document_type.ToList();
+                    viewModel.curUser = curUser;
+                    viewModel.titulo = titulo;
+                    viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
+                    viewModel.pubMessageList = pubMessageList;
+                    viewModel.communityList = entities.communities.ToList();
+                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                    return View(viewModel);
+                }
+                else
+                {
+                    return Redirect(Url.Action("NotFound", "Error"));
+                }
+            }
+            else
+            {
+                return Redirect(ep.GetLogoutUrl());
+            }
+        }
+
+        [HttpPost]
+        public ActionResult InsertarTitulo(long IdUser, string siono, string since, string until, int IdCommunity,
+            string tenant_first_name1, string tenant_last_name1, string tenant_mother_last_name1, string apartment,
+            HttpPostedFileBase script_file, string leased_postal_address, string leased_residential_address, string acq_date, HttpPostedFileBase writing_script)
+        {
+            if (Session["USER_ID"] != null)
+            {
+                try
+                {
+                    if (writing_script != null)
+                    {
+                        Titulo titulo = new Titulo();
+                        titulo = CrearObjetoTitulo(IdUser, siono, since, until, IdCommunity,
+                                         tenant_first_name1, tenant_last_name1, tenant_mother_last_name1, apartment,
+                                         script_file, leased_postal_address, leased_residential_address, acq_date, writing_script, titulo);
+                        entities.Titulos.Add(titulo);
+                        entities.SaveChanges();
+                        return Redirect(Url.Action("listadoTitulos", "titulares", new { area = "coadmin", Id = IdUser, }));
+                    }
+                    else
+                    {
+                        return Redirect(Url.Action("agregarTitulo", "titulares", new { area = "coadmin", Id = IdUser, Error = "Debe cargar el titulo de propiedad" }));
+                    }
+
+
+                }
+                catch (Exception ex)
+                {
+                    return Redirect(Url.Action("agregarTitulo", "titulares", new { area = "coadmin", Id = IdUser, Error = "Intentando guardar Titulo " + ex.Message }));
+                }
+
+
+            }
+            else
+            {
+                return Redirect(ep.GetLogoutUrl());
+            }
+        }
+
+        [HttpPost]
+        public ActionResult EditarTitulo(long IdTitulo, long IdUser, string siono, string since, string until, int IdCommunity,
+           string tenant_first_name1, string tenant_last_name1, string tenant_mother_last_name1, string apartment,
+           HttpPostedFileBase script_file, string leased_postal_address, string leased_residential_address, string acq_date, HttpPostedFileBase writing_script)
+        {
+            if (Session["USER_ID"] != null)
+            {
+                try
+                {
+                    Titulo titulo = entities.Titulos.Find(IdTitulo);
+
+                    titulo = CrearObjetoTitulo(0, siono, since, until, IdCommunity,
+                                     tenant_first_name1, tenant_last_name1, tenant_mother_last_name1, apartment,
+                                     script_file, leased_postal_address, leased_residential_address, acq_date, writing_script, titulo);
+
+                    entities.SaveChanges();
+                    return Redirect(Url.Action("listadoTitulos", "titulares", new { area = "coadmin", Id = IdUser }));
+
+
+
+                }
+                catch (Exception ex)
+                {
+                    return Redirect(Url.Action("editarTitulo", "titulares", new { area = "coadmin", Id = IdTitulo, Error = "Intentando guardar Titulo" + ex.Message }));
+                }
+
+
+            }
+            else
+            {
+                return Redirect(ep.GetLogoutUrl());
+            }
+        }
+
+        private Titulo CrearObjetoTitulo(long IdUser, string siono, string since, string until, int IdCommunity,
+            string tenant_first_name1, string tenant_last_name1, string tenant_mother_last_name1, string apartment,
+            HttpPostedFileBase script_file, string leased_postal_address, string leased_residential_address, string acq_date, HttpPostedFileBase writing_script, Titulo newTitulo)
+        {
+            if (IdUser > 0)
+            {
+                newTitulo.IdUser = IdUser;
+            }
+            newTitulo.apartment = apartment;
+            string urlW = GuardarArchivos(writing_script, "~/Upload/Upload_Writing");
+            if (urlW != null)
+            {
+                newTitulo.upload_writing = urlW;
+            }
+            string urlF = GuardarArchivos(script_file, "~/Upload/Upload_Contract");
+            if (urlF != null)
+            {
+                newTitulo.leased_upload_file = urlF;
+            }
+
+            newTitulo.is_leased = (siono == "boxyes") ? true : false;
+            newTitulo.acq_date = (ValidarFecha(acq_date) == null) ? DateTime.Now : (DateTime)ValidarFecha(acq_date);
+            newTitulo.since = ValidarFecha(since);
+            newTitulo.until = ValidarFecha(until);
+            newTitulo.tenant_first_name1 = tenant_first_name1;
+            newTitulo.tenant_last_name1 = tenant_last_name1;
+            newTitulo.tenant_mother_last_name1 = tenant_mother_last_name1;
+            newTitulo.leased_postal_address = leased_postal_address;
+            newTitulo.leased_residential_address = leased_residential_address;
+            newTitulo.IdCommunity = IdCommunity;
+
+
+            return newTitulo;
+        }
+        #endregion TITULO
+
+        #region TITULAR
+
         public ActionResult listado(string searchStr = "")
         {
             if (Session["USER_ID"] != null)
             {
                 long userId = (long)Session["USER_ID"];
                 user curUser = entities.users.Find(userId);
-                List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                 Dictionary<long, string> communityDict = new Dictionary<long, string>();
+                List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                 List<user> titularList = new List<user>();
                 if (searchStr == "")
                 {
-                    var query1 = (from r in entities.users where r.role == 1 select r);
+                    var query1 = (from r in entities.users
+                                  where
+         r.role == 1 && r.is_del != true
+                                  select r);
                     titularList = query1.ToList();
-                } else
+                }
+                else
                 {
                     var query = (from r in entities.users
-                                 where r.role == 1 && (r.first_name1.Contains(searchStr) == true || r.last_name1.Contains(searchStr) == true)
+                                 where r.role == 1 &&
+                                 (r.first_name1.Contains(searchStr) == true
+                                 || r.last_name1.Contains(searchStr) == true)
+                                 && r.is_del != true
                                  select r);
                     titularList = query.ToList();
                 }
@@ -51,34 +508,33 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     communityDict.Add(item.id, communityName);
                 }
 
-                titularesViewModel viewModel = new titularesViewModel();
+                listadoTitularesViewModel viewModel = new listadoTitularesViewModel();
                 viewModel.side_menu = "titulares";
                 viewModel.side_sub_menu = "titulares_listado";
                 viewModel.document_category_list = entities.document_type.ToList();
                 viewModel.titularList = titularList;
                 viewModel.searchStr = searchStr;
                 viewModel.curUser = curUser;
+                viewModel.communityDict = communityDict;
                 viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                 viewModel.pubMessageList = pubMessageList;
-                viewModel.communityDict = communityDict;
                 viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                viewModel.communityName = ep.GetCommunityInfo(userId)[0];
-                viewModel.communityApart = ep.GetCommunityInfo(userId)[1];
                 return View(viewModel);
-            } else
+            }
+            else
             {
                 return Redirect(ep.GetLogoutUrl());
             }
         }
 
-        public ActionResult agregar()
+        public ActionResult agregar(string Error)
         {
             if (Session["USER_ID"] != null)
             {
                 long userId = (long)Session["USER_ID"];
                 user curUser = entities.users.Find(userId);
                 List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
-                titularesViewModel viewModel = new titularesViewModel();
+                agregarTitularesViewModel viewModel = new agregarTitularesViewModel();
                 viewModel.side_menu = "titulares";
                 viewModel.side_sub_menu = "titulares_agregar";
                 viewModel.document_category_list = entities.document_type.ToList();
@@ -87,8 +543,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 viewModel.pubMessageList = pubMessageList;
                 viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
                 viewModel.communityList = entities.communities.ToList();
-                viewModel.communityName = ep.GetCommunityInfo(userId)[0];
-                viewModel.communityApart = ep.GetCommunityInfo(userId)[1];
+                ViewBag.msgError = Error;
                 return View(viewModel);
             }
             else
@@ -105,28 +560,25 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 {
                     long userId = (long)Session["USER_ID"];
                     user curUser = entities.users.Find(userId);
-                    user editUser = entities.users.Find(id);
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
-                    titularesEditViewModel viewModel = new titularesEditViewModel();
+                    user editUser = entities.users.Find(id);
+                    verTitularesViewModel viewModel = new verTitularesViewModel();
                     viewModel.side_menu = "titulares";
-                    viewModel.side_sub_menu = "titulares_ver";
+                    viewModel.side_sub_menu = "manage_edit_headlines";
                     viewModel.document_category_list = entities.document_type.ToList();
                     viewModel.editUser = editUser;
                     viewModel.view_resident_logo = "~/App_Data/User_Logo/" + editUser.user_img;
                     viewModel.curUser = curUser;
-                    viewModel.password = ep.Decrypt(editUser.password);
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = pubMessageList;
                     viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                    viewModel.communityName = ep.GetCommunityInfo(userId)[0];
-                    viewModel.communityApart = ep.GetCommunityInfo(userId)[1];
+                    return View(viewModel);
                     Session["ACC_USER_ID"] = Convert.ToInt64(id);
                     return View(viewModel);
-                    //return Redirect(Url.Action("ver", "titulares", new { area = "" }));
                 }
                 else
                 {
-                    return Redirect(Url.Action("ver", "titulares"));
+                    return Redirect(Url.Action("NotFound", "Error"));
                 }
             }
             else
@@ -134,32 +586,20 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 return Redirect(ep.GetLogoutUrl());
             }
         }
+        public ActionResult editar(long? id, string Error)
+        {
 
-        public ActionResult editar(long id)
-        { 
-
-                
             if (Session["USER_ID"] != null)
-            { 
-
-                try
+            {
+                if (id != null)
                 {
-                    long userId = id;
-                    if (Convert.ToInt32(Session["USER_ROLE"]) == 1)
-                    {
-                        userId = (long)Session["USER_ID"];
-                    }
-                    else if (Convert.ToInt32(Session["USER_ROLE"]) > 1
-                    && Session["ACC_USER_ID"] != null)
-                    {
-                        userId = (long)Session["ACC_USER_ID"];
-                    }
+                    long userId = (long)Session["USER_ID"];
                     user curUser = entities.users.Find(userId);
-                    user editUser = entities.users.Find(id);
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
-                    titularesEditViewModel viewModel = new titularesEditViewModel();
+                    user editUser = entities.users.Find(id);
+                    editarTitularesViewModel viewModel = new editarTitularesViewModel();
                     viewModel.side_menu = "titulares";
-                    viewModel.side_sub_menu = "titulares_editar";
+                    viewModel.side_sub_menu = "manage_edit_headlines";
                     viewModel.document_category_list = entities.document_type.ToList();
                     viewModel.editUser = editUser;
                     viewModel.curUser = curUser;
@@ -167,13 +607,12 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = pubMessageList;
                     viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                    viewModel.communityName = ep.GetCommunityInfo(userId)[0];
-                    viewModel.communityApart = ep.GetCommunityInfo(userId)[1];
+                    ViewBag.msgError = Error;
                     return View(viewModel);
                 }
-                catch (Exception ex)
+                else
                 {
-                    return Redirect(Url.Action("Index", "Error"));
+                    return Redirect(Url.Action("NotFound", "Error"));
                 }
             }
             else
@@ -182,256 +621,102 @@ namespace WebApplication1.Areas.coadmin.Controllers
             }
         }
 
-
         [HttpPost]
-        public async Task<ActionResult> newresident(HttpPostedFileBase user_logo,
-    string email, string password, string acq_date, string first_name1,
-    string last_name1, string mother_last_name1, string phone_number1,
-    string postal_address, string residential_address, string apartment, HttpPostedFileBase writing_script,
-    string siono, string brand, string model, string colour, string year, string clapboard,
-    string stamp_number)
+        public ActionResult InsertarTitular(HttpPostedFileBase user_logo, string email, string password, string first_name1,
+                string last_name1, string mother_last_name1, string phone_number1, string postal_address, string residential_address)
         {
             if (Session["USER_ID"] != null)
             {
-                string emailTemplate = "";
-                long userId = (long)Session["USER_ID"];
-                user curUser = entities.users.Find(userId);
-                user newResident = new user();
-
-                if (user_logo != null && user_logo.ContentLength > 0)
-                {
-                    var fileName = Path.GetFileName(user_logo.FileName);
-                    // store the file inside ~/App_Data/uploads folder
-                    var path = Path.Combine(Server.MapPath("~/Upload/User_Logo"), fileName);
-                    user_logo.SaveAs(path);
-                    newResident.user_img = fileName;
-                }
-                else
-                {
-                    newResident.user_img = null;
-                }
-
-
-                if (writing_script != null && writing_script.ContentLength > 0)
-                {
-                    var fileName = Path.GetFileName(writing_script.FileName);
-                    // store the file inside ~/App_Data/uploads folder
-                    var path = Path.Combine(Server.MapPath("~/Upload/Upload_Writing"), fileName);
-                    writing_script.SaveAs(path);
-                    newResident.upload_writing = fileName;
-                }
-                else
-                {
-                    newResident.user_img = null;
-                }
-                newResident.email = email;
-                newResident.password = ep.Encrypt(password);
-                DateTime acqDate = DateTime.ParseExact(acq_date, "yyyy-MM-dd",
-                    System.Globalization.CultureInfo.InvariantCulture);
-                newResident.acq_date = acqDate;
-                newResident.apartment = apartment;
-                newResident.first_name1 = first_name1;
-                newResident.last_name1 = last_name1;
-                newResident.mother_last_name1 = mother_last_name1;
-                newResident.phone_number1 = phone_number1;
-                newResident.postal_address = postal_address;
-                newResident.residential_address = residential_address;
-                if (siono == "boxyes")
-                {
-                    newResident.is_leased = true;
-                }
-                else
-                {
-                    newResident.is_leased = false;
-                }
-                newResident.brand = brand;
-                newResident.model = model;
-                newResident.colour = colour;
-                if (year != "")
-                {
-                    newResident.year = Convert.ToInt32(year);
-                }
-                else
-                {
-                    newResident.year = null;
-                }
-
-                newResident.clapboard = clapboard;
                 try
                 {
-                    newResident.stamp_number = Convert.ToInt32(stamp_number);
+                    user newResident = new user();
+                    //Metodo que crea el objeto user
+                    newResident = CrearObjetoUser(user_logo, email, password, first_name1, last_name1, mother_last_name1,
+                                                 phone_number1, postal_address, residential_address, newResident);
+                    //Condicion para validadr si el email ya existe en la base de datos
+                    if (entities.users.Where(x => x.email == newResident.email).ToList().Count > 0)
+                    {
+                        return Redirect(Url.Action("agregar", "titulares", new { area = "coadmin", Error = "El email ya existe" }));
+                    }
+                    else
+                    {
+                        entities.users.Add(newResident);
+                        entities.SaveChanges();
+
+                        return Redirect(Url.Action("listado", "titulares", new { area = "coadmin" }));
+                    }
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    newResident.stamp_number = null;
+                    return Redirect(Url.Action("agregar", "titulares", new { area = "coadmin", Error = "Intentando guardar Titular" }));
                 }
 
-                newResident.role = 1;
-                newResident.create_userid = userId;
-                entities.users.Add(newResident);
-                entities.SaveChanges();
-                emailtheme emailtheme = entities.emailthemes.Where(m => m.user_id == userId
-                                    && m.type_id == 1).FirstOrDefault();
-                //user g = entities.users.Where(m => m.email == email).FirstOrDefault();
 
-                //if (g!=null)
-                //{
-                //    return Redirect(Url.Action("agregar", "titulares", new { area = "coadmin" }));
-                //}
-                //if (emailtheme != null)
-                //{
-                //    //emailTemplate = emailtheme.htmcontent;
-                //    string patialView = "~/Areas/webmaster/Views/titulares/emailing.cshtml";
-                //    emailingViewModel viewModel = new emailingViewModel();
-                //    emailTemplate = ViewRenderer.RenderPartialView(patialView, viewModel);
-                //} else
-                //{
-
-                //}
-
-                // **********
-                MailMessage msj = new MailMessage();
-                SmtpClient cli = new SmtpClient();
-
-                String email_g = email;
-                String name_g = first_name1 + " " + last_name1;
-                string user_g = email;
-                string pass_g = password;
-
-                msj.From = new MailAddress("o.olaya@zerosystempr.com");
-                msj.To.Add(new MailAddress(email_g));
-                msj.Subject = "Bienvenido";
-                msj.Body = "Hola " + name_g + " bienvenido a brokole, tu usuario es:" + " "  + user_g + "y tu contraseña es: " + " " + pass_g ;
-                msj.IsBodyHtml = false;
-
-                cli.Host = "mail.zerosystempr.com";
-                cli.Port = 587;
-                cli.Credentials = new NetworkCredential("o.olaya@zerosystempr.com", "temporero");
-                cli.EnableSsl = true;
-                cli.Send(msj);
-
-                //*********
-
-                string patialView = "~/Views/iniciar/emailing.cshtml";
-                emailingViewModel viewModel = new emailingViewModel();
-                viewModel.firstName = first_name1;
-                viewModel.lastName = last_name1;
-                viewModel.fromEmail = curUser.email;
-                viewModel.toEmail = email;
-                emailTemplate = ViewRenderer.RenderPartialView(patialView, viewModel);
-                int a = await ep.SendAlertEmail(curUser.email, email, curUser.first_name1 + " " + curUser.last_name1,
-                    "añadir título", "has sido añadido como titular\n password: " + password, emailTemplate);
-                return Redirect(Url.Action("listado", "titulares", new { area = "coadmin" }));
             }
             else
             {
-                return Redirect(Url.Action("agregar", "titulares", new { area = "coadmin" }));
+                return Redirect(ep.GetLogoutUrl());
             }
         }
 
-        [HttpPost]
-        public ActionResult editresident(long editID, HttpPostedFileBase user_logo,
-            string password, string acq_date, string first_name1, string last_name1,
-            string mother_last_name1, string phone_number1, string postal_address,
-            string residential_address, string siono, string since, string until,
-            string tenant_first_name1, string tenant_last_name1, string tenant_mother_last_name1,
-            HttpPostedFileBase script_file, string leased_postal_address, string leased_residential_address,
-            string brand, string model, string colour, string year,
-            string clapboard, string stamp_number, string apartment)
+        public ActionResult EditarTitular(long editID, HttpPostedFileBase user_logo, string email, string password, string first_name1,
+               string last_name1, string mother_last_name1, string phone_number1, string postal_address, string residential_address)
         {
             if (Session["USER_ID"] != null)
             {
-                user editResident = entities.users.Find(editID);
-
-                if (user_logo != null && user_logo.ContentLength > 0)
+                try
                 {
-                    var fileName = Path.GetFileName(user_logo.FileName);
-                    // store the file inside ~/App_Data/uploads folder
-                    var path = Path.Combine(Server.MapPath("~/Upload/User_Logo"), fileName);
-                    user_logo.SaveAs(path);
-                    editResident.user_img = fileName;
+                    user editResident = entities.users.Find(editID);
+                    //Metodo que crea el objeto user
+                    editResident = CrearObjetoUser(user_logo, email, password, first_name1, last_name1, mother_last_name1,
+                                                  phone_number1, postal_address, residential_address, editResident);
+                    //Se Guardan los cambias realizados a la entidad
+                    entities.SaveChanges();
+
+                    return Redirect(Url.Action("listado", "titulares", new { area = "coadmin" }));
+                }
+                catch (Exception ex)
+                {
+                    return Redirect(Url.Action("editar", "titulares", new { area = "coadmin", id = editID, Error = "Intentando guardar Titular" + ex.Message }));
                 }
 
-                if (script_file != null && script_file.ContentLength > 0)
-                {
-                    var fileName = Path.GetFileName(script_file.FileName);
-                    // store the file inside ~/App_Data/uploads folder
-                    var path = Path.Combine(Server.MapPath("~/Upload/Upload_Writing"), fileName);
-                    script_file.SaveAs(path);
-                    editResident.upload_writing = fileName;
-                }
 
-                editResident.password = ep.Encrypt(password);
-                DateTime acqDate = DateTime.ParseExact(acq_date, "yyyy-MM-dd",
-                    System.Globalization.CultureInfo.InvariantCulture);
-                editResident.acq_date = acqDate;
-                editResident.first_name1 = first_name1;
-                editResident.last_name1 = last_name1;
-                editResident.mother_last_name1 = mother_last_name1;
-                editResident.phone_number1 = phone_number1;
-                editResident.apartment = apartment;
-                editResident.postal_address = postal_address;
-                editResident.residential_address = residential_address;
-                if (siono == "boxyes")
-                {
-                    editResident.is_leased = true;
-                }
-                else
-                {
-                    editResident.is_leased = false;
-                }
-
-                if (since == "")
-                {
-                    editResident.since = null;
-                } else
-                {
-                    editResident.since = DateTime.ParseExact(since, "yyyy-MM-dd",
-                            System.Globalization.CultureInfo.InvariantCulture);
-                }
-
-                if (until == "")
-                {
-                    editResident.until = null;
-                } else
-                {
-                    editResident.until = DateTime.ParseExact(until, "yyyy-MM-dd",
-                            System.Globalization.CultureInfo.InvariantCulture);
-                }
-
-                editResident.tenant_first_name1 = tenant_first_name1;
-                editResident.tenant_last_name1 = tenant_last_name1;
-                editResident.tenant_mother_last_name1 = tenant_mother_last_name1;
-                editResident.leased_postal_address = leased_postal_address;
-                editResident.leased_residential_address = leased_residential_address;
-                editResident.brand = brand;
-                editResident.model = model;
-                editResident.colour = colour;
-                if (year != "")
-                {
-                    editResident.year = Convert.ToInt32(year);
-                } else
-                {
-                    editResident.year = null;
-                }
-
-                editResident.clapboard = clapboard;
-
-                if (stamp_number != "")
-                {
-                    editResident.stamp_number = Convert.ToInt32(stamp_number);
-                } else
-                {
-                    editResident.stamp_number = null;
-                }
-
-                entities.SaveChanges();
-                return Redirect(Url.Action("listado", "titulares", new { area = "coadmin" }));
-            } else
+            }
+            else
             {
-                return Redirect(Url.Action("editar", "titulares", new { area = "coadmin", id = editID }));
+                return Redirect(ep.GetLogoutUrl());
             }
         }
+
+        private user CrearObjetoUser(HttpPostedFileBase user_logo, string email, string password, string first_name1,
+          string last_name1, string mother_last_name1, string phone_number1, string postal_address, string residential_address, user Titular)
+        {
+
+            long userId = (long)Session["USER_ID"];
+            if (Titular.user_img != null)
+            {
+                string url = GuardarArchivos(user_logo, "~/Upload/User_Logo");
+                Titular.user_img = (url != null) ? url : Titular.user_img;
+            }
+            else
+            {
+                Titular.user_img = GuardarArchivos(user_logo, "~/Upload/User_Logo");
+            }
+            Titular.email = email;
+            Titular.password = ep.Encrypt(password);
+            Titular.first_name1 = first_name1;
+            Titular.last_name1 = last_name1;
+            Titular.mother_last_name1 = mother_last_name1;
+            Titular.phone_number1 = phone_number1;
+            Titular.postal_address = postal_address;
+            Titular.residential_address = residential_address;
+            Titular.role = 1;
+            Titular.create_userid = userId;
+            Titular.acq_date = DateTime.Now;
+            return Titular;
+        }
+
+        #endregion TITULAR      
 
         public JsonResult DeleteUser(long delID)
         {
@@ -510,6 +795,106 @@ namespace WebApplication1.Areas.coadmin.Controllers
             catch (Exception ex)
             {
                 return Json(new { result = "error", exception = ex.HResult });
+            }
+        }
+
+        private DateTime? ValidarFecha(string fecha)
+        {
+            if (fecha == "" || fecha == "0001-01-01" || fecha == null)
+            {
+                return null;
+            }
+            else
+            {
+                return DateTime.Parse(fecha);
+            }
+
+        }
+
+        public JsonResult DeleteTitulares(long delID)
+        {
+            try
+            {
+                // Delete Forign records
+                // Delete USO
+                // Delete related records in other tables
+                List<chatmessage> chatmessages = entities.chatmessages.Where(m => m.from_user_id == delID
+                || m.to_user_id == delID).ToList();
+                entities.chatmessages.RemoveRange(chatmessages);
+                // Delete blogs
+                List<blog> blogs = entities.blogs.Where(m => m.user_id == delID).ToList();
+                foreach (var item in blogs)
+                {
+                    List<blogcomment> blogcomments = entities.blogcomments.Where(m => m.blog_id == item.id).ToList();
+                    entities.blogcomments.RemoveRange(blogcomments);
+                }
+                entities.blogs.RemoveRange(blogs);
+                // Delete bank info
+                List<bank> banks = entities.banks.Where(m => m.user_id == delID).ToList();
+                foreach (var item in banks)
+                {
+                    List<fee> fees = entities.fees.Where(m => m.bank_id == item.id).ToList();
+                    entities.fees.RemoveRange(fees);
+                }
+                entities.banks.RemoveRange(banks);
+                // Delete CreditCards
+                List<creditcard> creditcards = entities.creditcards.Where(m => m.user_id == delID).ToList();
+                entities.creditcards.RemoveRange(creditcards);
+                List<taskuser> taskusers = entities.taskusers.Where(m => m.user_id == delID).ToList();
+                entities.taskusers.RemoveRange(taskusers);
+                List<uso> usos = entities.usoes.Where(m => m.create_userid == delID).ToList();
+                entities.usoes.RemoveRange(usos);
+                List<emailtheme> emailthemes = entities.emailthemes.Where(m => m.user_id == delID).ToList();
+                entities.emailthemes.RemoveRange(emailthemes);
+                user delUser = entities.users.Find(delID);
+                delUser.is_del = true;
+                entities.SaveChanges();
+                return Json(new { result = "success" });
+            }
+            catch (Exception ex)
+            {
+                return Json(new
+                {
+                    result = "error",
+                    exception = ex.HResult
+                });
+            }
+        }
+
+        public JsonResult DeleteTitulo(long delID)
+        {
+            try
+            {
+                Titulo titulo = entities.Titulos.Find(delID);
+                List<Vehiculo> vehiculosList = entities.Vehiculos.Where(x => x.IdTitulo == titulo.Id).ToList();
+                entities.Vehiculos.RemoveRange(vehiculosList);
+                entities.Titulos.Remove(titulo);
+                entities.SaveChanges();
+                return Json(new { result = "success" });
+            }
+            catch (Exception ex)
+            {
+                return Json(new
+                {
+                    result = "error",
+                    exception = ex.HResult
+                });
+            }
+        }
+
+        private string GuardarArchivos(HttpPostedFileBase Archivo, string p_Path)
+        {
+            if (Archivo != null && Archivo.ContentLength > 0)
+            {
+                var fileName = Path.GetFileName(Archivo.FileName);
+                // store the file inside ~/App_Data/uploads folder
+                var path = Path.Combine(Server.MapPath(p_Path), fileName);
+                Archivo.SaveAs(path);
+                return fileName;
+            }
+            else
+            {
+                return null;
             }
         }
 
@@ -680,7 +1065,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                                 //}
                                 //else
                                 //{
-                                //    string patialView = "~/Areas/webmaster/Views/titulares/emailing.cshtml";
+                                //    string patialView = "~/Areas/coadmin/Views/titulares/emailing.cshtml";
                                 //    emailingViewModel viewModel = new emailingViewModel();
                                 //    emailTemplate = ViewRenderer.RenderPartialView(patialView, viewModel);
                                 //}

@@ -430,6 +430,7 @@
     <Compile Include="Areas\coadmin\ViewModels\agregarComentarioViewModel.cs" />
     <Compile Include="Areas\coadmin\ViewModels\agregarCuotasViewModel.cs" />
     <Compile Include="Areas\coadmin\ViewModels\agregarFacViewModel.cs" />
+    <Compile Include="Areas\coadmin\ViewModels\agregarTitularesViewModel.cs" />
     <Compile Include="Areas\coadmin\ViewModels\agregarViewModel.cs" />
     <Compile Include="Areas\coadmin\ViewModels\CalEventView.cs" />
     <Compile Include="Areas\coadmin\ViewModels\cargosViewModel.cs" />
@@ -449,6 +450,9 @@
     <Compile Include="Areas\coadmin\ViewModels\editarContractViewModel.cs" />
     <Compile Include="Areas\coadmin\ViewModels\editarFacViewModel.cs" />
     <Compile Include="Areas\coadmin\ViewModels\editarTareasViewModel.cs" />
+    <Compile Include="Areas\coadmin\ViewModels\editarTitularesViewModel.cs" />
+    <Compile Include="Areas\coadmin\ViewModels\editarTituloViewModel.cs" />
+    <Compile Include="Areas\coadmin\ViewModels\editarVehiculoViewModel.cs" />
     <Compile Include="Areas\coadmin\ViewModels\editarViewModel.cs" />
     <Compile Include="Areas\coadmin\ViewModels\editDocumentViewModel.cs" />
     <Compile Include="Areas\coadmin\ViewModels\editEventViewModel.cs" />
@@ -458,6 +462,9 @@
     <Compile Include="Areas\coadmin\ViewModels\facilidadesViewModel.cs" />
     <Compile Include="Areas\coadmin\ViewModels\listadoCuotasViewModel.cs" />
     <Compile Include="Areas\coadmin\ViewModels\listadoPlantillasViewModel.cs" />
+    <Compile Include="Areas\coadmin\ViewModels\listadoTitularesViewModel.cs" />
+    <Compile Include="Areas\coadmin\ViewModels\listadoTitulosViewModel.cs" />
+    <Compile Include="Areas\coadmin\ViewModels\listadoVehiculosViewModel.cs" />
     <Compile Include="Areas\coadmin\ViewModels\pagosCuotasViewModel.cs" />
     <Compile Include="Areas\coadmin\ViewModels\perfilViewModel.cs" />
     <Compile Include="Areas\coadmin\ViewModels\PlantillaItemViewModel.cs" />
@@ -475,6 +482,7 @@
     <Compile Include="Areas\coadmin\ViewModels\verDocumentViewModel.cs" />
     <Compile Include="Areas\coadmin\ViewModels\versuplidorViewModel.cs" />
     <Compile Include="Areas\coadmin\ViewModels\vertareaViewModel.cs" />
+    <Compile Include="Areas\coadmin\ViewModels\verTitularesViewModel.cs" />
     <Compile Include="Areas\webmaster\Controllers\administradorController.cs" />
     <Compile Include="Areas\webmaster\Controllers\administradoresController.cs" />
     <Compile Include="Areas\webmaster\Controllers\cargosController.cs" />
@@ -1497,6 +1505,14 @@
     <Content Include="Areas\webmaster\Views\titulares\editarVehiculo.cshtml" />
     <Content Include="Areas\webmaster\Views\titulares\verTitulo.cshtml" />
     <Content Include="Areas\webmaster\Views\titulares\verVehiculo.cshtml" />
+    <Content Include="Areas\coadmin\Views\titulares\listadoTitulos.cshtml" />
+    <Content Include="Areas\coadmin\Views\titulares\agregarTitulo.cshtml" />
+    <Content Include="Areas\coadmin\Views\titulares\agregarVehiculo.cshtml" />
+    <Content Include="Areas\coadmin\Views\titulares\editarTitulo.cshtml" />
+    <Content Include="Areas\coadmin\Views\titulares\editarVehiculo.cshtml" />
+    <Content Include="Areas\coadmin\Views\titulares\listadoVehiculos.cshtml" />
+    <Content Include="Areas\coadmin\Views\titulares\verTitulo.cshtml" />
+    <Content Include="Areas\coadmin\Views\titulares\verVehiculo.cshtml" />
     <None Include="Properties\PublishProfiles\Default Settings.pubxml" />
     <None Include="Properties\PublishProfiles\Default Settings1.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
