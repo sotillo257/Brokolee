@@ -44,6 +44,9 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 viewModel.document_category_list = entities.document_type.ToList();
                 viewModel.vehiculosList = vehiculosLists;
                 viewModel.curUser = curUser;
+                viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                viewModel.communityName = ep.GetCommunityInfo(userId)[0];
+                viewModel.communityApart = ep.GetCommunityInfo(userId)[1];
                 viewModel.CantidadDeVehiculos = vehiculosLists.Count();
                 viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                 viewModel.pubMessageList = pubMessageList;
@@ -70,6 +73,9 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 viewModel.side_sub_menu = "titulares_agregar";
                 viewModel.document_category_list = entities.document_type.ToList();
                 viewModel.curUser = curUser;
+                viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                viewModel.communityName = ep.GetCommunityInfo(userId)[0];
+                viewModel.communityApart = ep.GetCommunityInfo(userId)[1];
                 viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                 viewModel.pubMessageList = pubMessageList;
                 viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
@@ -99,6 +105,9 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     viewModel.document_category_list = entities.document_type.ToList();
                     viewModel.vehiculo = vehiculo;
                     viewModel.curUser = curUser;
+                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                    viewModel.communityName = ep.GetCommunityInfo(userId)[0];
+                    viewModel.communityApart = ep.GetCommunityInfo(userId)[1];
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = pubMessageList;
                     viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
@@ -132,6 +141,9 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     viewModel.document_category_list = entities.document_type.ToList();
                     viewModel.vehiculo = vehiculo;
                     viewModel.curUser = curUser;
+                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                    viewModel.communityName = ep.GetCommunityInfo(userId)[0];
+                    viewModel.communityApart = ep.GetCommunityInfo(userId)[1];
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = pubMessageList;
                     viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
@@ -247,7 +259,10 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 Dictionary<long, string> communityDict = new Dictionary<long, string>();
                 List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                 List<Titulo> titulosList = new List<Titulo>();
-                titulosList = entities.Titulos.Where(x => x.is_del != true && x.IdUser == Id).ToList();
+
+                string commName = ep.GetCommunityInfo(userId)[0];
+               
+                titulosList = entities.Titulos.Where(x => x.is_del != true && x.IdUser == Id && x.community.first_name == commName).ToList();
 
                 listadoTitulosViewModel viewModel = new listadoTitulosViewModel();
                 viewModel.side_menu = "titulares";
@@ -256,6 +271,9 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 viewModel.titulosList = titulosList;
                 viewModel.IdUserTitular = (int)Id;
                 viewModel.curUser = curUser;
+                viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                viewModel.communityName = ep.GetCommunityInfo(userId)[0];
+                viewModel.communityApart = ep.GetCommunityInfo(userId)[1];
                 viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                 viewModel.pubMessageList = pubMessageList;
                 viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
@@ -280,6 +298,9 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 viewModel.side_sub_menu = "titulares_agregar";
                 viewModel.document_category_list = entities.document_type.ToList();
                 viewModel.curUser = curUser;
+                viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                viewModel.communityName = ep.GetCommunityInfo(userId)[0];
+                viewModel.communityApart = ep.GetCommunityInfo(userId)[1];
                 viewModel.IdUserTitular = (int)Id;
                 viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                 viewModel.pubMessageList = pubMessageList;
@@ -310,6 +331,9 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     viewModel.side_sub_menu = "manage_edit_headlines";
                     viewModel.document_category_list = entities.document_type.ToList();
                     viewModel.curUser = curUser;
+                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                    viewModel.communityName = ep.GetCommunityInfo(userId)[0];
+                    viewModel.communityApart = ep.GetCommunityInfo(userId)[1];
                     viewModel.titulo = titulo;
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = pubMessageList;
@@ -345,6 +369,9 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     viewModel.side_sub_menu = "manage_edit_headlines";
                     viewModel.document_category_list = entities.document_type.ToList();
                     viewModel.curUser = curUser;
+                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                    viewModel.communityName = ep.GetCommunityInfo(userId)[0];
+                    viewModel.communityApart = ep.GetCommunityInfo(userId)[1];
                     viewModel.titulo = titulo;
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = pubMessageList;
@@ -515,6 +542,8 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 viewModel.titularList = titularList;
                 viewModel.searchStr = searchStr;
                 viewModel.curUser = curUser;
+                viewModel.communityName = ep.GetCommunityInfo(userId)[0];
+                viewModel.communityApart = ep.GetCommunityInfo(userId)[1];
                 viewModel.communityDict = communityDict;
                 viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                 viewModel.pubMessageList = pubMessageList;
@@ -539,6 +568,9 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 viewModel.side_sub_menu = "titulares_agregar";
                 viewModel.document_category_list = entities.document_type.ToList();
                 viewModel.curUser = curUser;
+                viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                viewModel.communityName = ep.GetCommunityInfo(userId)[0];
+                viewModel.communityApart = ep.GetCommunityInfo(userId)[1];
                 viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                 viewModel.pubMessageList = pubMessageList;
                 viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
@@ -569,6 +601,9 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     viewModel.editUser = editUser;
                     viewModel.view_resident_logo = "~/App_Data/User_Logo/" + editUser.user_img;
                     viewModel.curUser = curUser;
+                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                    viewModel.communityName = ep.GetCommunityInfo(userId)[0];
+                    viewModel.communityApart = ep.GetCommunityInfo(userId)[1];
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = pubMessageList;
                     viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
@@ -603,6 +638,9 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     viewModel.document_category_list = entities.document_type.ToList();
                     viewModel.editUser = editUser;
                     viewModel.curUser = curUser;
+                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                    viewModel.communityName = ep.GetCommunityInfo(userId)[0];
+                    viewModel.communityApart = ep.GetCommunityInfo(userId)[1];
                     viewModel.password = ep.Decrypt(editUser.password);
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = pubMessageList;

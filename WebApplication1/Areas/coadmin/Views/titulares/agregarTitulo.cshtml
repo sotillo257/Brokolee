@@ -1,7 +1,7 @@
 ﻿
 @{
     ViewBag.Title = "agregar";
-    Page.Title = "Agregar Titular - Brokolee Software";
+    Page.Title = "Agregar título - Brokolee Software";
 }
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
@@ -52,13 +52,13 @@
                 <div class="page-title-box">
                     <div class="float-left">
                         <div class="breadcrumb float-md-right">
-                            <h4 class="page-title">Agregar Titulo</h4>
+                            <h4 class="page-title">Agregar título</h4>
                         </div>
                     </div>
                     <div class="float-right">
                         <ul class="breadcrumb float-md-right">
                             <li class="breadcrumb-item"><a href="@Url.Action("panel", "control", new { area = "coadmin" })" class="text-success"><i class="mdi mdi-home-modern"></i> Panel de Control</a></li>
-                            <li class="breadcrumb-item active">Agregar Titulo</li>
+                            <li class="breadcrumb-item active">Agregar título</li>
                         </ul>
                     </div>
                 </div>
@@ -99,180 +99,189 @@
                         }))
                     {
                         @Html.AntiForgeryToken()
-                        <div class="card-body">
-                            <h5 class="d-inline-block">Información del Titulo</h5>
-                            <input type="hidden" value="@Model.IdUserTitular" name="IdUser" />
-                          
-                            <div class="form-divider"></div>
-                            <div class="form-group row">
-                                <label label="example-date-input" class="col-sm-3 col-form-label">Fecha de adquisición</label>
-                                <div class="col-sm-9">
+                    <div class="card-body">
+                        <h5 class="d-inline-block">Información del título</h5>
+                        <input type="hidden" value="@Model.IdUserTitular" name="IdUser" />
 
-                                    <input name="acq_date"
-                                           id="fecha1" />
+                        <div class="form-divider"></div>
+                        <div class="form-group row">
+                            <label label="example-date-input" class="col-sm-3 col-form-label">Fecha de adquisición</label>
+                            <div class="col-sm-9">
+
+                                <input name="acq_date"
+                                       id="fecha1" />
+                                <small class="form-text text-muted">Mes / día / año</small>
+                            </div>
+                        </div>
+                        <div class="form-divider"></div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Comunidad</label>
+                            <div class="col-sm-9">
+                                <select class="form-control" name="IdCommunity"
+                                        data-toggle="tooltip" title="Nombre de la comunidad" id="IdCommunity">
+                                    @foreach (var item in Model.communityList)
+                                    {
+                                        <option value="@item.id">@item.first_name</option>
+                                    }
+                                </select>
+                                <small class="form-text text-muted">Lista de comunidades</small>
+                            </div>
+                        </div>
+
+                        @*<div class="form-divider"></div>
+                        <div class="form-group row">
+                            <label for="apartment-input" class="col-sm-3 col-form-label">Comunidad</label>
+                            <div class="col-sm-9">
+                                <input class="form-control" type="text" value="" readonly name="IdCommunity"
+                                       data-toggle="tooltip" title="Apartamento del titular"
+                                       placeholder="Apartamento" id="IdCommunity">
+                                <small class="form-text text-muted">Comunidad asociada</small>
+                            </div>
+                        </div>*@
+
+
+                        <div class="form-divider"></div>
+                        <div class="form-group row">
+                            <label for="apartment-input" class="col-sm-3 col-form-label">Apartamento</label>
+                            <div class="col-sm-9">
+                                <input class="form-control" type="text" value="" name="apartment" required
+                                       data-toggle="tooltip" title="Apartamento del titular"
+                                       placeholder="Apartamento" id="apartment-input">
+                                <small class="form-text text-muted">Apartamento del titular</small>
+                            </div>
+                        </div>
+                        <div class="form-divider"></div>
+                        <h6 class="mt-0 header-title">Escritura</h6>
+                        <p>Escritura de compra-venta.</p>
+                        <div class="form-group row">
+                            <label for="example-name2-input" class="col-sm-3 col-form-label">Subir escritura</label>
+                            <div class="col-sm-9">
+                                <div class="input-group mt-2">
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input" id="input-arch" name="writing_script" />
+                                        <label id="garras" class="custom-file-label" for="input-arch">Seleccionar archivo</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-divider"></div>
+                        <div class="form-group row">
+                            <label for="example-address1-input" class="col-sm-3 col-form-label">¿Está la propiedad arrendada?</label>
+                            <div class="col-sm-9">
+                                <div class="form-check-inline my-2">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" name="siono"
+                                               data-parsley-multiple="groups" data-parsley-mincheck="2"
+                                               data-toggle="tooltip" title="Si"
+                                               id="customCheck6" value="boxyes">
+                                        <label class="custom-control-label" for="customCheck6">Si</label>
+                                    </div>
+                                </div>
+                                <div class="form-check-inline my-2">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" id="customCheck7"
+                                               data-parsley-multiple="groups" data-parsley-mincheck="2"
+                                               data-toggle="tooltip" title="No" checked
+                                               class="custom-control-input" name="siono" value="boxno">
+                                        <label class="custom-control-label" for="customCheck7">No</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- View -->
+                        <div class="boxyes box">
+                            <div class="form-divider"></div>
+                            <h6 class="mt-0 header-title">Periodo de arrendamiento</h6>
+
+
+                            <div class="form-group row">
+                                <label for="example-date-input" class="col-sm-3 col-form-label">Desde</label>
+                                <div class="col-sm-9">
+                                    <input name="since"
+                                           id="fecha2">
+                                    <small class="form-text text-muted">Mes / día / año</small>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="example-date-input" class="col-sm-3 col-form-label">Hasta</label>
+                                <div class="col-sm-9">
+                                    <input name="until"
+                                           id="fecha3">
                                     <small class="form-text text-muted">Mes / día / año</small>
                                 </div>
                             </div>
                             <div class="form-divider"></div>
+                            <h5 class="d-inline-block">Información del Arrendatario</h5>
+                            <div class="form-divider"></div>
+                            <h6 class="mt-0 header-title">Nombre completo del arrendatario</h6>
                             <div class="form-group row">
-                                <label class="col-sm-3 col-form-label">Comunidad</label>
+                                <label for="example-name2-input" class="col-sm-3 col-form-label">Nombre</label>
                                 <div class="col-sm-9">
-                                    <select class="form-control" name="IdCommunity"
-                                            data-toggle="tooltip" title="Nombre de la comunidad" id="IdCommunity">
-                                        @foreach (var item in Model.communityList)
-                                        {
-                                            <option value="@item.id">@item.first_name</option>
-                                        }
-                                    </select>
-                                    <small class="form-text text-muted">Lista de comunidades</small>
+                                    <input class="form-control" type="text" value="" name="tenant_first_name1"
+                                           data-toggle="tooltip" title="Nombre del arrendatario"
+                                           placeholder="Nombre" id="example-name2-input">
+                                    <small class="form-text text-muted">Nombre del arrendatario</small>
                                 </div>
                             </div>
-
-
-
-
-                            <div class="form-divider"></div>                          
                             <div class="form-group row">
-                                <label for="apartment-input" class="col-sm-3 col-form-label">Apartamento</label>
+                                <label for="example-lastname2-input" class="col-sm-3 col-form-label">Apellido paterno</label>
                                 <div class="col-sm-9">
-                                    <input class="form-control" type="text" value="" name="apartment" required
-                                           data-toggle="tooltip" title="Apartamento del titular"
-                                           placeholder="Apartamento" id="apartment-input">
-                                    <small class="form-text text-muted">Apartamento del titular</small>
+                                    <input class="form-control" type="text" value="" name="tenant_last_name1"
+                                           data-toggle="tooltip" title="Apellido paterno del arrendatario"
+                                           placeholder="Apellido paterno" id="example-lastname2-input">
+                                    <small class="form-text text-muted">Apellido paterno del arrendatario</small>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="example-lastname2m-input" class="col-sm-3 col-form-label">Apellido materno</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" type="text" value="" name="tenant_mother_last_name1" placeholder="Apellido materno"
+                                           data-toggle="tooltip" title="Apellido materno del arrendatario"
+                                           id="example-lastname2m-input">
+                                    <small class="form-text text-muted">Apellido materno del arrendatario</small>
                                 </div>
                             </div>
                             <div class="form-divider"></div>
-                            <h6 class="mt-0 header-title">Escritura</h6>
-                            <p>Escritura de compra-venta.</p>
                             <div class="form-group row">
-                                <label for="example-name2-input" class="col-sm-3 col-form-label">Subir escritura</label>
+                                <label for="example-address1-input" class="col-sm-3 col-form-label">Dirección postal</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" type="text" value="" name="leased_postal_address"
+                                           data-toggle="tooltip" title="Dirección postal del arrendatario"
+                                           placeholder="Dirección postal" id="example-address1-input">
+                                    <small class="form-text text-muted">Dirección postal del arrendatario</small>
+                                </div>
+                            </div>
+
+
+
+                            <div class="form-divider"></div>
+                            <div class="form-group row">
+                                <label for="example-address2-input" class="col-sm-3 col-form-label">Dirección residencial</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" type="text" value="" placeholder="Dirección residencial"
+                                           data-toggle="tooltip" title="Dirección residencial del arrendatario" name="leased_residential_address"
+                                           id="example-address2-input">
+                                    <small class="form-text text-muted">Dirección residencial del arrendatario-G2</small>
+                                </div>
+                            </div>
+                            <div class="form-divider"></div>
+                            <h6 class="mt-0 header-title">Contrato de arrendamiento</h6>
+                            <div class="form-group row">
+                                <label for="example-name2-input" class="col-sm-3 col-form-label">Subir contrato de arrendamiento</label>
                                 <div class="col-sm-9">
                                     <div class="input-group mt-2">
                                         <div class="custom-file">
-                                            <input type="file" class="custom-file-input" id="input-arch" name="writing_script" />
-                                            <label id="garras" class="custom-file-label" for="input-arch">Seleccionar archivo</label>
+                                            <input type="file" class="custom-file-input" id="input-arch-contra" name="script_file" />
+                                            <label id="garrasC" class="custom-file-label" for="input-arch">Seleccionar archivo</label>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-divider"></div>
-                            <div class="form-group row">
-                                <label for="example-address1-input" class="col-sm-3 col-form-label">¿Está la propiedad arrendada?</label>
-                                <div class="col-sm-9">
-                                    <div class="form-check-inline my-2">
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" name="siono"
-                                                   data-parsley-multiple="groups" data-parsley-mincheck="2"
-                                                   data-toggle="tooltip" title="Si"
-                                                   id="customCheck6" value="boxyes">
-                                            <label class="custom-control-label" for="customCheck6">Si</label>
-                                        </div>
-                                    </div>
-                                    <div class="form-check-inline my-2">
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" id="customCheck7"
-                                                   data-parsley-multiple="groups" data-parsley-mincheck="2"
-                                                   data-toggle="tooltip" title="No" checked
-                                                   class="custom-control-input" name="siono" value="boxno">
-                                            <label class="custom-control-label" for="customCheck7">No</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- View -->
-                            <div class="boxyes box">
-                                <div class="form-divider"></div>
-                                <h6 class="mt-0 header-title">Periodo de arrendamiento</h6>
-
-
-                                <div class="form-group row">
-                                    <label for="example-date-input" class="col-sm-3 col-form-label">Desde</label>
-                                    <div class="col-sm-9">
-                                        <input name="since"
-                                               id="fecha2">
-                                        <small class="form-text text-muted">Mes / día / año</small>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="example-date-input" class="col-sm-3 col-form-label">Hasta</label>
-                                    <div class="col-sm-9">
-                                        <input name="until"
-                                               id="fecha3">
-                                        <small class="form-text text-muted">Mes / día / año</small>
-                                    </div>
-                                </div>
-                                <div class="form-divider"></div>
-                                <h5 class="d-inline-block">Información del Arrendatario</h5>
-                                <div class="form-divider"></div>
-                                <h6 class="mt-0 header-title">Nombre completo del arrendatario</h6>
-                                <div class="form-group row">
-                                    <label for="example-name2-input" class="col-sm-3 col-form-label">Nombre</label>
-                                    <div class="col-sm-9">
-                                        <input class="form-control" type="text" value="" name="tenant_first_name1"
-                                               data-toggle="tooltip" title="Nombre del arrendatario"
-                                               placeholder="Nombre" id="example-name2-input">
-                                        <small class="form-text text-muted">Nombre del arrendatario</small>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="example-lastname2-input" class="col-sm-3 col-form-label">Apellido paterno</label>
-                                    <div class="col-sm-9">
-                                        <input class="form-control" type="text" value="" name="tenant_last_name1"
-                                               data-toggle="tooltip" title="Apellido paterno del arrendatario"
-                                               placeholder="Apellido paterno" id="example-lastname2-input">
-                                        <small class="form-text text-muted">Apellido paterno del arrendatario</small>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="example-lastname2m-input" class="col-sm-3 col-form-label">Apellido materno</label>
-                                    <div class="col-sm-9">
-                                        <input class="form-control" type="text" value="" name="tenant_mother_last_name1" placeholder="Apellido materno"
-                                               data-toggle="tooltip" title="Apellido materno del arrendatario"
-                                               id="example-lastname2m-input">
-                                        <small class="form-text text-muted">Apellido materno del arrendatario</small>
-                                    </div>
-                                </div>
-                                <div class="form-divider"></div>
-                                <div class="form-group row">
-                                    <label for="example-address1-input" class="col-sm-3 col-form-label">Dirección postal</label>
-                                    <div class="col-sm-9">
-                                        <input class="form-control" type="text" value="" name="leased_postal_address"
-                                               data-toggle="tooltip" title="Dirección postal del arrendatario"
-                                               placeholder="Dirección postal" id="example-address1-input">
-                                        <small class="form-text text-muted">Dirección postal del arrendatario</small>
-                                    </div>
-                                </div>
-
-
-
-                                <div class="form-divider"></div>
-                                <div class="form-group row">
-                                    <label for="example-address2-input" class="col-sm-3 col-form-label">Dirección residencial</label>
-                                    <div class="col-sm-9">
-                                        <input class="form-control" type="text" value="" placeholder="Dirección residencial"
-                                               data-toggle="tooltip" title="Dirección residencial del arrendatario" name="leased_residential_address"
-                                               id="example-address2-input">
-                                        <small class="form-text text-muted">Dirección residencial del arrendatario-G2</small>
-                                    </div>
-                                </div>
-                                <div class="form-divider"></div>
-                                <h6 class="mt-0 header-title">Contrato de arrendamiento</h6>
-                                <div class="form-group row">
-                                    <label for="example-name2-input" class="col-sm-3 col-form-label">Subir contrato de arrendamiento</label>
-                                    <div class="col-sm-9">
-                                        <div class="input-group mt-2">
-                                            <div class="custom-file">
-                                                <input type="file" class="custom-file-input" id="input-arch-contra" name="script_file" />
-                                                <label id="garrasC" class="custom-file-label" for="input-arch">Seleccionar archivo</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-divider"></div>
-                            </div>
-                            <!-- End View -->
-                            <button type="submit" class="btn btn-primary waves-effect waves-light">Guardar</button>
                         </div>
+                        <!-- End View -->
+                        <button type="submit" class="btn btn-primary waves-effect waves-light">Guardar</button>
+                    </div>
                     }
                 </div>
             </div>

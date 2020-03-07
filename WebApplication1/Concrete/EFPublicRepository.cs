@@ -133,7 +133,7 @@ namespace WebApplication1.Concrete
         {
             string[] list = new string[2];
             string communityName = "No community";
-            string communityApart = "No apartment";
+            string communityApart = "No apartment";        
             communuser communuserResult = entities.communusers.Where(m => m.user_id == userId).FirstOrDefault();
             
             if (communuserResult != null)
@@ -144,7 +144,7 @@ namespace WebApplication1.Concrete
                 communityApart = community.apart;
             }
             list[0] = communityName;
-            list[1] = communityApart;
+            list[1] = communityApart;            
             return list;
         }
 
