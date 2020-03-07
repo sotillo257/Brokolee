@@ -131,9 +131,10 @@ namespace WebApplication1.Concrete
 
         public string[] GetCommunityInfo(long userId)
         {
-            string[] list = new string[2];
+            string[] list = new string[3];
             string communityName = "No community";
-            string communityApart = "No apartment";        
+            string communityApart = "No apartment";
+            string cID = "No ID";
             communuser communuserResult = entities.communusers.Where(m => m.user_id == userId).FirstOrDefault();
             
             if (communuserResult != null)
@@ -142,9 +143,13 @@ namespace WebApplication1.Concrete
                 community community = entities.communities.Find(communityID);
                 communityName = community.first_name;
                 communityApart = community.apart;
+                cID = Convert.ToString(communityID);
+
+
             }
             list[0] = communityName;
-            list[1] = communityApart;            
+            list[1] = communityApart;
+            list[2] = cID;
             return list;
         }
 

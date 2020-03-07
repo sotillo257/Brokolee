@@ -305,7 +305,13 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                 viewModel.pubMessageList = pubMessageList;
                 viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                viewModel.communityList = entities.communities.ToList();
+                
+                string strComm_id = ep.GetCommunityInfo(userId)[2];
+                long commun_id = Convert.ToInt64(strComm_id);
+                List<community> titulosList = new List<community>();
+                titulosList = entities.communities.Where(x => x.id == commun_id).ToList();
+                viewModel.communityList = titulosList;                
+
                 ViewBag.msgError = Error;
                 return View(viewModel);
             }
@@ -337,7 +343,13 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     viewModel.titulo = titulo;
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = pubMessageList;
-                    viewModel.communityList = entities.communities.ToList();
+
+                    string strComm_id = ep.GetCommunityInfo(userId)[2];
+                    long commun_id = Convert.ToInt64(strComm_id);
+                    List<community> titulosList = new List<community>();
+                    titulosList = entities.communities.Where(x => x.id == commun_id).ToList();
+                    viewModel.communityList = titulosList;
+
                     viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
                     ViewBag.msgError = Error;
                     return View(viewModel);
@@ -375,7 +387,13 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     viewModel.titulo = titulo;
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = pubMessageList;
-                    viewModel.communityList = entities.communities.ToList();
+
+                    string strComm_id = ep.GetCommunityInfo(userId)[2];
+                    long commun_id = Convert.ToInt64(strComm_id);
+                    List<community> titulosList = new List<community>();
+                    titulosList = entities.communities.Where(x => x.id == commun_id).ToList();
+                    viewModel.communityList = titulosList;
+
                     viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
                     return View(viewModel);
                 }
