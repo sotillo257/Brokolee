@@ -1,7 +1,7 @@
 ﻿
 @{
     ViewBag.Title = "editar";
-    Page.Title = "Editar Tarea - Brokolee Software";
+    Page.Title = "Editar tarea - Brokolee Software";
 }
 
 <div class="page-content-wrapper">
@@ -13,13 +13,13 @@
                 <div class="page-title-box">
                     <div class="float-left">
                         <div class="breadcrumb float-md-right">
-                            <h4 class="page-title">Editar Tarea</h4>
+                            <h4 class="page-title">Editar tarea</h4>
                         </div>
                     </div>
                     <div class="float-right">
                         <ul class="breadcrumb float-md-right">
                             <li class="breadcrumb-item"><a href="@Url.Action("panel", "control", new { area = "coadmin" })" class="text-success"><i class="mdi mdi-home-modern"></i>Panel de Control</a></li>
-                            <li class="breadcrumb-item active">Editar Tarea</li>
+                            <li class="breadcrumb-item active">Editar tarea</li>
                         </ul>
                     </div>
                 </div>
@@ -36,13 +36,13 @@
                         @Html.AntiForgeryToken()
                         <input type="hidden" name="taskID" value="@Model.editTask.id"/>
                         <div class="card-body">
-                            <h5 class="d-inline-block">Servicio carpintería</h5>
+                            <h5 class="d-inline-block">Editar tarea</h5>
                             <div class="form-divider"></div>
                             <div class="form-group row">
                                 <label for="example-email-input" class="col-sm-3 col-form-label">Nombre</label>
                                 <div class="col-sm-9">
                                     <input class="form-control" type="text" 
-                                           value="@Model.editTask.task_name" placeholder="Servicio carpintería"
+                                           value="@Model.editTask.task_name" placeholder="Nombre"
                                            data-toggle="tooltip" title="Nombre de la tarea"
                                            id="example-email-input" name="task_name" required>
                                     <small class="form-text text-muted">Nombre de la tarea</small>
@@ -54,7 +54,7 @@
                                 <div class="col-sm-9">
                                     <textarea class="form-control" rows="3"  name="description"
                                               data-toggle="tooltip" title="Nombre de la tarea"
-                                              placeholder="Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur">@Model.editTask.description</textarea>
+                                              placeholder="Descripción">@Model.editTask.description</textarea>
                                     <small class="form-text text-muted">Descripción de la tarea</small>
                                 </div>
                             </div>
@@ -64,7 +64,7 @@
                                 <div class="col-sm-9">
                                     <input class="form-control" type="text" name="responsable" required
                                            data-toggle="tooltip" title="Nombre de la persona responsable"
-                                           value="@Model.editTask.responsable" placeholder="Daniel González" 
+                                           value="@Model.editTask.responsable" placeholder="Responsable" 
                                            id="example-lastname1-input">
                                     <small class="form-text text-muted">Nombre de la persona responsable</small>
                                 </div>
@@ -98,7 +98,7 @@
                                 <div class="col-sm-9">
                                     <textarea class="form-control" rows="3" name="comments"
                                               data-toggle="tooltip" title="Comentarios del administrador"
-                                              placeholder="At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga.">@Model.editTask.comments</textarea>
+                                              placeholder="Comentarios">@Model.editTask.comments</textarea>
                                     <small class="form-text text-muted">Comentarios del administrador</small>
                                 </div>
                             </div>

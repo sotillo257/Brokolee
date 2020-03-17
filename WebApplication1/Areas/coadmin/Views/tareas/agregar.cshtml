@@ -1,7 +1,7 @@
 ﻿
 @{
     ViewBag.Title = "agregar";
-    Page.Title = "Agregar Tarea - Brokolee Software";
+    Page.Title = "Agregar tarea - Brokolee Software";
 }
 
 <div class="page-content-wrapper">
@@ -13,13 +13,13 @@
                 <div class="page-title-box">
                     <div class="float-left">
                         <div class="breadcrumb float-md-right">
-                            <h4 class="page-title">Tareas </h4>
+                            <h4 class="page-title">Agregar tarea</h4>
                         </div>
                     </div>
                     <div class="float-right">
                         <ul class="breadcrumb float-md-right">
                             <li class="breadcrumb-item"><a href="@Url.Action("panel", "control", new { area ="coadmin" })" class="text-success"><i class="mdi mdi-home-modern"></i> Panel de Control</a></li>
-                            <li class="breadcrumb-item active">Tareas </li>
+                            <li class="breadcrumb-item active">Agregar tarea</li>
                         </ul>
                     </div>
                 </div>
@@ -48,7 +48,7 @@
                     {
                         @Html.AntiForgeryToken()
                         <div class="card-body">
-                            <h5 class="d-inline-block">Nueva Tarea</h5>
+                            <h5 class="d-inline-block">Nueva tarea</h5>
                             <div class="form-divider"></div>
                             <div class="form-group row">
                                 <label for="example-email-input" class="col-sm-3 col-form-label">Nombre</label>

@@ -1,7 +1,7 @@
 ﻿
 @{
     ViewBag.Title = "agregar";
-    Page.Title = "Agregar Contrato - Brokolee Software";
+    Page.Title = "Agregar contrato - Brokolee Software";
 }
 
 <script src="~/Scripts/jquery-3.1.1.min.js"></script>
@@ -28,7 +28,7 @@
                     <div class="float-right">
                         <ul class="breadcrumb float-md-right">
                             <li class="breadcrumb-item"><a href="@Url.Action("panel", "control", new { area = "coadmin" })" class="text-success"><i class="mdi mdi-home-modern"></i> Panel de Control</a></li>
-                            <li class="breadcrumb-item active">Agregar Contrato</li>
+                            <li class="breadcrumb-item active">Agregar contrato</li>
                         </ul>
                     </div>
                 </div>
@@ -59,27 +59,27 @@
                     {
                         @Html.AntiForgeryToken()
                         <div class="card-body">
-                            <h5 class="d-inline-block">Nuevo Contrato</h5>
+                            <h5 class="d-inline-block">Nuevo contrato</h5>
                             <div class="form-divider"></div>
                             <div class="form-group row">
                                 <label for="example-email-input" class="col-sm-3 col-form-label">Nombre</label>
                                 <div class="col-sm-9">
                                     <input class="form-control" type="text" value=""
-                                           data-toggle="tooltip" title="Nombre del Contrato"
+                                           data-toggle="tooltip" title="Nombre del contrato"
                                            name="first_name" required
                                            placeholder="Nombre" id="example-email-input">
-                                    <small class="form-text text-muted">Nombre del Contrato</small>
+                                    <small class="form-text text-muted">Nombre del contrato</small>
                                 </div>
                             </div>
                             <div class="form-divider"></div>
                             <div class="form-group row">
-                                <label for="example-date-input" class="col-sm-3 col-form-label">Fecha del Contrato</label>
+                                <label for="example-date-input" class="col-sm-3 col-form-label">Fecha del contrato</label>
                                 <div class="col-sm-9">
                                     <input class="form-control" type="date"
-                                           data-toggle="tooltip" title="Mes / día / año | Fecha del día que se subió el Contrato"
+                                           data-toggle="tooltip" title="Mes / día / año | Fecha del día que se subió el contrato"
                                            name="date_contract" required
                                            value="" id="example-date-input">
-                                    <small class="form-text text-muted">Mes / día / año | Fecha del día que se subió el Contrato</small>
+                                    <small class="form-text text-muted">Mes / día / año | Fecha del día que se subió el contrato</small>
                                 </div>
                             </div>
                             <div class="form-divider"></div>
@@ -94,7 +94,7 @@
                             </div>
                             <div class="form-divider"></div>
                             <div class="form-group row">
-                                <label for="example-name2-input" class="col-sm-3 col-form-label">Subir Contrato</label>
+                                <label for="example-name2-input" class="col-sm-3 col-form-label">Subir contrato</label>
                                 <div class="col-sm-9">
                                     <div class="input-group mt-2">
                                         <div class="custom-file">

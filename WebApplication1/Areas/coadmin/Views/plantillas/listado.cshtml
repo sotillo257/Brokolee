@@ -1,7 +1,7 @@
 ﻿
 @{
     ViewBag.Title = "listado";
-    Page.Title = "Plantillas de Email - Brokolee Software";
+    Page.Title = "Plantillas de email - Brokolee Software";
 }
 
 
@@ -14,13 +14,13 @@
                 <div class="page-title-box">
                     <div class="float-left">
                         <div class="breadcrumb float-md-right">
-                            <h4 class="page-title">Plantillas de Email</h4>
+                            <h4 class="page-title">Plantillas de email</h4>
                         </div>
                     </div>
                     <div class="float-right">
                         <ul class="breadcrumb float-md-right">
                             <li class="breadcrumb-item"><a href="@Url.Action("panel", "control", new { area = "coadmin"  })" class="text-success"><i class="mdi mdi-home-modern"></i> Panel de Control</a></li>
-                            <li class="breadcrumb-item active">Plantillas de Email</li>
+                            <li class="breadcrumb-item active">Plantillas de email</li>
                         </ul>
                     </div>
                 </div>
@@ -94,7 +94,7 @@
                                                         <div class="form-group mb-0">
                                                             <div class="my-3">
                                                                 <button class="btn btn-primary" onclick="onEditEmailTheme(this)" data-id="@Model.list[i].ID"> <span>Guardar</span></button>
-                                                                @*<a href=""><button type="button" class="btn btn-danger waves-effect waves-light">Cancelar</button></a>*@
+                                                                <a href=""><button type="button" class="btn btn-danger waves-effect waves-light">Cancelar</button></a>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -128,7 +128,7 @@
                                                         <div class="form-group mb-0">
                                                             <div class="my-3">
                                                                 <button class="btn btn-primary" type="submit" data-id="@Model.list[i].ID"> <span>Guardar</span></button>
-                                                                @*<a href=""><button type="button" class="btn btn-danger waves-effect waves-light">Cancelar-g</button></a>*@
+                                                                <a href=""><button type="button" class="btn btn-danger waves-effect waves-light">Cancelar-g</button></a>
                                                             </div>
                                                         </div>
                                                     </div>
