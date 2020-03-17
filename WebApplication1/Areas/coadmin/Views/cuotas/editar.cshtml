@@ -1,6 +1,6 @@
 ﻿@{
     ViewBag.Title = "editar";
-    Page.Title = "Editar Cuota - Brokolee Software";
+    Page.Title = "Editar cuota - Brokolee Software";
 }
 
 <div class="page-content-wrapper">
@@ -18,7 +18,7 @@
                     <div class="float-right">
                         <ul class="breadcrumb float-md-right">
                             <li class="breadcrumb-item"><a href="@Url.Action("panel", "control", new { area = "coadmin" })" class="text-success"><i class="mdi mdi-home-modern"></i> Panel de Control</a></li>
-                            <li class="breadcrumb-item active">Editar Cuota</li>
+                            <li class="breadcrumb-item active">Editar cuota</li>
                         </ul>
                     </div>
                 </div>
@@ -47,15 +47,15 @@
                         @Html.AntiForgeryToken()
                         <input type="hidden" name="feedId" value="@Model.feedId"/>
                         <div class="card-body">
-                            <h5 class="d-inline-block">Nueva Cuota</h5>
+                            <h5 class="d-inline-block">Editar Cuota</h5>
                             <div class="form-divider"></div>
                             <div class="form-group row">
-                                <label for="example-email-input" class="col-sm-3 col-form-label">Nombre de la Cuota</label>
+                                <label for="example-email-input" class="col-sm-3 col-form-label">Nombre de la cuota</label>
                                 <div class="col-sm-9">
                                     <input class="form-control" type="text" value="@Model.feeName" name="fee_name" required
                                            placeholder="Cuota..." id="example-email-input"
-                                           data-toggle="tooltip" title="Nombre de la Cuota">
-                                    <small class="form-text text-muted">Nombre de la Cuota</small>
+                                           data-toggle="tooltip" title="Nombre de la cuota">
+                                    <small class="form-text text-muted">Nombre de la cuota</small>
                                 </div>
                             </div>
                             <div class="form-divider"></div>
@@ -92,10 +92,10 @@
                             </div>
                             <div class="form-divider"></div>
                             <div class="form-group row">
-                                <label class="col-sm-3 col-form-label">Cuenta de Banco</label>
+                                <label class="col-sm-3 col-form-label">Cuenta de vanco</label>
                                 <div class="col-sm-6">
                                     <select class="form-control" name="bank_id"
-                                            data-toggle="tooltip" title="Cuenta de Banco"
+                                            data-toggle="tooltip" title="Cuenta de vanco"
                                             required>
                                         <option value="">Elije una cuenta</option>
                                         @foreach (var item in Model.bankList)
@@ -110,26 +110,26 @@
                                             }
                                         }
                                     </select>
-                                    <small class="form-text text-muted">Cuenta de Banco</small>
+                                    <small class="form-text text-muted">Cuenta de vanco</small>
                                 </div>
                                 <div class="col-sm-3">
                                     <a href="@Url.Action("agregarcuenta", "cuotas", new {  area = "coadmin" })">
-                                        <button type="button" class="btn btn-primary waves-effect waves-light">Guardar</button>
+                                        <button type="button" class="btn btn-primary waves-effect waves-light">Agregar cuenta</button>
                                     </a>
                                 </div>
                             </div>
                             <div class="form-divider"></div>
                             <div class="form-group row">
-                                <label for="example-lastname1-input" class="col-sm-3 col-form-label">Merchant Account</label>
+                                <label for="example-lastname1-input" class="col-sm-3 col-form-label">Cuenta comercial</label>
                                 <div class="col-sm-9">
                                     <input class="form-control" type="text" value="@Model.merchantAccount" name="merchant_account" required
                                            placeholder="XXX-XXXXXXXX-X-XX" id="example-lastname1-input"
-                                           data-toggle="tooltip" title="Merchant Account"
+                                           data-toggle="tooltip" title="Cuenta comercial"
                                            />
                                     <small class="form-text text-muted">Merchant Account</small>
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-primary waves-effect waves-light">Editar Cuota</button>
+                            <button type="submit" class="btn btn-primary waves-effect waves-light">Guardar</button>
                             <button type="button" class="btn btn-danger waves-effect waves-light">Cancelar</button>
                         </div>
                     }

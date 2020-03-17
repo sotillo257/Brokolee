@@ -1,7 +1,7 @@
 ﻿
 @{
     ViewBag.Title = "agregar";
-    Page.Title = "Agregar Titular - Brokolee Software";
+    Page.Title = "Agregar vehículo - Brokolee Software";
 }
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
@@ -52,13 +52,13 @@
                 <div class="page-title-box">
                     <div class="float-left">
                         <div class="breadcrumb float-md-right">
-                            <h4 class="page-title">Agregar Vehículos</h4>
+                            <h4 class="page-title">Agregar vehículo</h4>
                         </div>
                     </div>
                     <div class="float-right">
                         <ul class="breadcrumb float-md-right">
                             <li class="breadcrumb-item"><a href="@Url.Action("panel", "control", new { area = "webmaster" })" class="text-success"><i class="mdi mdi-home-modern"></i> Panel de Control</a></li>
-                            <li class="breadcrumb-item active">Agregar Vehículos</li>
+                            <li class="breadcrumb-item active">Agregar vehículo</li>
                         </ul>
                     </div>
                 </div>
@@ -103,7 +103,7 @@
                         <h5 class="d-inline-block">Vehículos autorizados</h5>
                         <input type="hidden" value="@Model.titulo.Id" name="IdTitulo" />
 
-                      
+
                         <div class="form-divider"></div>
                         <div class="form-group row">
                             <label for="example-brand-input" class="col-sm-3 col-form-label">Marca</label>
@@ -161,6 +161,7 @@
                         <!-- View -->
                         <!-- End View -->
                         <button type="submit" class="btn btn-primary waves-effect waves-light">Guardar</button>
+                        <a href="javascript:history.back()"><button type="button" class="btn btn-danger waves-effect waves-light">Cancelar</button></a>
                     </div>
                     }
                 </div>

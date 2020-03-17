@@ -359,7 +359,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
             {
                 
                 content += "<div class='Container'><div class='row'><div class='col-sm-12'><div class='single-blog caja'><p class='fecha'>" + item.author + " <span>";
-                content += "<td>" + Convert.ToDateTime(item.blogdate).ToString("dd/MM/yyyy HH:mm") + "</td></span></p><h2><a class='titulo' href='#'>" + item.title + "</a></h2>";
+                content += "<td>" + Convert.ToDateTime(item.blogdate).ToString("dd/MM/yyyy HH:mm") + "</td></span></p><h2><a class='titulo' href='" + Url.Action("verblog", "comunicaciones", new { blogID = item.id, area = "webmaster" }).ToString() + "'>" + item.title + "</a></h2>";
                 content += item.content.Replace('"', '\'');
                 content += "<p class='fecha'><a href='#' ><a href = '" + Url.Action("editarblog", "comunicaciones", new { area = "webmaster", blogID = item.id }).ToString() + "'><button type = 'button' class='btn btn-primary waves-effect waves-light btn-sm mr-1 mb-1'";
                 content += "data-toggle='tooltip' data-placement='top' title='Editar'><i class='mdi mdi-lead-pencil'></i></button></a>";

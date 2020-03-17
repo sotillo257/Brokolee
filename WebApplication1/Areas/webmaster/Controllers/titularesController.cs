@@ -5,6 +5,7 @@ using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
 using System.IO;
 using System.Linq;
+using System.Xml.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
@@ -844,7 +845,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
             List<user> userList = new List<user>();
             if (searchStr == "")
             {
-                var query = (from r in entities.users where r.role == 1 select r);
+                var query = (from r in entities.users where r.role == 1 && r.is_del != true select r);
                 userList = query.ToList();
 
             }
@@ -853,69 +854,112 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 var query1 = (from r in entities.users
                               where r.role == 1
                               && (r.first_name1.Contains(searchStr) || r.last_name1.Contains(searchStr))
-                              select r);
+                              && r.is_del != true select r);
                 userList = query1.ToList();
             }
 
-            string[] columnNames = new string[] { "First Name", "Last Name", "Acquired Date",
-            "Email", "Password", "Phone Number", "Postal Address", "Residential Address",
-            "Siono"};
+            //string[] columnNames = new string[] { "First Name", "Last Name", "Acquired Date",
+            //"Email", "Password", "Phone Number", "Postal Address", "Residential Address",
+            //"Siono"};
             string csv = string.Empty;
+            StringBuilder csvContent = new StringBuilder();
 
-            foreach (string columnName in columnNames)
-            {
+            //foreach (string columnName in columnNames)
+            //{
                 //Add the Header row for CSV file.
-                csv += columnName + ',';
-            }
+            csv += csvContent.AppendLine("First Name,Last Name,Acquired Date,Email,Password,Phone Number,Postal Address,Residential Address,Siono");
+            //}
 
             //Add new line.
-            csv += "\r\n";
+            //csv += "\r\n";
 
             foreach (var item in userList)
             {
-                csv += item.first_name1.ToString().Replace(",", ";") + ",";
-                csv += item.last_name1.ToString().Replace(",", ";") + ",";
-                csv += item.acq_date.ToString("yyyy-MM-dd").Replace(",", ";") + ",";
-                csv += item.email.ToString().Replace(",", ";") + ",";
-                csv += item.password.ToString().Replace(",", ";") + ",";
+                csv = string.Empty;
+                string phoneNumber1, postalAddress, resAddress, siNo = "";
                 if (item.phone_number1 != null)
                 {
-                    csv += item.phone_number1.ToString().Replace(",", ";") + ",";
+                    phoneNumber1 = item.phone_number1.ToString();
                 }
                 else
                 {
-                    csv += "".Replace(",", ";") + ",";
+                    phoneNumber1 = "".ToString();
                 }
 
                 if (item.postal_address != null)
                 {
-                    csv += item.postal_address.ToString().Replace(",", ";") + ",";
+                    postalAddress = item.postal_address.ToString();
                 }
                 else
                 {
-                    csv += "".ToString().Replace(",", ";") + ",";
+                    postalAddress = "".ToString();
                 }
 
                 if (item.residential_address != null)
                 {
-                    csv += item.residential_address.ToString().Replace(",", ";") + ",";
+                    resAddress = item.residential_address.ToString();
                 }
                 else
                 {
-                    csv += "".ToString().Replace(",", ";") + ",";
+                    resAddress = "".ToString();
                 }
 
                 if (item.siono != null)
                 {
-                    csv += item.siono.ToString().Replace(",", ";") + ",";
+                    siNo = item.siono.ToString();
                 }
                 else
                 {
-                    csv += "".ToString().Replace(",", ";") + ",";
+                    siNo = "".ToString();
                 }
 
-                //Add new line.
-                csv += "\r\n";
+                csv += csvContent.AppendLine(item.first_name1.ToString() + "," + item.last_name1.ToString() + "," + item.acq_date.ToString("yyyy-MM-dd")
+                    + "," + item.email.ToString() + "," + item.password.ToString() + "," + phoneNumber1 + "," + postalAddress
+                    + "," + resAddress + "," + siNo);
+
+                //csv += item.first_name1.ToString().Replace(",", ";") + ",";
+                //csv += item.last_name1.ToString().Replace(",", ";") + ",";
+                //csv += item.acq_date.ToString("yyyy-MM-dd").Replace(",", ";") + ",";
+                //csv += item.email.ToString().Replace(",", ";") + ",";
+                //csv += item.password.ToString().Replace(",", ";") + ",";
+                //if (item.phone_number1 != null)
+                //{
+                //    csv += item.phone_number1.ToString().Replace(",", ";") + ",";
+                //}
+                //else
+                //{
+                //    csv += "".Replace(",", ";") + ",";
+                //}
+
+                //if (item.postal_address != null)
+                //{
+                //    csv += item.postal_address.ToString().Replace(",", ";") + ",";
+                //}
+                //else
+                //{
+                //    csv += "".ToString().Replace(",", ";") + ",";
+                //}
+
+                //if (item.residential_address != null)
+                //{
+                //    csv += item.residential_address.ToString().Replace(",", ";") + ",";
+                //}
+                //else
+                //{
+                //    csv += "".ToString().Replace(",", ";") + ",";
+                //}
+
+                //if (item.siono != null)
+                //{
+                //    csv += item.siono.ToString().Replace(",", ";") + ",";
+                //}
+                //else
+                //{
+                //    csv += "".ToString().Replace(",", ";") + ",";
+                //}
+
+                ////Add new line.
+                //csv += "\r\n";
             }
 
             //Download the CSV file.

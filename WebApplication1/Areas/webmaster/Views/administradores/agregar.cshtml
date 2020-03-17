@@ -1,7 +1,7 @@
 ﻿
 @{
     ViewBag.Title = "agregar";
-    Page.Title = "Agregar Administrador - Brokolee Software";
+    Page.Title = "Agregar administrador - Brokolee Software";
 }
 
 <script src="~/Scripts/jquery-3.1.1.min.js"></script>
@@ -36,7 +36,7 @@
                     <div class="float-right">
                         <ul class="breadcrumb float-md-right">
                             <li class="breadcrumb-item"><a href="@Url.Action("panel", "control", new { area = "webmaster" })" class="text-success"><i class="mdi mdi-home-modern"></i> Panel de Control</a></li>
-                            <li class="breadcrumb-item active">Agregar Administrador</li>
+                            <li class="breadcrumb-item active">Agregar administrador</li>
                         </ul>
                     </div>
                 </div>
@@ -65,7 +65,7 @@
                      }))
                     {
                         <div class="card-body">
-                            <h5 class="d-inline-block">Nuevo Administrador</h5>
+                            <h5 class="d-inline-block">Nuevo administrador</h5>
                             <div class="form-divider"></div>
                             <div class="form-group row">
                                 <div id="img-fluid" class="col-sm-3">
@@ -76,7 +76,7 @@
                                         <div class="custom-file">
                                             <input type="file" class="custom-file-input" id="inputGroupFile04"
                                                    name="user_logo" data-toggle="tooltip" title="Subir logo en formato jpg o png" />
-                                            <label class="custom-file-label" for="inputGroupFile04">Selecciona Tu imagen</label>
+                                            <label class="custom-file-label" for="inputGroupFile04">Selecciona tu imagen</label>
                                         </div>
                                         <div class="col-sm-3">
                                             <small class="form-text text-muted">Subir logo en formato jpg o png</small>
@@ -90,29 +90,29 @@
                                 <label for="example-email-input" class="col-sm-3 col-form-label">Nombre</label>
                                 <div class="col-sm-9">
                                     <input class="form-control" type="text" value="" name="first_name1" required
-                                           data-toggle="tooltip" title="Nombre del Administrador"
+                                           data-toggle="tooltip" title="Nombre del administrador"
                                            placeholder="Nombre" id="example-email-input">
-                                    <small class="form-text text-muted">Nombre del Administrador</small>
+                                    <small class="form-text text-muted">Nombre del administrador</small>
                                 </div>
                             </div>
                             <div class="form-divider"></div>
                             <div class="form-group row">
-                                <label for="example-email-input" class="col-sm-3 col-form-label">Apellido Paterno</label>
+                                <label for="example-email-input" class="col-sm-3 col-form-label">Apellido paterno</label>
                                 <div class="col-sm-9">
                                     <input class="form-control" type="text" value="" name="last_name1" required
-                                           data-toggle="tooltip" title="Apellido Paterno del Administrador"
-                                           placeholder="Apellido Paterno" id="example-email-input">
-                                    <small class="form-text text-muted">Apellido Paterno del Administrador</small>
+                                           data-toggle="tooltip" title="Apellido paterno del administrador"
+                                           placeholder="Apellido paterno" id="example-email-input">
+                                    <small class="form-text text-muted">Apellido paterno del administrador</small>
                                 </div>
                             </div>
                             <div class="form-divider"></div>
                             <div class="form-group row">
-                                <label for="example-email-input" class="col-sm-3 col-form-label">Apellido Materno</label>
+                                <label for="example-email-input" class="col-sm-3 col-form-label">Apellido materno</label>
                                 <div class="col-sm-9">
                                     <input class="form-control" type="text" value="" name="mother_last_name1"
-                                           data-toggle="tooltip" title="Apellido Materno del Administrador"
-                                           placeholder="Apellido Materno" id="example-email-input">
-                                    <small class="form-text text-muted">Apellido Materno del Administrador</small>
+                                           data-toggle="tooltip" title="Apellido materno del administrador"
+                                           placeholder="Apellido materno" id="example-email-input">
+                                    <small class="form-text text-muted">Apellido materno del administrador</small>
                                 </div>
                             </div>
                             <div class="form-divider"></div>
@@ -120,9 +120,9 @@
                                 <label for="example-lastname1-input" class="col-sm-3 col-form-label">Email</label>
                                 <div class="col-sm-9">
                                     <input class="form-control" type="email" value="" name="email"
-                                           data-toggle="tooltip" title="Email del Administrador"
+                                           data-toggle="tooltip" title="Email del administrador"
                                            placeholder="Email" id="example-email-input">
-                                    <small class="form-text text-muted">Email del Administrador</small>
+                                    <small class="form-text text-muted">Email del administrador</small>
                                 </div>
                             </div>
                             <div class="form-divider"></div>
@@ -140,13 +140,13 @@
                                 <label class="col-sm-3 col-form-label">Comunidad</label>
                                 <div class="col-sm-9">
                                     <select class="form-control" name="communityID" 
-                                            data-toggle="tooltip" title="Nombre de la Comunidad">
+                                            data-toggle="tooltip" title="Nombre de la comunidad">
                                         @foreach (var item in Model.communityList)
                                         {
                                             <option value="@item.id">@item.first_name</option>
                                         }
                                     </select>
-                                    <small class="form-text text-muted">Categoría del suplidor</small>
+                                    <small class="form-text text-muted">Lista de comunidades</small>
                                 </div>
                             </div>
                             @*<div class="form-divider"></div>
@@ -163,7 +163,7 @@
                                         <small class="form-text text-muted">Categoría del suplidor</small>
                                     </div>
                                 </div>*@
-                            <a href=""><button type="submit" class="btn btn-primary waves-effect waves-light">Guardar Administrador</button></a>
+                            <a href=""><button type="submit" class="btn btn-primary waves-effect waves-light">Guardar</button></a>
                             <a href="javascript:history.back()"><button type="button" class="btn btn-danger waves-effect waves-light">Cancelar</button></a>
                         </div>
                     }

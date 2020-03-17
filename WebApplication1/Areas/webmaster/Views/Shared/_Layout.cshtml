@@ -186,6 +186,7 @@
                             </li>
                         }
 
+
                         @if (Model.side_sub_menu == "titulares_listado")
                         {
                             <li class="active">
@@ -196,6 +197,19 @@
                         {
                             <li>
                                 <a href="@Url.Action("listado", "titulares", new { area = "webmaster" })" class="waves-effect waves-light"><i class="mdi mdi-account-multiple"></i><span>Titulares </span></a>
+                            </li>
+                        }
+
+                        @if (Model.side_sub_menu == "supplier_directory")
+                        {
+                            <li class="active">
+                                <a href="@Url.Action("listado", "suplidores", new { area = "webmaster" })" class="waves-effect waves-light active"><i class="mdi mdi-account-key"></i><span> Directorio de suplidores </span></a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li>
+                                <a href="@Url.Action("listado", "suplidores", new { area = "webmaster" })" class="waves-effect waves-light"><i class="mdi mdi-account-key"></i><span> Directorio de suplidores </span></a>
                             </li>
                         }
 
@@ -213,34 +227,34 @@
                         }
 
 
-                 
-                                    @if (Model.side_sub_menu == "comunicaciones_blog")
-                                    {
-                                        <li class="active">
-                                            <a href="@Url.Action("blog", "comunicaciones", new { area = "webmaster" })" class="active"><i class="mdi mdi-message-draw"></i>Blog General</a>
-                                        </li>
-                                    }
-                                    else
-                                    {
-                                        <li>
-                                            <a href="@Url.Action("blog", "comunicaciones", new { area = "webmaster" })"><i class="mdi mdi-message-draw"></i>Blog General</a>
-                                        </li>
-                                    }
 
-                                    @if (Model.side_sub_menu == "comunicaciones_privados")
-                                    {
-                    <li class="active">
-                      
-                        <a href="@Url.Action("privados", "comunicaciones", new { area = "webmaster" })" class="active">  <i class="mdi mdi-message-text"></i> Mensajería</a>
-                    </li>
-                                    }
-                                    else
-                                    {
-                                        <li>
-                                            <a href="@Url.Action("privados", "comunicaciones", new { area = "webmaster" })"><i class="mdi mdi-message-text"></i>Mensajería</a>
-                                        </li>
-                                    }
-                              
+                        @if (Model.side_sub_menu == "comunicaciones_blog")
+                        {
+                            <li class="active">
+                                <a href="@Url.Action("blog", "comunicaciones", new { area = "webmaster" })" class="active"><i class="mdi mdi-message-draw"></i>Blog General</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li>
+                                <a href="@Url.Action("blog", "comunicaciones", new { area = "webmaster" })"><i class="mdi mdi-message-draw"></i>Blog General</a>
+                            </li>
+                        }
+
+                        @if (Model.side_sub_menu == "comunicaciones_privados")
+                        {
+                            <li class="active">
+
+                                <a href="@Url.Action("privados", "comunicaciones", new { area = "webmaster" })" class="active">  <i class="mdi mdi-message-text"></i> Mensajería</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li>
+                                <a href="@Url.Action("privados", "comunicaciones", new { area = "webmaster" })"><i class="mdi mdi-message-text"></i>Mensajería</a>
+                            </li>
+                        }
+
 
                         @*<li class="has_sub">
             @if (Model.side_menu == "facilidades")

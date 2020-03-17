@@ -13,13 +13,13 @@
                 <div class="page-title-box">
                     <div class="float-left">
                         <div class="breadcrumb float-md-right">
-                            <h4 class="page-title">Editar Suplidor</h4>
+                            <h4 class="page-title">Editar suplidor</h4>
                         </div>
                     </div>
                     <div class="float-right">
                         <ul class="breadcrumb float-md-right">
                             <li class="breadcrumb-item"><a href="@Url.Action("panel", "control", new { area = "webmaster" })" class="text-success"><i class="mdi mdi-home-modern"></i> Panel de Control</a></li>
-                            <li class="breadcrumb-item active">Editar Suplidor</li>
+                            <li class="breadcrumb-item active">Editar suplidor</li>
                         </ul>
                     </div>
                 </div>
@@ -52,7 +52,7 @@
                         @Html.AntiForgeryToken()
                         <input type="hidden" name="editID" value="@Model.editSupplier.id" />
                         <div class="card-body">
-                            <h5 class="d-inline-block">Compañía 1 - John Doe</h5>
+                            <h5 class="d-inline-block">@Model.editSupplier.company - @Model.editSupplier.contact_name</h5>
                             <div class="form-divider"></div>
                             <div class="form-group row">
                                 <div class="col-sm-3">
@@ -81,11 +81,11 @@
                             </div>
                             <div class="form-divider"></div>
                             <div class="form-group row">
-                                <label for="example-email-input" class="col-sm-3 col-form-label">Compañía Suplidor</label>
+                                <label for="example-email-input" class="col-sm-3 col-form-label">Compañía suplidor</label>
                                 <div class="col-sm-9">
                                     <input class="form-control" type="text" value="@Model.editSupplier.company"
                                            data-toggle="tooltip" title="Nombre de la compañía del suplidor"
-                                           placeholder="Compañía Suplidor" id="example-email-input" name="company"/>
+                                           placeholder="Compañía suplidor" id="example-email-input" name="company"/>
                                     <small class="form-text text-muted">Nombre de la compañía del suplidor</small>
                                 </div>
                             </div>
@@ -182,7 +182,7 @@
                                     <small class="form-text text-muted">Por ejemplo: wwww.suplidores.com</small>
                                 </div>
                             </div>
-                            <a href=""><button type="submit" class="btn btn-primary waves-effect waves-light">Editar Suplidor</button></a>
+                            <a href=""><button type="submit" class="btn btn-primary waves-effect waves-light">Guardar</button></a>
                             <a href=""><button type="button" class="btn btn-danger waves-effect waves-light">Cancelar</button></a>
                         </div>
                     }

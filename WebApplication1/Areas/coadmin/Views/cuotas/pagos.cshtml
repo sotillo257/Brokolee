@@ -1,7 +1,7 @@
 ﻿
 @{
     ViewBag.Title = "pagos";
-    Page.Title = "Pagos - Brokolee Software";
+    Page.Title = "Listado de pagos - Brokolee Software";
 }
 
 <div class="page-content-wrapper">
@@ -19,7 +19,7 @@
                     <div class="float-right">
                         <ul class="breadcrumb float-md-right">
                             <li class="breadcrumb-item"><a href="@Url.Action("panel", "control", new { area = "coadmin" })" class="text-success"><i class="mdi mdi-home-modern"></i> Panel de Control</a></li>
-                            <li class="breadcrumb-item active">Listado de Pagos</li>
+                            <li class="breadcrumb-item active">Listado de pagos</li>
                         </ul>
                     </div>
                 </div>
@@ -49,7 +49,7 @@
                                     </span>
                                 </div>
                                 <div class="input-group col-md-6">
-                                    <label class="col-sm-6 col-md-4 col-form-label">Filtrar por Estado</label>
+                                    <label class="col-sm-6 col-md-4 col-form-label">Filtrar por estado</label>
                                     <div class="col-sm-6 col-md-8">
                                         <select class="form-control" name="searchState" onchange="this.form.submit()">
                                             <option value="-1">Elije un estado</option>
@@ -92,8 +92,8 @@
                                         <th class="f-b">Nombre</th>
                                         <th class="f-b">Apellido</th>
                                         <th class="f-b">Email</th>
-                                        <th class="f-b">Fecha de Emision</th>
-                                        <th class="f-b">Fecha de Pago</th>
+                                        <th class="f-b">Fecha de emisión</th>
+                                        <th class="f-b">Fecha de pago</th>
                                         <th class="f-b">Cantidad</th>
                                         <th class="f-b">Método</th>
                                         <th class="f-b">Estado</th>
