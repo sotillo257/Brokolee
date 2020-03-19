@@ -150,14 +150,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             @if (Model.side_menu == "control")
                             {
                                 <a href="@Url.Action("panel", "control")" class="waves-effect waves-light active">
-                                    <i class="mdi mdi-home-modern"></i>Panel de Control
+                                    <i class="mdi mdi-home-modern"></i>Panel de control
                                 </a>
 
                             }
                             else
                             {
                                 <a href="@Url.Action("panel", "control")" class="waves-effect waves-light">
-                                    <i class="mdi mdi-home-modern"></i>Panel de Control
+                                    <i class="mdi mdi-home-modern"></i>Panel de control
                                 </a>
                             }
                         </li>
@@ -428,11 +428,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <li>
                             @if (Model.side_menu == "tecnico")
                             {
-                                <a href="@Url.Action("soporte", "tecnico")" class="waves-effect waves-light active"><i class="mdi mdi-comment-processing"></i><span> Soporte Técnico </span></a>
+                                <a href="@Url.Action("soporte", "tecnico")" class="waves-effect waves-light active"><i class="mdi mdi-comment-processing"></i><span> Soporte técnico </span></a>
                             }
                             else
                             {
-                                <a href="@Url.Action("soporte", "tecnico")" class="waves-effect waves-light"><i class="mdi mdi-comment-processing"></i><span> Soporte Técnico </span></a>
+                                <a href="@Url.Action("soporte", "tecnico")" class="waves-effect waves-light"><i class="mdi mdi-comment-processing"></i><span> Soporte técnico </span></a>
                             }
                         </li>
 
@@ -444,33 +444,33 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                     <li>
                                         @if (Model.side_sub_menu == "uso_privacidad")
                                         {
-                                            <a href="@Url.Action("privacidad", "uso")" class="active">Aviso de Privacidad</a>
+                                            <a href="@Url.Action("privacidad", "uso")" class="active">Aviso de privacidad</a>
                                         }
                                         else
                                         {
-                                            <a href="@Url.Action("privacidad", "uso")">Aviso de Privacidad</a>
+                                            <a href="@Url.Action("privacidad", "uso")">Aviso de privacidad</a>
                                         }
                                     </li>
                                     <li>
                                         @if (Model.side_sub_menu == "uso_terminos")
                                         {
-                                            <a href="@Url.Action("terminos", "uso")" class="active">Términos de Uso</a>
+                                            <a href="@Url.Action("terminos", "uso")" class="active">Términos de uso</a>
 
                                         }
                                         else
                                         {
-                                            <a href="@Url.Action("terminos", "uso")">Términos de Uso</a>
+                                            <a href="@Url.Action("terminos", "uso")">Términos de uso</a>
                                         }
                                     </li>
 
                                     <li>
                                         @if (Model.side_sub_menu == "uso_derechos")
                                         {
-                                            <a href="@Url.Action("derechos", "uso")" class="active">Derechos Reservados</a>
+                                            <a href="@Url.Action("derechos", "uso")" class="active">Derechos reservados</a>
                                         }
                                         else
                                         {
-                                            <a href="@Url.Action("derechos", "uso")">Derechos Reservados</a>
+                                            <a href="@Url.Action("derechos", "uso")">Derechos reservados</a>
                                         }
                                     </li>
                                 </ul>
@@ -479,9 +479,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             {
                                 <a href="javascript:void(0);" class="waves-effect waves-light"><i class="mdi mdi-copyright"></i> <span> Políticas de Uso </span> <span class="float-right"><i class="mdi mdi-chevron-right"></i></span></a>
                                 <ul class="list-unstyled">
-                                    <li><a href="@Url.Action("privacidad", "uso")">Aviso de Privacidad</a></li>
-                                    <li><a href="@Url.Action("terminos", "uso")">Términos de Uso</a></li>
-                                    <li><a href="@Url.Action("derechos", "uso")">Derechos Reservados</a></li>
+                                    <li><a href="@Url.Action("privacidad", "uso")">Aviso de privacidad</a></li>
+                                    <li><a href="@Url.Action("terminos", "uso")">Términos de uso</a></li>
+                                    <li><a href="@Url.Action("derechos", "uso")">Derechos reservados</a></li>
                                 </ul>
                             }
 
@@ -519,7 +519,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                             {
                                                 <span class="badge badge-danger float-right">@Model.messageCount</span>
                                             }
-                                            Mensajes Privados
+                                            Mensajes privados
                                         </h5>
                                     </div>
                                     @foreach (var item in Model.pubMessageList)

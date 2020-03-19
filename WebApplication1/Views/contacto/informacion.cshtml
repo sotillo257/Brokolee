@@ -1,7 +1,7 @@
 ﻿
 @{
     ViewBag.Title = "informacion";
-    Page.Title = "Información de Contacto - Brokolee Software";
+    Page.Title = "Información de contacto - Brokolee Software";
 }
 
 <div class="page-content-wrapper">
@@ -13,13 +13,13 @@
                 <div class="page-title-box">
                     <div class="float-left">
                         <div class="breadcrumb float-md-right">
-                            <h4 class="page-title">Información de Contacto</h4>
+                            <h4 class="page-title">Información de contacto</h4>
                         </div>
                     </div>
                     <div class="float-right">
                         <ul class="breadcrumb float-md-right">
-                            <li class="breadcrumb-item"><a href="@Url.Action("panel", "control")" class="text-success"><i class="mdi mdi-home-modern"></i> Panel de Control</a></li>
-                            <li class="breadcrumb-item active">Información de Contacto</li>
+                            <li class="breadcrumb-item"><a href="@Url.Action("panel", "control")" class="text-success"><i class="mdi mdi-home-modern"></i> Panel de control</a></li>
+                            <li class="breadcrumb-item active">Información de contacto</li>
                         </ul>
                     </div>
                 </div>
@@ -32,12 +32,12 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="form-group row">
-                            <label for="example-email-input" class="col-sm-3 col-form-label">Compañía Administración</label>
+                            <label for="example-email-input" class="col-sm-3 col-form-label">Compañía administración</label>
                             <div class="col-sm-9">
                                 <input class="form-control" type="email" value="@Model.contactinfo.company_admin" readonly
-                                       placeholder="Compañía Administración" id="example-email-input" 
-                                       data-toggle="tooltip" title="Nombre de Compañía de Administración"/>
-                                <small class="form-text text-muted">Nombre de Compañía de Administración</small>
+                                       placeholder="Compañía administración" id="example-email-input" 
+                                       data-toggle="tooltip" title="Nombre de compañía de administración"/>
+                                <small class="form-text text-muted">Nombre de compañía de administración</small>
                             </div>
                         </div>
                         <div class="form-divider"></div>
@@ -46,12 +46,12 @@
                             <div class="col-sm-9">
                                 <input class="form-control" type="text" value="@Model.contactinfo.coordinator" readonly
                                        placeholder="Administrador o Coordinador" id="example-name1-input"
-                                       data-toggle="tooltip" title="Administrador o Coordinador de Administración" />
-                                <small class="form-text text-muted">Administrador o Coordinador de Administración</small>
+                                       data-toggle="tooltip" title="Administrador o Coordinador de administración" />
+                                <small class="form-text text-muted">Administrador o Coordinador de administración</small>
                             </div>
                         </div>
                         <div class="form-divider"></div>
-                        <h6 class="mt-0 header-title">Junta de Directores</h6>
+                        <h6 class="mt-0 header-title">Junta de directores</h6>
                         <div class="form-group row">
                             <label for="example-lastname1-input" class="col-sm-3 col-form-label">Presidente</label>
                             <div class="col-sm-9">
@@ -76,60 +76,60 @@
                             <label for="example-lastname1-input" class="col-sm-3 col-form-label">Tesorero</label>
                             <div class="col-sm-9">
                                 <input class="form-control" type="text" value="@Model.contactinfo.treasurer" readonly
-                                       placeholder="Nombre del Tesorero" id="example-lastname1-input"
-                                       data-toggle="tooltip" title="Nombre completo del Tesorero" />
-                                <small class="form-text text-muted">Nombre completo del Tesorero</small>
+                                       placeholder="Nombre del tesorero" id="example-lastname1-input"
+                                       data-toggle="tooltip" title="Nombre completo del tesorero" />
+                                <small class="form-text text-muted">Nombre completo del tesorero</small>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="example-lastname1-input" class="col-sm-3 col-form-label">Secretario</label>
                             <div class="col-sm-9">
                                 <input class="form-control" type="text" value="@Model.contactinfo.secretary" readonly
-                                       placeholder="Nombre del Secretario" id="example-lastname1-input"
-                                       data-toggle="tooltip" title="Nombre completo del Secretario"
+                                       placeholder="Nombre del secretario" id="example-lastname1-input"
+                                       data-toggle="tooltip" title="Nombre completo del secretario"
                                        />
-                                <small class="form-text text-muted">Nombre completo del Secretario</small>
+                                <small class="form-text text-muted">Nombre completo del secretario</small>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="example-lastname1-input" class="col-sm-3 col-form-label">Vocal</label>
                             <div class="col-sm-9">
                                 <input class="form-control" type="text" value="@Model.contactinfo.vocal1" readonly
-                                       placeholder="Nombre del Vocal" id="example-lastname1-input">
-                                <small class="form-text text-muted">Nombre completo del Vocal</small>
+                                       placeholder="Nombre del vocal" id="example-lastname1-input">
+                                <small class="form-text text-muted">Nombre completo del vocal</small>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="example-lastname1-input" class="col-sm-3 col-form-label">Vocal</label>
                             <div class="col-sm-9">
                                 <input class="form-control" type="text" value="@Model.contactinfo.vocal2" readonly
-                                       placeholder="Nombre del Vocal" id="example-lastname1-input">
-                                <small class="form-text text-muted">Nombre completo del Vocal</small>
+                                       placeholder="Nombre del vocal" id="example-lastname1-input">
+                                <small class="form-text text-muted">Nombre completo del vocal</small>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="example-lastname1-input" class="col-sm-3 col-form-label">Vocal</label>
                             <div class="col-sm-9">
                                 <input class="form-control" type="text" value="@Model.contactinfo.vocal3" readonly
-                                       placeholder="Nombre del Vocal" id="example-lastname1-input">
-                                <small class="form-text text-muted">Nombre completo del Vocal</small>
+                                       placeholder="Nombre del vocal" id="example-lastname1-input">
+                                <small class="form-text text-muted">Nombre completo del vocal</small>
                             </div>
                         </div>
                         <div class="form-divider"></div>
                         <div class="form-group row">
-                            <label for="example-lastname1-input" class="col-sm-3 col-form-label">Dirección Física</label>
+                            <label for="example-lastname1-input" class="col-sm-3 col-form-label">Dirección física</label>
                             <div class="col-sm-9">
                                 <input class="form-control" type="text" value="@Model.contactinfo.phy_address" readonly
-                                       placeholder="Dirección Física" id="example-lastname1-input">
+                                       placeholder="Dirección física" id="example-lastname1-input">
                                 <small class="form-text text-muted">Dirección física</small>
                             </div>
                         </div>
                         <div class="form-divider"></div>
                         <div class="form-group row">
-                            <label for="example-lastname1-input" class="col-sm-3 col-form-label">Dirección Postal</label>
+                            <label for="example-lastname1-input" class="col-sm-3 col-form-label">Dirección postal</label>
                             <div class="col-sm-9">
                                 <input class="form-control" type="text" value="@Model.contactinfo.postal_address" readonly
-                                       placeholder="Dirección Postal" id="example-lastname1-input"/>
+                                       placeholder="Dirección postal" id="example-lastname1-input"/>
                                 <small class="form-text text-muted">Dirección postal</small>
                             </div>
                         </div>

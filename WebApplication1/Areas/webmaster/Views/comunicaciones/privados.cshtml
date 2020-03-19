@@ -1,7 +1,7 @@
 ﻿
 @{
     ViewBag.Title = "privados";
-    Page.Title = "Mensajes Privados - Brokolee Software";
+    Page.Title = "Mensajes privados - Brokolee Software";
 }
 
 <div class="page-content-wrapper">
@@ -13,13 +13,13 @@
                 <div class="page-title-box">
                     <div class="float-left">
                         <div class="breadcrumb float-md-right">
-                            <h4 class="page-title">Mensajes Privados</h4>
+                            <h4 class="page-title">Mensajes privados</h4>
                         </div>
                     </div>
                     <div class="float-right">
                         <ul class="breadcrumb float-md-right">
-                            <li class="breadcrumb-item"><a href="@Url.Action("panel", "control", new { area = "webmaster" })" class="text-success"><i class="mdi mdi-home-modern"></i> Panel de Control</a></li>
-                            <li class="breadcrumb-item active">Mensajes Privados</li>
+                            <li class="breadcrumb-item"><a href="@Url.Action("panel", "control", new { area = "webmaster" })" class="text-success"><i class="mdi mdi-home-modern"></i> Panel de control</a></li>
+                            <li class="breadcrumb-item active">Mensajes privados</li>
                         </ul>
                     </div>
                 </div>
@@ -40,7 +40,7 @@
                     <div class="card-body">
                         <div class="row form-material">
                             <div class="col-md-4 mb-4">
-                                <h5><i class="mdi mdi-comment-processing"></i> Mensajes Privados <span class="float-right"><a href=""><i class="mdi mdi-lead-pencil"></i></a></span></h5>
+                                <h5><i class="mdi mdi-comment-processing"></i> Mensajes privados <span class="float-right"><a href=""><i class="mdi mdi-lead-pencil"></i></a></span></h5>
                                 <div class="form-divider"></div>
                                 <div style="overflow-y: auto; height: 500px;" id="connected_users_list">
                                     @foreach (var item in Model.onlineUserList)

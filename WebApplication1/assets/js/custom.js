@@ -93,7 +93,7 @@ $(document).ready(function() {
     }
 } );
 
-// tabla Tareas Completadas //
+// tabla Tareas completadas //
 $(document).ready(function() {
     var dataTable_tareas_completadas = $("#dataTable-tareas-completadas").DataTable( {      
          //"searching": false,
@@ -115,7 +115,7 @@ $(document).ready(function() {
     }
 });
 
-// tabla Calendario de Eventos Registrados //
+// tabla Calendario de Eventos registrados //
 $(document).ready(function() {
     $("#dataTable-eventos-registrados").DataTable( {      
          "searching": false,

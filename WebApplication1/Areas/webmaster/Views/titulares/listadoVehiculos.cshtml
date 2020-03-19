@@ -13,12 +13,12 @@
                 <div class="page-title-box">
                     <div class="float-left">
                         <div class="breadcrumb float-md-right">
-                            <h4 class="page-title">Listado de Vehículos</h4>
+                            <h4 class="page-title">Listado de vehículos</h4>
                         </div>
                     </div>
                     <div class="float-right">
                         <ul class="breadcrumb float-md-right">
-                            <li class="breadcrumb-item"><a href="@Url.Action("panel", "control", new { area = "webmaster" })" class="text-success"><i class="mdi mdi-home-modern"></i> Panel de Control</a></li>
+                            <li class="breadcrumb-item"><a href="@Url.Action("panel", "control", new { area = "webmaster" })" class="text-success"><i class="mdi mdi-home-modern"></i> Panel de control</a></li>
                             <li class="breadcrumb-item active">Listado de vehículos</li>
                         </ul>
                     </div>
@@ -145,13 +145,13 @@
         <!-- end back button -->
 
     </div><!-- container -->
-    <form id="exportForm" method="post" action="@Url.Action("ExportCSV", "titulares", new { area = "coadmin", searchStr = Model.searchStr })">
+    <form id="exportForm" method="post" action="@Url.Action("ExportCSV", "titulares", new { area = "webmaster", searchStr = Model.searchStr })">
         <input type="submit" style="display: none;" id="id_submit_csv" />
     </form>
 
     <form method="post" id="csvForm" enctype="multipart/form-data"
           style="display: inline-block"
-          action="@Url.Action("ImportCsv", "titulares", new { area = "coadmin" })">
+          action="@Url.Action("ImportCsv", "titulares", new { area = "webmaster" })">
         @Html.AntiForgeryToken()
         <input type="file" name="csv_file" id="id_titular_file_csv" style="display: none;" accept=".csv">
 

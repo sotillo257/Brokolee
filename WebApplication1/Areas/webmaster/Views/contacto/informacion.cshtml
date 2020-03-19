@@ -1,7 +1,7 @@
 ﻿
 @{
     ViewBag.Title = "informacion";
-    Page.Title = "Información de Contacto - Brokolee Software";
+    Page.Title = "Información de contacto - Brokolee Software";
 }
 
 <div class="page-content-wrapper">
@@ -13,13 +13,13 @@
                 <div class="page-title-box">
                     <div class="float-left">
                         <div class="breadcrumb float-md-right">
-                            <h4 class="page-title">Información de Contacto</h4>
+                            <h4 class="page-title">Información de contacto</h4>
                         </div>
                     </div>
                     <div class="float-right">
                         <ul class="breadcrumb float-md-right">
-                            <li class="breadcrumb-item"><a href="@Url.Action("panel", "control", new { area = "webmaster" })" class="text-success"><i class="mdi mdi-home-modern"></i> Panel de Control</a></li>
-                            <li class="breadcrumb-item active">Información de Contacto</li>
+                            <li class="breadcrumb-item"><a href="@Url.Action("panel", "control", new { area = "webmaster" })" class="text-success"><i class="mdi mdi-home-modern"></i> Panel de control</a></li>
+                            <li class="breadcrumb-item active">Información de contacto</li>
                         </ul>
                     </div>
                 </div>
@@ -51,22 +51,22 @@
                         }
                         <div class="card-body">
                             <div class="form-group row">
-                                <label for="example-email-input" class="col-sm-3 col-form-label">Compañía Administración</label>
+                                <label for="example-email-input" class="col-sm-3 col-form-label">Compañía administración</label>
                                 <div class="col-sm-9">
                                     @if (Model.editContactInfo == null)
                                     {
                                         <input class="form-control" type="email" value="" required name="company_admin"
-                                                data-toggle="tooltip" title="Nombre de Compañía de Administración"
-                                               placeholder="Compañía Administración" id="example-email-input">
+                                                data-toggle="tooltip" title="Nombre de compañía de administración"
+                                               placeholder="Compañía administración" id="example-email-input">
                                     }
                                     else
                                     {
                                         <input class="form-control" type="email" value="@Model.editContactInfo.company_admin"
                                                required name="company_admin"
-                                               data-toggle="tooltip" title="Nombre de Compañía de Administración"
-                                               placeholder="Compañía Administración" id="example-email-input">
+                                               data-toggle="tooltip" title="Nombre de compañía de administración"
+                                               placeholder="Compañía administración" id="example-email-input">
                                     }
-                                    <small class="form-text text-muted">Nombre de Compañía de Administración</small>
+                                    <small class="form-text text-muted">Nombre de compañía de administración</small>
                                 </div>
                             </div>
                             <div class="form-divider"></div>
@@ -76,20 +76,20 @@
                                     @if (Model.editContactInfo == null)
                                     {
                                         <input class="form-control" type="text" value="" name="coordinator"
-                                               data-toggle="tooltip" title="Administrador o Coordinador de Administración"
+                                               data-toggle="tooltip" title="Administrador o Coordinador de administración"
                                                placeholder="Administrador o Coordinador" id="example-name1-input">
                                     }
                                     else
                                     {
                                         <input class="form-control" type="text" value="@Model.editContactInfo.coordinator" name="coordinator"
-                                               data-toggle="tooltip" title="Administrador o Coordinador de Administración"
+                                               data-toggle="tooltip" title="Administrador o Coordinador de administración"
                                                placeholder="Administrador o Coordinador" id="example-name1-input">
                                     }
-                                    <small class="form-text text-muted">Administrador o Coordinador de Administración</small>
+                                    <small class="form-text text-muted">Administrador o Coordinador de administración</small>
                                 </div>
                             </div>
                             <div class="form-divider"></div>
-                            <h6 class="mt-0 header-title">Junta de Directores</h6>
+                            <h6 class="mt-0 header-title">Junta de directores</h6>
                             <div class="form-group row">
                                 <label for="example-lastname1-input" class="col-sm-3 col-form-label">Presidente</label>
                                 <div class="col-sm-9">
@@ -133,16 +133,16 @@
                                     @if (Model.editContactInfo == null)
                                     {
                                         <input class="form-control" type="text" value="" name="treasurer"
-                                               data-toggle="tooltip" title="Nombre completo del Tesorero"
-                                               placeholder="Nombre del Tesorero" id="example-lastname1-input">
+                                               data-toggle="tooltip" title="Nombre completo del tesorero"
+                                               placeholder="Nombre del tesorero" id="example-lastname1-input">
                                     }
                                     else
                                     {
                                         <input class="form-control" type="text" value="@Model.editContactInfo.treasurer" name="treasurer"
-                                               data-toggle="tooltip" title="Nombre completo del Tesorero"
-                                               placeholder="Nombre del Tesorero" id="example-lastname1-input">
+                                               data-toggle="tooltip" title="Nombre completo del tesorero"
+                                               placeholder="Nombre del tesorero" id="example-lastname1-input">
                                     }
-                                    <small class="form-text text-muted">Nombre completo del Tesorero</small>
+                                    <small class="form-text text-muted">Nombre completo del tesorero</small>
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -151,16 +151,16 @@
                                     @if (Model.editContactInfo == null)
                                     {
                                         <input class="form-control" type="text" value="" name="secretary"
-                                               data-toggle="tooltip" title="Nombre completo del Secretario"
-                                               placeholder="Nombre del Secretario" id="example-lastname1-input">
+                                               data-toggle="tooltip" title="Nombre completo del secretario"
+                                               placeholder="Nombre del secretario" id="example-lastname1-input">
                                     }
                                     else
                                     {
                                         <input class="form-control" type="text" value="@Model.editContactInfo.secretary" name="secretary"
-                                               data-toggle="tooltip" title="Nombre completo del Secretario"
-                                               placeholder="Nombre del Secretario" id="example-lastname1-input">
+                                               data-toggle="tooltip" title="Nombre completo del secretario"
+                                               placeholder="Nombre del secretario" id="example-lastname1-input">
                                     }
-                                    <small class="form-text text-muted">Nombre completo del Secretario</small>
+                                    <small class="form-text text-muted">Nombre completo del secretario</small>
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -169,16 +169,16 @@
                                     @if (Model.editContactInfo == null)
                                     {
                                         <input class="form-control" type="text" value="" name="vocal1"
-                                               data-toggle="tooltip" title="Nombre completo del Vocal"
-                                               placeholder="Nombre del Vocal" id="example-lastname1-input">
+                                               data-toggle="tooltip" title="Nombre completo del vocal"
+                                               placeholder="Nombre del vocal" id="example-lastname1-input">
                                     }
                                     else
                                     {
                                         <input class="form-control" type="text" value="@Model.editContactInfo.vocal1" name="vocal1"
-                                               data-toggle="tooltip" title="Nombre completo del Vocal"
-                                               placeholder="Nombre del Vocal" id="example-lastname1-input">
+                                               data-toggle="tooltip" title="Nombre completo del vocal"
+                                               placeholder="Nombre del vocal" id="example-lastname1-input">
                                     }
-                                    <small class="form-text text-muted">Nombre completo del Vocal</small>
+                                    <small class="form-text text-muted">Nombre completo del vocal</small>
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -187,16 +187,16 @@
                                     @if (Model.editContactInfo == null)
                                     {
                                         <input class="form-control" type="text" value="" name="vocal2"
-                                               data-toggle="tooltip" title="Nombre completo del Vocal"
-                                               placeholder="Nombre del Vocal" id="example-lastname1-input">
+                                               data-toggle="tooltip" title="Nombre completo del vocal"
+                                               placeholder="Nombre del vocal" id="example-lastname1-input">
                                     }
                                     else
                                     {
                                         <input class="form-control" type="text" value="@Model.editContactInfo.vocal2" name="vocal2"
-                                               data-toggle="tooltip" title="Nombre completo del Vocal"
-                                               placeholder="Nombre del Vocal" id="example-lastname1-input">
+                                               data-toggle="tooltip" title="Nombre completo del vocal"
+                                               placeholder="Nombre del vocal" id="example-lastname1-input">
                                     }
-                                    <small class="form-text text-muted">Nombre completo del Vocal</small>
+                                    <small class="form-text text-muted">Nombre completo del vocal</small>
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -205,33 +205,33 @@
                                     @if (Model.editContactInfo == null)
                                     {
                                         <input class="form-control" type="text" value="" name="vocal3"
-                                               data-toggle="tooltip" title="Nombre completo del Vocal"
-                                               placeholder="Nombre del Vocal" id="example-lastname1-input">
+                                               data-toggle="tooltip" title="Nombre completo del vocal"
+                                               placeholder="Nombre del vocal" id="example-lastname1-input">
                                     }
                                     else
                                     {
                                         <input class="form-control" type="text" value="@Model.editContactInfo.vocal3" name="vocal3"
-                                               data-toggle="tooltip" title="Nombre completo del Vocal"
-                                               placeholder="Nombre del Vocal" id="example-lastname1-input">
+                                               data-toggle="tooltip" title="Nombre completo del vocal"
+                                               placeholder="Nombre del vocal" id="example-lastname1-input">
                                     }
-                                    <small class="form-text text-muted">Nombre completo del Vocal</small>
+                                    <small class="form-text text-muted">Nombre completo del vocal</small>
                                 </div>
                             </div>
                             <div class="form-divider"></div>
                             <div class="form-group row">
-                                <label for="example-lastname1-input" class="col-sm-3 col-form-label">Dirección Física</label>
+                                <label for="example-lastname1-input" class="col-sm-3 col-form-label">Dirección física</label>
                                 <div class="col-sm-9">
                                     @if (Model.editContactInfo == null)
                                     {
                                         <input class="form-control" type="text" value="" name="phy_address"
                                                data-toggle="tooltip" title="Dirección física"
-                                               placeholder="Dirección Física" id="example-lastname1-input">
+                                               placeholder="Dirección física" id="example-lastname1-input">
                                     }
                                     else
                                     {
                                         <input class="form-control" type="text" value="@Model.editContactInfo.phy_address"
                                                data-toggle="tooltip" title="Dirección física"
-                                               placeholder="Dirección Física" name="phy_address"
+                                               placeholder="Dirección física" name="phy_address"
                                                id="example-lastname1-input">
                                     }
                                     <small class="form-text text-muted">Dirección física</small>
@@ -239,19 +239,19 @@
                             </div>
                             <div class="form-divider"></div>
                             <div class="form-group row">
-                                <label for="example-lastname1-input" class="col-sm-3 col-form-label">Dirección Postal</label>
+                                <label for="example-lastname1-input" class="col-sm-3 col-form-label">Dirección postal</label>
                                 <div class="col-sm-9">
                                     @if (Model.editContactInfo == null)
                                     {
                                         <input class="form-control" type="text" value="" name="postal_address" required
                                                data-toggle="tooltip" title="Dirección postal"
-                                               placeholder="Dirección Postal" id="example-lastname1-input">
+                                               placeholder="Dirección postal" id="example-lastname1-input">
                                     }
                                     else
                                     {
                                         <input class="form-control" type="text" value="@Model.editContactInfo.postal_address"
                                                name="postal_address" required data-toggle="tooltip" title="Dirección postal"
-                                               placeholder="Dirección Postal" id="example-lastname1-input">
+                                               placeholder="Dirección postal" id="example-lastname1-input">
                                     }
                                     <small class="form-text text-muted">Dirección postal</small>
                                 </div>
@@ -314,7 +314,7 @@
                                 </div>
                             </div>
                             <div class="form-divider"></div>
-                            <a href=""><button type="submit" class="btn btn-primary waves-effect waves-light">Editar Información de Contacto</button></a>
+                            <a href=""><button type="submit" class="btn btn-primary waves-effect waves-light">Guardar</button></a>
                             <a href=""><button type="button" class="btn btn-danger waves-effect waves-light">Cancelar</button></a>
                         </div>
                     }

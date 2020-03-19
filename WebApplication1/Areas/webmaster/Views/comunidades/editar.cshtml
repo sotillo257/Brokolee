@@ -20,7 +20,7 @@
                     </div>
                     <div class="float-right">
                         <ul class="breadcrumb float-md-right">
-                            <li class="breadcrumb-item"><a href="@Url.Action("panel", "control", new { area = "webmaster" } )" class="text-success"><i class="mdi mdi-home-modern"></i> Panel de Control</a></li>
+                            <li class="breadcrumb-item"><a href="@Url.Action("panel", "control", new { area = "webmaster" } )" class="text-success"><i class="mdi mdi-home-modern"></i> Panel de control</a></li>
                             <li class="breadcrumb-item active">Editar comunidad</li>
                         </ul>
                     </div>
@@ -59,7 +59,7 @@
                                     <input class="form-control" type="text" value="@Model.editCommunity.first_name"
                                            data-toggle="tooltip"
                                            placeholder="Nombre" id="example-email-input" name="first_name" required>
-                                    @* <small class="form-text text-muted">Nombre de la Comunidad</small>*@
+                                    @* <small class="form-text text-muted">Nombre de la comunidad</small>*@
                                 </div>
                             </div>
                             <div class="form-divider"></div>
@@ -68,7 +68,7 @@
                                 <div class="col-sm-9">
 
                                     <select class="form-control" id="AdminSelect" multiple="multiple" name="adminlist"
-                                            data-toggle="tooltip" title="Email del Administrador">
+                                            data-toggle="tooltip" title="Email del administrador">
 
                                         @foreach (var item in Model.coadminList)
                                         {
@@ -91,7 +91,7 @@
 
                                         }
                                     </select>
-                                    @* <small class="form-text text-muted">Email del Administrador</small>*@
+                                    @* <small class="form-text text-muted">Email del administrador</small>*@
                                 </div>
                             </div>
                             <div class="form-divider"></div>

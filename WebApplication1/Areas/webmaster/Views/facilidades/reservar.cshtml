@@ -1,7 +1,7 @@
 ﻿
 @{
     ViewBag.Title = "reservar";
-    Page.Title = "Reservar Facilidad - Brokolee Softwar";
+    Page.Title = "Reservar facilidad - Brokolee Softwar";
 }
 
 <div class="page-content-wrapper">
@@ -13,13 +13,13 @@
                 <div class="page-title-box">
                     <div class="float-left">
                         <div class="breadcrumb float-md-right">
-                            <h4 class="page-title">Reservar Facilidad</h4>
+                            <h4 class="page-title">Reservar facilidad</h4>
                         </div>
                     </div>
                     <div class="float-right">
                         <ul class="breadcrumb float-md-right">
-                            <li class="breadcrumb-item"><a href="@Url.Action("panel", "control", new { area = "webmaster" })" class="text-success"><i class="mdi mdi-home-modern"></i> Panel de Control</a></li>
-                            <li class="breadcrumb-item active">Reservar Facilidad</li>
+                            <li class="breadcrumb-item"><a href="@Url.Action("panel", "control", new { area = "webmaster" })" class="text-success"><i class="mdi mdi-home-modern"></i> Panel de control</a></li>
+                            <li class="breadcrumb-item active">Reservar facilidad</li>
                         </ul>
                     </div>
                 </div>
@@ -40,12 +40,12 @@
                     <div class="card-body">
                         <div class="row form-material">
                             <div class="col-md-6 mb-4">
-                                <h5 class="d-inline-block">1. Elije la fecha para reservar Gimnasio</h5>
+                                <h5 class="d-inline-block">Por favor elije la fecha para reservar:</h5>
                                 <div class="form-divider"></div>
                                 <div id='calendar' class="col-xl-12"></div>
                             </div>
                             <div class="col-md-6 mb-4">
-                                <h5 class="d-inline-block">2. Horarios disponibles para el 10 de Octubre de 2018</h5>
+                                <h5 class="d-inline-block">Horarios disponisables para reservar</h5>
                                 <div class="form-divider"></div>
                                 <div class="table-responsive">
                                     <table class="table-reservar" id="my-table">
@@ -183,7 +183,7 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="form-divider"></div>
-                                <a href=""><button type="button" class="btn btn-primary waves-effect waves-light">Reservar Facilidad</button></a>
+                                <a href=""><button type="button" class="btn btn-primary waves-effect waves-light">Guardar</button></a>
                                 <a href="@Url.Action("reservartwo", "facilidades", new { area = "webmaster" })"><button type="button" class="btn btn-danger waves-effect waves-light">Cancelar</button></a>
                             </div>
                         </div>

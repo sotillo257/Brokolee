@@ -1,7 +1,7 @@
 ﻿
 @{
     ViewBag.Title = "editar";
-    Page.Title = "Editar Contrato - Brokolee Software";
+    Page.Title = "Editar contrato - Brokolee Software";
 }
 
 <div class="page-content-wrapper">
@@ -13,13 +13,13 @@
                 <div class="page-title-box">
                     <div class="float-left">
                         <div class="breadcrumb float-md-right">
-                            <h4 class="page-title">Editar Contrato</h4>
+                            <h4 class="page-title">Editar contrato</h4>
                         </div>
                     </div>
                     <div class="float-right">
                         <ul class="breadcrumb float-md-right">
-                            <li class="breadcrumb-item"><a href="@Url.Action("panel", "control", new { area = "webmaster" })" class="text-success"><i class="mdi mdi-home-modern"></i> Panel de Control</a></li>
-                            <li class="breadcrumb-item active">Editar Contrato</li>
+                            <li class="breadcrumb-item"><a href="@Url.Action("panel", "control", new { area = "webmaster" })" class="text-success"><i class="mdi mdi-home-modern"></i> Panel de control</a></li>
+                            <li class="breadcrumb-item active">Editar contrato</li>
                         </ul>
                     </div>
                 </div>
@@ -49,20 +49,20 @@
                         @Html.AntiForgeryToken()
                         <input name="contractID" value="@Model.editContract.id" type="hidden" />
                         <div class="card-body">
-                            <h5 class="d-inline-block">Contraro de Prestación de Servicios 1</h5>
+                            <h5 class="d-inline-block">Contrato de prestación de servicios 1</h5>
                             <div class="form-divider"></div>
                             <div class="form-group row">
                                 <label for="example-email-input" class="col-sm-3 col-form-label">Nombre</label>
                                 <div class="col-sm-9">
                                     <input class="form-control" type="text" value="@Model.editContract.first_name" required
-                                           data-toggle="tooltip" title="Nombre del Contrato"
+                                           data-toggle="tooltip" title="Nombre del contrato"
                                            placeholder="Nombre" id="example-email-input" name="first_name">
-                                    <small class="form-text text-muted">Nombre del Contrato</small>
+                                    <small class="form-text text-muted">Nombre del contrato</small>
                                 </div>
                             </div>
                             <div class="form-divider"></div>
                             <div class="form-group row">
-                                <label for="example-date-input" class="col-sm-3 col-form-label">Fecha del Contrato</label>
+                                <label for="example-date-input" class="col-sm-3 col-form-label">Fecha del contrato</label>
                                 <div class="col-sm-9">
                                     <input class="form-control" type="date" required
                                            value="@Convert.ToDateTime(Model.editContract.date_contract).ToString("yyyy-MM-dd")"
@@ -85,7 +85,7 @@
                             </div>
                             <div class="form-divider"></div>
                             <div class="form-group row">
-                                <label for="example-name2-input" class="col-sm-3 col-form-label">Subir Contrato</label>
+                                <label for="example-name2-input" class="col-sm-3 col-form-label">Subir contrato</label>
                                 <div class="col-sm-9">
                                     <div class="input-group mt-2">
                                         <div class="custom-file">
@@ -100,9 +100,9 @@
                                 <label for="example-lastname1-input" class="col-sm-3 col-form-label">Descripción</label>
                                 <div class="col-sm-9">
                                     <textarea class="form-control" rows="3" placeholder="Descripción" 
-                                              data-toggle="tooltip" title="Descripción de la tarea"
+                                              data-toggle="tooltip" title="Descripción del contrato"
                                               name="description">@Model.editContract.description</textarea>
-                                    <small class="form-text text-muted">Descripción de la tarea</small>
+                                    <small class="form-text text-muted">Descripción del contrato</small>
                                 </div>
                             </div>
                             <div class="form-divider"></div>
@@ -156,7 +156,7 @@
                                 </div>
                             </div>
                             <div class="form-divider"></div>
-                            <a href=""><button type="submit" class="btn btn-primary waves-effect waves-light">Editar Contrato</button></a>
+                            <a href=""><button type="submit" class="btn btn-primary waves-effect waves-light">Guardar</button></a>
                             <a href=""><button type="button" class="btn btn-danger waves-effect waves-light">Cancelar</button></a>
                         </div>
                     }

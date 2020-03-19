@@ -24,7 +24,7 @@
                     </div>
                     <div class="float-right">
                         <ul class="breadcrumb float-md-right">
-                            <li class="breadcrumb-item"><a href="@Url.Action("panel", "control", new { area = "coadmin" })" class="text-success"><i class="mdi mdi-home-modern"></i> Panel de Control</a></li>
+                            <li class="breadcrumb-item"><a href="@Url.Action("panel", "control", new { area = "coadmin" })" class="text-success"><i class="mdi mdi-home-modern"></i> Panel de control</a></li>
                             <li class="breadcrumb-item active">Agregar entrada</li>
                         </ul>
                     </div>
@@ -63,7 +63,7 @@
                                     <input class="form-control" type="text" value="" name="title"
                                            data-toggle="tooltip" title="Título descriptivo del blog"
                                            placeholder="Título" id="example-email-input-1" required />
-                                    <small class="form-text text-muted">Título descriptivo del blog</small>
+                                    @*<small class="form-text text-muted">Título descriptivo del blog</small>*@
                                 </div>
                             </div>
                             <div class="form-divider"></div>
@@ -86,7 +86,7 @@
                                 </div>
                             </div>
                             <div class="form-divider"></div>
-                            <a href=""><button type="submit" class="btn btn-primary waves-effect waves-light">Agregar Blog</button></a>
+                            <a href=""><button type="submit" class="btn btn-primary waves-effect waves-light">Guardar</button></a>
                             <a href="@Url.Action("blog", "comunicaciones", new { area="coadmin" })"><button type="button" class="btn btn-danger waves-effect waves-light">Cancelar</button></a>
                         </div>
                     }

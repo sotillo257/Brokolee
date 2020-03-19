@@ -1,7 +1,7 @@
 ﻿
 @{
     ViewBag.Title = "editar";
-    Page.Title = "Editar Evento - Brokolee Software";
+    Page.Title = "Editar evento - Brokolee Software";
 }
 
 <div class="page-content-wrapper">
@@ -13,13 +13,13 @@
                 <div class="page-title-box">
                     <div class="float-left">
                         <div class="breadcrumb float-md-right">
-                            <h4 class="page-title">Editar Evento</h4>
+                            <h4 class="page-title">Editar evento</h4>
                         </div>
                     </div>
                     <div class="float-right">
                         <ul class="breadcrumb float-md-right">
-                            <li class="breadcrumb-item"><a href="@Url.Action("panel", "control", new { area = "webmaster" })" class="text-success"><i class="mdi mdi-home-modern"></i> Panel de Control</a></li>
-                            <li class="breadcrumb-item active">Editar Evento</li>
+                            <li class="breadcrumb-item"><a href="@Url.Action("panel", "control", new { area = "webmaster" })" class="text-success"><i class="mdi mdi-home-modern"></i> Panel de control</a></li>
+                            <li class="breadcrumb-item active">Editar evento</li>
                         </ul>
                     </div>
                 </div>
@@ -49,7 +49,7 @@
                         @Html.AntiForgeryToken()
                         <input type="hidden" value="@Model.editEvent.id" name="editID" />
                         <div class="card-body">
-                            <h5 class="d-inline-block">Aniversario del Condominio</h5>
+                            <h5 class="d-inline-block">Editar evento</h5>
                             <div class="form-divider"></div>
                             <div class="form-group row">
                                 <label for="example-email-input" class="col-sm-3 col-form-label">Nombre</label>
@@ -137,7 +137,7 @@
                                 <label for="example-lastname1-input" class="col-sm-3 col-form-label">Descripción</label>
                                 <div class="col-sm-9">
                                     <textarea class="form-control" rows="3" name="description" data-toggle="tooltip" title="Descripción del evento"
-                                              placeholder="Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.">@Model.editEvent.description</textarea>
+                                              placeholder="">@Model.editEvent.description</textarea>
                                     <small class="form-text text-muted">Descripción del evento</small>
                                 </div>
                             </div>
@@ -146,11 +146,11 @@
                                 <label for="example-lastname1-input" class="col-sm-3 col-form-label">Nota</label>
                                 <div class="col-sm-9">
                                     <textarea class="form-control" rows="3" name="note" data-toggle="tooltip" title="Nota escrita por el administrador"
-                                              placeholder="Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.">@Model.editEvent.note</textarea>
+                                              placeholder="">@Model.editEvent.note</textarea>
                                     <small class="form-text text-muted">Nota escrita por el administrador</small>
                                 </div>
                             </div>
-                            <a href=""><button type="submit" class="btn btn-primary waves-effect waves-light">Editar Evento</button></a>
+                            <a href=""><button type="submit" class="btn btn-primary waves-effect waves-light">Guardar</button></a>
                             <a href=""><button type="button" class="btn btn-danger waves-effect waves-light">Cancelar</button></a>
                         </div>
                     }
