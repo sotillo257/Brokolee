@@ -53,7 +53,6 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     viewModel.pubMessageList = pubMessageList;
                     viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
                     viewModel.communityName = ep.GetCommunityCoInfo(userId)[0];
-                    viewModel.communityApart = ep.GetCommunityCoInfo(userId)[1];
                     viewModel.bankDict = bankDict;
                     return View(viewModel);
                 }

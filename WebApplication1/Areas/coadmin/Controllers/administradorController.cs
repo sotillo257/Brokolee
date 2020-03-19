@@ -45,8 +45,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     viewModel.pubMessageList = pubMessageList;
                     viewModel.password = ep.Decrypt(curUser.password);
                     viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                    viewModel.communityName = ep.GetCommunityInfo(userId)[0];
-                    viewModel.communityApart = ep.GetCommunityInfo(userId)[1];
+                    viewModel.communityName = ep.GetCommunityInfo(userId)[0];                    
                     return View(viewModel);
                 }
                 catch(Exception ex)
