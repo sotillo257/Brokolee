@@ -13,6 +13,9 @@ namespace WebApplication1.Controllers
     {
         pjrdev_condominiosEntities entities = new pjrdev_condominiosEntities();
         EFPublicRepository ep = new EFPublicRepository();
+        List<Titulo> titulosList = new List<Titulo>();
+        List<community> listComunities = new List<community>();
+
         // GET: contacto
         public ActionResult informacion()
         {
@@ -36,6 +39,11 @@ namespace WebApplication1.Controllers
                     contactinfo contactinfo = entities.contactinfoes
                         .Where(m => m.user_id == curUser.create_userid).FirstOrDefault();
                     contactoViewModel viewModel = new contactoViewModel();
+
+                    titulosList = ep.GetTitulosByTitular(userId);
+                    listComunities = ep.GetCommunityListByTitular(titulosList);
+                    viewModel.communityList = listComunities;
+                    viewModel.communityID1 = Convert.ToInt64(Session["CURRENT_COMU"]);
                     viewModel.side_menu = "contacto";
                     viewModel.side_sub_menu = "";
                     viewModel.document_category_list = entities.document_type.ToList();
@@ -43,9 +51,7 @@ namespace WebApplication1.Controllers
                     viewModel.contactinfo = contactinfo;
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = pubMessageList;
-                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                    viewModel.communityName = ep.GetCommunityCoInfo(userId)[0];
-                    viewModel.communityApart = ep.GetCommunityCoInfo(userId)[1];
+                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);                    
                     return View(viewModel);
                 }
                 catch(Exception ex)

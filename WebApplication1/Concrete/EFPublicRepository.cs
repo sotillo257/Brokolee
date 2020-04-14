@@ -144,13 +144,46 @@ namespace WebApplication1.Concrete
                 communityName = community.first_name;
                 communityApart = community.apart;
                 cID = Convert.ToString(communityID);
-
-
             }
             list[0] = communityName;
             list[1] = communityApart;
             list[2] = cID;
             return list;
+        }     
+
+        public List<community> GetCommunityList(long userId)
+        {            
+            List<communuser> comxUser = entities.communusers.Where(x=> x.user_id == userId).ToList();
+            List<community> commList = new List<community>();            
+            if (comxUser != null)
+            {               
+                foreach (communuser item in comxUser) {
+                    community comSearch = entities.communities.Where(x => x.id == item.commun_id).FirstOrDefault();
+                    commList.Add(comSearch);
+                }                              
+            }           
+            return commList;
+        }
+
+        public List<community> GetCommunityListByTitular(List<Titulo> titulosList)
+        {            
+            List<community> listComunities = new List<community>();
+            foreach (Titulo item in titulosList)
+            {
+                bool containComm = listComunities.Any(x => x.id == item.community.id);
+                if (containComm != true)
+                {
+                    listComunities.Add(item.community);
+                }
+            }
+            return listComunities;
+        }
+
+        public List<Titulo> GetTitulosByTitular(long userId)
+        {
+            List<Titulo> titulosList = new List<Titulo>();
+            titulosList = entities.Titulos.Where(x => x.is_del != true && x.IdUser == userId).ToList();            
+            return titulosList;
         }
 
         public List<task> GetNotifiTaskList(long userID)
@@ -178,8 +211,7 @@ namespace WebApplication1.Concrete
                         taskList.Add(taskItem);
                     }
                 }
-            }
-            
+            }            
             return taskList;
         }
 

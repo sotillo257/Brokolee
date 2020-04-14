@@ -15,6 +15,10 @@ namespace WebApplication1.Controllers
     {
         pjrdev_condominiosEntities entities = new pjrdev_condominiosEntities();
         EFPublicRepository ep = new EFPublicRepository();
+
+        List<Titulo> titulosList = new List<Titulo>();
+        List<community> listComunities = new List<community>();
+
         // GET: comunicaciones
         public ActionResult blog()
         {
@@ -36,6 +40,11 @@ namespace WebApplication1.Controllers
                     user curUser = entities.users.Find(userId);
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                     comunicacionesViewModel viewModel = new comunicacionesViewModel();
+
+                    titulosList = ep.GetTitulosByTitular(userId);
+                    listComunities = ep.GetCommunityListByTitular(titulosList);
+                    viewModel.communityList = listComunities;
+                    viewModel.communityID1 = Convert.ToInt64(Session["CURRENT_COMU"]);
                     viewModel.side_menu = "comunicaciones";
                     viewModel.side_sub_menu = "comunicaciones_blog";
                     viewModel.document_category_list = entities.document_type.ToList();
@@ -43,9 +52,7 @@ namespace WebApplication1.Controllers
                     viewModel.blogList = entities.blogs.Where(m => m.user_id == userId).ToList();
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = pubMessageList;
-                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                    viewModel.communityName = ep.GetCommunityCoInfo(userId)[0];
-                    viewModel.communityApart = ep.GetCommunityCoInfo(userId)[1];
+                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);                   
                     return View(viewModel);
                 }
                 catch(Exception ex)
@@ -80,15 +87,18 @@ namespace WebApplication1.Controllers
                     user curUser = entities.users.Find(userId);
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                     agregarBlogViewModel viewModel = new agregarBlogViewModel();
+
+                    titulosList = ep.GetTitulosByTitular(userId);
+                    listComunities = ep.GetCommunityListByTitular(titulosList);
+                    viewModel.communityList = listComunities;
+                    viewModel.communityID1 = Convert.ToInt64(Session["CURRENT_COMU"]);
                     viewModel.side_menu = "comunicaciones";
                     viewModel.side_sub_menu = "comunicaciones_agregarblog";
                     viewModel.document_category_list = entities.document_type.ToList();
                     viewModel.curUser = curUser;
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = pubMessageList;
-                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                    viewModel.communityName = ep.GetCommunityCoInfo(userId)[0];
-                    viewModel.communityApart = ep.GetCommunityCoInfo(userId)[1];
+                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);                   
                     return View(viewModel);
                 }
                 catch(Exception ex)
@@ -124,6 +134,11 @@ namespace WebApplication1.Controllers
                         user curUser = entities.users.Find(userId);
                         List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                         agregarComentarioViewModel viewModel = new agregarComentarioViewModel();
+
+                        titulosList = ep.GetTitulosByTitular(userId);
+                        listComunities = ep.GetCommunityListByTitular(titulosList);
+                        viewModel.communityList = listComunities;
+                        viewModel.communityID1 = Convert.ToInt64(Session["CURRENT_COMU"]);
                         viewModel.side_menu = "comunicaciones";
                         viewModel.side_sub_menu = "comunicaciones_agregarcomentario";
                         viewModel.document_category_list = entities.document_type.ToList();
@@ -131,9 +146,7 @@ namespace WebApplication1.Controllers
                         viewModel.blogID = Convert.ToInt64(blogID);
                         viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                         viewModel.pubMessageList = pubMessageList;
-                        viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                        viewModel.communityName = ep.GetCommunityCoInfo(userId)[0];
-                        viewModel.communityApart = ep.GetCommunityCoInfo(userId)[1];
+                        viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);                       
                         return View(viewModel);
                     }
                     catch(Exception ex)
@@ -174,6 +187,11 @@ namespace WebApplication1.Controllers
                     List<onlineuser> onlineUserList = entities.onlineusers
                         .Where(m => m.user_id != userId).ToList();
                     comunicacionesViewModel viewmodel = new comunicacionesViewModel();
+
+                    titulosList = ep.GetTitulosByTitular(userId);
+                    listComunities = ep.GetCommunityListByTitular(titulosList);
+                    viewmodel.communityList = listComunities;
+                    viewmodel.communityID1 = Convert.ToInt64(Session["CURRENT_COMU"]);
                     viewmodel.side_menu = "comunicaciones";
                     viewmodel.side_sub_menu = "comunicaciones_privados";
                     viewmodel.document_category_list = entities.document_type.ToList();
@@ -195,9 +213,7 @@ namespace WebApplication1.Controllers
                     }
                     viewmodel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewmodel.pubMessageList = pubMessageList;
-                    viewmodel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                    viewmodel.communityName = ep.GetCommunityCoInfo(userId)[0];
-                    viewmodel.communityApart = ep.GetCommunityCoInfo(userId)[1];
+                    viewmodel.messageCount = ep.GetUnreadMessageCount(pubMessageList);                    
                     return View(viewmodel);
                 }
                 catch(Exception ex)
@@ -235,6 +251,11 @@ namespace WebApplication1.Controllers
                         user curUser = entities.users.Find(userId);
                         blog blog = entities.blogs.Find(blogID);
                         verblogViewModel viewModel = new verblogViewModel();
+
+                        titulosList = ep.GetTitulosByTitular(userId);
+                        listComunities = ep.GetCommunityListByTitular(titulosList);
+                        viewModel.communityList = listComunities;
+                        viewModel.communityID1 = Convert.ToInt64(Session["CURRENT_COMU"]);
                         viewModel.side_menu = "comunicaciones";
                         viewModel.side_sub_menu = "comunicaciones_verblog";
                         viewModel.document_category_list = entities.document_type.ToList();
@@ -244,9 +265,7 @@ namespace WebApplication1.Controllers
                         viewModel.blogcommentList = entities.blogcomments.Where(m => m.blog_id == blogID).ToList();
                         viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                         viewModel.pubMessageList = pubMessageList;
-                        viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                        viewModel.communityName = ep.GetCommunityCoInfo(userId)[0];
-                        viewModel.communityApart = ep.GetCommunityCoInfo(userId)[1];
+                        viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);                    
                         return View(viewModel);
                     }
                     catch(Exception ex)
@@ -423,7 +442,7 @@ namespace WebApplication1.Controllers
 
                 long userId = (long)Session["USER_ID"];
                 List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
-                ChatNotificationViewModel viewModel = new ChatNotificationViewModel();
+                ChatNotificationViewModel viewModel = new ChatNotificationViewModel();                
                 viewModel.pubMessageList = pubMessageList;
                 viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
                 string patialView = "~/Views/comunicaciones/_chatnotification.cshtml";

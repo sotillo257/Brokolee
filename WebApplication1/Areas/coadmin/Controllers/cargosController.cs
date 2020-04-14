@@ -14,6 +14,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
 
         pjrdev_condominiosEntities entities = new pjrdev_condominiosEntities();
         EFPublicRepository ep = new EFPublicRepository();
+        List<community> communityList = new List<community>();
 
         // GET: coadmin/cargos
         public ActionResult balance()
@@ -37,15 +38,17 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                     List<document_type> document_category_list = entities.document_type.ToList();
                     cargosViewModel viewModel = new cargosViewModel();
+
+                    communityList = ep.GetCommunityList(userId);
+                    viewModel.communityList = communityList;
+
                     viewModel.side_menu = "fee_charges";
                     viewModel.side_sub_menu = "fee_charges_balance";
                     viewModel.document_category_list = document_category_list;
                     viewModel.curUser = curUser;
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = pubMessageList;
-                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                    viewModel.communityName = ep.GetCommunityInfo(userId)[0];
-                    viewModel.communityApart = ep.GetCommunityInfo(userId)[1];
+                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);                   
                     return View(viewModel);
                 }
                 catch (Exception ex)
@@ -82,15 +85,17 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                     List<document_type> document_category_list = entities.document_type.ToList();
                     cargosViewModel viewModel = new cargosViewModel();
+
+                    communityList = ep.GetCommunityList(userId);
+                    viewModel.communityList = communityList;
+
                     viewModel.side_menu = "fee_charges";
                     viewModel.side_sub_menu = "fee_charges_pago";
                     viewModel.curUser = curUser;
                     viewModel.document_category_list = document_category_list;
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = pubMessageList;
-                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                    viewModel.communityName = ep.GetCommunityInfo(userId)[0];
-                    viewModel.communityApart = ep.GetCommunityInfo(userId)[1];
+                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);                   
                     return View(viewModel);
                 }
                 catch(Exception ex)
@@ -124,15 +129,17 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                     List<document_type> document_category_list = entities.document_type.ToList();
                     cargosViewModel viewModel = new cargosViewModel();
+
+                    communityList = ep.GetCommunityList(userId);
+                    viewModel.communityList = communityList;
+
                     viewModel.side_menu = "fee_charges";
                     viewModel.side_sub_menu = "fee_charges_estado";
                     viewModel.document_category_list = document_category_list;
                     viewModel.curUser = curUser;
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = pubMessageList;
-                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                    viewModel.communityName = ep.GetCommunityInfo(userId)[0];
-                    viewModel.communityApart = ep.GetCommunityInfo(userId)[1];
+                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);                    
                     return View(viewModel);
                 }
                 catch(Exception ex)
@@ -173,9 +180,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     viewModel.curUser = curUser;
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = pubMessageList;
-                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                    viewModel.communityName = ep.GetCommunityInfo(userId)[0];
-                    viewModel.communityApart = ep.GetCommunityInfo(userId)[1];
+                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);               
                     return View(viewModel);
                 }
                 catch(Exception ex)

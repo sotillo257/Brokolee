@@ -21,5 +21,6 @@ namespace WebApplication1.Areas.coadmin.ViewModels
         public List<task> pubTaskList { get; set; }
         public List<ShowMessage> pubMessageList { get; set; }
         public Dictionary<long, string> communityDict { get; set; }
+        public List<community> communityList { get; set; }
     }
 }

@@ -762,12 +762,16 @@
     <Compile Include="ViewModels\contactoViewModel.cs" />
     <Compile Include="ViewModels\controlViewModel.cs" />
     <Compile Include="ViewModels\documentosViewModel.cs" />
+    <Compile Include="ViewModels\editarTituloViewModel.cs" />
+    <Compile Include="ViewModels\editarVehiculoViewModel.cs" />
     <Compile Include="ViewModels\emailingViewModel.cs" />
     <Compile Include="ViewModels\estadoCuotasViewModel.cs" />
     <Compile Include="ViewModels\eventosViewModel.cs" />
     <Compile Include="ViewModels\facilidadesViewModel.cs" />
     <Compile Include="ViewModels\friendRequestViewModel.cs" />
     <Compile Include="ViewModels\iniciarViewModel.cs" />
+    <Compile Include="ViewModels\listadoTitulosViewModel.cs" />
+    <Compile Include="ViewModels\listadoVehiculosViewModel.cs" />
     <Compile Include="ViewModels\MessageModel.cs" />
     <Compile Include="ViewModels\messageRecordViewModel.cs" />
     <Compile Include="ViewModels\onlineUserDetailsViewModel.cs" />
@@ -1637,6 +1641,10 @@
     <Content Include="Views\Error\Index.cshtml" />
     <Content Include="Views\Error\NotFound.cshtml" />
     <Content Include="Views\control\community.cshtml" />
+    <Content Include="Views\control\listadoTitulos.cshtml" />
+    <Content Include="Views\control\listadoVehiculos.cshtml" />
+    <Content Include="Views\control\verTitulo.cshtml" />
+    <Content Include="Views\control\verVehiculo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

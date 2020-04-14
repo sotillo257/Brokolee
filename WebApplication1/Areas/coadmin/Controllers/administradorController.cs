@@ -16,6 +16,8 @@ namespace WebApplication1.Areas.coadmin.Controllers
     {
         pjrdev_condominiosEntities entities = new pjrdev_condominiosEntities();
         EFPublicRepository ep = new EFPublicRepository();
+        List<community> communityList = new List<community>();
+
         // GET: coadmin/administrador
         public ActionResult perfil()
         {
@@ -37,6 +39,10 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                     user curUser = entities.users.Find(userId);
                     perfilViewModel viewModel = new perfilViewModel();
+
+                    communityList = ep.GetCommunityList(userId);
+                    viewModel.communityList = communityList;
+
                     viewModel.side_menu = "";
                     viewModel.side_sub_menu = "";
                     viewModel.curUser = curUser;
@@ -44,8 +50,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = pubMessageList;
                     viewModel.password = ep.Decrypt(curUser.password);
-                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                    viewModel.communityName = ep.GetCommunityInfo(userId)[0];                    
+                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);                                     
                     return View(viewModel);
                 }
                 catch(Exception ex)

@@ -13,6 +13,10 @@ namespace WebApplication1.Controllers
     {
         pjrdev_condominiosEntities entities = new pjrdev_condominiosEntities();
         EFPublicRepository ep = new EFPublicRepository();
+
+        List<Titulo> titulosList = new List<Titulo>();
+        List<community> listComunities = new List<community>();
+
         // GET: events
         public ActionResult calendario(string searchStr = "")
         {
@@ -34,6 +38,11 @@ namespace WebApplication1.Controllers
                     user curUser = entities.users.Find(userId);
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                     eventosViewModel viewModel = new eventosViewModel();
+
+                    titulosList = ep.GetTitulosByTitular(userId);
+                    listComunities = ep.GetCommunityListByTitular(titulosList);
+                    viewModel.communityList = listComunities;
+                    viewModel.communityID1 = Convert.ToInt64(Session["CURRENT_COMU"]);
                     viewModel.side_menu = "eventos";
                     viewModel.document_category_list = entities.document_type.ToList();
                     viewModel.curUser = curUser;
@@ -115,6 +124,11 @@ namespace WebApplication1.Controllers
                         List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                         @event event_item = entities.events.Find(id);
                         registradoViewModel viewModel = new registradoViewModel();
+
+                        titulosList = ep.GetTitulosByTitular(userId);
+                        listComunities = ep.GetCommunityListByTitular(titulosList);
+                        viewModel.communityList = listComunities;
+                        viewModel.communityID1 = Convert.ToInt64(Session["CURRENT_COMU"]);
                         viewModel.side_menu = "registrado";
                         viewModel.event_name = event_item.name;
                         viewModel.event_date = Convert.ToDateTime(event_item.created_at).ToString("dd/MM/yyyy");

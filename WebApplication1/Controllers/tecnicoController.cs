@@ -13,6 +13,10 @@ namespace WebApplication1.Controllers
     {
         pjrdev_condominiosEntities entities = new pjrdev_condominiosEntities();
         EFPublicRepository ep = new EFPublicRepository();
+
+        List<Titulo> titulosList = new List<Titulo>();
+        List<community> listComunities = new List<community>();
+
         // GET: coadmin/tecnico
         public ActionResult soporte()
         {
@@ -24,6 +28,11 @@ namespace WebApplication1.Controllers
                 long tecUserId = (long)curUser.create_userid;
                 user tecUser = entities.users.Find(tecUserId);
                 tecnicoViewModel viewModel = new tecnicoViewModel();
+
+                titulosList = ep.GetTitulosByTitular(userId);
+                listComunities = ep.GetCommunityListByTitular(titulosList);
+                viewModel.communityList = listComunities;
+                viewModel.communityID1 = Convert.ToInt64(Session["CURRENT_COMU"]);
                 viewModel.side_menu = "tecnico";
                 viewModel.side_sub_menu = "";
                 viewModel.document_category_list = entities.document_type.ToList();
@@ -34,9 +43,7 @@ namespace WebApplication1.Controllers
                         || (m.from_user_id == tecUserId && m.to_user_id == userId)).ToList();
                 viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                 viewModel.pubMessageList = pubMessageList;
-                viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                viewModel.communityName = ep.GetCommunityCoInfo(userId)[0];
-                viewModel.communityApart = ep.GetCommunityCoInfo(userId)[1];
+                viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);                
                 return View(viewModel);
             }
             else

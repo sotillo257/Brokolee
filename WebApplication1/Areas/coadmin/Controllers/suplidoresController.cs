@@ -196,97 +196,98 @@ namespace WebApplication1.Areas.coadmin.Controllers
             
         }
 
-        public ActionResult editar(long? editID)
-        {
-            if (Session["USER_ID"] != null)
-            {
-                if (editID != null)
-                {
-                    try
-                    {
-                        long userId = 0;
-                        if (Convert.ToInt32(Session["USER_ROLE"]) >= 1)
-                        {
-                            userId = (long)Session["USER_ID"];
-                        }
-                        else if (Convert.ToInt32(Session["USER_ROLE"]) > 1
-                        && Session["ACC_USER_ID"] != null)
-                        {
-                            userId = (long)Session["ACC_USER_ID"];
-                        }
-                        user curUser = entities.users.Find(userId);
-                        List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
-                        supplier editSupplier = entities.suppliers.Find(editID);
-                        editarViewModel viewModel = new editarViewModel();
-                        viewModel.side_menu = "supplier_directory";
-                        viewModel.side_sub_menu = "supplier_directory_editar";
-                        viewModel.editSupplier = editSupplier;
-                        viewModel.document_category_list = entities.document_type.ToList();
-                        viewModel.categoryList = entities.categories.ToList();
-                        viewModel.curUser = curUser;
-                        viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
-                        viewModel.pubMessageList = pubMessageList;
-                        viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                        viewModel.communityName = ep.GetCommunityInfo(userId)[0];
-                        viewModel.communityApart = ep.GetCommunityInfo(userId)[1];
-                        return View(viewModel);
-                    }
-                    catch(Exception ex)
-                    {
-                        return Redirect(Url.Action("Index", "Error"));
-                    }                   
-                }
-                else
-                {
-                    return Redirect(Url.Action("NotFound", "Error"));
-                }               
-            } else
-            {
-                return Redirect(ep.GetLogoutUrl());
-            }
-        }
-        [HttpPost]
-        public ActionResult editsupplier(long editID, HttpPostedFileBase supply_logo, string company, string contact_name,
-            string type_service, int category, string address, string phone, string email,
-            string supplier_from, string web_page)
-        {
-            try
-            {
-                supplier supplier = entities.suppliers.Find(editID);
-                if (supply_logo != null && supply_logo.ContentLength > 0)
-                {
-                    var fileName = Path.GetFileName(supply_logo.FileName);
-                    if (!Directory.Exists(Path.Combine(Server.MapPath("~/"), "Upload")))
-                    {
-                        Directory.CreateDirectory(Path.Combine(Server.MapPath("~/"), "Upload"));
-                    }
+        //public ActionResult editar(long? editID)
+        //{
+        //    if (Session["USER_ID"] != null)
+        //    {
+        //        if (editID != null)
+        //        {
+        //            try
+        //            {
+        //                long userId = 0;
+        //                if (Convert.ToInt32(Session["USER_ROLE"]) >= 1)
+        //                {
+        //                    userId = (long)Session["USER_ID"];
+        //                }
+        //                else if (Convert.ToInt32(Session["USER_ROLE"]) > 1
+        //                && Session["ACC_USER_ID"] != null)
+        //                {
+        //                    userId = (long)Session["ACC_USER_ID"];
+        //                }
+        //                user curUser = entities.users.Find(userId);
+        //                List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
+        //                supplier editSupplier = entities.suppliers.Find(editID);
+        //                editarViewModel viewModel = new editarViewModel();
+        //                viewModel.side_menu = "supplier_directory";
+        //                viewModel.side_sub_menu = "supplier_directory_editar";
+        //                viewModel.editSupplier = editSupplier;
+        //                viewModel.document_category_list = entities.document_type.ToList();
+        //                viewModel.categoryList = entities.categories.ToList();
+        //                viewModel.curUser = curUser;
+        //                viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
+        //                viewModel.pubMessageList = pubMessageList;
+        //                viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+        //                viewModel.communityName = ep.GetCommunityInfo(userId)[0];
+        //                viewModel.communityApart = ep.GetCommunityInfo(userId)[1];
+        //                return View(viewModel);
+        //            }
+        //            catch(Exception ex)
+        //            {
+        //                return Redirect(Url.Action("Index", "Error"));
+        //            }                   
+        //        }
+        //        else
+        //        {
+        //            return Redirect(Url.Action("NotFound", "Error"));
+        //        }               
+        //    } else
+        //    {
+        //        return Redirect(ep.GetLogoutUrl());
+        //    }
+        //}
 
-                    if (!Directory.Exists(Path.Combine(Server.MapPath("~/Upload/"), "Supplier_Logo")))
-                    {
-                        Directory.CreateDirectory(Path.Combine(Server.MapPath("~/Upload/"), "Supplier_Logo"));
-                    }
-                    var path = Path.Combine(Server.MapPath("~/Upload/Supplier_Logo"), fileName);
-                    supply_logo.SaveAs(path);
-                    supplier.logo = fileName;
-                }
+        //[HttpPost]
+        //public ActionResult editsupplier(long editID, HttpPostedFileBase supply_logo, string company, string contact_name,
+        //    string type_service, int category, string address, string phone, string email,
+        //    string supplier_from, string web_page)
+        //{
+        //    try
+        //    {
+        //        supplier supplier = entities.suppliers.Find(editID);
+        //        if (supply_logo != null && supply_logo.ContentLength > 0)
+        //        {
+        //            var fileName = Path.GetFileName(supply_logo.FileName);
+        //            if (!Directory.Exists(Path.Combine(Server.MapPath("~/"), "Upload")))
+        //            {
+        //                Directory.CreateDirectory(Path.Combine(Server.MapPath("~/"), "Upload"));
+        //            }
+
+        //            if (!Directory.Exists(Path.Combine(Server.MapPath("~/Upload/"), "Supplier_Logo")))
+        //            {
+        //                Directory.CreateDirectory(Path.Combine(Server.MapPath("~/Upload/"), "Supplier_Logo"));
+        //            }
+        //            var path = Path.Combine(Server.MapPath("~/Upload/Supplier_Logo"), fileName);
+        //            supply_logo.SaveAs(path);
+        //            supplier.logo = fileName;
+        //        }
                 
-                supplier.company = company;
-                supplier.contact_name = contact_name;
-                supplier.type_service = type_service;
-                supplier.category_id = category;
-                supplier.address = address;
-                supplier.phone = phone;
-                supplier.email = email;
-                supplier.supplier_from = DateTime.ParseExact(supplier_from, "yyyy-MM-dd",
-                    System.Globalization.CultureInfo.CurrentCulture);
-                supplier.web_page = web_page;
-                entities.SaveChanges();
-                return Redirect(Url.Action("listado", "suplidores"));
-            } catch(Exception)
-            {
-                return Redirect(ep.GetLogoutUrl());
-            }
-        }
+        //        supplier.company = company;
+        //        supplier.contact_name = contact_name;
+        //        supplier.type_service = type_service;
+        //        supplier.category_id = category;
+        //        supplier.address = address;
+        //        supplier.phone = phone;
+        //        supplier.email = email;
+        //        supplier.supplier_from = DateTime.ParseExact(supplier_from, "yyyy-MM-dd",
+        //            System.Globalization.CultureInfo.CurrentCulture);
+        //        supplier.web_page = web_page;
+        //        entities.SaveChanges();
+        //        return Redirect(Url.Action("listado", "suplidores"));
+        //    } catch(Exception)
+        //    {
+        //        return Redirect(ep.GetLogoutUrl());
+        //    }
+        //}
 
         [HttpPost]
         public ActionResult newsupplier(HttpPostedFileBase logo_file, 
@@ -338,26 +339,26 @@ namespace WebApplication1.Areas.coadmin.Controllers
             }
         }
 
-        public JsonResult DeleteSupplier(long delID)
-        {
-            try
-            {
+        //public JsonResult DeleteSupplier(long delID)
+        //{
+        //    try
+        //    {
             
-            List<comment> comments = entities.comments.Where(m => m.supplier_id == delID).ToList();
-            entities.comments.RemoveRange(comments);
-            //comment delComment = entities.comments.Find(delID);
-            //    entities.comments.Remove(delComment);
+        //    List<comment> comments = entities.comments.Where(m => m.supplier_id == delID).ToList();
+        //    entities.comments.RemoveRange(comments);
+        //    //comment delComment = entities.comments.Find(delID);
+        //    //    entities.comments.Remove(delComment);
 
-                supplier delSupplier = entities.suppliers.Find(delID);
-                entities.suppliers.Remove(delSupplier);
+        //        supplier delSupplier = entities.suppliers.Find(delID);
+        //        entities.suppliers.Remove(delSupplier);
 
-                entities.SaveChanges();
-                return Json(new { result = "success" });
-            } catch(Exception ex)
-            {
-              return Json(new { result = "error", exception = ex.HResult });
-            }
-        }
+        //        entities.SaveChanges();
+        //        return Json(new { result = "success" });
+        //    } catch(Exception ex)
+        //    {
+        //      return Json(new { result = "error", exception = ex.HResult });
+        //    }
+        //}
 
         [HttpPost]
         public ActionResult SeacrhResult(string searchStr, int searchCategoryId)

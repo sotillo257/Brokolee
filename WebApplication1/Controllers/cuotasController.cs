@@ -14,6 +14,9 @@ namespace WebApplication1.Controllers
     {
         pjrdev_condominiosEntities entities = new pjrdev_condominiosEntities();
         EFPublicRepository ep = new EFPublicRepository();
+        List<Titulo> titulosList = new List<Titulo>();
+        List<community> listComunities = new List<community>();
+
         // GET: concepto
         public ActionResult balance()
         {
@@ -35,15 +38,18 @@ namespace WebApplication1.Controllers
                     user curUser = entities.users.Find(userId);
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                     conceptoViewModel viewModel = new conceptoViewModel();
+
+                    titulosList = ep.GetTitulosByTitular(userId);
+                    listComunities = ep.GetCommunityListByTitular(titulosList);
+                    viewModel.communityList = listComunities;
+                    viewModel.communityID1 = Convert.ToInt64(Session["CURRENT_COMU"]);
                     viewModel.side_menu = "cuotas";
                     viewModel.side_sub_menu = "cuotas_balance";
                     viewModel.document_category_list = entities.document_type.ToList();
                     viewModel.curUser = curUser;
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = pubMessageList;
-                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                    viewModel.communityName = ep.GetCommunityCoInfo(userId)[0];
-                    viewModel.communityApart = ep.GetCommunityCoInfo(userId)[1];
+                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);                   
                     long adminId = (long)curUser.create_userid;
                     List<fee> feeList = entities.fees.Where(m => m.user_id == adminId).ToList();
                     viewModel.feeList = feeList;
@@ -121,15 +127,18 @@ namespace WebApplication1.Controllers
                         }
                     }
                     estadoCuotasViewModel viewModel = new estadoCuotasViewModel();
+
+                    titulosList = ep.GetTitulosByTitular(userId);
+                    listComunities = ep.GetCommunityListByTitular(titulosList);
+                    viewModel.communityList = listComunities;
+                    viewModel.communityID1 = Convert.ToInt64(Session["CURRENT_COMU"]);
                     viewModel.side_menu = "cuotas";
                     viewModel.side_sub_menu = "cuotas_estado";
                     viewModel.document_category_list = entities.document_type.ToList();
                     viewModel.curUser = curUser;
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = pubMessageList;
-                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                    viewModel.communityName = ep.GetCommunityCoInfo(userId)[0];
-                    viewModel.communityApart = ep.GetCommunityCoInfo(userId)[1];
+                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);               
                     viewModel.transactionList = transactionList;
                     viewModel.totalCredit = totalCredit;
                     viewModel.totalDebit = totalDebit;
@@ -167,15 +176,18 @@ namespace WebApplication1.Controllers
                     user curUser = entities.users.Find(userId);
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                     conceptoViewModel viewModel = new conceptoViewModel();
+                    viewModel.communityID1 = Convert.ToInt64(Session["CURRENT_COMU"]);
+                    titulosList = ep.GetTitulosByTitular(userId);
+                    listComunities = ep.GetCommunityListByTitular(titulosList);
+                    viewModel.communityList = listComunities;
+
                     viewModel.side_menu = "cuotas";
                     viewModel.side_sub_menu = "cuotas_agregar";
                     viewModel.document_category_list = entities.document_type.ToList();
                     viewModel.curUser = curUser;
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = pubMessageList;
-                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                    viewModel.communityName = ep.GetCommunityCoInfo(userId)[0];
-                    viewModel.communityApart = ep.GetCommunityCoInfo(userId)[1];
+                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);                  
                     return View(viewModel);
                 }
                 catch (Exception ex)

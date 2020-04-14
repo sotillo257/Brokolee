@@ -13,6 +13,10 @@ namespace WebApplication1.Controllers
     {
         pjrdev_condominiosEntities entities = new pjrdev_condominiosEntities();
         EFPublicRepository ep = new EFPublicRepository();
+
+        List<Titulo> titulosList = new List<Titulo>();
+        List<community> listComunities = new List<community>();
+
         // GET: uso
         public ActionResult privacidad()
         {
@@ -42,15 +46,18 @@ namespace WebApplication1.Controllers
                     {
                         viewModel.uso = null;
                     }
+
+                    titulosList = ep.GetTitulosByTitular(userId);
+                    listComunities = ep.GetCommunityListByTitular(titulosList);
+                    viewModel.communityList = listComunities;
+                    viewModel.communityID1 = Convert.ToInt64(Session["CURRENT_COMU"]);
                     viewModel.side_menu = "uso";
                     viewModel.side_sub_menu = "uso_privacidad";
                     viewModel.document_category_list = entities.document_type.ToList();
                     viewModel.curUser = curUser;
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = pubMessageList;
-                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                    viewModel.communityName = ep.GetCommunityCoInfo(userId)[0];
-                    viewModel.communityApart = ep.GetCommunityCoInfo(userId)[1];
+                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);                    
                     return View(viewModel);
                 }
                 catch(Exception ex)
@@ -80,15 +87,18 @@ namespace WebApplication1.Controllers
                 {
                     viewModel.uso = null;
                 }
+
+                titulosList = ep.GetTitulosByTitular(userId);
+                listComunities = ep.GetCommunityListByTitular(titulosList);
+                viewModel.communityList = listComunities;
+                viewModel.communityID1 = Convert.ToInt64(Session["CURRENT_COMU"]);
                 viewModel.side_menu = "uso";
                 viewModel.side_sub_menu = "uso_terminos";
                 viewModel.document_category_list = entities.document_type.ToList();
                 viewModel.curUser = curUser;
                 viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                 viewModel.pubMessageList = pubMessageList;
-                viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                viewModel.communityName = ep.GetCommunityCoInfo(userId)[0];
-                viewModel.communityApart = ep.GetCommunityCoInfo(userId)[1];
+                viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);                
                 return View(viewModel);
             } else
             {
@@ -114,15 +124,18 @@ namespace WebApplication1.Controllers
                 {
                     viewModel.uso = null;
                 }
+
+                titulosList = ep.GetTitulosByTitular(userId);
+                listComunities = ep.GetCommunityListByTitular(titulosList);
+                viewModel.communityList = listComunities;
+                viewModel.communityID1 = Convert.ToInt64(Session["CURRENT_COMU"]);
                 viewModel.side_menu = "uso";
                 viewModel.side_sub_menu = "uso_derechos";
                 viewModel.document_category_list = entities.document_type.ToList();
                 viewModel.curUser = curUser;
                 viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                 viewModel.pubMessageList = pubMessageList;
-                viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                viewModel.communityName = ep.GetCommunityCoInfo(userId)[0];
-                viewModel.communityApart = ep.GetCommunityCoInfo(userId)[1];
+                viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);                
                 return View(viewModel);
             } else
             {

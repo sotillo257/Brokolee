@@ -13,6 +13,10 @@ namespace WebApplication1.Controllers
     {
         pjrdev_condominiosEntities entities = new pjrdev_condominiosEntities();
         EFPublicRepository ep = new EFPublicRepository();
+
+        List<Titulo> titulosList = new List<Titulo>();
+        List<community> listComunities = new List<community>();
+
         // GET: suppliers
         public ActionResult listado(string searchStr = "", int searchCategoryId = 0)
         {
@@ -71,6 +75,11 @@ namespace WebApplication1.Controllers
                         categoryDict.Add(item.id, category.name);
                     }
                     suppliersViewModel viewModel = new suppliersViewModel();
+
+                    titulosList = ep.GetTitulosByTitular(userId);
+                    listComunities = ep.GetCommunityListByTitular(titulosList);
+                    viewModel.communityList = listComunities;
+                    viewModel.communityID1 = Convert.ToInt64(Session["CURRENT_COMU"]);
                     viewModel.side_menu = "suppliers";
                     viewModel.supplierList = supplierList;
                     viewModel.document_category_list = entities.document_type.ToList();
@@ -81,9 +90,7 @@ namespace WebApplication1.Controllers
                     viewModel.searchStr = searchStr;
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = pubMessageList;
-                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                    viewModel.communityName = ep.GetCommunityCoInfo(userId)[0];
-                    viewModel.communityApart = ep.GetCommunityCoInfo(userId)[1];
+                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);                   
                     return View(viewModel);
                 }
                 catch(Exception ex)
@@ -120,6 +127,11 @@ namespace WebApplication1.Controllers
                         supplier supplier = entities.suppliers.Find(supplier_id);
                         category category = entities.categories.Find(supplier.category_id);
                         versuplidorViewModel viewModel = new versuplidorViewModel();
+
+                        titulosList = ep.GetTitulosByTitular(userId);
+                        listComunities = ep.GetCommunityListByTitular(titulosList);
+                        viewModel.communityList = listComunities;
+                        viewModel.communityID1 = Convert.ToInt64(Session["CURRENT_COMU"]);
                         viewModel.side_menu = "suppliers";
                         viewModel.category_name = category.name;
                         viewModel.viewSupplier = supplier;
@@ -129,9 +141,7 @@ namespace WebApplication1.Controllers
                         viewModel.curUser = curUser;
                         viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                         viewModel.pubMessageList = pubMessageList;
-                        viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                        viewModel.communityName = ep.GetCommunityCoInfo(userId)[0];
-                        viewModel.communityApart = ep.GetCommunityCoInfo(userId)[1];
+                        viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);                      
                         return View(viewModel);
                     }
                     catch (Exception ex)

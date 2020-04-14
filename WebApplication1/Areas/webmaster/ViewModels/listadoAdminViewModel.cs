@@ -12,6 +12,7 @@ namespace WebApplication1.Areas.webmaster.ViewModels
         public string side_menu { get; set; }
         public string side_sub_menu { get; set; }
         public string communityName { get; set; }
+        public List<community> communityList{ get; set; }
         public string communityApart { get; set; }
         public List<document_type> document_category_list { get; set; }
         public user curUser { get; set; }

@@ -108,9 +108,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     viewModel.curUser = curUser;
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = pubMessageList;
-                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                    viewModel.communityName = ep.GetCommunityInfo(userId)[0];
-                    viewModel.communityApart = ep.GetCommunityInfo(userId)[1];
+                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);                   
                     return View(viewModel);
                 }
                 catch (Exception ex)
@@ -125,9 +123,42 @@ namespace WebApplication1.Areas.coadmin.Controllers
 
         }
 
-       
+        public ActionResult editar(long? id, string Error)
+        {
 
-        
+            if (Session["USER_ID"] != null)
+            {
+                if (id != null)
+                {
+                    long userId = (long)Session["USER_ID"];
+                    contactinfo infoContact = entities.contactinfoes.Find(id);
+                    List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
+                    user curUser = entities.users.Find(userId);
+                    contactoViewModel viewModel = new contactoViewModel();
+                    viewModel.side_menu = "contacto";
+                    viewModel.side_sub_menu = "manage_edit_headlines";
+                    viewModel.document_category_list = entities.document_type.ToList();
+                    viewModel.curUser = curUser;
+                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);                   
+                    viewModel.editContactInfo = infoContact;
+                    viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
+                    viewModel.pubMessageList = pubMessageList;                    
+                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                    ViewBag.msgError = Error;
+                    return View(viewModel);
+                }
+                else
+                {
+                    return Redirect(Url.Action("NotFound", "Error"));
+                }
+            }
+            else
+            {
+                return Redirect(ep.GetLogoutUrl());
+            }
+        }
+
+
 
         [HttpPost]
         public ActionResult editcontact(long contactID, string company_admin,
@@ -217,70 +248,94 @@ namespace WebApplication1.Areas.coadmin.Controllers
         }
 
         [HttpPost]
-        public ActionResult informacionNew(long contactID, string company_admin,
+        public ActionResult informacionNew(long? contactID, string company_admin,
             string coordinator, string president, string vice_president,
             string treasurer, string secretary, string vocal1, string vocal2,
             string vocal3, string phy_address, string postal_address,
             string phone_number1, string phone_number2, string email
             )
         {
-            //try
-            //{
+            try
+            {
                 long user_id = (long)Session["USER_ID"];
-                if (contactID != 0)
-                {
-                    contactinfo contactinfo = entities.contactinfoes.Find(contactID);
-                    contactinfo.company_admin = company_admin;
-                    contactinfo.coordinator = coordinator;
-                    contactinfo.president = president;
-                    contactinfo.vice_president = vice_president;
-                    contactinfo.treasurer = treasurer;
-                    contactinfo.secretary = secretary;
-                    contactinfo.vocal1 = vocal1;
-                    contactinfo.vocal2 = vocal2;
-                    contactinfo.vocal3 = vocal3;
-                    contactinfo.phy_address = phy_address;
-                    contactinfo.postal_address = postal_address;
-                    contactinfo.phone_number1 = phone_number1;
-                    contactinfo.phone_number2 = phone_number2;
-                    contactinfo.email = email;
-                    contactinfo.user_id = user_id;
-                    entities.SaveChanges();
-
-                }
-                else
-                {
-                    contactinfo contactinfo = new contactinfo();
-                    contactinfo.company_admin = company_admin;
-                    contactinfo.coordinator = coordinator;
-                    contactinfo.president = president;
-                    contactinfo.vice_president = vice_president;
-                    contactinfo.treasurer = treasurer;
-                    contactinfo.secretary = secretary;
-                    contactinfo.vocal1 = vocal1;
-                    contactinfo.vocal2 = vocal2;
-                    contactinfo.vocal3 = vocal3;
-                    contactinfo.phy_address = phy_address;
-                    contactinfo.postal_address = postal_address;
-                    contactinfo.phone_number1 = phone_number1;
-                    contactinfo.phone_number2 = phone_number2;
-                    contactinfo.email = email;
-                    contactinfo.user_id = user_id;
-                    entities.contactinfoes.Add(contactinfo);
-                    entities.SaveChanges();
-                }
+                contactinfo contactinfo = new contactinfo();
+                contactinfo.company_admin = company_admin;
+                contactinfo.coordinator = coordinator;
+                contactinfo.president = president;
+                contactinfo.vice_president = vice_president;
+                contactinfo.treasurer = treasurer;
+                contactinfo.secretary = secretary;
+                contactinfo.vocal1 = vocal1;
+                contactinfo.vocal2 = vocal2;
+                contactinfo.vocal3 = vocal3;
+                contactinfo.phy_address = phy_address;
+                contactinfo.postal_address = postal_address;
+                contactinfo.phone_number1 = phone_number1;
+                contactinfo.phone_number2 = phone_number2;
+                contactinfo.email = email;
+                contactinfo.user_id = user_id;
+                entities.contactinfoes.Add(contactinfo);
+                entities.SaveChanges();
                 return Redirect(Url.Action("listado", "contacto", new { area = "coadmin" }));
             }
+            catch (Exception ex)
+            {
+                return Json(new { result = "error", exception = ex.HResult });
+            }
+            //try
+            //{
+            //if (contactID != 0)
+            //    {
+            //        contactinfo contactinfo = entities.contactinfoes.Find(contactID);
+            //        contactinfo.company_admin = company_admin;
+            //        contactinfo.coordinator = coordinator;
+            //        contactinfo.president = president;
+            //        contactinfo.vice_president = vice_president;
+            //        contactinfo.treasurer = treasurer;
+            //        contactinfo.secretary = secretary;
+            //        contactinfo.vocal1 = vocal1;
+            //        contactinfo.vocal2 = vocal2;
+            //        contactinfo.vocal3 = vocal3;
+            //        contactinfo.phy_address = phy_address;
+            //        contactinfo.postal_address = postal_address;
+            //        contactinfo.phone_number1 = phone_number1;
+            //        contactinfo.phone_number2 = phone_number2;
+            //        contactinfo.email = email;
+            //        contactinfo.user_id = user_id;
+            //        entities.SaveChanges();
+
+            //    }
+            //    else
+            //    {
+            //        contactinfo contactinfo = new contactinfo();
+            //        contactinfo.company_admin = company_admin;
+            //        contactinfo.coordinator = coordinator;
+            //        contactinfo.president = president;
+            //        contactinfo.vice_president = vice_president;
+            //        contactinfo.treasurer = treasurer;
+            //        contactinfo.secretary = secretary;
+            //        contactinfo.vocal1 = vocal1;
+            //        contactinfo.vocal2 = vocal2;
+            //        contactinfo.vocal3 = vocal3;
+            //        contactinfo.phy_address = phy_address;
+            //        contactinfo.postal_address = postal_address;
+            //        contactinfo.phone_number1 = phone_number1;
+            //        contactinfo.phone_number2 = phone_number2;
+            //        contactinfo.email = email;
+            //        contactinfo.user_id = user_id;
+            //        entities.contactinfoes.Add(contactinfo);
+            //        entities.SaveChanges();
+            //    }                          
             //catch (Exception ex)
             //{
-        //        return Redirect(Url.Action("informacion", "contacto",
-        //            new
-        //            {
-        //                area = "coadmin",
-        //                exception = ex.Message
-        //            }));
-        //    }
-        //}
-
+            //        return Redirect(Url.Action("informacion", "contacto",
+            //            new
+            //            {
+            //                area = "coadmin",
+            //                exception = ex.Message
+            //            }));
+            //    }
+            //}
+        }
     }
-    }
+}

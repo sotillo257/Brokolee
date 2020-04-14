@@ -79,6 +79,7 @@ namespace WebApplication1.Controllers
                                     Session["USER_ADMIN"] = current_user.is_admin;
                                     Session["USER_ROLE"] = current_user.role;
                                     Session["Active"] = current_user.is_active;
+                                    Session["CURRENT_COMU"] = null;
                                     userIdCookie.Expires = DateTime.Now.AddDays(100);
                                     userIdCookie.Value = current_user.id.ToString();
                                     response.Cookies.Remove("UserID");

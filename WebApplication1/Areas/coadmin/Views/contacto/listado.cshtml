@@ -67,7 +67,13 @@
                                     <h5 class="d-inline-block">Listado</h5>
                                 </div>
                                 <div class="col-md-6 mb-1">
-                                    <a href="@Url.Action("informacion", "contacto", new { area = "coadmin" })"><button type="button" class="btn btn-primary waves-effect waves-light float-xl-right float-lg-right float-md-left mb-1">Agregar nuevo</button></a>
+                                    @if (Model.contactList.Count > 0)
+                                    {
+                                        <button type="button" disabled class="btn btn-primary waves-effect waves-light float-xl-right float-lg-right float-md-left mb-1">Agregar nuevo</button>
+                                    }else{
+                                        <a href="@Url.Action("informacion", "contacto", new { area = "coadmin" })"><button type="button" class="btn btn-primary waves-effect waves-light float-xl-right float-lg-right float-md-left mb-1">Agregar nuevo</button></a>
+                                    }
+
                                 </div>
                             </div>
                             <div class="table-responsive">
@@ -95,7 +101,7 @@
                                             <td class="text-center">@item.treasurer</td>
 
                                             <td class="text-center">
-                                                <a href="@Url.Action("editar", "contacto", new { area = "coadmin", contractID = item.id })">
+                                                <a href="@Url.Action("editar", "contacto", new { area = "coadmin", id = item.id })">
                                                     <button type="button" class="btn btn-primary waves-effect waves-light btn-sm mr-1 mb-1"
                                                             data-toggle="tooltip" data-placement="top" title="Editar">
                                                         <i class="mdi mdi-lead-pencil"></i>

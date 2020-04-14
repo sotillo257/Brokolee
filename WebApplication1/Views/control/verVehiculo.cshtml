@@ -1,0 +1,167 @@
+﻿
+@{
+    ViewBag.Title = "verVehiculo";
+    Layout = "~/Areas/coadmin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>verVehiculo</h2>
+
+
+@{
+    ViewBag.Title = "ver";
+    Page.Title = "Ver vehículo - Brokolee Software";
+}
+
+<script src="~/Scripts/jquery-3.1.1.min.js"></script>
+
+
+
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+
+
+
+<div class="page-content-wrapper">
+
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="page-title-box">
+                    <div class="float-left">
+                        <div class="breadcrumb float-md-right">
+                            <h4 class="page-title">Ver vehículo</h4>
+                        </div>
+                    </div>
+                    <div class="float-right">
+                        <ul class="breadcrumb float-md-right">
+                            <li class="breadcrumb-item"><a href="@Url.Action("panel", "control")" class="text-success"><i class="mdi mdi-home-modern"></i> Panel de control</a></li>
+                            <li class="breadcrumb-item active">Ver vehículo</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end page title end breadcrumb -->
+        <!-- back button -->
+        <div class="row pb-4">
+            <div class="col-md-6">
+                <a href="javascript:history.back()"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+            </div>
+        </div>
+        <!-- end back button -->
+
+        <div class="row">
+            @if (ViewBag.msgError != null)
+            {
+                <div class="col-12">
+                    <div class="alert alert-danger" role="alert">
+                        <strong>Error: </strong> @ViewBag.msgError
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+            }
+            <div class="col-12">
+                <div class="card">
+                  
+                        <input type="hidden" value="@Model.vehiculo.IdVehiculo" name="IdVehiculo" />
+                        <input type="hidden" value="@Model.vehiculo.IdTitulo" name="IdTitulo" />
+                        <div class="card-body">
+
+                            <h5 class="d-inline-block">Vehículo autorizado</h5>
+
+
+                            <div class="form-divider"></div>
+                            <div class="form-group row">
+                                <label for="example-brand-input" class="col-sm-3 col-form-label">Marca</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control"
+                                           type="text" data-toggle="tooltip" readonly
+                                           value="@Model.vehiculo.Brand"
+                                           name="brand"
+                                           placeholder="Marca"
+                                           id="example-brand-input">
+                                    @* <small class="form-text text-muted">Marca del vehículo</small>*@
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="example-model-input" class="col-sm-3 col-form-label">Modelo</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control"
+                                           type="text"
+                                           value="@Model.vehiculo.Model" readonly
+                                           name="model" data-toggle="tooltip"
+                                           placeholder="Modelo"
+                                           id="example-model-input">
+                                    @* <small class="form-text text-muted">Modelo del vehículo</small>*@
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="example-color-input" class="col-sm-3 col-form-label">Color</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control"
+                                           type="text"
+                                           value="@Model.vehiculo.Color" readonly
+                                           name="colour" data-toggle="tooltip"
+                                           placeholder="Color"
+                                           id="example-color-input">
+                                    @* <small class="form-text text-muted">Color del vehículo</small>*@
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="example-year-input" class="col-sm-3 col-form-label">Año</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" name="year" readonly
+                                           type="number" data-toggle="tooltip"
+                                           value="@Model.vehiculo.Year"
+                                           placeholder="Año"
+                                           id="example-year-input">
+                                    @*  <small class="form-text text-muted">Año del vehículo</small>*@
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="example-cartable-input" class="col-sm-3 col-form-label">Tablilla</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control"
+                                           type="text" data-toggle="tooltip" readonly
+                                           value="@Model.vehiculo.ClapBoard"
+                                           name="clapboard"
+                                           placeholder="Tablilla"
+                                           id="example-cartable-input">
+                                    @* <small class="form-text text-muted">Tablilla del vehículo</small>*@
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="example-numbercar-input" class="col-sm-3 col-form-label">Número de sello</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control"
+                                           type="text"
+                                           value="@Model.vehiculo.StampNumber" readonly
+                                           name="stamp_number" data-toggle="tooltip"
+                                           placeholder="Número de sello"
+                                           id="example-numbercar-input">
+                                    @* <small class="form-text text-muted">Número de sello del vehículo</small>*@
+                                </div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </div><!-- end row -->
+        <!-- back button -->
+        <div class="row pb-4">
+            <div class="col-md-6">
+                <a href="javascript:history.back()"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+            </div>
+        </div>
+        <!-- end back button -->
+
+    </div><!-- container -->
+
+</div> <!-- Page content Wrapper -->
+

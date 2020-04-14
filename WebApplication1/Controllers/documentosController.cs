@@ -13,6 +13,10 @@ namespace WebApplication1.Controllers
     {
         pjrdev_condominiosEntities entities = new pjrdev_condominiosEntities();
         EFPublicRepository ep = new EFPublicRepository();
+
+        List<Titulo> titulosList = new List<Titulo>();
+        List<community> listComunities = new List<community>();
+
         // GET: documentos
         public ActionResult legales(int? type_id, string searchStr = "")
         {
@@ -54,6 +58,11 @@ namespace WebApplication1.Controllers
                         }
 
                         documentosViewModel viewModel = new documentosViewModel();
+
+                        titulosList = ep.GetTitulosByTitular(userId);
+                        listComunities = ep.GetCommunityListByTitular(titulosList);
+                        viewModel.communityList = listComunities;
+                        viewModel.communityID1 = Convert.ToInt64(Session["CURRENT_COMU"]);
                         viewModel.side_menu = "documentos";
                         viewModel.side_sub_menu = "documentos_" + document_Type.type_name;
                         viewModel.documentList = documentList;
@@ -63,9 +72,7 @@ namespace WebApplication1.Controllers
                         viewModel.typeId = Convert.ToInt32(type_id);
                         viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                         viewModel.pubMessageList = pubMessageList;
-                        viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                        viewModel.communityName = ep.GetCommunityCoInfo(userId)[0];
-                        viewModel.communityApart = ep.GetCommunityCoInfo(userId)[1];
+                        viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);                       
                         return View(viewModel);
                     }
                     catch(Exception ex)

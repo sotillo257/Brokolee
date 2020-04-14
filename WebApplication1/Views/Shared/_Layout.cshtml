@@ -126,7 +126,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <!-- LOGO -->
             <div class="topbar-left m-b-10">
                 <div class="text-center p-b-10">
-                    <a href="@Url.Action("panel", "control")" class="logo"><img src="~/assets/images/logo.png" height="100" alt="logo Brokolee Software"></a>
+                    <a href="@Url.Action("community", "control")" class="logo"><img src="~/assets/images/logo.png" height="100" alt="logo Brokolee Software"></a>
                 </div>
             </div>
 
@@ -137,7 +137,20 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <div class="m-b-10 title-condominio">
                     <div class="text-center">
                         <h6>@Model.curUser.first_name1 @Model.curUser.last_name1</h6>
-                        <a class="text-success" href="#">@Model.communityName<span class="waves-block">@Model.communityApart</span></a>
+                        @*<a class="text-success" href="#">@Model.communityList<span class="waves-block">@Model.communityApart</span></a>*@
+                    <select class="form-control selectComunidad" onchange="changeComu(this.value)" name="communitySelect">
+                        @foreach (var item in Model.communityList)
+                        {
+                            if (Model.communityID1 == item.id)
+                            {
+                                <option value="@item.id" selected>@item.first_name</option>
+                            }
+                            else
+                            {
+                                <option value="@item.id">@item.first_name</option>
+                            }
+                        }
+                    </select>
                         <p class="text-primary text-uppercase"><sub><i class="mdi mdi-checkbox-blank-circle"></i> Activo</sub></p>
                     </div>
 
@@ -149,14 +162,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <li>
                             @if (Model.side_menu == "control")
                             {
-                                <a href="@Url.Action("panel", "control")" class="waves-effect waves-light active">
+                                <a href="@Url.Action("community", "control")" class="waves-effect waves-light active">
                                     <i class="mdi mdi-home-modern"></i>Panel de control
                                 </a>
 
                             }
                             else
                             {
-                                <a href="@Url.Action("panel", "control")" class="waves-effect waves-light">
+                                <a href="@Url.Action("community", "control")" class="waves-effect waves-light">
                                     <i class="mdi mdi-home-modern"></i>Panel de control
                                 </a>
                             }

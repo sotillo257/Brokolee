@@ -15,7 +15,8 @@ namespace WebApplication1.Controllers
     public class suscribeController : Controller
     {
         pjrdev_condominiosEntities entities = new pjrdev_condominiosEntities();
-        EFPublicRepository ep = new EFPublicRepository();
+        EFPublicRepository ep = new EFPublicRepository();       
+
         // GET: suscribe
         //Login Page to Suscribe
         public ActionResult Index(long? packageId)

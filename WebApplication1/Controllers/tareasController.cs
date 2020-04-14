@@ -13,6 +13,10 @@ namespace WebApplication1.Controllers
     {
         pjrdev_condominiosEntities entities = new pjrdev_condominiosEntities();
         EFPublicRepository ep = new EFPublicRepository();
+
+        List<Titulo> titulosList = new List<Titulo>();
+        List<community> listComunities = new List<community>();
+
         // GET: tareas
         public ActionResult listado(string searchStr = "")
         {
@@ -47,6 +51,11 @@ namespace WebApplication1.Controllers
                     }
 
                     tareasViewModel viewModel = new tareasViewModel();
+
+                    titulosList = ep.GetTitulosByTitular(userId);
+                    listComunities = ep.GetCommunityListByTitular(titulosList);
+                    viewModel.communityList = listComunities;
+                    viewModel.communityID1 = Convert.ToInt64(Session["CURRENT_COMU"]);
                     viewModel.side_menu = "tareas";
                     viewModel.side_sub_menu = "tareas_listado";
                     viewModel.taskList = taskList;
@@ -55,9 +64,7 @@ namespace WebApplication1.Controllers
                     viewModel.searchStr = searchStr;
                     viewModel.pubMessageList = pubMessageList;
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
-                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                    viewModel.communityName = ep.GetCommunityCoInfo(userId)[0];
-                    viewModel.communityApart = ep.GetCommunityCoInfo(userId)[1];
+                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);                   
                     return View(viewModel);
                 }
                 catch(Exception ex)
@@ -95,6 +102,11 @@ namespace WebApplication1.Controllers
                                  select r);
                     List<task> taskList = query.ToList();
                     tareasViewModel viewModel = new tareasViewModel();
+
+                    titulosList = ep.GetTitulosByTitular(userId);
+                    listComunities = ep.GetCommunityListByTitular(titulosList);
+                    viewModel.communityList = listComunities;
+                    viewModel.communityID1 = Convert.ToInt64(Session["CURRENT_COMU"]);
                     viewModel.side_menu = "tareas";
                     viewModel.side_sub_menu = "tareas_completadas";
                     viewModel.taskList = taskList;
@@ -102,9 +114,7 @@ namespace WebApplication1.Controllers
                     viewModel.curUser = curUser;
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = pubMessageList;
-                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                    viewModel.communityName = ep.GetCommunityCoInfo(userId)[0];
-                    viewModel.communityApart = ep.GetCommunityCoInfo(userId)[1];
+                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);                  
                     return View(viewModel);
                 }
                 catch(Exception ex)
@@ -185,6 +195,11 @@ namespace WebApplication1.Controllers
                     }
 
                     tareasViewModel viewModel = new tareasViewModel();
+
+                    titulosList = ep.GetTitulosByTitular(userId);
+                    listComunities = ep.GetCommunityListByTitular(titulosList);
+                    viewModel.communityList = listComunities;
+                    viewModel.communityID1 = Convert.ToInt64(Session["CURRENT_COMU"]);
                     viewModel.side_menu = "tareas";
                     viewModel.side_sub_menu = "tareas_vertarea";
                     viewModel.document_category_list = entities.document_type.ToList();
@@ -228,6 +243,11 @@ namespace WebApplication1.Controllers
 
                     user curUser = entities.users.Find(userId);
                     tareasViewModel viewModel = new tareasViewModel();
+
+                    titulosList = ep.GetTitulosByTitular(userId);
+                    listComunities = ep.GetCommunityListByTitular(titulosList);
+                    viewModel.communityList = listComunities;
+                    viewModel.communityID1 = Convert.ToInt64(Session["CURRENT_COMU"]);
                     viewModel.side_menu = "tareas";
                     viewModel.side_sub_menu = "tareas_sugerirtarea";
                     viewModel.document_category_list = entities.document_type.ToList();

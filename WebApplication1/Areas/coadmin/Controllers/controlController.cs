@@ -13,6 +13,8 @@ namespace WebApplication1.Areas.coadmin.Controllers
     {
         pjrdev_condominiosEntities entities = new pjrdev_condominiosEntities();
         EFPublicRepository ep = new EFPublicRepository();
+        List<community> communityList = new List<community>();
+
         // GET: coadmin/control
         public ActionResult panel()
         {
@@ -34,15 +36,17 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     user curUser = entities.users.Find(userId);
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                     List<document_type> document_category_list = entities.document_type.ToList();
+                                      
+                    communityList = ep.GetCommunityList(userId);
+                    viewModel.communityList = communityList; 
+                    
                     viewModel.side_menu = "control_panel";
                     viewModel.side_sub_menu = "";
                     viewModel.document_category_list = document_category_list;
                     viewModel.curUser = curUser;
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = pubMessageList;
-                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                    viewModel.communityName = ep.GetCommunityInfo(userId)[0];
-                    viewModel.communityApart = ep.GetCommunityInfo(userId)[1];
+                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);                                      
                     viewModel.isPartial = false;
                     return View(viewModel);
                 }
@@ -57,15 +61,17 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 user curUser = entities.users.Find(userId);
                 List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                 List<document_type> document_category_list = entities.document_type.ToList();
+
+                communityList = ep.GetCommunityList(userId);
+                viewModel.communityList = communityList;
+
                 viewModel.side_menu = "control_panel";
                 viewModel.side_sub_menu = "";
                 viewModel.document_category_list = document_category_list;
                 viewModel.curUser = curUser;
                 viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                 viewModel.pubMessageList = pubMessageList;
-                viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                viewModel.communityName = ep.GetCommunityInfo(userId)[0];
-                viewModel.communityApart = ep.GetCommunityInfo(userId)[1];
+                viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);                
                 viewModel.isPartial = false;
                 return View(viewModel);
             }
@@ -74,5 +80,6 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 return Redirect(ep.GetLogoutUrl());
             }     
         }
+       
     }
 }

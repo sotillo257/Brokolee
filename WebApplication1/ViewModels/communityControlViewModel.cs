@@ -10,6 +10,7 @@ namespace WebApplication1.ViewModels
     public class communityControlViewModel
     {
         public List<community> communityList { get; set; }
+        public List<Titulo> titulosList { get; set; }
         public string side_menu { get; set; }
         public string side_sub_menu { get; set; }
         public string communityName { get; set; }
@@ -18,6 +19,7 @@ namespace WebApplication1.ViewModels
         public user curUser { get; set; }
         public int messageCount { get; set; }
         public List<task> pubTaskList { get; set; }
+        public long communityID1 { get; set; }
         public List<ShowMessage> pubMessageList { get; set; }
     }
 }

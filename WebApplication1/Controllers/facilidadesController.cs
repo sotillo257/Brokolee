@@ -14,6 +14,10 @@ namespace WebApplication1.Controllers
     {
         pjrdev_condominiosEntities entities = new pjrdev_condominiosEntities();
         EFPublicRepository ep = new EFPublicRepository();
+
+        List<Titulo> titulosList = new List<Titulo>();
+        List<community> listComunities = new List<community>();
+
         // GET: facilidades
         public ActionResult disponibles(string searchString = "")
         {
@@ -37,6 +41,11 @@ namespace WebApplication1.Controllers
                     var query = (from r in entities.efacs where r.first_name.Contains(searchString) == true select r);
                     List<efac> facilitieList = query.ToList();
                     facilidadesViewModel viewModel = new facilidadesViewModel();
+
+                    titulosList = ep.GetTitulosByTitular(userId);
+                    listComunities = ep.GetCommunityListByTitular(titulosList);
+                    viewModel.communityList = listComunities;
+                    viewModel.communityID1 = Convert.ToInt64(Session["CURRENT_COMU"]);
                     viewModel.side_menu = "facilidades";
                     viewModel.side_sub_menu = "facilidades_disponibles";
                     viewModel.facilitieList = facilitieList;
@@ -88,6 +97,11 @@ namespace WebApplication1.Controllers
                     var query = (from r in entities.efacs select r);
                     List<efac> efacList = query.ToList();
                     reservasViewModel viewModel = new reservasViewModel();
+
+                    titulosList = ep.GetTitulosByTitular(userId);
+                    listComunities = ep.GetCommunityListByTitular(titulosList);
+                    viewModel.communityList = listComunities;
+                    viewModel.communityID1 = Convert.ToInt64(Session["CURRENT_COMU"]);
                     viewModel.side_menu = "facilidades";
                     viewModel.side_sub_menu = "facilidades_reservas";
                     viewModel.document_category_list = entities.document_type.ToList();
@@ -130,6 +144,11 @@ namespace WebApplication1.Controllers
                     user curUser = entities.users.Find(userId);
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                     facilidadesViewModel viewModel = new facilidadesViewModel();
+
+                    titulosList = ep.GetTitulosByTitular(userId);
+                    listComunities = ep.GetCommunityListByTitular(titulosList);
+                    viewModel.communityList = listComunities;
+                    viewModel.communityID1 = Convert.ToInt64(Session["CURRENT_COMU"]);
                     viewModel.side_menu = "reservar";
                     viewModel.side_sub_menu = "facilidades_reservar";
                     viewModel.curUser = curUser;
@@ -171,6 +190,11 @@ namespace WebApplication1.Controllers
                     user curUser = entities.users.Find(userId);
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                     facilidadesViewModel viewModel = new facilidadesViewModel();
+
+                    titulosList = ep.GetTitulosByTitular(userId);
+                    listComunities = ep.GetCommunityListByTitular(titulosList);
+                    viewModel.communityList = listComunities;
+                    viewModel.communityID1 = Convert.ToInt64(Session["CURRENT_COMU"]);
                     viewModel.side_menu = "reservartwo";
                     viewModel.side_sub_menu = "facilidades_reservartwo";
                     viewModel.curUser = curUser;

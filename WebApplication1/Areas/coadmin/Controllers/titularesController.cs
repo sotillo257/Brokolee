@@ -555,6 +555,10 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 }
 
                 listadoTitularesViewModel viewModel = new listadoTitularesViewModel();
+                List<community> communityList = new List<community>();
+                communityList = ep.GetCommunityList(userId);
+                viewModel.communityList = communityList;
+
                 viewModel.side_menu = "titulares";
                 viewModel.side_sub_menu = "titulares_listado";
                 viewModel.document_category_list = entities.document_type.ToList();
@@ -583,6 +587,11 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 user curUser = entities.users.Find(userId);
                 List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                 agregarTitularesViewModel viewModel = new agregarTitularesViewModel();
+
+                List<community> communityList = new List<community>();
+                communityList = ep.GetCommunityList(userId);
+                viewModel.communityList = communityList;
+
                 viewModel.side_menu = "titulares";
                 viewModel.side_sub_menu = "titulares_agregar";
                 viewModel.document_category_list = entities.document_type.ToList();

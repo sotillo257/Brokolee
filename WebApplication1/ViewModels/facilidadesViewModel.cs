@@ -13,6 +13,8 @@ namespace WebApplication1.ViewModels
         public string side_sub_menu { get; set; }
         public string communityName { get; set; }
         public string communityApart { get; set; }
+        public long communityID1 { get; set; }
+        public List<community> communityList { get; set; }
         public List<efac> facilitieList { get; set; }
         public List<document_type> document_category_list { get; set; }
         public user curUser { get; set; }
