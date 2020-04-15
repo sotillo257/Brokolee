@@ -14,7 +14,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
         pjrdev_condominiosEntities entities = new pjrdev_condominiosEntities();
         EFPublicRepository ep = new EFPublicRepository();
         // GET: coadmin/contacto
-        public ActionResult listado(string searchStr = "")
+        public ActionResult listado(string Error, string searchStr = "")
         {
             if (Session["USER_ID"] != null)
             {
@@ -35,18 +35,21 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                     List<contactinfo> contactList = new List<contactinfo>();
 
+                    long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
+
                     if (searchStr == "")
                     {
-                        var query1 = (from r in entities.contactinfoes select r);
+                        var query1 = (from r in entities.contactinfoes where r.community_id == communityAct select r);
                         contactList = query1.ToList();
                     }
                     else
                     {
                         var query2 = (from r in entities.contactinfoes
-                                      where r.company_admin.Contains(searchStr) == true
+                                      where r.community_id == communityAct && r.company_admin.Contains(searchStr) == true
                                       select r);
                         contactList = query2.ToList();
                     }
+
                     contactoViewModel viewModel = new contactoViewModel();
                     viewModel.side_menu = "contacto";
                     viewModel.side_sub_menu = "contacto_informacion";
@@ -57,8 +60,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = pubMessageList;
                     viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                    viewModel.communityName = ep.GetCommunityInfo(userId)[0];
-                    viewModel.communityApart = ep.GetCommunityInfo(userId)[1];
+                    ViewBag.msgError = Error;
                     return View(viewModel);
                 }
                 catch (Exception ex)
@@ -78,38 +80,50 @@ namespace WebApplication1.Areas.coadmin.Controllers
             {
                 try
                 {
-                    long userId = 0;
-                    if (Convert.ToInt32(Session["USER_ROLE"]) == 2)
+                    long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
+                    List<contactinfo> contactinfoList = entities.contactinfoes.Where(m => m.community_id == communityAct).ToList();
+                    if (contactinfoList == null || contactinfoList.Count == 0)
                     {
-                        userId = (long)Session["USER_ID"];
-                    }
-                    else if (Convert.ToInt32(Session["USER_ROLE"]) > 2
-                    && Session["ACC_USER_ID"] != null)
-                    {
-                        userId = (long)Session["ACC_USER_ID"];
-                    }
+                        long userId = 0;
+                        if (Convert.ToInt32(Session["USER_ROLE"]) == 2)
+                        {
+                            userId = (long)Session["USER_ID"];
+                        }
+                        else if (Convert.ToInt32(Session["USER_ROLE"]) > 2
+                        && Session["ACC_USER_ID"] != null)
+                        {
+                            userId = (long)Session["ACC_USER_ID"];
+                        }
 
-                    user curUser = entities.users.Find(userId);
-                    List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
-                    List<contactinfo> contactinfoList = entities.contactinfoes.Where(m => m.user_id == userId).ToList();
-                    List<document_type> document_category_list = entities.document_type.ToList();
-                    contactoViewModel viewModel = new contactoViewModel();
-                    viewModel.side_menu = "contacto";
-                    viewModel.side_sub_menu = "contacto_informacion";
-                    viewModel.document_category_list = document_category_list;
-                    if (contactinfoList.Count > 0)
-                    {
-                        viewModel.editContactInfo = contactinfoList.First();
+
+
+
+                        user curUser = entities.users.Find(userId);
+                        List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);                        
+                        List<document_type> document_category_list = entities.document_type.ToList();
+                        contactoViewModel viewModel = new contactoViewModel();
+                        viewModel.side_menu = "contacto";
+                        viewModel.side_sub_menu = "contacto_informacion";
+                        viewModel.document_category_list = document_category_list;
+                        if (contactinfoList.Count > 0)
+                        {
+                            viewModel.editContactInfo = contactinfoList.First();
+                        }
+                        else
+                        {
+                            viewModel.editContactInfo = null;
+                        }
+                        viewModel.curUser = curUser;
+                        viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
+                        viewModel.pubMessageList = pubMessageList;
+                        viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                        return View(viewModel);
                     }
                     else
                     {
-                        viewModel.editContactInfo = null;
+                        return Redirect(Url.Action("listado", "contacto", new { Error = "Solo puede existir una lista de contactos por comunidad" }));
                     }
-                    viewModel.curUser = curUser;
-                    viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
-                    viewModel.pubMessageList = pubMessageList;
-                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);                   
-                    return View(viewModel);
+
                 }
                 catch (Exception ex)
                 {
@@ -130,6 +144,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
             {
                 if (id != null)
                 {
+                    long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
                     long userId = (long)Session["USER_ID"];
                     contactinfo infoContact = entities.contactinfoes.Find(id);
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
@@ -158,6 +173,42 @@ namespace WebApplication1.Areas.coadmin.Controllers
             }
         }
 
+        public ActionResult ver(long? id, string Error)
+        {
+
+            if (Session["USER_ID"] != null)
+            {
+                if (id != null)
+                {
+                    long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
+                    long userId = (long)Session["USER_ID"];
+                    contactinfo infoContact = entities.contactinfoes.Find(id);
+                    List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
+                    user curUser = entities.users.Find(userId);
+                    contactoViewModel viewModel = new contactoViewModel();
+                    viewModel.side_menu = "contacto";
+                    viewModel.side_sub_menu = "manage_edit_headlines";
+                    viewModel.document_category_list = entities.document_type.ToList();
+                    viewModel.curUser = curUser;
+                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                    viewModel.editContactInfo = infoContact;
+                    viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
+                    viewModel.pubMessageList = pubMessageList;
+                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                    ViewBag.msgError = Error;
+                    return View(viewModel);
+                }
+                else
+                {
+                    return Redirect(Url.Action("NotFound", "Error"));
+                }
+            }
+            else
+            {
+                return Redirect(ep.GetLogoutUrl());
+            }
+        }
+
 
 
         [HttpPost]
@@ -170,49 +221,27 @@ namespace WebApplication1.Areas.coadmin.Controllers
         {
             try
             {
-                long user_id = (long)Session["USER_ID"];
-                if (contactID != 0)
-                {
-                    contactinfo contactinfo = entities.contactinfoes.Find(contactID);
-                    contactinfo.company_admin = company_admin;
-                    contactinfo.coordinator = coordinator;
-                    contactinfo.president = president;
-                    contactinfo.vice_president = vice_president;
-                    contactinfo.treasurer = treasurer;
-                    contactinfo.secretary = secretary;
-                    contactinfo.vocal1 = vocal1;
-                    contactinfo.vocal2 = vocal2;
-                    contactinfo.vocal3 = vocal3;
-                    contactinfo.phy_address = phy_address;
-                    contactinfo.postal_address = postal_address;
-                    contactinfo.phone_number1 = phone_number1;
-                    contactinfo.phone_number2 = phone_number2;
-                    contactinfo.email = email;
-                    contactinfo.user_id = user_id;
-                    entities.SaveChanges();
+                long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
 
-                }
-                else
-                {
-                    contactinfo contactinfo = new contactinfo();
-                    contactinfo.company_admin = company_admin;
-                    contactinfo.coordinator = coordinator;
-                    contactinfo.president = president;
-                    contactinfo.vice_president = vice_president;
-                    contactinfo.treasurer = treasurer;
-                    contactinfo.secretary = secretary;
-                    contactinfo.vocal1 = vocal1;
-                    contactinfo.vocal2 = vocal2;
-                    contactinfo.vocal3 = vocal3;
-                    contactinfo.phy_address = phy_address;
-                    contactinfo.postal_address = postal_address;
-                    contactinfo.phone_number1 = phone_number1;
-                    contactinfo.phone_number2 = phone_number2;
-                    contactinfo.email = email;
-                    contactinfo.user_id = user_id;
-                    entities.contactinfoes.Add(contactinfo);
-                    entities.SaveChanges();
-                }
+                long user_id = (long)Session["USER_ID"];
+                contactinfo contactinfo = entities.contactinfoes.Find(contactID);
+                contactinfo.company_admin = company_admin;
+                contactinfo.coordinator = coordinator;
+                contactinfo.president = president;
+                contactinfo.vice_president = vice_president;
+                contactinfo.treasurer = treasurer;
+                contactinfo.secretary = secretary;
+                contactinfo.vocal1 = vocal1;
+                contactinfo.vocal2 = vocal2;
+                contactinfo.vocal3 = vocal3;
+                contactinfo.phy_address = phy_address;
+                contactinfo.postal_address = postal_address;
+                contactinfo.phone_number1 = phone_number1;
+                contactinfo.phone_number2 = phone_number2;
+                contactinfo.email = email;
+                contactinfo.user_id = user_id;
+                contactinfo.community_id = communityAct;
+                entities.SaveChanges();
                 return Redirect(Url.Action("listado", "contacto", new { area = "coadmin" }));
             }
             catch (Exception ex)
@@ -255,33 +284,45 @@ namespace WebApplication1.Areas.coadmin.Controllers
             string phone_number1, string phone_number2, string email
             )
         {
-            try
+            long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
+            List<contactinfo> contactinfoList = entities.contactinfoes.Where(m => m.community_id == communityAct).ToList();
+            if(contactinfoList == null || contactinfoList.Count == 0)
             {
-                long user_id = (long)Session["USER_ID"];
-                contactinfo contactinfo = new contactinfo();
-                contactinfo.company_admin = company_admin;
-                contactinfo.coordinator = coordinator;
-                contactinfo.president = president;
-                contactinfo.vice_president = vice_president;
-                contactinfo.treasurer = treasurer;
-                contactinfo.secretary = secretary;
-                contactinfo.vocal1 = vocal1;
-                contactinfo.vocal2 = vocal2;
-                contactinfo.vocal3 = vocal3;
-                contactinfo.phy_address = phy_address;
-                contactinfo.postal_address = postal_address;
-                contactinfo.phone_number1 = phone_number1;
-                contactinfo.phone_number2 = phone_number2;
-                contactinfo.email = email;
-                contactinfo.user_id = user_id;
-                entities.contactinfoes.Add(contactinfo);
-                entities.SaveChanges();
-                return Redirect(Url.Action("listado", "contacto", new { area = "coadmin" }));
+                try
+                {
+
+                    long user_id = (long)Session["USER_ID"];
+                    contactinfo contactinfo = new contactinfo();
+                    contactinfo.company_admin = company_admin;
+                    contactinfo.coordinator = coordinator;
+                    contactinfo.president = president;
+                    contactinfo.vice_president = vice_president;
+                    contactinfo.treasurer = treasurer;
+                    contactinfo.secretary = secretary;
+                    contactinfo.vocal1 = vocal1;
+                    contactinfo.vocal2 = vocal2;
+                    contactinfo.vocal3 = vocal3;
+                    contactinfo.phy_address = phy_address;
+                    contactinfo.postal_address = postal_address;
+                    contactinfo.phone_number1 = phone_number1;
+                    contactinfo.phone_number2 = phone_number2;
+                    contactinfo.email = email;
+                    contactinfo.user_id = user_id;
+                    contactinfo.community_id = communityAct;
+                    entities.contactinfoes.Add(contactinfo);
+                    entities.SaveChanges();
+                    return Redirect(Url.Action("listado", "contacto", new { area = "coadmin" }));
+                }
+                catch (Exception ex)
+                {
+                    return Json(new { result = "error", exception = ex.HResult });
+                }
             }
-            catch (Exception ex)
+            else
             {
-                return Json(new { result = "error", exception = ex.HResult });
+                return Redirect(Url.Action("listado", "contacto", new { Error = "Solo puede existir una lista de contactos por comunidad"}));
             }
+            
             //try
             //{
             //if (contactID != 0)

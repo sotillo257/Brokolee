@@ -14,7 +14,6 @@
         <EntityTypeShape EntityType="pjrdev_condominiosModel.comment" Width="1.5" PointX="10.25" PointY="2" IsExpanded="true" />
         <EntityTypeShape EntityType="pjrdev_condominiosModel.community" Width="1.5" PointX="3.75" PointY="3.25" IsExpanded="true" />
         <EntityTypeShape EntityType="pjrdev_condominiosModel.communuser" Width="1.5" PointX="6" PointY="22.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="pjrdev_condominiosModel.contactinfo" Width="1.5" PointX="9.75" PointY="11.75" IsExpanded="true" />
         <EntityTypeShape EntityType="pjrdev_condominiosModel.contract" Width="1.5" PointX="11.75" PointY="11.75" IsExpanded="true" />
         <EntityTypeShape EntityType="pjrdev_condominiosModel.creditcard" Width="1.5" PointX="4.375" PointY="21.25" IsExpanded="true" />
         <EntityTypeShape EntityType="pjrdev_condominiosModel.document" Width="1.5" PointX="10" PointY="7" IsExpanded="true" />
@@ -76,6 +75,7 @@
         <AssociationConnector Association="pjrdev_condominiosModel.FK_blogcomment_blogcomment" />
         <AssociationConnector Association="pjrdev_condominiosModel.FK_BlogUserLikes_blog" />
         <AssociationConnector Association="pjrdev_condominiosModel.FK_BlogUserLikes_user" />
+        <EntityTypeShape EntityType="pjrdev_condominiosModel.contactinfo" Width="1.5" PointX="16.375" PointY="11.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

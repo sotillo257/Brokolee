@@ -1,0 +1,343 @@
+﻿@{
+    ViewBag.Title = "ver";
+    Page.Title = "Ver contacto - Brokolee Software";
+}
+
+
+<div class="page-content-wrapper">
+
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="page-title-box">
+                    <div class="float-left">
+                        <div class="breadcrumb float-md-right">
+                            <h4 class="page-title">Información de contacto</h4>
+                        </div>
+                    </div>
+                    <div class="float-right">
+                        <ul class="breadcrumb float-md-right">
+                            <li class="breadcrumb-item"><a href="@Url.Action("panel", "control", new { area = "coadmin" })" class="text-success"><i class="mdi mdi-home-modern"></i> Panel de control</a></li>
+                            <li class="breadcrumb-item active">Editar contacto</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end page title end breadcrumb -->
+        <!-- back button -->
+        <div class="row pb-4">
+            <div class="col-md-6">
+                <a href="javascript:history.back()"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+            </div>
+        </div>
+        <!-- end back button -->
+
+        <div class="row">
+
+            <div class="col-12">
+                <div class="card">                                          
+                        @if (Model.editContactInfo == null)
+                        {
+                            <input type="hidden" name="contactID" value="0" />
+                        }
+                        else
+                        {
+                            <input type="hidden" name="contactID" value="@Model.editContactInfo.id" />
+                        }
+                        <div class="card-body">
+                            <div class="form-group row">
+                                <label for="example-email-input" class="col-sm-3 col-form-label">Compañía de administración</label>
+                                <div class="col-sm-9">
+                                    @if (Model.editContactInfo == null)
+                                    {
+                                        <input class="form-control" readonly type="email" value="" required name="company_admin"
+                                               placeholder="Compañía de administración" id="example-email-input"
+                                               data-toggle="tooltip" title="Nombre de compañía de administración" />
+                                    }
+                                    else
+                                    {
+                                        <input class="form-control" readonly type="email" value="@Model.editContactInfo.company_admin"
+                                               required name="company_admin"
+                                               placeholder="Compañía de administración" id="example-email-input"
+                                               data-toggle="tooltip" title="Nombre de compañía de administración" />
+                                    }
+
+                                    @*<small class="form-text text-muted">Nombre de compañía de administración</small>*@
+                                </div>
+                            </div>
+                            <div class="form-divider"></div>
+                            <div class="form-group row">
+                                <label for="example-name1-input" class="col-sm-3 col-form-label">Administrador o Coordinador</label>
+                                <div class="col-sm-9">
+                                    @if (Model.editContactInfo == null)
+                                    {
+                                        <input class="form-control" readonly type="text" value="" name="coordinator"
+                                               placeholder="Administrador o Coordinador" id="example-name1-input"
+                                               data-toggle="tooltip" title="Administrador o Coordinador de administración">
+                                    }
+                                    else
+                                    {
+                                        <input class="form-control" readonly type="text" value="@Model.editContactInfo.coordinator" name="coordinator"
+                                               placeholder="Administrador o Coordinador" id="example-name1-input"
+                                               data-toggle="tooltip" title="Administrador o Coordinador de administración" />
+                                    }
+                                    @*<small class="form-text text-muted">Administrador o Coordinador de administración</small>*@
+                                </div>
+                            </div>
+                            <div class="form-divider"></div>
+                            <h6 class="mt-0 header-title">Junta de directores</h6>
+                            <div class="form-group row">
+                                <label for="example-lastname1-input" class="col-sm-3 col-form-label">Presidente</label>
+                                <div class="col-sm-9">
+                                    @if (Model.editContactInfo == null)
+                                    {
+                                        <input class="form-control" readonly type="text" value="" name="president"
+                                               placeholder="Nombre del Presidente" id="example-lastname1-input"
+                                               data-toggle="tooltip" title="Nombre completo del Presidente" />
+                                    }
+                                    else
+                                    {
+                                        <input class="form-control" readonly type="text" value="@Model.editContactInfo.president"
+                                               name="president" placeholder="Nombre del Presidente" id="example-lastname1-input"
+                                               data-toggle="tooltip" title="Nombre completo del Presidente">
+                                    }
+                                    @*<small class="form-text text-muted">Nombre completo del Presidente</small>*@
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="example-lastname1-input" class="col-sm-3 col-form-label">Vice-Presidente</label>
+                                <div class="col-sm-9">
+                                    @if (Model.editContactInfo == null)
+                                    {
+                                        <input class="form-control" readonly type="text" name="vice_president"
+                                               value="" placeholder="Nombre del Vice-Presidente"
+                                               data-toggle="tooltip" title="Nombre completo del Vice-Presidente"
+                                               id="example-lastname1-input" />
+                                    }
+                                    else
+                                    {
+                                        <input class="form-control" readonly type="text" name="vice_president"
+                                               value="@Model.editContactInfo.vice_president"
+                                               data-toggle="tooltip" title="Nombre completo del Vice-Presidente"
+                                               placeholder="Nombre del Vice-Presidente"
+                                               id="example-lastname1-input" />
+                                    }
+
+                                    @*<small class="form-text text-muted">Nombre completo del Vice-Presidente</small>*@
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="example-lastname1-input" class="col-sm-3 col-form-label">Tesorero</label>
+                                <div class="col-sm-9">
+                                    @if (Model.editContactInfo == null)
+                                    {
+                                        <input class="form-control" readonly type="text" value="" name="treasurer"
+                                               placeholder="Nombre del tesorero"
+                                               data-toggle="tooltip" title="Nombre completo del tesorero"
+                                               id="example-lastname1-input" />
+                                    }
+                                    else
+                                    {
+                                        <input class="form-control" readonly type="text" value="@Model.editContactInfo.treasurer" name="treasurer"
+                                               placeholder="Nombre del tesorero"
+                                               data-toggle="tooltip" title="Nombre completo del tesorero"
+                                               id="example-lastname1-input">
+                                    }
+
+                                    @*<small class="form-text text-muted">Nombre completo del tesorero</small>*@
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="example-lastname1-input" class="col-sm-3 col-form-label">Secretario</label>
+                                <div class="col-sm-9">
+                                    @if (Model.editContactInfo == null)
+                                    {
+                                        <input class="form-control" readonly type="text" value="" name="secretary"
+                                               placeholder="Nombre del secretario" id="example-lastname1-input"
+                                               data-toggle="tooltip" title="Nombre completo del secretario" />
+                                    }
+                                    else
+                                    {
+                                        <input class="form-control" readonly type="text" value="@Model.editContactInfo.secretary" name="secretary"
+                                               placeholder="Nombre del secretario" id="example-lastname1-input"
+                                               data-toggle="tooltip" title="Nombre completo del secretario" />
+                                    }
+
+                                    @*<small class="form-text text-muted">Nombre completo del secretario</small>*@
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="example-lastname1-input" class="col-sm-3 col-form-label">Vocal</label>
+                                <div class="col-sm-9">
+                                    @if (Model.editContactInfo == null)
+                                    {
+                                        <input class="form-control" readonly type="text" value="" name="vocal1"
+                                               placeholder="Nombre del vocal" id="example-lastname1-input"
+                                               data-toggle="tooltip" title="Nombre completo del vocal" />
+                                    }
+                                    else
+                                    {
+                                        <input class="form-control" readonly type="text" value="@Model.editContactInfo.vocal1" name="vocal1"
+                                               placeholder="Nombre del vocal" id="example-lastname1-input"
+                                               data-toggle="tooltip" title="Nombre completo del vocal" />
+                                    }
+
+                                    @*<small class="form-text text-muted">Nombre completo del vocal</small>*@
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="example-lastname1-input" class="col-sm-3 col-form-label">Vocal</label>
+                                <div class="col-sm-9">
+                                    @if (Model.editContactInfo == null)
+                                    {
+                                        <input class="form-control" readonly type="text" value="" name="vocal2"
+                                               placeholder="Nombre del vocal" id="example-lastname1-input"
+                                               data-toggle="tooltip" title="Nombre completo del vocal" />
+                                    }
+                                    else
+                                    {
+                                        <input class="form-control" readonly type="text" value="@Model.editContactInfo.vocal2" name="vocal2"
+                                               placeholder="Nombre del vocal" id="example-lastname1-input"
+                                               data-toggle="tooltip" title="Nombre completo del vocal" />
+                                    }
+                                    @*<small class="form-text text-muted">Nombre completo del vocal</small>*@
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="example-lastname1-input" class="col-sm-3 col-form-label">Vocal</label>
+                                <div class="col-sm-9">
+                                    @if (Model.editContactInfo == null)
+                                    {
+                                        <input class="form-control" readonly type="text" value="" name="vocal3"
+                                               placeholder="Nombre del vocal" id="example-lastname1-input"
+                                               data-toggle="tooltip" title="Nombre completo del vocal" />
+                                    }
+                                    else
+                                    {
+                                        <input class="form-control" readonly type="text" value="@Model.editContactInfo.vocal3" name="vocal3"
+                                               placeholder="Nombre del vocal" id="example-lastname1-input"
+                                               data-toggle="tooltip" title="Nombre completo del vocal" />
+                                    }
+                                    @*<small class="form-text text-muted">Nombre completo del vocal</small>*@
+                                </div>
+                            </div>
+                            <div class="form-divider"></div>
+                            <div class="form-group row">
+                                <label for="example-lastname1-input" class="col-sm-3 col-form-label">Dirección física</label>
+                                <div class="col-sm-9">
+                                    @if (Model.editContactInfo == null)
+                                    {
+                                        <input class="form-control" readonly type="text" value="" name="phy_address"
+                                               placeholder="Dirección física" id="example-lastname1-input"
+                                               data-toggle="tooltip" title="Dirección física" />
+                                    }
+                                    else
+                                    {
+                                        <input class="form-control" readonly type="text" value="@Model.editContactInfo.phy_address"
+                                               placeholder="Dirección física" name="phy_address"
+                                               data-toggle="tooltip" title="Dirección física"
+                                               id="example-lastname1-input">
+                                    }
+
+                                    @*<small class="form-text text-muted">Dirección física</small>*@
+                                </div>
+                            </div>
+                            <div class="form-divider"></div>
+                            <div class="form-group row">
+                                <label for="example-lastname1-input" class="col-sm-3 col-form-label">Dirección postal</label>
+                                <div class="col-sm-9">
+                                    @if (Model.editContactInfo == null)
+                                    {
+                                        <input class="form-control" readonly type="text" value="" name="postal_address" required
+                                               placeholder="Dirección postal" id="example-lastname1-input"
+                                               data-toggle="tooltip" title="Dirección postal" />
+                                    }
+                                    else
+                                    {
+                                        <input class="form-control" readonly type="text" value="@Model.editContactInfo.postal_address" name="postal_address" required
+                                               placeholder="Dirección postal" id="example-lastname1-input"
+                                               data-toggle="tooltip" title="Dirección postal" />
+                                    }
+
+                                    @*<small class="form-text text-muted">Dirección postal</small>*@
+                                </div>
+                            </div>
+                            <div class="form-divider"></div>
+                            <div class="form-group row">
+                                <label for="example-tel1-input" class="col-sm-3 col-form-label">Teléfono</label>
+                                <div class="col-sm-9">
+                                    @if (Model.editContactInfo == null)
+                                    {
+                                        <input class="form-control" readonly type="tel" value="" name="phone_number1"
+                                               placeholder="# Teléfono" id="example-tel1-input"
+                                               data-toggle="tooltip" title="Teléfono de contacto" />
+                                    }
+                                    else
+                                    {
+                                        <input class="form-control" readonly type="tel" value="@Model.editContactInfo.phone_number1"
+                                               name="phone_number1" data-toggle="tooltip"
+                                               title="Teléfono de contacto"
+                                               placeholder="# Teléfono" id="example-tel1-input">
+                                    }
+
+                                    @*<small class="form-text text-muted">Teléfono de contacto</small>*@
+                                </div>
+                            </div>
+                            <div class="form-divider"></div>
+                            <div class="form-group row">
+                                <label for="example-tel1-input" class="col-sm-3 col-form-label">Teléfono</label>
+                                <div class="col-sm-9">
+                                    @if (Model.editContactInfo == null)
+                                    {
+                                        <input class="form-control" readonly type="tel" value="" name="phone_number2"
+                                               placeholder="# Teléfono" id="example-tel1-input"
+                                               data-toggle="tooltip" title="Teléfono de contacto" />
+                                    }
+                                    else
+                                    {
+                                        <input class="form-control" readonly type="tel" value="@Model.editContactInfo.phone_number2" name="phone_number2"
+                                               placeholder="# Teléfono" id="example-tel1-input"
+                                               data-toggle="tooltip" title="Teléfono de contacto" />
+                                    }
+
+                                    @*<small class="form-text text-muted">Teléfono de contacto</small>*@
+                                </div>
+                            </div>
+                            <div class="form-divider"></div>
+                            <div class="form-group row">
+                                <label for="example-email-input" class="col-sm-3 col-form-label">Correo electrónico</label>
+                                <div class="col-sm-9">
+                                    @if (Model.editContactInfo == null)
+                                    {
+                                        <input class="form-control" readonly type="email" value="" name="email"
+                                               placeholder="Correo electrónico" id="example-email-input"
+                                               data-toggle="tooltip" title="Correo electrónico del suplidor" />
+                                    }
+                                    else
+                                    {
+                                        <input class="form-control" readonly type="email" value="@Model.editContactInfo.email" name="email"
+                                               placeholder="Correo electrónico" id="example-email-input"
+                                               data-toggle="tooltip" title="Correo electrónico del suplidor" />
+                                    }
+
+                                    @*<small class="form-text text-muted">Correo electrónico del suplidor</small>*@
+                                </div>
+                            </div>                            
+                        </div>
+                    
+                </div>
+            </div>
+        </div><!-- end row -->
+        <!-- back button -->
+        <div class="row pb-4">
+            <div class="col-md-6">
+                <a href="javascript:history.back()"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+            </div>
+        </div>
+        <!-- end back button -->
+
+    </div><!-- container -->
+
+</div> <!-- Page content Wrapper -->

@@ -41,38 +41,54 @@ namespace WebApplication1.Controllers
                     titulosList = ep.GetTitulosByTitular(userId);
                     listComunities = ep.GetCommunityListByTitular(titulosList);                      
                     viewModel.communityList = listComunities;
-
-                    if (Session["CURRENT_COMU"] == null )
-                    {
-                       long selectedCommu = 0;
-                       community firstCommu = listComunities.LastOrDefault();
-                       selectedCommu = firstCommu.id;
-                       Session["CURRENT_COMU"] = selectedCommu;
-                       viewModel.communityID1 = selectedCommu;                       
+                    if (listComunities.Count == 0)
+                    {                        
+                        viewModel.side_menu = "control";
+                        viewModel.side_sub_menu = "control";
+                        viewModel.document_category_list = entities.document_type.ToList();
+                        viewModel.curUser = curUser;
+                        viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
+                        viewModel.pubMessageList = pubMessageList;
+                        viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                        viewModel.titulosList = titulosList;                        
+                        return View(viewModel);
                     }
                     else
-                    {                        
-                        if (Id == null)
+                    {
+                        if (Session["CURRENT_COMU"] == null)
                         {
-                            long comId = Convert.ToInt64(Session["CURRENT_COMU"]);
-                            viewModel.communityID1 = comId;
+                            long selectedCommu = 0;
+                            community firstCommu = listComunities.LastOrDefault();
+                            selectedCommu = firstCommu.id;
+                            Session["CURRENT_COMU"] = selectedCommu;
+                            viewModel.communityID1 = selectedCommu;
                         }
                         else
                         {
-                            Session["CURRENT_COMU"] = Id;
-                            viewModel.communityID1 = Convert.ToInt64(Id);
-                        }                        
+                            if (Id == null)
+                            {
+                                long comId = Convert.ToInt64(Session["CURRENT_COMU"]);
+                                viewModel.communityID1 = comId;
+                            }
+                            else
+                            {
+                                Session["CURRENT_COMU"] = Id;
+                                viewModel.communityID1 = Convert.ToInt64(Id);
+                            }
+                        }
+
+                        viewModel.side_menu = "control";
+                        viewModel.side_sub_menu = "control";
+                        viewModel.document_category_list = entities.document_type.ToList();
+                        viewModel.curUser = curUser;
+                        viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
+                        viewModel.pubMessageList = pubMessageList;
+                        viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                        viewModel.titulosList = titulosList;
+                        return View(viewModel);
                     }
-              
-                    viewModel.side_menu = "control";
-                    viewModel.side_sub_menu = "control";
-                    viewModel.document_category_list = entities.document_type.ToList();
-                    viewModel.curUser = curUser;
-                    viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
-                    viewModel.pubMessageList = pubMessageList;
-                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);                                    
-                    viewModel.titulosList = titulosList;
-                    return View(viewModel);
+
+                    
                 }
                 catch(Exception ex)
                 {

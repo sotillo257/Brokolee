@@ -16,7 +16,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
         List<community> communityList = new List<community>();
 
         // GET: coadmin/control
-        public ActionResult panel()
+        public ActionResult panel(long? Id)
         {
             controlViewModel viewModel = new controlViewModel();
             if (Session["USER_ID"] != null)
@@ -35,11 +35,32 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     }
                     user curUser = entities.users.Find(userId);
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
-                    List<document_type> document_category_list = entities.document_type.ToList();
-                                      
+                    List<document_type> document_category_list = entities.document_type.ToList();                                       
+
                     communityList = ep.GetCommunityList(userId);
-                    viewModel.communityList = communityList; 
-                    
+                    viewModel.communityList = communityList;
+                 
+
+                    if (Session["CURRENT_COMU"] == null)
+                    {                       
+                        community firstCommu = communityList.LastOrDefault();
+                        long selectedCommu = firstCommu.id;
+                        Session["CURRENT_COMU"] = selectedCommu;
+                        viewModel.communityID1 = selectedCommu;
+                    }
+                    else
+                    {
+                        if (Id == null)
+                        {
+                            viewModel.communityID1 = Convert.ToInt64(Session["CURRENT_COMU"]);
+                        }
+                        else
+                        {
+                            Session["CURRENT_COMU"] = Id;
+                            viewModel.communityID1 = Convert.ToInt64(Id);
+                        }
+                    }
+
                     viewModel.side_menu = "control_panel";
                     viewModel.side_sub_menu = "";
                     viewModel.document_category_list = document_category_list;

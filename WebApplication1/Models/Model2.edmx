@@ -151,6 +151,7 @@
           <Property Name="created_at" Type="datetime" />
           <Property Name="updated_at" Type="datetime" />
           <Property Name="user_id" Type="bigint" />
+          <Property Name="community_id" Type="bigint" />
         </EntityType>
         <EntityType Name="contract">
           <Key>
@@ -1246,29 +1247,6 @@
           <NavigationProperty Name="community" Relationship="Self.FK_communuser_community" FromRole="communuser" ToRole="community" />
           <NavigationProperty Name="user" Relationship="Self.FK_communuser_user" FromRole="communuser" ToRole="user" />
         </EntityType>
-        <EntityType Name="contactinfo">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="company_admin" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="coordinator" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="president" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="vice_president" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="treasurer" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="secretary" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="vocal1" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="vocal2" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="vocal3" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="phy_address" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
-          <Property Name="postal_address" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="phone_number1" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="phone_number2" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="created_at" Type="DateTime" Precision="3" />
-          <Property Name="updated_at" Type="DateTime" Precision="3" />
-          <Property Name="user_id" Type="Int64" />
-        </EntityType>
         <EntityType Name="contract">
           <Key>
             <PropertyRef Name="id" />
@@ -1999,7 +1977,6 @@
           <EntitySet Name="comments" EntityType="Self.comment" />
           <EntitySet Name="communities" EntityType="Self.community" />
           <EntitySet Name="communusers" EntityType="Self.communuser" />
-          <EntitySet Name="contactinfoes" EntityType="Self.contactinfo" />
           <EntitySet Name="contracts" EntityType="Self.contract" />
           <EntitySet Name="creditcards" EntityType="Self.creditcard" />
           <EntitySet Name="documents" EntityType="Self.document" />
@@ -2157,6 +2134,7 @@
             <End Role="user" EntitySet="users" />
             <End Role="BlogUserLike" EntitySet="BlogUserLikes" />
           </AssociationSet>
+          <EntitySet Name="contactinfoes" EntityType="pjrdev_condominiosModel.contactinfo" />
           </EntityContainer>
         <EntityType Name="Vehiculo">
           <Key>
@@ -2315,6 +2293,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="contactinfo">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="company_admin" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="coordinator" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="president" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="vice_president" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="treasurer" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="secretary" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="vocal1" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="vocal2" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="vocal3" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="phy_address" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="postal_address" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="phone_number1" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="phone_number2" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="created_at" Type="DateTime" Precision="3" />
+          <Property Name="updated_at" Type="DateTime" Precision="3" />
+          <Property Name="user_id" Type="Int64" />
+          <Property Name="community_id" Type="Int64" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2430,30 +2432,6 @@
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="user_id" ColumnName="user_id" />
                 <ScalarProperty Name="commun_id" ColumnName="commun_id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="contactinfoes">
-            <EntityTypeMapping TypeName="pjrdev_condominiosModel.contactinfo">
-              <MappingFragment StoreEntitySet="contactinfo">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="company_admin" ColumnName="company_admin" />
-                <ScalarProperty Name="coordinator" ColumnName="coordinator" />
-                <ScalarProperty Name="president" ColumnName="president" />
-                <ScalarProperty Name="vice_president" ColumnName="vice_president" />
-                <ScalarProperty Name="treasurer" ColumnName="treasurer" />
-                <ScalarProperty Name="secretary" ColumnName="secretary" />
-                <ScalarProperty Name="vocal1" ColumnName="vocal1" />
-                <ScalarProperty Name="vocal2" ColumnName="vocal2" />
-                <ScalarProperty Name="vocal3" ColumnName="vocal3" />
-                <ScalarProperty Name="phy_address" ColumnName="phy_address" />
-                <ScalarProperty Name="postal_address" ColumnName="postal_address" />
-                <ScalarProperty Name="phone_number1" ColumnName="phone_number1" />
-                <ScalarProperty Name="phone_number2" ColumnName="phone_number2" />
-                <ScalarProperty Name="email" ColumnName="email" />
-                <ScalarProperty Name="created_at" ColumnName="created_at" />
-                <ScalarProperty Name="updated_at" ColumnName="updated_at" />
-                <ScalarProperty Name="user_id" ColumnName="user_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2924,6 +2902,31 @@
                 <ScalarProperty Name="Fecha" ColumnName="Fecha" />
                 <ScalarProperty Name="IDUser" ColumnName="IDUser" />
                 <ScalarProperty Name="IDBlog" ColumnName="IDBlog" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="contactinfoes">
+            <EntityTypeMapping TypeName="pjrdev_condominiosModel.contactinfo">
+              <MappingFragment StoreEntitySet="contactinfo">
+                <ScalarProperty Name="community_id" ColumnName="community_id" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="updated_at" ColumnName="updated_at" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="phone_number2" ColumnName="phone_number2" />
+                <ScalarProperty Name="phone_number1" ColumnName="phone_number1" />
+                <ScalarProperty Name="postal_address" ColumnName="postal_address" />
+                <ScalarProperty Name="phy_address" ColumnName="phy_address" />
+                <ScalarProperty Name="vocal3" ColumnName="vocal3" />
+                <ScalarProperty Name="vocal2" ColumnName="vocal2" />
+                <ScalarProperty Name="vocal1" ColumnName="vocal1" />
+                <ScalarProperty Name="secretary" ColumnName="secretary" />
+                <ScalarProperty Name="treasurer" ColumnName="treasurer" />
+                <ScalarProperty Name="vice_president" ColumnName="vice_president" />
+                <ScalarProperty Name="president" ColumnName="president" />
+                <ScalarProperty Name="coordinator" ColumnName="coordinator" />
+                <ScalarProperty Name="company_admin" ColumnName="company_admin" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

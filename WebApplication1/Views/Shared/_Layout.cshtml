@@ -137,20 +137,25 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <div class="m-b-10 title-condominio">
                     <div class="text-center">
                         <h6>@Model.curUser.first_name1 @Model.curUser.last_name1</h6>
-                        @*<a class="text-success" href="#">@Model.communityList<span class="waves-block">@Model.communityApart</span></a>*@
-                    <select class="form-control selectComunidad" onchange="changeComu(this.value)" name="communitySelect">
-                        @foreach (var item in Model.communityList)
-                        {
-                            if (Model.communityID1 == item.id)
-                            {
-                                <option value="@item.id" selected>@item.first_name</option>
-                            }
-                            else
-                            {
-                                <option value="@item.id">@item.first_name</option>
-                            }
+                        @if(Model.communityList.Count == 0){
+                           <span class="waves-block">Sin comunidades</span>
                         }
-                    </select>
+                        else
+                        {
+                            <select class="form-control selectComunidad" onchange="changeComu(this.value)" name="communitySelect">
+                                @foreach (var item in Model.communityList)
+                                {
+                                    if (Model.communityID1 == item.id)
+                                    {
+                                        <option value="@item.id" selected>@item.first_name</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@item.id">@item.first_name</option>
+                                    }
+                                }
+                            </select>
+                        }
                         <p class="text-primary text-uppercase"><sub><i class="mdi mdi-checkbox-blank-circle"></i> Activo</sub></p>
                     </div>
 
@@ -430,11 +435,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <li>
                             @if (Model.side_menu == "contacto")
                             {
-                                <a href="@Url.Action("informacion", "contacto")" class="waves-effect waves-light active"><i class="mdi mdi-contact-mail"></i><span> Información de contacto </span></a>
+                                <a href="@Url.Action("listado", "contacto")" class="waves-effect waves-light active"><i class="mdi mdi-contact-mail"></i><span> Contacto </span></a>
                             }
                             else
                             {
-                                <a href="@Url.Action("informacion", "contacto")" class="waves-effect waves-light"><i class="mdi mdi-contact-mail"></i><span> Información de contacto </span></a>
+                                <a href="@Url.Action("listado", "contacto")" class="waves-effect waves-light"><i class="mdi mdi-contact-mail"></i><span> Contacto </span></a>
                             }
                         </li>
 

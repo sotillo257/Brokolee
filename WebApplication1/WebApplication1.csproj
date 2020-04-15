@@ -1517,6 +1517,7 @@
     <Content Include="Areas\coadmin\Views\titulares\listadoVehiculos.cshtml" />
     <Content Include="Areas\coadmin\Views\titulares\verTitulo.cshtml" />
     <Content Include="Areas\coadmin\Views\titulares\verVehiculo.cshtml" />
+    <Content Include="Areas\coadmin\Views\contacto\ver.cshtml" />
     <None Include="Properties\PublishProfiles\Default Settings.pubxml" />
     <None Include="Properties\PublishProfiles\Default Settings1.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
@@ -1645,6 +1646,8 @@
     <Content Include="Views\control\listadoVehiculos.cshtml" />
     <Content Include="Views\control\verTitulo.cshtml" />
     <Content Include="Views\control\verVehiculo.cshtml" />
+    <Content Include="Views\contacto\listado.cshtml" />
+    <Content Include="Views\contacto\ver.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
