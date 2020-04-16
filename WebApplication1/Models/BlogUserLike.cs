@@ -18,7 +18,7 @@ namespace WebApplication1.Models
         public long IDUser { get; set; }
         public System.DateTime Fecha { get; set; }
     
-        public virtual blog blog { get; set; }
         public virtual user user { get; set; }
+        public virtual blog blog { get; set; }
     }
 }

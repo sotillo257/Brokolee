@@ -49,7 +49,11 @@ namespace WebApplication1.Controllers
                     viewModel.side_sub_menu = "comunicaciones_blog";
                     viewModel.document_category_list = entities.document_type.ToList();
                     viewModel.curUser = curUser;
-                    viewModel.blogList = entities.blogs.Where(m => m.user_id == userId).ToList();
+
+                    long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
+                    List<blog> blogs = entities.blogs.Where(m => m.community_id == communityAct).ToList();
+
+                    viewModel.blogList = blogs;
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = pubMessageList;
                     viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);                   
@@ -417,6 +421,7 @@ namespace WebApplication1.Controllers
                 blog.blogdate = DateTime.Now;
                 blog.author = author;
                 blog.user_id = userId;
+                blog.community_id = Convert.ToInt64(Session["CURRENT_COMU"]);
                 entities.blogs.Add(blog);
                 entities.SaveChanges();
                 return Redirect(Url.Action("blog", "comunicaciones"));

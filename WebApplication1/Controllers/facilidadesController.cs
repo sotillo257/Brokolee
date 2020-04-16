@@ -38,7 +38,10 @@ namespace WebApplication1.Controllers
 
                     user curUser = entities.users.Find(userId);
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
-                    var query = (from r in entities.efacs where r.first_name.Contains(searchString) == true select r);
+
+                    long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
+
+                    var query = (from r in entities.efacs where r.first_name.Contains(searchString) == true && r.community_id == communityAct select r);
                     List<efac> facilitieList = query.ToList();
                     facilidadesViewModel viewModel = new facilidadesViewModel();
 
@@ -53,9 +56,7 @@ namespace WebApplication1.Controllers
                     viewModel.curUser = curUser;
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = pubMessageList;
-                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                    viewModel.communityName = ep.GetCommunityCoInfo(userId)[0];
-                    viewModel.communityApart = ep.GetCommunityCoInfo(userId)[1];
+                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);                   
                     return View(viewModel);
                 }
                 catch(Exception ex)
@@ -94,7 +95,10 @@ namespace WebApplication1.Controllers
 
                     user curUser = entities.users.Find(userId);
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
-                    var query = (from r in entities.efacs select r);
+
+                    long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
+
+                    var query = (from r in entities.efacs where r.community_id == communityAct select r);
                     List<efac> efacList = query.ToList();
                     reservasViewModel viewModel = new reservasViewModel();
 
@@ -110,8 +114,7 @@ namespace WebApplication1.Controllers
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = pubMessageList;
                     viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                    viewModel.communityName = ep.GetCommunityCoInfo(userId)[0];
-                    viewModel.communityApart = ep.GetCommunityCoInfo(userId)[1];
+                    
                     return View(viewModel);
                 }
                 catch(Exception ex)
@@ -201,9 +204,7 @@ namespace WebApplication1.Controllers
                     viewModel.document_category_list = entities.document_type.ToList();
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = pubMessageList;
-                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                    viewModel.communityName = ep.GetCommunityCoInfo(userId)[0];
-                    viewModel.communityApart = ep.GetCommunityCoInfo(userId)[1];
+                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);                   
                     return View(viewModel);
                 }
                 catch(Exception ex)
@@ -235,8 +236,7 @@ namespace WebApplication1.Controllers
                                                     System.Globalization.CultureInfo.InvariantCulture);
                 newBook.description = description;
                 newBook.cost_per_reservation = Convert.ToDecimal(cost_per_reserve);
-                newBook.created_at = DateTime.Now;
-
+                newBook.created_at = DateTime.Now;                
                 entities.books.Add(newBook);
                 entities.SaveChanges();
                 return Redirect(Url.Action("reservar", "facilidades"));

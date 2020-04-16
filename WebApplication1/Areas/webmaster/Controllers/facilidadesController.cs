@@ -24,15 +24,18 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 user curUser = entities.users.Find(userId);
                 List<ShowMessage> pubMessageList  = ep.GetChatMessages(userId);
                 List<efac> efacList = new List<efac>();
+
+                long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
+
                 if (searchStr == "")
                 {
-                    var query = (from r in entities.efacs select r);
+                    var query = (from r in entities.efacs where r.community_id == communityAct select r);
                     efacList = query.ToList();
                 }
                 else
                 {
                     var query1 = (from r in entities.efacs
-                                  where r.first_name.Contains(searchStr) == true
+                                  where r.first_name.Contains(searchStr) == true && r.community_id == communityAct
                                   select r);
                     efacList = query1.ToList();
                 }
@@ -174,14 +177,16 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 List<ShowMessage> pubMessageList = ep.GetChatMessages(userId); ;
                 List<efac> efacList = new List<efac>();
 
+                long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
+
                 if (searchStr == "")
                 {
-                    var query = (from r in entities.efacs select r);
+                    var query = (from r in entities.efacs where r.community_id == communityAct select r);
                     efacList = query.ToList();
                 }
                 else
                 {
-                    var query1 = (from r in entities.efacs where r.first_name.Contains(searchStr) == true select r);
+                    var query1 = (from r in entities.efacs where r.first_name.Contains(searchStr) == true && r.community_id == communityAct select r);
                     efacList = query1.ToList();
                 }
 
@@ -307,6 +312,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 newFac.cost_reservation = Convert.ToDecimal(cost_reservation);
                 newFac.duration = duration;
                 newFac.created_at = DateTime.Now;
+                newFac.community_id = Convert.ToInt64(Session["CURRENT_COMU"]);
                 if (upload_regulation != null && upload_regulation.ContentLength > 0)
                 {
                     var fileName = Path.GetFileName(upload_regulation.FileName);

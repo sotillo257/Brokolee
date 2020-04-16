@@ -20,7 +20,7 @@ namespace WebApplication1.Models
         public long task_id { get; set; }
         public long user_id { get; set; }
     
-        public virtual task task { get; set; }
         public virtual user user { get; set; }
+        public virtual task task { get; set; }
     }
 }

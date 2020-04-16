@@ -35,24 +35,25 @@ namespace WebApplication1.Controllers
                         && Session["ACC_USER_ID"] != null)
                         {
                             userId = (long)Session["ACC_USER_ID"];
-                        }
-
+                        }                        
                         user curUser = entities.users.Find(userId);
                         List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                         document_type document_Type = entities.document_type.Find(type_id);
                         List<document> documentList = new List<document>();
 
+                        long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
+
                         if (searchStr == "")
                         {
                             var query = (from r in entities.documents
-                                         where r.type_id == type_id
+                                         where r.type_id == type_id && r.community_id == communityAct
                                          select r);
                             documentList = query.ToList();
                         }
                         else
                         {
                             var query = (from r in entities.documents
-                                         where r.type_id == type_id && (r.first_name.Contains(searchStr) == true)
+                                         where r.type_id == type_id && (r.first_name.Contains(searchStr) == true) && r.community_id == communityAct
                                          select r);
                             documentList = query.ToList();
                         }

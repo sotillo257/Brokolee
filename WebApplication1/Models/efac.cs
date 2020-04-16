@@ -26,5 +26,6 @@ namespace WebApplication1.Models
         public string upload_regulation { get; set; }
         public Nullable<int> share { get; set; }
         public Nullable<int> status { get; set; }
+        public Nullable<long> community_id { get; set; }
     }
 }

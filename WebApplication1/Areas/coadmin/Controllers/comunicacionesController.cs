@@ -559,10 +559,13 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 viewModel.document_category_list = entities.document_type.ToList();
                 viewModel.curUser = curUser;
                 viewModel.communityName = ep.GetCommunityInfo(userId)[0];
-                viewModel.communityApart = ep.GetCommunityInfo(userId)[1];
-                viewModel.blogList = entities.blogs.Where(m => m.user_id == userId).ToList();
+                viewModel.communityApart = ep.GetCommunityInfo(userId)[1];               
                 viewModel.Content = userId.ToString();
-                List<blog> blogs = entities.blogs.Where(m => m.user_id == userId).ToList();
+
+                long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
+                List<blog> blogs = entities.blogs.Where(m => m.community_id == communityAct).ToList();
+
+                viewModel.blogList = blogs;
                 //  ViewBag.blogList = JsonConvert.SerializeObject(blogs);
                 viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                 viewModel.pubMessageList = pubMessageList;
@@ -649,9 +652,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 viewModel.side_menu = "comunicaciones";
                 viewModel.side_sub_menu = "comunicaciones_privados";
                 viewModel.document_category_list = entities.document_type.ToList();
-                viewModel.curUser = curUser;
-                viewModel.communityName = ep.GetCommunityInfo(userId)[0];
-                viewModel.communityApart = ep.GetCommunityInfo(userId)[1];
+                viewModel.curUser = curUser;             
                 viewModel.onlineUserList = onlineUserList;
                 if (onlineUserList.Count > 0)
                 {
@@ -853,6 +854,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 blog.blogdate = DateTime.Now;
                 blog.author = author;
                 blog.user_id = userId;
+                blog.community_id = Convert.ToInt64(Session["CURRENT_COMU"]); 
                 entities.blogs.Add(blog);
                 entities.SaveChanges();
                 return Redirect(Url.Action("blog", "comunicaciones"));

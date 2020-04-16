@@ -16,9 +16,7 @@
         <EntityTypeShape EntityType="pjrdev_condominiosModel.communuser" Width="1.5" PointX="6" PointY="22.875" IsExpanded="true" />
         <EntityTypeShape EntityType="pjrdev_condominiosModel.contract" Width="1.5" PointX="11.75" PointY="11.75" IsExpanded="true" />
         <EntityTypeShape EntityType="pjrdev_condominiosModel.creditcard" Width="1.5" PointX="4.375" PointY="21.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="pjrdev_condominiosModel.document" Width="1.5" PointX="10" PointY="7" IsExpanded="true" />
         <EntityTypeShape EntityType="pjrdev_condominiosModel.document_type" Width="1.5" PointX="7.75" PointY="7.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="pjrdev_condominiosModel.efac" Width="1.5" PointX="12.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="pjrdev_condominiosModel.emailtheme" Width="1.5" PointX="6" PointY="25.75" IsExpanded="true" />
         <EntityTypeShape EntityType="pjrdev_condominiosModel.emailtype" Width="1.5" PointX="3.75" PointY="40.875" IsExpanded="true" />
         <EntityTypeShape EntityType="pjrdev_condominiosModel.facsche" Width="1.5" PointX="13.75" PointY="9.75" IsExpanded="true" />
@@ -30,7 +28,6 @@
         <EntityTypeShape EntityType="pjrdev_condominiosModel.payment" Width="1.5" PointX="3" PointY="36.5" IsExpanded="true" />
         <EntityTypeShape EntityType="pjrdev_condominiosModel.schedule" Width="1.5" PointX="14.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="pjrdev_condominiosModel.suscribe" Width="1.5" PointX="3.75" PointY="50" IsExpanded="true" />
-        <EntityTypeShape EntityType="pjrdev_condominiosModel.task" Width="1.5" PointX="5.75" PointY="28.75" IsExpanded="true" />
         <EntityTypeShape EntityType="pjrdev_condominiosModel.taskcomment" Width="1.5" PointX="8" PointY="19.625" IsExpanded="true" />
         <EntityTypeShape EntityType="pjrdev_condominiosModel.taskuser" Width="1.5" PointX="3" PointY="43.875" IsExpanded="true" />
         <EntityTypeShape EntityType="pjrdev_condominiosModel.tooltip" Width="1.5" PointX="14.75" PointY="3.75" IsExpanded="true" />
@@ -39,14 +36,12 @@
         <EntityTypeShape EntityType="pjrdev_condominiosModel.uso" Width="1.5" PointX="3" PointY="46.5" IsExpanded="true" />
         <AssociationConnector Association="pjrdev_condominiosModel.FK_bank_user" ManuallyRouted="false" />
         <AssociationConnector Association="pjrdev_condominiosModel.FK_fee_bank" ManuallyRouted="false" />
-        <AssociationConnector Association="pjrdev_condominiosModel.FK_carpentry_task" ManuallyRouted="false" />
         <AssociationConnector Association="pjrdev_condominiosModel.FK_chatmessage_user" ManuallyRouted="false" />
         <AssociationConnector Association="pjrdev_condominiosModel.FK_chatmessage_user1" ManuallyRouted="false" />
         <AssociationConnector Association="pjrdev_condominiosModel.FK_community_package" ManuallyRouted="false" />
         <AssociationConnector Association="pjrdev_condominiosModel.FK_communuser_community" ManuallyRouted="false" />
         <AssociationConnector Association="pjrdev_condominiosModel.FK_communuser_user" ManuallyRouted="false" />
         <AssociationConnector Association="pjrdev_condominiosModel.FK_creditcard_user" ManuallyRouted="false" />
-        <AssociationConnector Association="pjrdev_condominiosModel.FK_document_type" ManuallyRouted="false" />
         <AssociationConnector Association="pjrdev_condominiosModel.FK_emailtheme_emailtype" ManuallyRouted="false" />
         <AssociationConnector Association="pjrdev_condominiosModel.FK_emailtheme_user" ManuallyRouted="false" />
         <AssociationConnector Association="pjrdev_condominiosModel.FK_fee_user" ManuallyRouted="false" />
@@ -56,7 +51,6 @@
         <AssociationConnector Association="pjrdev_condominiosModel.FK_suscribe_package" ManuallyRouted="false" />
         <AssociationConnector Association="pjrdev_condominiosModel.FK_payment_user" ManuallyRouted="false" />
         <AssociationConnector Association="pjrdev_condominiosModel.FK_payment_user1" ManuallyRouted="false" />
-        <AssociationConnector Association="pjrdev_condominiosModel.FK_task_taskcomment" ManuallyRouted="false" />
         <AssociationConnector Association="pjrdev_condominiosModel.FK_taskcomment_user" ManuallyRouted="false" />
         <AssociationConnector Association="pjrdev_condominiosModel.FK_taskuser_user" ManuallyRouted="false" />
         <AssociationConnector Association="pjrdev_condominiosModel.FK_uso_user" ManuallyRouted="false" />
@@ -65,17 +59,23 @@
         <AssociationConnector Association="pjrdev_condominiosModel.FK_Titulos_community" />
         <AssociationConnector Association="pjrdev_condominiosModel.FK_Titulos_user" />
         <AssociationConnector Association="pjrdev_condominiosModel.FK_Vehiculos_user" />
-        <EntityTypeShape EntityType="pjrdev_condominiosModel.blog" Width="1.5" PointX="3" PointY="0.75" />
         <EntityTypeShape EntityType="pjrdev_condominiosModel.BlogUserLike" Width="1.5" PointX="5.25" PointY="9.875" />
-        <AssociationConnector Association="pjrdev_condominiosModel.FK_blog_user" />
-        <AssociationConnector Association="pjrdev_condominiosModel.FK_blogcomment_blogcomment" />
-        <AssociationConnector Association="pjrdev_condominiosModel.FK_BlogUserLikes_blog" />
         <AssociationConnector Association="pjrdev_condominiosModel.FK_BlogUserLikes_user" />
         <EntityTypeShape EntityType="pjrdev_condominiosModel.contactinfo" Width="1.5" PointX="16.375" PointY="11.75" />
         <EntityTypeShape EntityType="pjrdev_condominiosModel.event" Width="1.5" PointX="13.375" PointY="16.75" />
         <EntityTypeShape EntityType="pjrdev_condominiosModel.supplier" Width="1.5" PointX="8" PointY="1" />
         <AssociationConnector Association="pjrdev_condominiosModel.FK_supplier_category" />
         <AssociationConnector Association="pjrdev_condominiosModel.FK_comment_supplier" />
+        <EntityTypeShape EntityType="pjrdev_condominiosModel.document" Width="1.5" PointX="10" PointY="6.875" />
+        <AssociationConnector Association="pjrdev_condominiosModel.FK_document_type" />
+        <EntityTypeShape EntityType="pjrdev_condominiosModel.efac" Width="1.5" PointX="17.375" PointY="0.75" />
+        <EntityTypeShape EntityType="pjrdev_condominiosModel.blog" Width="1.5" PointX="3" PointY="0.75" />
+        <AssociationConnector Association="pjrdev_condominiosModel.FK_blog_user" />
+        <AssociationConnector Association="pjrdev_condominiosModel.FK_blogcomment_blogcomment" />
+        <AssociationConnector Association="pjrdev_condominiosModel.FK_BlogUserLikes_blog" />
+        <EntityTypeShape EntityType="pjrdev_condominiosModel.task" Width="1.5" PointX="5.75" PointY="29.625" />
+        <AssociationConnector Association="pjrdev_condominiosModel.FK_carpentry_task" />
+        <AssociationConnector Association="pjrdev_condominiosModel.FK_task_taskcomment" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

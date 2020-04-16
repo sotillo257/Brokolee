@@ -38,9 +38,12 @@ namespace WebApplication1.Areas.coadmin.Controllers
                         user curUser = entities.users.Find(userId);
                         List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                         List<document> document_list = new List<document>();
+
+                        long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
+
                         if (searchStr == "")
                         {
-                            var query = (from r in entities.documents where r.type_id == id select r);
+                            var query = (from r in entities.documents where r.type_id == id && r.community_id == communityAct select r);
                             document_list = query.ToList();
 
                         }
@@ -48,7 +51,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                         {
                             var query1 = (from r in entities.documents
                                           where r.type_id == id &&
-                                          r.first_name.Contains(searchStr) == true
+                                          r.first_name.Contains(searchStr) == true && r.community_id == communityAct
                                           select r);
                             document_list = query1.ToList();
                         }
@@ -358,7 +361,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
             {
                 document_type editDocumentType = entities.document_type.Find(typeID);
                 editDocumentType.type_name = type_name;
-                editDocumentType.share = documentTypeShare;
+                editDocumentType.share = documentTypeShare;             
                 entities.SaveChanges();
                 return Redirect(Url.Action("editarcategoria", "documentos", 
                     new {
@@ -414,6 +417,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     editDocument.first_name = first_name;
                     editDocument.type_id = document_category;
                     editDocument.uploaded_by = uploaded_by;
+                    editDocument.community_id = Convert.ToInt64(Session["CURRENT_COMU"]);
                     //editDocument.link = link;
                     editDocument.uploaded_date = DateTime.ParseExact(uploaded_date, "yyyy-MM-dd",
                         System.Globalization.CultureInfo.CurrentCulture);
@@ -467,7 +471,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     document document = new document();
                     document.first_name = first_name;
                     document.type_id = document_category;
-                    
+                    document.community_id = Convert.ToInt64(Session["CURRENT_COMU"]);
                     //document.link = link;
                     document.uploaded_by = uploaded_by;
                     document.uploaded_date = DateTime.ParseExact(uploaded_date, "yyyy-MM-dd",

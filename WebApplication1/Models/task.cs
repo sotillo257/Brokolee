@@ -35,6 +35,7 @@ namespace WebApplication1.Models
         public Nullable<int> share { get; set; }
         public Nullable<System.DateTime> updated_at { get; set; }
         public Nullable<bool> is_read { get; set; }
+        public Nullable<long> community_id { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<carpentry> carpentries { get; set; }

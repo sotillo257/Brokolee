@@ -25,6 +25,7 @@ namespace WebApplication1.Models
         public Nullable<System.DateTime> uploaded_date { get; set; }
         public string link { get; set; }
         public Nullable<System.DateTime> updated_at { get; set; }
+        public Nullable<long> community_id { get; set; }
     
         public virtual document_type document_type { get; set; }
     }

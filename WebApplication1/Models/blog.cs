@@ -28,6 +28,7 @@ namespace WebApplication1.Models
         public System.DateTime blogdate { get; set; }
         public long user_id { get; set; }
         public Nullable<int> CantLike { get; set; }
+        public Nullable<long> community_id { get; set; }
     
         public virtual user user { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

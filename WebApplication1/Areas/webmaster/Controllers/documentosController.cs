@@ -25,16 +25,19 @@ namespace WebApplication1.Areas.webmaster.Controllers
                     user curUser = entities.users.Find(userId);
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                     List<document> document_list = new List<document>();
+
+                    long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
+
                     if (searchStr == "")
                     {
-                        var query = (from r in entities.documents where r.type_id == id select r);
+                        var query = (from r in entities.documents where r.type_id == id && r.community_id == communityAct select r);
                         document_list = query.ToList();
                     }
                     else
                     {
                         var query1 = (from r in entities.documents
                                       where r.type_id == id &&
-                                      r.first_name.Contains(searchStr) == true
+                                      r.first_name.Contains(searchStr) == true && r.community_id == communityAct
                                       select r);
                         document_list = query1.ToList();
                     }
@@ -257,6 +260,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                     editDocument.type_id = document_category;
                     editDocument.uploaded_by = uploaded_by;
                     editDocument.link = link;
+                    editDocument.community_id = Convert.ToInt64(Session["CURRENT_COMU"]);
                     editDocument.uploaded_date = DateTime.ParseExact(uploaded_date, "yyyy-MM-dd",
                         System.Globalization.CultureInfo.CurrentCulture);
                     editDocument.share = share;
@@ -311,6 +315,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                     document.type_id = document_category;
                     document.link = link;
                     document.uploaded_by = uploaded_by;
+                    document.community_id = Convert.ToInt64(Session["CURRENT_COMU"]);
                     document.uploaded_date = DateTime.ParseExact(uploaded_date, "yyyy-MM-dd",
                         System.Globalization.CultureInfo.CurrentCulture);
                     if (upload_document != null && upload_document.ContentLength > 0)

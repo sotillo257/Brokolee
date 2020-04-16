@@ -43,6 +43,7 @@ namespace WebApplication1.Controllers
                     listComunities = ep.GetCommunityListByTitular(titulosList);
                     viewModel.communityList = listComunities;
                     viewModel.communityID1 = Convert.ToInt64(Session["CURRENT_COMU"]);
+
                     viewModel.side_menu = "cuotas";
                     viewModel.side_sub_menu = "cuotas_balance";
                     viewModel.document_category_list = entities.document_type.ToList();

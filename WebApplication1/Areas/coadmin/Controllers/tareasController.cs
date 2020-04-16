@@ -34,15 +34,17 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                     List<task> taskList = new List<task>();
 
+                    long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
+
                     if (searchStr == "")
                     {
-                        var query = (from r in entities.tasks select r);
+                        var query = (from r in entities.tasks where r.community_id == communityAct select r);
                         taskList = query.ToList();
                     }
                     else
                     {
                         var query1 = (from r in entities.tasks
-                                      where r.task_name.Contains(searchStr) == true
+                                      where r.task_name.Contains(searchStr) == true && r.community_id == communityAct
                                       select r);
                         taskList = query1.ToList();
                     }
@@ -60,9 +62,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     viewModel.searchStr = searchStr;
                     viewModel.curUser = curUser;
                     viewModel.pubMessageList = pubMessageList;
-                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                    viewModel.communityName = ep.GetCommunityInfo(userId)[0];
-                    viewModel.communityApart = ep.GetCommunityInfo(userId)[1];
+                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);                    
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.titularList = titularList;
                     return View(viewModel);
@@ -141,6 +141,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 newTask.status = status;
                 newTask.created_at = DateTime.Now;
                 newTask.updated_at = DateTime.Now;
+                newTask.community_id = Convert.ToInt64(Session["CURRENT_COMU"]);
                 entities.tasks.Add(newTask);
                 entities.SaveChanges();
                 taskuser taskuser = entities.taskusers.Where(m => m.user_id == userId).FirstOrDefault();
@@ -249,14 +250,17 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 user curUser = entities.users.Find(userId);
                 List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                 List<task> taskList = new List<task>();
+
+                long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
                 if (searchStr == "")
                 {
-                    var query = (from r in entities.tasks where r.completed_date != null select r);
+                    var query = (from r in entities.tasks where r.completed_date != null && r.community_id == communityAct select r);
                     taskList = query.ToList();
                 } else
                 {
                     var query1 = (from r in entities.tasks
-                                  where r.completed_date != null && r.task_name.Contains(searchStr) == true select r);
+                                  where r.completed_date != null && r.task_name.Contains(searchStr) == true && r.community_id == communityAct
+                                  select r);
                 }
                 tareasViewModel viewModel = new tareasViewModel();
                 viewModel.side_menu = "task_process";

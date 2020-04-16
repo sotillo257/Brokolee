@@ -29,11 +29,14 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 viewModel.side_menu = "comunicaciones";
                 viewModel.side_sub_menu = "comunicaciones_blog";
                 viewModel.document_category_list = entities.document_type.ToList();
-                viewModel.curUser = curUser;
-                viewModel.blogList = entities.blogs.Where(m => m.user_id == userId).ToList();
+                viewModel.curUser = curUser;                
                 viewModel.Content = userId.ToString();
-                List<blog> blogs = entities.blogs.Where(m => m.user_id == userId).ToList();               
-              //  ViewBag.blogList = JsonConvert.SerializeObject(blogs);
+
+                long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
+                List<blog> blogs = entities.blogs.Where(m => m.community_id == communityAct).ToList();
+
+                viewModel.blogList = blogs;
+                //  ViewBag.blogList = JsonConvert.SerializeObject(blogs);
                 viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                 viewModel.pubMessageList = pubMessageList;
                 viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
@@ -311,6 +314,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 blog.blogdate = DateTime.Now;
                 blog.author = author;
                 blog.user_id = userId;
+                blog.community_id = Convert.ToInt64(Session["CURRENT_COMU"]);
                 entities.blogs.Add(blog);
                 entities.SaveChanges();
                 return Redirect(Url.Action("blog", "comunicaciones"));

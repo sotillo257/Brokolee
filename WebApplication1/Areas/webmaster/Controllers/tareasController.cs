@@ -23,16 +23,18 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                 List<task> taskList = new List<task>();
 
+                long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
+
                 if (searchStr == "")
                 {
-                    var query = (from r in entities.tasks select r);
+                    var query = (from r in entities.tasks where r.community_id == communityAct select r);
                     taskList = query.ToList();
                 }
                 else
                 {
                     var query1 = (from r in entities.tasks
                                   where
-                                  r.task_name.Contains(searchStr) == true
+                                  r.task_name.Contains(searchStr) == true && r.community_id == communityAct
                                   select r);
                     taskList = query1.ToList();
                 }
@@ -84,15 +86,17 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 user curUser = entities.users.Find(userId);
                 List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                 List<task> taskList = new List<task>();
+
+                long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
                 if (searchStr == "")
                 {
-                    var query = (from r in entities.tasks where r.status == 2 select r);
+                    var query = (from r in entities.tasks where r.status == 2 && r.community_id == communityAct select r);
                     taskList = query.ToList();
                 }
                 else
                 {
                     var query1 = (from r in entities.tasks
-                                  where r.status == 2 && r.task_name.Contains(searchStr) == true
+                                  where r.status == 2 && r.task_name.Contains(searchStr) == true && r.community_id == communityAct
                                   select r);
                 }
                 completadasTareasViewModel viewModel = new completadasTareasViewModel();
@@ -275,6 +279,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 newTask.status = status;
                 newTask.created_at = DateTime.Now;
                 newTask.updated_at = DateTime.Now;
+                newTask.community_id = Convert.ToInt64(Session["CURRENT_COMU"]);
                 entities.tasks.Add(newTask);
                 entities.SaveChanges();
                 taskuser taskuser = entities.taskusers.Where(m => m.user_id == userId).FirstOrDefault();

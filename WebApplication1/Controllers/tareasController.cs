@@ -39,14 +39,16 @@ namespace WebApplication1.Controllers
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                     List<task> taskList = new List<task>();
 
+                    long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
+
                     if (searchStr != "")
                     {
-                        var query = (from r in entities.tasks where r.task_name.Contains(searchStr) == true select r);
+                        var query = (from r in entities.tasks where r.task_name.Contains(searchStr) == true && r.community_id == communityAct select r);
                         taskList = query.ToList();
                     }
                     else
                     {
-                        var query = (from r in entities.tasks select r);
+                        var query = (from r in entities.tasks where r.community_id == communityAct select r);
                         taskList = query.ToList();
                     }
 
@@ -96,8 +98,11 @@ namespace WebApplication1.Controllers
                     }
                     user curUser = entities.users.Find(userId);
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
+
+                    long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
+
                     var query = (from r in entities.tasks
-                                 where r.task_name.Contains(searchString) == true
+                                 where r.task_name.Contains(searchString) == true && r.community_id == communityAct
                                  && r.completed_date != null
                                  select r);
                     List<task> taskList = query.ToList();
@@ -284,6 +289,7 @@ namespace WebApplication1.Controllers
                 task.description = description;
                 task.responsable = responsable;
                 task.status = 2;
+                task.community_id = Convert.ToInt64(Session["CURRENT_COMU"]);
                 string datetime_str = start_date + " " + start_time;
                 DateTime datetime = DateTime.ParseExact(datetime_str, "yyyy-MM-dd HH:mm", 
                     System.Globalization.CultureInfo.CurrentCulture);
