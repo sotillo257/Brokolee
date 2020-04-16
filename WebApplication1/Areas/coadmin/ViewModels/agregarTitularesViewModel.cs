@@ -12,8 +12,8 @@ namespace WebApplication1.Areas.coadmin.ViewModels
         public string side_menu { get; set; }
         public string side_sub_menu { get; set; }
         public string communityName { get; set; }
-
-        
+        public List<community> communityList { get; set; }
+        public long communityID1 { get; set; }
         public string communityApart { get; set; }
         public List<user> titularList { get; set; }
         public List<document_type> document_category_list { get; set; }
@@ -21,7 +21,6 @@ namespace WebApplication1.Areas.coadmin.ViewModels
         public string searchStr { get; set; }
         public int messageCount { get; set; }
         public List<task> pubTaskList { get; set; }
-        public List<ShowMessage> pubMessageList { get; set; }
-        public List<community> communityList { get; set; }
+        public List<ShowMessage> pubMessageList { get; set; }       
     }
 }

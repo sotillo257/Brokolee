@@ -23,7 +23,6 @@ namespace WebApplication1.Models
             this.communusers = new HashSet<communuser>();
             this.creditcards = new HashSet<creditcard>();
             this.emailthemes = new HashSet<emailtheme>();
-            this.fees = new HashSet<fee>();
             this.friendmappings = new HashSet<friendmapping>();
             this.friendmappings1 = new HashSet<friendmapping>();
             this.onlineusers = new HashSet<onlineuser>();
@@ -35,6 +34,7 @@ namespace WebApplication1.Models
             this.Titulos = new HashSet<Titulo>();
             this.BlogUserLikes = new HashSet<BlogUserLike>();
             this.blogs = new HashSet<blog>();
+            this.fees = new HashSet<fee>();
         }
     
         public long id { get; set; }
@@ -99,8 +99,6 @@ namespace WebApplication1.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<emailtheme> emailthemes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<fee> fees { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<friendmapping> friendmappings { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<friendmapping> friendmappings1 { get; set; }
@@ -122,5 +120,7 @@ namespace WebApplication1.Models
         public virtual ICollection<BlogUserLike> BlogUserLikes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<blog> blogs { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<fee> fees { get; set; }
     }
 }

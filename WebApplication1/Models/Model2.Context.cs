@@ -40,7 +40,6 @@ namespace WebApplication1.Models
         public virtual DbSet<emailtheme> emailthemes { get; set; }
         public virtual DbSet<emailtype> emailtypes { get; set; }
         public virtual DbSet<facsche> facsches { get; set; }
-        public virtual DbSet<fee> fees { get; set; }
         public virtual DbSet<friendmapping> friendmappings { get; set; }
         public virtual DbSet<notification> notifications { get; set; }
         public virtual DbSet<onlineuser> onlineusers { get; set; }
@@ -64,5 +63,6 @@ namespace WebApplication1.Models
         public virtual DbSet<efac> efacs { get; set; }
         public virtual DbSet<blog> blogs { get; set; }
         public virtual DbSet<task> tasks { get; set; }
+        public virtual DbSet<fee> fees { get; set; }
     }
 }

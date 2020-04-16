@@ -39,37 +39,51 @@ namespace WebApplication1.Areas.coadmin.Controllers
 
                     communityList = ep.GetCommunityList(userId);
                     viewModel.communityList = communityList;
-                 
 
-                    if (Session["CURRENT_COMU"] == null)
-                    {                       
-                        community firstCommu = communityList.LastOrDefault();
-                        long selectedCommu = firstCommu.id;
-                        Session["CURRENT_COMU"] = selectedCommu;
-                        viewModel.communityID1 = selectedCommu;
+                    if(communityList.Count == 0)
+                    {
+                        viewModel.side_menu = "control_panel";
+                        viewModel.side_sub_menu = "";
+                        viewModel.document_category_list = document_category_list;
+                        viewModel.curUser = curUser;
+                        viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
+                        viewModel.pubMessageList = pubMessageList;
+                        viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                        viewModel.isPartial = false;
+                        return View(viewModel);
                     }
                     else
                     {
-                        if (Id == null)
+                        if (Session["CURRENT_COMU"] == null)
                         {
-                            viewModel.communityID1 = Convert.ToInt64(Session["CURRENT_COMU"]);
+                            community firstCommu = communityList.LastOrDefault();
+                            long selectedCommu = firstCommu.id;
+                            Session["CURRENT_COMU"] = selectedCommu;
+                            viewModel.communityID1 = selectedCommu;
                         }
                         else
                         {
-                            Session["CURRENT_COMU"] = Id;
-                            viewModel.communityID1 = Convert.ToInt64(Id);
+                            if (Id == null)
+                            {
+                                viewModel.communityID1 = Convert.ToInt64(Session["CURRENT_COMU"]);
+                            }
+                            else
+                            {
+                                Session["CURRENT_COMU"] = Id;
+                                viewModel.communityID1 = Convert.ToInt64(Id);
+                            }
                         }
+                        viewModel.side_menu = "control_panel";
+                        viewModel.side_sub_menu = "";
+                        viewModel.document_category_list = document_category_list;
+                        viewModel.curUser = curUser;
+                        viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
+                        viewModel.pubMessageList = pubMessageList;
+                        viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                        viewModel.isPartial = false;
+                        return View(viewModel);
                     }
-
-                    viewModel.side_menu = "control_panel";
-                    viewModel.side_sub_menu = "";
-                    viewModel.document_category_list = document_category_list;
-                    viewModel.curUser = curUser;
-                    viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
-                    viewModel.pubMessageList = pubMessageList;
-                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);                                      
-                    viewModel.isPartial = false;
-                    return View(viewModel);
+                                     
                 }
                 catch(Exception ex)
                 {

@@ -34,7 +34,9 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     user curUser = entities.users.Find(userId);
                     listadoCuotasViewModel viewModel = new listadoCuotasViewModel();
                     Dictionary<long, string> bankDict = new Dictionary<long, string>();
-                    List<fee> feeList = entities.fees.Where(m => m.user_id == userId).ToList();
+
+                    long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
+                    List<fee> feeList = entities.fees.Where(m => m.user_id == userId && m.community_id == communityAct).ToList();
                     foreach (var item in feeList)
                     {
                         long bankID = item.bank_id;
@@ -51,8 +53,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     viewModel.curUser = curUser;
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = pubMessageList;
-                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                    viewModel.communityName = ep.GetCommunityCoInfo(userId)[0];
+                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);                   
                     viewModel.bankDict = bankDict;
                     return View(viewModel);
                 }
@@ -93,9 +94,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     viewModel.curUser = curUser;
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = pubMessageList;
-                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                    viewModel.communityName = ep.GetCommunityCoInfo(userId)[0];
-                    viewModel.communityApart = ep.GetCommunityCoInfo(userId)[1];
+                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);                   
                     viewModel.bankList = bankList;
 
                     viewModel.feeName = "";
@@ -277,9 +276,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     viewModel.curUser = curUser;
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = pubMessageList;
-                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                    viewModel.communityName = ep.GetCommunityCoInfo(userId)[0];
-                    viewModel.communityApart = ep.GetCommunityCoInfo(userId)[1];
+                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);                   
                     viewModel.paymentList = paymentList;
                     viewModel.searchString = searchString;
                     viewModel.searchState = searchState;
@@ -334,6 +331,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
             feeItem.penalty = penalty;
             feeItem.created_at = DateTime.Now;
             feeItem.user_id = userId;
+            feeItem.community_id = Convert.ToInt64(Session["CURRENT_COMU"]);
             entities.fees.Add(feeItem);
             
             
