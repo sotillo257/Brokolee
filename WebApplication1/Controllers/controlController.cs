@@ -319,5 +319,23 @@ namespace WebApplication1.Controllers
         }
 
         #endregion
+
+        public JsonResult ChangeCommunity(long id)
+        {
+            try
+            {
+
+                Session["CURRENT_COMU"] = id;
+                return Json(new { result = "success" });
+            }
+            catch (Exception ex)
+            {
+                return Json(new
+                {
+                    result = "error",
+                    exception = ex.Message
+                });
+            }
+        }
     }
 }

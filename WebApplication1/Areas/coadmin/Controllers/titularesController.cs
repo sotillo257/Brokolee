@@ -310,7 +310,8 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 string strComm_id = ep.GetCommunityInfo(userId)[2];
                 long commun_id = Convert.ToInt64(strComm_id);
                 List<community> titulosList = new List<community>();
-                titulosList = entities.communities.Where(x => x.id == commun_id).ToList();
+                //  titulosList = entities.communities.Where(x => x.id == commun_id).ToList();
+                titulosList = entities.communities.ToList();
                 viewModel.communityList = titulosList;                
 
                 ViewBag.msgError = Error;
