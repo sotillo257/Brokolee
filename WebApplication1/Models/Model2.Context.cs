@@ -41,7 +41,6 @@ namespace WebApplication1.Models
         public virtual DbSet<efac> efacs { get; set; }
         public virtual DbSet<emailtheme> emailthemes { get; set; }
         public virtual DbSet<emailtype> emailtypes { get; set; }
-        public virtual DbSet<@event> events { get; set; }
         public virtual DbSet<facsche> facsches { get; set; }
         public virtual DbSet<fee> fees { get; set; }
         public virtual DbSet<friendmapping> friendmappings { get; set; }
@@ -50,7 +49,6 @@ namespace WebApplication1.Models
         public virtual DbSet<package> packages { get; set; }
         public virtual DbSet<payment> payments { get; set; }
         public virtual DbSet<schedule> schedules { get; set; }
-        public virtual DbSet<supplier> suppliers { get; set; }
         public virtual DbSet<suscribe> suscribes { get; set; }
         public virtual DbSet<task> tasks { get; set; }
         public virtual DbSet<taskcomment> taskcomments { get; set; }
@@ -64,5 +62,7 @@ namespace WebApplication1.Models
         public virtual DbSet<blog> blogs { get; set; }
         public virtual DbSet<BlogUserLike> BlogUserLikes { get; set; }
         public virtual DbSet<contactinfo> contactinfoes { get; set; }
+        public virtual DbSet<@event> events { get; set; }
+        public virtual DbSet<supplier> suppliers { get; set; }
     }
 }

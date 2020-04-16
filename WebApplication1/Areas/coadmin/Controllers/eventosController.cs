@@ -35,15 +35,17 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                     List<@event> eventList = new List<@event>();
 
+                    long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
+
                     if (searchStr == "")
                     {
-                        var query = (from r in entities.events select r);
+                        var query = (from r in entities.events where r.community_id == communityAct select r);
                         eventList = query.ToList();
                     }
                     else
                     {
                         var query = (from r in entities.events
-                                     where r.name.Contains(searchStr) == true
+                                     where r.name.Contains(searchStr) == true && r.community_id == communityAct
                                      select r);
                         eventList = query.ToList();
                     }
@@ -57,9 +59,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     viewModel.searchStr = searchStr;
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = pubMessageList;
-                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                    viewModel.communityName = ep.GetCommunityInfo(userId)[0];
-                    viewModel.communityApart = ep.GetCommunityInfo(userId)[1];
+                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);                    
                     return View(viewModel);
                 }
                 catch(Exception ex)
@@ -100,9 +100,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.searchStr = searchStr;
                     viewModel.pubMessageList = pubMessageList;
-                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                    viewModel.communityName = ep.GetCommunityInfo(userId)[0];
-                    viewModel.communityApart = ep.GetCommunityInfo(userId)[1];
+                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);                   
                     return View(viewModel);
                 }
                 catch(Exception ex)
@@ -143,9 +141,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     viewModel.document_category_list = document_category_list;
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = pubMessageList;
-                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                    viewModel.communityName = ep.GetCommunityInfo(userId)[0];
-                    viewModel.communityApart = ep.GetCommunityInfo(userId)[1];
+                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);              
                     return View(viewModel);
                 }
                 catch(Exception ex)
@@ -179,16 +175,18 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                     List<@event> eventList = new List<@event>();
 
+                    long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
+
                     if (searchStr == "")
                     {
-                        var query = (from r in entities.events where r.is_active == false select r);
+                        var query = (from r in entities.events where r.is_active == false && r.community_id == communityAct select r);
                         eventList = query.OrderBy(m => m.created_at).ToList();
                     }
                     else
                     {
                         var query = (from r in entities.events
                                      where r.name.Contains(searchStr) == true
-                                    && r.is_active == false
+                                    && r.is_active == false && r.community_id == communityAct
                                      select r);
                         eventList = query.OrderBy(m => m.created_at).ToList();
                     }
@@ -236,7 +234,8 @@ namespace WebApplication1.Areas.coadmin.Controllers
                         && Session["ACC_USER_ID"] != null)
                         {
                             userId = (long)Session["ACC_USER_ID"];
-                        }
+                        }                       
+
                         user curUser = entities.users.Find(userId);
                         List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                         editEventViewModel viewModel = new editEventViewModel();
@@ -330,6 +329,8 @@ namespace WebApplication1.Areas.coadmin.Controllers
         {
             try
             {
+                long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
+
                 @event editevent = entities.events.Find(editID);
                 editevent.name = name;
                 editevent.place = place;
@@ -338,6 +339,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 editevent.description = description;
                 editevent.note = note;
                 editevent.share = share;
+                editevent.community_id = communityAct;
                 entities.SaveChanges();
                 return Redirect(Url.Action("registrados", "eventos", new { area = "coadmin" }));
             } catch (DbEntityValidationException e)
@@ -381,6 +383,8 @@ namespace WebApplication1.Areas.coadmin.Controllers
         {
             try
             {
+                long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
+
                 @event newEvent = new @event();
                 newEvent.name = name;
                 newEvent.event_date = DateTime.ParseExact(event_date + " " + event_time, "yyyy-MM-dd HH:mm",
@@ -389,6 +393,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 newEvent.description = description;
                 newEvent.note = note;
                 newEvent.share = 1;
+                newEvent.community_id = communityAct;
                 entities.events.Add(newEvent);
                 entities.SaveChanges();
                 return Redirect(Url.Action("registrados", "eventos", new { area = "coadmin" }));
@@ -411,15 +416,17 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 {
                     List<@event> eventList = new List<@event>();
 
+                    long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
+
                     if (searchStr == "")
                     {
-                        var query = (from r in entities.events select r);
+                        var query = (from r in entities.events where r.community_id == communityAct select r);
                         eventList = query.ToList();
                     }
                     else
                     {
                         var query = (from r in entities.events
-                                     where r.name.Contains(searchStr) == true
+                                     where r.name.Contains(searchStr) == true && r.community_id == communityAct
                                      select r);
                         eventList = query.ToList();
                     }

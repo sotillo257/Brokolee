@@ -13,7 +13,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
     {
         pjrdev_condominiosEntities entities = new pjrdev_condominiosEntities();
         EFPublicRepository ep = new EFPublicRepository();
-        List<community> communityList = new List<community>();
+        List<community> communityList = new List<community>();      
 
         // GET: coadmin/control
         public ActionResult panel(long? Id)

@@ -23,15 +23,18 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 user curUser = entities.users.Find(userId);
                 List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                 List<@event> eventList = new List<@event>();
+
+                long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
+
                 if (searchStr == "")
                 {
-                    var query = (from r in entities.events select r);
+                    var query = (from r in entities.events where r.community_id == communityAct select r);
                     eventList = query.ToList();
                 }
                 else
                 {
                     var query = (from r in entities.events
-                                 where r.name.Contains(searchStr) == true
+                                 where r.name.Contains(searchStr) == true && r.community_id == communityAct
                                  select r);
                     eventList = query.ToList();
                 }
@@ -133,14 +136,16 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 user curUser = entities.users.Find(userId);
                 List<@event> eventList = new List<@event>();
 
+                long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
+
                 if (searchStr == "")
                 {
-                    var query = (from r in entities.events select r);
+                    var query = (from r in entities.events where r.community_id == communityAct select r);
                     eventList = query.ToList();
                 }
                 else
                 {
-                    var query = (from r in entities.events where r.name.Contains(searchStr) == true select r);
+                    var query = (from r in entities.events where r.name.Contains(searchStr) == true && r.community_id == communityAct select r);
                     eventList = query.ToList();
                 }
 
@@ -204,15 +209,17 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 {
                     List<@event> eventList = new List<@event>();
 
+                    long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
+
                     if (searchStr == "")
                     {
-                        var query = (from r in entities.events select r);
+                        var query = (from r in entities.events where r.community_id == communityAct select r);
                         eventList = query.ToList();
                     }
                     else
                     {
                         var query = (from r in entities.events
-                                     where r.name.Contains(searchStr) == true
+                                     where r.name.Contains(searchStr) == true && r.community_id == communityAct
                                      select r);
                         eventList = query.ToList();
                     }
@@ -267,6 +274,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 editevent.description = description;
                 editevent.note = note;
                 editevent.share = share;
+                editevent.community_id = Convert.ToInt64(Session["CURRENT_COMU"]);
                 entities.SaveChanges();
                 return Redirect(Url.Action("registrados", "eventos", new { area = "webmaster" }));
             }
@@ -300,6 +308,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 newEvent.description = description;
                 newEvent.note = note;
                 newEvent.share = 1;
+                newEvent.community_id = Convert.ToInt64(Session["CURRENT_COMU"]);
                 entities.events.Add(newEvent);
                 entities.SaveChanges();
                 return Redirect(Url.Action("registrados", "eventos", new { area = "webmaster" }));

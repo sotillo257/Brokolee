@@ -15,11 +15,11 @@ namespace WebApplication1.Controllers
         EFPublicRepository ep = new EFPublicRepository();
 
         List<Titulo> titulosList = new List<Titulo>();
-        List<community> listComunities = new List<community>();
+        List<community> listComunities = new List<community>();       
 
         // GET: community          
         public ActionResult community(long? Id)
-        {
+        {           
             if (Session["USER_ID"] != null)
             {
                 try
@@ -160,7 +160,7 @@ namespace WebApplication1.Controllers
         }
 
         #region Titulos
-        public ActionResult listadoTitulos(long? Id, long? idCommu)
+        public ActionResult listadoTitulos(long? Id)
         {
             if (Session["USER_ID"] != null && Id != null)
             {
@@ -170,23 +170,15 @@ namespace WebApplication1.Controllers
                 List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                 List<Titulo> titulosList = new List<Titulo>();
                 listadoTitulosViewModel viewModel = new listadoTitulosViewModel();
-                
-                
 
-                if (idCommu == null)
-                {
-                    //long selectedCommu = Convert.ToInt64(Session["CURRENT_COMU"]);
-                    titulosList = entities.Titulos.Where(x => x.is_del != true && x.IdUser == userId && x.community.id == Id).ToList();
-                    Session["CURRENT_COMU"] = Id;
-                    viewModel.communityID1 = Convert.ToInt64(Id);
-                }
-                else
-                {
-                    titulosList = entities.Titulos.Where(x => x.is_del != true && x.IdUser == userId && x.community.id == idCommu).ToList();
-                    Session["CURRENT_COMU"] = idCommu;
-                    viewModel.communityID1 = Convert.ToInt64(idCommu);
-                }
-                  
+                titulosList = ep.GetTitulosByTitular(userId);
+                listComunities = ep.GetCommunityListByTitular(titulosList);
+                viewModel.communityList = listComunities;
+
+                titulosList = entities.Titulos.Where(x => x.is_del != true && x.IdUser == userId && x.community.id == Id).ToList();
+                Session["CURRENT_COMU"] = Id;
+                viewModel.communityID1 = Convert.ToInt64(Id);
+                     
                 viewModel.side_menu = "titulares";
                 viewModel.side_sub_menu = "titulares_listado";
                 viewModel.document_category_list = entities.document_type.ToList();
@@ -225,14 +217,13 @@ namespace WebApplication1.Controllers
                     viewModel.titulo = titulo;
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = pubMessageList;
-
                     viewModel.communityID1 = Convert.ToInt64(Session["CURRENT_COMU"]);
 
-                    string strComm_id = ep.GetCommunityInfo(userId)[2];
-                    long commun_id = Convert.ToInt64(strComm_id);
-                    List<community> titulosList = new List<community>();
-                    titulosList = entities.communities.Where(x => x.id == commun_id).ToList();
-                    viewModel.communityList = titulosList;                 
+                    List<Titulo> titulosList = new List<Titulo>();
+                    titulosList = ep.GetTitulosByTitular(userId);
+                    listComunities = ep.GetCommunityListByTitular(titulosList);
+                    viewModel.communityList = listComunities;
+                                  
                     return View(viewModel);
                 }
                 else
@@ -266,15 +257,18 @@ namespace WebApplication1.Controllers
                 viewModel.document_category_list = entities.document_type.ToList();
                 viewModel.vehiculosList = vehiculosLists;
                 viewModel.curUser = curUser;
-                viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                viewModel.communityName = ep.GetCommunityInfo(userId)[0];
-                viewModel.communityApart = ep.GetCommunityInfo(userId)[1];
+                viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);                
                 viewModel.CantidadDeVehiculos = vehiculosLists.Count();
                 viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                 viewModel.pubMessageList = pubMessageList;
                 viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
 
                 viewModel.communityID1 = Convert.ToInt64(Session["CURRENT_COMU"]);
+                List<Titulo> titulosList = new List<Titulo>();
+                titulosList = ep.GetTitulosByTitular(userId);
+                listComunities = ep.GetCommunityListByTitular(titulosList);
+                viewModel.communityList = listComunities;
+
                 return View(viewModel);
             }
             else
@@ -300,14 +294,17 @@ namespace WebApplication1.Controllers
                     viewModel.document_category_list = entities.document_type.ToList();
                     viewModel.vehiculo = vehiculo;
                     viewModel.curUser = curUser;
-                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                    viewModel.communityName = ep.GetCommunityInfo(userId)[0];
-                    viewModel.communityApart = ep.GetCommunityInfo(userId)[1];
+                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);                    
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = pubMessageList;
                     viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
 
+                    List<Titulo> titulosList = new List<Titulo>();
+                    titulosList = ep.GetTitulosByTitular(userId);
+                    listComunities = ep.GetCommunityListByTitular(titulosList);
+                    viewModel.communityList = listComunities;
                     viewModel.communityID1 = Convert.ToInt64(Session["CURRENT_COMU"]);
+
                     return View(viewModel);
                 }
                 else

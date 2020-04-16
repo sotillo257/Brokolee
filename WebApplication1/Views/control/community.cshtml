@@ -78,38 +78,34 @@
                                         <th class="f-b">Comunidad</th>
                                         <th class="f-b">Descripción</th>
                                         <th class="text-center f-b">Opciones</th>
+                                        <th class="f-b"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach (var item in Model.communityList)
                                     {
-                                        <tr>
-                                            <td>@item.first_name</td>
-                                            <td>@item.description</td>
-                                            <td class="text-center">
-                                                <a href="@Url.Action("listadoTitulos", "control", new { Id = item.id })"
-                                                   class="btn btn-primary waves-effect waves-light btn-sm mr-1 mb-1"
-                                                   data-toggle="tooltip" data-placement="top" title="Comunidades">
-                                                    <i class="mdi mdi-home"></i>
-                                                </a>                                               
-                                                @if (Model.communityID1 == item.id)
-                                                {
-                                                    <a href="#" class="btn btn-success waves-effect waves-light btn-sm mb-1"
-                                                       data-placement="top">
-                                                        <i class="mdi mdi-checkbox-marked-outline"></i>
-                                                    </a>
-                                                }
-                                                else
-                                                {
-                                                    <a href="@Url.Action("community", "control", new { Id = item.id })"
-                                                       class="btn btn-success waves-effect waves-light btn-sm mb-1 comunidadSelect"
-                                                       data-placement="top">
-                                                        <i class="mdi mdi-checkbox-blank-outline"></i>
-                                                    </a>
-                                                }
-                                            </td>
+                                    <tr>
+                                        <td>@item.first_name</td>
+                                        <td>@item.description</td>
+                                        <td class="text-center">
+                                            <a href="@Url.Action("listadoTitulos", "control", new { Id = item.id })"
+                                               class="btn btn-primary waves-effect waves-light btn-sm mr-1 mb-1"
+                                               data-toggle="tooltip" data-placement="top" title="Comunidades">
+                                                <i class="mdi mdi-home"></i>
+                                            </a>                                           
+                                        </td>
+                                        <td>
+                                            @if (Model.communityID1 == item.id)
+                                            {
+                                                <input class="form-control" type="checkbox" value="@item.id" checked />
+                                            }
+                                            else
+                                            {
+                                                <input class="form-control" type="checkbox" value="@item.id" />
+                                            }
+                                        </td>
 
-                                        </tr>
+                                    </tr>
                                     }
                                 </tbody>
                             </table>
@@ -213,11 +209,5 @@
 
     </div><!-- container -->
 
-</div> <!-- Page content Wrapper -->
-
-    <script>
-        function changeComu(selectVal) {                            
-                    
-        }
-    </script>
+</div> <!-- Page content Wrapper -->   
         

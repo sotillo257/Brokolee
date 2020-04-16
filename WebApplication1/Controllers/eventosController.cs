@@ -33,7 +33,7 @@ namespace WebApplication1.Controllers
                     && Session["ACC_USER_ID"] != null)
                     {
                         userId = (long)Session["ACC_USER_ID"];
-                    }
+                    }                    
 
                     user curUser = entities.users.Find(userId);
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
@@ -67,36 +67,49 @@ namespace WebApplication1.Controllers
 
         public JsonResult GetEvents(string searchStr = "")
         {
-            using (pjrdev_condominiosEntities dc = new pjrdev_condominiosEntities())
+            List<CalEventView> listCalEventList = new List<CalEventView>();
+            try
             {
-                List<CalEventView> listCalEventList = new List<CalEventView>();
-                List<@event> eventList = new List<@event>();
+                using (pjrdev_condominiosEntities dc = new pjrdev_condominiosEntities())
+                {
+                    List<@event> eventList = new List<@event>();
 
-                if (searchStr != "")
-                {
-                    var query = (from r in entities.events
-                                 where r.name.Contains(searchStr) == true select r);
-                    eventList = query.ToList();
-                } else
-                {
-                    var query = (from r in entities.events select r);
-                    eventList = query.ToList();
+                    long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
+
+                    if (searchStr == "")
+                    {
+                        var query = (from r in entities.events where r.community_id == communityAct select r);
+                        eventList = query.ToList();
+                    }
+                    else
+                    {
+                        var query = (from r in entities.events
+                                     where r.name.Contains(searchStr) == true && r.community_id == communityAct
+                                     select r);
+                        eventList = query.ToList();
+                    }
+
+                    foreach (var item in eventList)
+                    {
+                        CalEventView ii = new CalEventView();
+                        ii.id = item.id;
+                        ii.title = item.name;
+                        DateTime datetime = (DateTime)item.event_date;
+                        ii.year = datetime.Year;
+                        ii.month = datetime.Month - 1;
+                        ii.day = datetime.Day;
+                        ii.hour = datetime.Hour;
+                        ii.minute = datetime.Minute;
+                        listCalEventList.Add(ii);
+                    }
+                    return new JsonResult { Data = listCalEventList, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
                 }
-                
-                foreach (var item in eventList)
-                {
-                    CalEventView ii = new CalEventView();
-                    ii.id = item.id;
-                    ii.title = item.name;
-                    DateTime datetime = (DateTime)item.event_date;
-                    ii.year = datetime.Year;
-                    ii.month = datetime.Month;
-                    ii.day = datetime.Day;
-                    ii.hour = datetime.Hour;
-                    ii.minute = datetime.Minute;
-                    listCalEventList.Add(ii);
-                }
-                return new JsonResult { Data = listCalEventList, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            } catch(Exception)
+            {
+                return new JsonResult {
+                    Data = listCalEventList,
+                    JsonRequestBehavior = JsonRequestBehavior.AllowGet,
+                };
             }
         }
 

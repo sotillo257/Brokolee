@@ -36,22 +36,25 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                     List<supplier> supplierList = new List<supplier>();
                     Dictionary<long, string> categoryDict = new Dictionary<long, string>();
+
+                    long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
+
                     if (searchStr == "" && searchCategoryId == 0)
                     {
-                        var query = (from r in entities.suppliers select r);
+                        var query = (from r in entities.suppliers where r.community_id == communityAct select r);
                         supplierList = query.ToList();
                     }
                     else if (searchStr != "" && searchCategoryId == 0)
                     {
                         var query1 = (from r in entities.suppliers
-                                      where r.contact_name.Contains(searchStr) == true
+                                      where r.contact_name.Contains(searchStr) == true && r.community_id == communityAct
                                       select r);
                         supplierList = query1.ToList();
                     }
                     else if (searchStr == "" && searchCategoryId != 0)
                     {
                         var query2 = (from r in entities.suppliers
-                                      where r.category_id == searchCategoryId
+                                      where r.category_id == searchCategoryId && r.community_id == communityAct
                                       select r
                                       );
                         supplierList = query2.ToList();
@@ -60,7 +63,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     {
                         var query3 = (from r in entities.suppliers
                                       where r.contact_name.Contains(searchStr) == true &&
-                                      r.category_id == searchCategoryId
+                                      r.category_id == searchCategoryId && r.community_id == communityAct
                                       select r);
                         supplierList = query3.ToList();
                     }
@@ -82,9 +85,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     viewModel.searchCategoryId = searchCategoryId;
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = pubMessageList;
-                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                    viewModel.communityName = ep.GetCommunityInfo(userId)[0];
-                    viewModel.communityApart = ep.GetCommunityInfo(userId)[1];
+                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);                
                     return View(viewModel);
                 }
                 catch(Exception ex)
@@ -132,9 +133,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                         viewModel.curUser = curUser;
                         viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                         viewModel.pubMessageList = pubMessageList;
-                        viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                        viewModel.communityName = ep.GetCommunityInfo(userId)[0];
-                        viewModel.communityApart = ep.GetCommunityInfo(userId)[1];
+                        viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);                        
                         return View(viewModel);
                     }
                     catch(Exception ex)
@@ -179,9 +178,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     viewModel.curUser = curUser;
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = pubMessageList;
-                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                    viewModel.communityName = ep.GetCommunityInfo(userId)[0];
-                    viewModel.communityApart = ep.GetCommunityInfo(userId)[1];
+                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);                    
                     return View(viewModel);
                 }
                 catch(Exception ex)
@@ -330,6 +327,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     System.Globalization.CultureInfo.CurrentCulture);
                 supplier.category_id = category;
                 supplier.created_at = DateTime.Now;
+                supplier.community_id = Convert.ToInt64(Session["CURRENT_COMU"]);
                 entities.suppliers.Add(supplier);
                 entities.SaveChanges();
                 return Redirect(Url.Action("listado", "suplidores", new { area = "coadmin" }));

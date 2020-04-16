@@ -24,5 +24,6 @@ namespace WebApplication1.Models
         public Nullable<System.DateTime> updated_at { get; set; }
         public int share { get; set; }
         public Nullable<bool> is_active { get; set; }
+        public Nullable<long> community_id { get; set; }
     }
 }

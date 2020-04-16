@@ -34,19 +34,19 @@ namespace WebApplication1.Areas.coadmin.Controllers
 
                     user curUser = entities.users.Find(userId);
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
-                    List<contract> contractList = new List<contract>();
+                    List<contract> contractList = new List<contract>();                   
 
                     if (searchStr == "")
                     {
                         var query1 = (from r in entities.contracts select r);
-                        contractList = query1.ToList();
+                        contractList = query1.ToList();                      
                     }
                     else
                     {
                         var query2 = (from r in entities.contracts
                                       where r.first_name.Contains(searchStr) == true
                                       select r);
-                        contractList = query2.ToList();
+                        contractList = query2.ToList();                     
                     }
                     contratosViewModel viewModel = new contratosViewModel();
                     viewModel.side_menu = "contratos";

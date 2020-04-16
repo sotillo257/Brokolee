@@ -177,7 +177,7 @@ namespace WebApplication1.Concrete
                 }
             }
             return listComunities;
-        }
+        }    
 
         public List<Titulo> GetTitulosByTitular(long userId)
         {
