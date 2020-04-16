@@ -35,6 +35,8 @@ namespace WebApplication1.Controllers
                         userId = (long)Session["ACC_USER_ID"];
                     }
 
+                    long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
+
                     user curUser = entities.users.Find(userId);
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                     conceptoViewModel viewModel = new conceptoViewModel();
@@ -42,7 +44,7 @@ namespace WebApplication1.Controllers
                     titulosList = ep.GetTitulosByTitular(userId);
                     listComunities = ep.GetCommunityListByTitular(titulosList);
                     viewModel.communityList = listComunities;
-                    viewModel.communityID1 = Convert.ToInt64(Session["CURRENT_COMU"]);
+                    viewModel.communityID1 = communityAct;
 
                     viewModel.side_menu = "cuotas";
                     viewModel.side_sub_menu = "cuotas_balance";
@@ -52,7 +54,7 @@ namespace WebApplication1.Controllers
                     viewModel.pubMessageList = pubMessageList;
                     viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);                   
                     long adminId = (long)curUser.create_userid;
-                    List<fee> feeList = entities.fees.Where(m => m.user_id == adminId).ToList();
+                    List<fee> feeList = entities.fees.Where(m => m.user_id == adminId && m.community_id == communityAct).ToList();
                     viewModel.feeList = feeList;
                     return View(viewModel);
                 }
@@ -208,12 +210,13 @@ namespace WebApplication1.Controllers
         {
             try
             {
+                long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
                 string paymentType = "CC"; // CreditCard
                 bool makePayment = false;
                 long userId = (long)Session["USER_ID"];
                 user curUser = entities.users.Find(userId);
                 long adminId = (long)curUser.create_userid;
-                fee feeItem = entities.fees.Where(m => m.user_id == adminId).FirstOrDefault();
+                fee feeItem = entities.fees.Where(m => m.user_id == adminId && m.community_id == communityAct).FirstOrDefault();
                 bank adminBankItem = entities.banks.Find(feeItem.bank_id);
                 string bank_account = adminBankItem.account_number;
                 string routing_number = adminBankItem.route_number;

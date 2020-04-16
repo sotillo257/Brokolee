@@ -23,6 +23,7 @@ namespace WebApplication1.Models
         public long user_id { get; set; }
         public decimal tax_charge { get; set; }
         public decimal penalty { get; set; }
+        public Nullable<long> community_id { get; set; }
     
         public virtual bank bank { get; set; }
         public virtual user user { get; set; }

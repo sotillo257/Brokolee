@@ -286,6 +286,7 @@
           <Property Name="user_id" Type="bigint" Nullable="false" />
           <Property Name="tax_charge" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="penalty" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="community_id" Type="bigint" />
         </EntityType>
         <EntityType Name="friendmapping">
           <Key>
@@ -1150,7 +1151,7 @@
           <Property Name="created_at" Type="DateTime" Precision="3" />
           <Property Name="updated_at" Type="DateTime" Precision="3" />
           <NavigationProperty Name="user" Relationship="Self.FK_bank_user" FromRole="bank" ToRole="user" />
-          <NavigationProperty Name="fees" Relationship="Self.FK_fee_bank" FromRole="bank" ToRole="fee" />
+          <NavigationProperty Name="fees" Relationship="pjrdev_condominiosModel.FK_fee_bank" FromRole="bank" ToRole="fee" />
         </EntityType>
         <EntityType Name="blogcomment">
           <Key>
@@ -1325,22 +1326,6 @@
           <Property Name="fac_id" Type="Int64" />
           <Property Name="schedule_id" Type="Int32" />
           <Property Name="status" Type="Boolean" />
-        </EntityType>
-        <EntityType Name="fee">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="cost" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
-          <Property Name="bank_id" Type="Int64" Nullable="false" />
-          <Property Name="merchant_account" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="created_at" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="user_id" Type="Int64" Nullable="false" />
-          <Property Name="tax_charge" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
-          <Property Name="penalty" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
-          <NavigationProperty Name="bank" Relationship="Self.FK_fee_bank" FromRole="fee" ToRole="bank" />
-          <NavigationProperty Name="user" Relationship="Self.FK_fee_user" FromRole="fee" ToRole="user" />
         </EntityType>
         <EntityType Name="friendmapping">
           <Key>
@@ -1551,7 +1536,6 @@
           <NavigationProperty Name="communusers" Relationship="Self.FK_communuser_user" FromRole="user" ToRole="communuser" />
           <NavigationProperty Name="creditcards" Relationship="Self.FK_creditcard_user" FromRole="user" ToRole="creditcard" />
           <NavigationProperty Name="emailthemes" Relationship="Self.FK_emailtheme_user" FromRole="user" ToRole="emailtheme" />
-          <NavigationProperty Name="fees" Relationship="Self.FK_fee_user" FromRole="user" ToRole="fee" />
           <NavigationProperty Name="friendmappings" Relationship="Self.FK_friendmapping_user" FromRole="user" ToRole="friendmapping" />
           <NavigationProperty Name="friendmappings1" Relationship="Self.FK_friendmapping_user1" FromRole="user" ToRole="friendmapping" />
           <NavigationProperty Name="onlineusers" Relationship="Self.FK_onlineuser_user" FromRole="user" ToRole="onlineuser" />
@@ -1566,6 +1550,7 @@
           <NavigationProperty Name="Titulos" Relationship="pjrdev_condominiosModel.FK_Titulos_user" FromRole="user" ToRole="Titulo" />
           <NavigationProperty Name="BlogUserLikes" Relationship="pjrdev_condominiosModel.FK_BlogUserLikes_user" FromRole="user" ToRole="BlogUserLike" />
           <NavigationProperty Name="blogs" Relationship="pjrdev_condominiosModel.FK_blog_user" FromRole="user" ToRole="blog" />
+          <NavigationProperty Name="fees" Relationship="pjrdev_condominiosModel.FK_fee_user" FromRole="user" ToRole="fee" />
           </EntityType>
         <EntityType Name="uso">
           <Key>
@@ -1589,18 +1574,6 @@
             </Principal>
             <Dependent Role="bank">
               <PropertyRef Name="user_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_fee_bank">
-          <End Role="bank" Type="Self.bank" Multiplicity="1" />
-          <End Role="fee" Type="Self.fee" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="bank">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="fee">
-              <PropertyRef Name="bank_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1696,18 +1669,6 @@
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="emailtheme">
-              <PropertyRef Name="user_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_fee_user">
-          <End Role="user" Type="Self.user" Multiplicity="1" />
-          <End Role="fee" Type="Self.fee" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="user">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="fee">
               <PropertyRef Name="user_id" />
             </Dependent>
           </ReferentialConstraint>
@@ -1836,7 +1797,6 @@
           <EntitySet Name="emailthemes" EntityType="Self.emailtheme" />
           <EntitySet Name="emailtypes" EntityType="Self.emailtype" />
           <EntitySet Name="facsches" EntityType="Self.facsche" />
-          <EntitySet Name="fees" EntityType="Self.fee" />
           <EntitySet Name="friendmappings" EntityType="Self.friendmapping" />
           <EntitySet Name="notifications" EntityType="Self.notification" />
           <EntitySet Name="onlineusers" EntityType="Self.onlineuser" />
@@ -1853,10 +1813,6 @@
           <AssociationSet Name="FK_bank_user" Association="Self.FK_bank_user">
             <End Role="user" EntitySet="users" />
             <End Role="bank" EntitySet="banks" />
-          </AssociationSet>
-          <AssociationSet Name="FK_fee_bank" Association="Self.FK_fee_bank">
-            <End Role="bank" EntitySet="banks" />
-            <End Role="fee" EntitySet="fees" />
           </AssociationSet>
           <AssociationSet Name="FK_chatmessage_user" Association="Self.FK_chatmessage_user">
             <End Role="user" EntitySet="users" />
@@ -1889,10 +1845,6 @@
           <AssociationSet Name="FK_emailtheme_user" Association="Self.FK_emailtheme_user">
             <End Role="user" EntitySet="users" />
             <End Role="emailtheme" EntitySet="emailthemes" />
-          </AssociationSet>
-          <AssociationSet Name="FK_fee_user" Association="Self.FK_fee_user">
-            <End Role="user" EntitySet="users" />
-            <End Role="fee" EntitySet="fees" />
           </AssociationSet>
           <AssociationSet Name="FK_friendmapping_user" Association="Self.FK_friendmapping_user">
             <End Role="user" EntitySet="users" />
@@ -1987,6 +1939,15 @@
           <AssociationSet Name="FK_task_taskcomment" Association="pjrdev_condominiosModel.FK_task_taskcomment">
             <End Role="task" EntitySet="tasks" />
             <End Role="taskcomment" EntitySet="taskcomments" />
+          </AssociationSet>
+          <EntitySet Name="fees" EntityType="pjrdev_condominiosModel.fee" />
+          <AssociationSet Name="FK_fee_bank" Association="pjrdev_condominiosModel.FK_fee_bank">
+            <End Role="bank" EntitySet="banks" />
+            <End Role="fee" EntitySet="fees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_fee_user" Association="pjrdev_condominiosModel.FK_fee_user">
+            <End Role="user" EntitySet="users" />
+            <End Role="fee" EntitySet="fees" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="Vehiculo">
@@ -2329,6 +2290,47 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="fee">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="cost" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="bank_id" Type="Int64" Nullable="false" />
+          <Property Name="merchant_account" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="created_at" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="user_id" Type="Int64" Nullable="false" />
+          <Property Name="tax_charge" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="penalty" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="community_id" Type="Int64" />
+          <NavigationProperty Name="bank" Relationship="pjrdev_condominiosModel.FK_fee_bank" FromRole="fee" ToRole="bank" />
+          <NavigationProperty Name="user" Relationship="pjrdev_condominiosModel.FK_fee_user" FromRole="fee" ToRole="user" />
+        </EntityType>
+        <Association Name="FK_fee_bank">
+          <End Type="pjrdev_condominiosModel.bank" Role="bank" Multiplicity="1" />
+          <End Type="pjrdev_condominiosModel.fee" Role="fee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="bank">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="fee">
+              <PropertyRef Name="bank_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_fee_user">
+          <End Type="pjrdev_condominiosModel.user" Role="user" Multiplicity="1" />
+          <End Type="pjrdev_condominiosModel.fee" Role="fee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="fee">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2518,21 +2520,6 @@
                 <ScalarProperty Name="fac_id" ColumnName="fac_id" />
                 <ScalarProperty Name="schedule_id" ColumnName="schedule_id" />
                 <ScalarProperty Name="status" ColumnName="status" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="fees">
-            <EntityTypeMapping TypeName="pjrdev_condominiosModel.fee">
-              <MappingFragment StoreEntitySet="fee">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="cost" ColumnName="cost" />
-                <ScalarProperty Name="bank_id" ColumnName="bank_id" />
-                <ScalarProperty Name="merchant_account" ColumnName="merchant_account" />
-                <ScalarProperty Name="created_at" ColumnName="created_at" />
-                <ScalarProperty Name="user_id" ColumnName="user_id" />
-                <ScalarProperty Name="tax_charge" ColumnName="tax_charge" />
-                <ScalarProperty Name="penalty" ColumnName="penalty" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2944,6 +2931,22 @@
                 <ScalarProperty Name="created_at" ColumnName="created_at" />
                 <ScalarProperty Name="responsable" ColumnName="responsable" />
                 <ScalarProperty Name="task_name" ColumnName="task_name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="fees">
+            <EntityTypeMapping TypeName="pjrdev_condominiosModel.fee">
+              <MappingFragment StoreEntitySet="fee">
+                <ScalarProperty Name="community_id" ColumnName="community_id" />
+                <ScalarProperty Name="penalty" ColumnName="penalty" />
+                <ScalarProperty Name="tax_charge" ColumnName="tax_charge" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="merchant_account" ColumnName="merchant_account" />
+                <ScalarProperty Name="bank_id" ColumnName="bank_id" />
+                <ScalarProperty Name="cost" ColumnName="cost" />
+                <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

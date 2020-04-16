@@ -20,7 +20,6 @@
         <EntityTypeShape EntityType="pjrdev_condominiosModel.emailtheme" Width="1.5" PointX="6" PointY="25.75" IsExpanded="true" />
         <EntityTypeShape EntityType="pjrdev_condominiosModel.emailtype" Width="1.5" PointX="3.75" PointY="40.875" IsExpanded="true" />
         <EntityTypeShape EntityType="pjrdev_condominiosModel.facsche" Width="1.5" PointX="13.75" PointY="9.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="pjrdev_condominiosModel.fee" Width="1.5" PointX="5.25" PointY="17.25" IsExpanded="true" />
         <EntityTypeShape EntityType="pjrdev_condominiosModel.friendmapping" Width="1.5" PointX="3" PointY="29.125" IsExpanded="true" />
         <EntityTypeShape EntityType="pjrdev_condominiosModel.notification" Width="1.5" PointX="13.75" PointY="12.75" IsExpanded="true" />
         <EntityTypeShape EntityType="pjrdev_condominiosModel.onlineuser" Width="1.5" PointX="3" PointY="32.625" IsExpanded="true" />
@@ -35,7 +34,6 @@
         <EntityTypeShape EntityType="pjrdev_condominiosModel.user" Width="1.5" PointX="0.75" PointY="17.5" IsExpanded="true" />
         <EntityTypeShape EntityType="pjrdev_condominiosModel.uso" Width="1.5" PointX="3" PointY="46.5" IsExpanded="true" />
         <AssociationConnector Association="pjrdev_condominiosModel.FK_bank_user" ManuallyRouted="false" />
-        <AssociationConnector Association="pjrdev_condominiosModel.FK_fee_bank" ManuallyRouted="false" />
         <AssociationConnector Association="pjrdev_condominiosModel.FK_chatmessage_user" ManuallyRouted="false" />
         <AssociationConnector Association="pjrdev_condominiosModel.FK_chatmessage_user1" ManuallyRouted="false" />
         <AssociationConnector Association="pjrdev_condominiosModel.FK_community_package" ManuallyRouted="false" />
@@ -44,7 +42,6 @@
         <AssociationConnector Association="pjrdev_condominiosModel.FK_creditcard_user" ManuallyRouted="false" />
         <AssociationConnector Association="pjrdev_condominiosModel.FK_emailtheme_emailtype" ManuallyRouted="false" />
         <AssociationConnector Association="pjrdev_condominiosModel.FK_emailtheme_user" ManuallyRouted="false" />
-        <AssociationConnector Association="pjrdev_condominiosModel.FK_fee_user" ManuallyRouted="false" />
         <AssociationConnector Association="pjrdev_condominiosModel.FK_friendmapping_user" ManuallyRouted="false" />
         <AssociationConnector Association="pjrdev_condominiosModel.FK_friendmapping_user1" ManuallyRouted="false" />
         <AssociationConnector Association="pjrdev_condominiosModel.FK_onlineuser_user" ManuallyRouted="false" />
@@ -76,6 +73,9 @@
         <EntityTypeShape EntityType="pjrdev_condominiosModel.task" Width="1.5" PointX="5.75" PointY="29.625" />
         <AssociationConnector Association="pjrdev_condominiosModel.FK_carpentry_task" />
         <AssociationConnector Association="pjrdev_condominiosModel.FK_task_taskcomment" />
+        <EntityTypeShape EntityType="pjrdev_condominiosModel.fee" Width="1.5" PointX="5.25" PointY="16.625" />
+        <AssociationConnector Association="pjrdev_condominiosModel.FK_fee_bank" />
+        <AssociationConnector Association="pjrdev_condominiosModel.FK_fee_user" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

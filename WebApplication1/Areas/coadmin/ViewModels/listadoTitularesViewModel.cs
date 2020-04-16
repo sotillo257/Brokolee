@@ -13,6 +13,7 @@ namespace WebApplication1.Areas.coadmin.ViewModels
         public string side_sub_menu { get; set; }
         public string communityName { get; set; }
         public string communityApart { get; set; }
+        public long communityID1 { get; set; }
         public List<user> titularList { get; set; }
         public List<document_type> document_category_list { get; set; }
         public user curUser { get; set; }
