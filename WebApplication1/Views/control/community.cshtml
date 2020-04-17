@@ -97,11 +97,11 @@
                                         <td>
                                             @if (Model.communityID1 == item.id)
                                             {
-                                                <input class="form-control" type="checkbox" value="@item.id" checked />
+                                                <input class="form-control CommunitySession" onchange="ChangeCommunity(this)" type="checkbox" value="@item.id" checked />
                                             }
                                             else
                                             {
-                                                <input class="form-control" type="checkbox" value="@item.id" />
+                                                <input class="form-control CommunitySession" onchange="ChangeCommunity(this)" type="checkbox" value="@item.id" />
                                             }
                                         </td>
 
