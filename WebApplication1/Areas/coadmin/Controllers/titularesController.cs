@@ -106,9 +106,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     viewModel.document_category_list = entities.document_type.ToList();
                     viewModel.vehiculo = vehiculo;
                     viewModel.curUser = curUser;
-                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                    viewModel.communityName = ep.GetCommunityInfo(userId)[0];
-                    viewModel.communityApart = ep.GetCommunityInfo(userId)[1];
+                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);                    
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = pubMessageList;
                     viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
@@ -142,9 +140,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     viewModel.document_category_list = entities.document_type.ToList();
                     viewModel.vehiculo = vehiculo;
                     viewModel.curUser = curUser;
-                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                    viewModel.communityName = ep.GetCommunityInfo(userId)[0];
-                    viewModel.communityApart = ep.GetCommunityInfo(userId)[1];
+                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);                   
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = pubMessageList;
                     viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
@@ -514,7 +510,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
 
         #region TITULAR
 
-        public ActionResult listado(string searchStr = "")
+        public ActionResult listado(long? Id, string searchStr = "")
         {
             if (Session["USER_ID"] != null)
             {
@@ -525,14 +521,20 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 List<user> titularList = new List<user>();
 
                 long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
+                if (Id != null)
+                {
+                    Session["CURRENT_COMU"] = Id;
+                    communityAct = Convert.ToInt64(Id);                  
+                }
 
                 if (searchStr == "")
                 {
                     var query1 = (from r in entities.users
                                   where
-         r.role == 1 && r.is_del != true && r.Titulos.Any(x=> x.IdCommunity == communityAct)
+         r.role == 1 && r.is_del != true && ((r.create_userid == userId && r.Titulos.Count == 0) || r.Titulos.Any(x => x.IdCommunity == communityAct))
                                   select r);
                     titularList = query1.ToList();
+
                 }
                 else
                 {
@@ -540,7 +542,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                                  where r.role == 1 &&
                                  (r.first_name1.Contains(searchStr) == true
                                  || r.last_name1.Contains(searchStr) == true)
-                                 && r.is_del != true && r.Titulos.Any(x => x.IdCommunity == communityAct)
+                                 && r.is_del != true && ((r.create_userid == userId && r.Titulos.Count == 0) || r.Titulos.Any(x => x.IdCommunity == communityAct))
                                  select r);
                     titularList = query.ToList();
                 }
@@ -598,7 +600,6 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);              
                 viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                 viewModel.pubMessageList = pubMessageList;
-                viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
                 viewModel.communityList = entities.communities.ToList();
                 ViewBag.msgError = Error;
                 return View(viewModel);
@@ -716,7 +717,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                         entities.users.Add(newResident);
                         entities.SaveChanges();
 
-                        return Redirect(Url.Action("listado", "titulares", new { area = "coadmin" }));
+                        return Redirect(Url.Action("agregarTitulo", "titulares", new { area = "coadmin", Id = newResident.id }));
                     }
                 }
                 catch (Exception ex)
