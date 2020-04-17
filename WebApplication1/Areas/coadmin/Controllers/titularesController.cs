@@ -592,8 +592,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 user curUser = entities.users.Find(userId);
                 List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                 agregarTitularesViewModel viewModel = new agregarTitularesViewModel();
-
-                long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
+               
                 List<community> communityList = new List<community>();
                 communityList = ep.GetCommunityList(userId);
                 viewModel.communityList = communityList;                
@@ -605,7 +604,6 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);              
                 viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                 viewModel.pubMessageList = pubMessageList;
-                viewModel.communityList = entities.communities.ToList();
                 ViewBag.msgError = Error;
                 return View(viewModel);
             }
