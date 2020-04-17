@@ -917,10 +917,10 @@ namespace WebApplication1.Areas.coadmin.Controllers
             long userId = (long)Session["USER_ID"];
             string content = "";           
             blog blogs = entities.blogs.Find(ID);
-            content += "<div class='Container'><div class='row'><div class='col-sm-12'><div class='single-blog caja'><p class='fecha'><i class='mdi mdi-worker text - primary'></i>" + blogs.author + " <span>";
+            content += "<div class='Container'><div class='row'><div class='col-sm-12'><div class='single-blog caja'><p class='fecha'><i class='mdi mdi-worker text-primary'></i>" + blogs.author + " <span>";
             content += "<td>" + Convert.ToDateTime(blogs.blogdate).ToString("dd/MM/yyyy HH:mm") + "</td></span></p><h2><a class='titulo' href='" + Url.Action("verblog", "comunicaciones", new { blogID = blogs.id, area = "coadmin" }).ToString() + "'>" + blogs.title + "</a></h2>";
             content += blogs.content.Replace('"', '\'');
-            content += "<p class='fecha' style='margin-top:10px!important'>";
+            content += "<p class='fecha' style='padding-top:15px!important'>";
             if (blogs.user_id == userId)
             {
                 content += "<a href='#' ><a href = '" + Url.Action("editarblog", "comunicaciones", new { area = "coadmin", blogID = blogs.id }).ToString() + "'><button type = 'button' class='btn btn-primary waves-effect waves-light btn-sm mr-1 mb-1'";

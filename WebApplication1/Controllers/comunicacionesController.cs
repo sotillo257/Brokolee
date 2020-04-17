@@ -264,6 +264,7 @@ namespace WebApplication1.Controllers
                         viewModel.side_sub_menu = "comunicaciones_verblog";
                         viewModel.document_category_list = entities.document_type.ToList();
                         viewModel.curUser = curUser;
+                        viewModel.Content = blogID.ToString();
                         viewModel.viewBlog = blog;
                         viewModel.blogID = Convert.ToInt64(blogID);
                         viewModel.blogcommentList = entities.blogcomments.Where(m => m.blog_id == blogID).ToList();
@@ -410,7 +411,8 @@ namespace WebApplication1.Controllers
         }
 
         [HttpPost]
-        public ActionResult newblog(string title,  string author, string content)
+        [ValidateInput(false)]
+        public ActionResult newblog(string title, string author, string content)
         {
             try
             {
@@ -426,10 +428,34 @@ namespace WebApplication1.Controllers
                 entities.SaveChanges();
                 return Redirect(Url.Action("blog", "comunicaciones"));
             }
-            catch(Exception)
+            catch (Exception)
             {
                 return Redirect(Url.Action("agregarblog", "comunicaciones"));
             }
+        }
+
+        [HttpPost]
+        public JsonResult ArmarBlogs(long ID)
+        {
+            long userId = (long)Session["USER_ID"];
+            string content = "";
+            blog blogs = entities.blogs.Find(ID);
+            content += "<div class='Container'><div class='row'><div class='col-sm-12'><div class='single-blog caja'><p class='fecha'><i class='mdi mdi-worker text-primary'></i>" + blogs.author + " <span>";
+            content += "<td>" + Convert.ToDateTime(blogs.blogdate).ToString("dd/MM/yyyy HH:mm") + "</td></span></p><h2><a class='titulo' href='" + Url.Action("verblog", "comunicaciones", new { blogID = blogs.id, area = "coadmin" }).ToString() + "'>" + blogs.title + "</a></h2>";
+            content += blogs.content.Replace('"', '\'');
+            content += "<p class='fecha' style='padding-top:15px!important'>";
+            if (blogs.user_id == userId)
+            {
+                content += "<a href='#' ><a href = '" + Url.Action("editarblog", "comunicaciones", new { area = "coadmin", blogID = blogs.id }).ToString() + "'><button type = 'button' class='btn btn-primary waves-effect waves-light btn-sm mr-1 mb-1'";
+                content += "data-toggle='tooltip' data-placement='top' title='Editar'><i class='mdi mdi-lead-pencil'></i></button></a>";
+                content += "<a href = '#' class='Eliminar'  data-id='" + blogs.id + "' ><button type = 'button' class='btn btn-danger waves-effect waves-light btn-sm mr-1 mb-1'";
+                content += "data-toggle='tooltip' data-placement='top' title='Eliminar'><i class='mdi mdi-close'></i></button></a>";
+            }
+            content += "<a href='#' class='Like' data-id='" + blogs.id + "' ><span><i class='fa fa-thumbs-o-up'></i> like " + blogs.CantLike + "</span> </a>" +
+                    "<a href = '" + Url.Action("agregarcomentario", "comunicaciones", new { area = "coadmin", blogID = blogs.id }).ToString() + "'><span style='padding-right: 18px;'> <i class='fa fa-comment-o'></i> Comentar </span> </a>" +
+                    "</p></div></div></div></div>";
+
+            return Json(content);
         }
 
         public JsonResult SetRead(long fromUserID, long toUserID)
@@ -460,6 +486,80 @@ namespace WebApplication1.Controllers
             } catch(Exception ex)
             {
                 return Json(new {
+                    result = "error",
+                    exception = ex.Message
+                });
+            }
+        }
+
+        [HttpPost]
+        [ValidateInput(false)]
+        public JsonResult AgregarLikeblog(long ID)
+        {
+            try
+            {
+                long userId = (long)Session["USER_ID"];
+                BlogUserLike blogUserLikee = entities.BlogUserLikes.Where(x => x.IDBlog == ID && x.IDUser == userId).ToList().FirstOrDefault();
+                if (blogUserLikee == null)
+                {
+                    BlogUserLike blogUserLike = new BlogUserLike();
+                    blogUserLike.IDBlog = ID;
+                    blogUserLike.IDUser = userId;
+                    blogUserLike.Fecha = DateTime.Now;
+                    entities.BlogUserLikes.Add(blogUserLike);
+                    entities.SaveChanges();
+                    List<BlogUserLike> listBlogLikes = entities.BlogUserLikes.Where(x => x.IDBlog == ID).ToList();
+                    blog blog = entities.blogs.Find(ID);
+                    if (blog.CantLike == null)
+                    {
+                        blog.CantLike = 1;
+                    }
+                    else
+                    {
+                        blog.CantLike = listBlogLikes.Count();
+                    }
+
+                    entities.SaveChanges();
+                }
+                return Json(new
+                {
+                    result = "success"
+                });
+            }
+            catch (Exception ex)
+            {
+                return Json(new
+                {
+                    result = "error",
+                    exception = ex.Message
+                });
+            }
+        }
+
+        [HttpPost]
+        [ValidateInput(false)]
+        public JsonResult eliminarBlog(long blogID)
+        {
+            try
+            {
+                long userId = (long)Session["USER_ID"];
+                blog blog = entities.blogs.Find(blogID);
+                List<BlogUserLike> listBlog = entities.BlogUserLikes.Where(x => x.IDBlog == blog.id).ToList();
+                entities.BlogUserLikes.RemoveRange(listBlog);
+                entities.SaveChanges();
+                List<blogcomment> listBlogCome = entities.blogcomments.Where(x => x.blog_id == blog.id).ToList();
+                entities.blogcomments.RemoveRange(listBlogCome);
+                entities.blogs.Remove(blog);
+                entities.SaveChanges();
+                return Json(new
+                {
+                    result = "success"
+                });
+            }
+            catch (Exception ex)
+            {
+                return Json(new
+                {
                     result = "error",
                     exception = ex.Message
                 });

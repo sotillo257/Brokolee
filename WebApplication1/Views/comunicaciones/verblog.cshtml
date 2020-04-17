@@ -4,6 +4,26 @@
     Page.Title = "Ver blog - Brokolee Software";
 }
 
+<style>
+    .caja {
+        box-shadow: 0px 0px 20px 1px rgba(0,0,0,0.2);
+        padding: 10px;
+        margin-top: 30px;
+        background-color: #fff;
+    }
+
+    .fecha span {
+        float: right;
+        font-size: 16px;
+        color: cornflowerblue;
+    }
+</style>
+
+
+
+<link rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
 <div class="page-content-wrapper">
     <div class="container-fluid">
         <div class="row">
@@ -33,76 +53,98 @@
             </div>
         </div>
         <!-- end back button -->
-        <div class="row">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="row form-material">
-                            <div class="col-md-6 mb-1">
-                                <h5 class="d-inline-block">
-                                    @Model.viewBlog.title
-                                </h5>
-                            </div>
-                            <div class="col-md-6">
-
-                            </div>
-                        </div>
-                        <div class="form-divider"></div>
-                        <div class="row form-material">
-                            <div class="col-md-6 mb-1">
-                                <p><i class="mdi mdi-worker text-primary"></i>@Model.viewBlog.author</p>
-                            </div>
-                            <div class="col-md-6">
-                                <p><i class="mdi mdi-clock text-primary"></i>@Convert.ToDateTime(Model.viewBlog.blogdate).ToString("yyyy-MM-dd HH:mm")</p>
-                            </div>
-                            <div class="col-md-11 mb-3">
-                                <textarea class="form-control" rows="3" readonly>@Model.viewBlog.content</textarea>
-                            </div>
-                        </div>
-                        <div class="form-divider"></div>
-                        <div class="row form-material">
-                            <div class="col-md-6">
-                                <h5 class="d-inline-block">Blog Comentarios</h5>
-                            </div>
-                            <div class="col-md-6 mb-1">
-                                <a href="@Url.Action("agregarcomentario", "comunicaciones", new { blogID = Model.blogID })">
-                                    <button type="button" class="btn btn-primary waves-effect waves-light float-xl-right float-lg-right float-md-left">Agregar Comentario</button>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="table-responsive">
-                            <table id="dataTable-documentos-legales"
-                                   class="table table-striped table-bordered normal"
-                                   style="border-collapse: collapse; border-spacing: 0; width: 100%;">
-                                <thead>
-                                    <tr>
-                                        <th>Nombre</th>
-                                        <th>Comentario</th>
-                                        <th>Fecha de publicación</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var item in Model.blogcommentList)
-                                    {
-                                        <tr>
-                                            <td>@item.name</td>
-                                            <td>@item.comment.</td>
-                                            <td class="text-center">@Convert.ToDateTime(item.postdate).ToString("MM/dd/yyyy HH:mm")</td>
-                                        </tr>
-                                    }
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <div id="divContenido"></div>
 
         <!-- back button -->
         <div class="row pb-4">
             <div class="col-md-6">
-                <a href="javascript:history.back()"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+                <a href="javascript:history.back()"><button type="button" style="margin-top: 10px;" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
             </div>
         </div>
     </div>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script>
+
+
+    console.log('@Model.Content');
+
+
+       var url = "@Url.Action("ArmarBlogs", "comunicaciones")";
+     var compania = new Array();
+    var formData = new FormData();
+
+    formData.append('ID', '@Model.Content');
+
+    compania.push(formData);
+    $.ajax({
+        url: url,
+        type: "post",
+        data: compania[0],
+                success: function (result) {
+                    $("#divContenido").append(result);
+                },
+                processData: false,
+                contentType: false
+    });
+    //.ToString()
+
+
+
+    $(document).ready(function () {
+          $(".Eliminar").on('click', function () {
+              var url = "@Url.Action("eliminarBlog", "comunicaciones")";
+             var compania = new Array();
+          var formData = new FormData();
+
+
+             var id = $(".Eliminar").attr('data-id');
+            formData.append('blogID',  id);
+
+            compania.push(formData);
+            $.ajax({
+                url: url,
+                type: "post",
+                data: compania[0],
+                        success: function (result) {
+                            if (result.result == "success") {
+                                window.location.href = "@Url.Action("blog", "comunicaciones")";
+                            } else {
+                                alert("Error al eliminar el blog: "+ result.exception);
+                            }
+                        },
+                        processData: false,
+                        contentType: false
+            });
+        });
+
+         $(".Like").on('click', function () {
+            var url = "@Url.Action("AgregarLikeblog", "comunicaciones")";
+             var compania = new Array();
+          var formData = new FormData();
+
+
+             var id = $(".Like").attr('data-id');
+            formData.append('ID',  id);
+
+            compania.push(formData);
+            $.ajax({
+                url: url,
+                type: "post",
+                data: compania[0],
+                        success: function (result) {
+                            //  $("#divContenido").append(result);
+                            console.log(result);
+                        },
+                        processData: false,
+                        contentType: false
+            });
+        });
+
+    });
+
+
+
+
+</script>
