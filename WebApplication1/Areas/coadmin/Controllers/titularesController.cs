@@ -160,7 +160,6 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 return Redirect(ep.GetLogoutUrl());
             }
         }
-
         public ActionResult InsertarVehiculo(long IdTitulo, string brand, string model, string colour, string year, string clapboard,
            string stamp_number)
         {
@@ -528,9 +527,12 @@ namespace WebApplication1.Areas.coadmin.Controllers
 
                 if (searchStr == "")
                 {
-                    var query1 = (from r in entities.users
+                    var query1 = (from r in entities.users                                    
                                   where
-         r.role == 1 && r.is_del != true && r.Titulos.Any(x=> x.IdCommunity == communityAct)
+                                    r.role == 1 &&
+                                    r.is_del != true && 
+                                   ( (r.create_userid == userId && r.Titulos.Count == 0) ||
+                                    r.Titulos.Any(x=> x.IdCommunity == communityAct))
                                   select r);
                     titularList = query1.ToList();
                 }
@@ -540,7 +542,9 @@ namespace WebApplication1.Areas.coadmin.Controllers
                                  where r.role == 1 &&
                                  (r.first_name1.Contains(searchStr) == true
                                  || r.last_name1.Contains(searchStr) == true)
-                                 && r.is_del != true && r.Titulos.Any(x => x.IdCommunity == communityAct)
+                                 && r.is_del != true &&
+                                   ((r.create_userid == userId && r.Titulos.Count == 0) ||
+                                    r.Titulos.Any(x => x.IdCommunity == communityAct))
                                  select r);
                     titularList = query.ToList();
                 }
