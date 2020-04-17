@@ -13,6 +13,8 @@ namespace WebApplication1.Areas.coadmin.Controllers
     {
         pjrdev_condominiosEntities entities = new pjrdev_condominiosEntities();
         EFPublicRepository ep = new EFPublicRepository();
+        List<community> communityList = new List<community>();
+
         // GET: coadmin/contacto
         public ActionResult listado(string Error, string searchStr = "")
         {
@@ -51,6 +53,10 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     }
 
                     contactoViewModel viewModel = new contactoViewModel();
+                  
+                    communityList = ep.GetCommunityList(userId);
+                    viewModel.communityList = communityList;
+
                     viewModel.side_menu = "contacto";
                     viewModel.side_sub_menu = "contacto_informacion";
                     viewModel.contactList = contactList;
@@ -102,6 +108,10 @@ namespace WebApplication1.Areas.coadmin.Controllers
                         List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);                        
                         List<document_type> document_category_list = entities.document_type.ToList();
                         contactoViewModel viewModel = new contactoViewModel();
+
+                        communityList = ep.GetCommunityList(userId);
+                        viewModel.communityList = communityList;
+
                         viewModel.side_menu = "contacto";
                         viewModel.side_sub_menu = "contacto_informacion";
                         viewModel.document_category_list = document_category_list;
@@ -150,6 +160,10 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                     user curUser = entities.users.Find(userId);
                     contactoViewModel viewModel = new contactoViewModel();
+                    
+                    communityList = ep.GetCommunityList(userId);
+                    viewModel.communityList = communityList;
+
                     viewModel.side_menu = "contacto";
                     viewModel.side_sub_menu = "manage_edit_headlines";
                     viewModel.document_category_list = entities.document_type.ToList();
@@ -185,6 +199,11 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                     user curUser = entities.users.Find(userId);
                     contactoViewModel viewModel = new contactoViewModel();
+
+                    List<community> communityList = new List<community>();
+                    communityList = ep.GetCommunityList(userId);
+                    viewModel.communityList = communityList;
+
                     viewModel.side_menu = "contacto";
                     viewModel.side_sub_menu = "manage_edit_headlines";
                     viewModel.document_category_list = entities.document_type.ToList();

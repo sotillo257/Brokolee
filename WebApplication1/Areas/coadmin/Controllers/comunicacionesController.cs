@@ -748,6 +748,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     viewModel.document_category_list = entities.document_type.ToList();
                     viewModel.curUser = curUser;
                     viewModel.viewBlog = blog;
+                    viewModel.Content = blogID.ToString();
                     viewModel.blogID = Convert.ToInt64(blogID);
                     viewModel.blogcommentList = entities.blogcomments.Where(m => m.blog_id == blogID).ToList();
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
@@ -913,29 +914,23 @@ namespace WebApplication1.Areas.coadmin.Controllers
         [HttpPost]
         public JsonResult ArmarBlogs(long ID)
         {
-            string content = "";
-            List<blog> blogs = entities.blogs.Where(m => m.user_id == ID).ToList();
-            foreach (var item in blogs)
+            long userId = (long)Session["USER_ID"];
+            string content = "";           
+            blog blogs = entities.blogs.Find(ID);
+            content += "<div class='Container'><div class='row'><div class='col-sm-12'><div class='single-blog caja'><p class='fecha'><i class='mdi mdi-worker text - primary'></i>" + blogs.author + " <span>";
+            content += "<td>" + Convert.ToDateTime(blogs.blogdate).ToString("dd/MM/yyyy HH:mm") + "</td></span></p><h2><a class='titulo' href='" + Url.Action("verblog", "comunicaciones", new { blogID = blogs.id, area = "coadmin" }).ToString() + "'>" + blogs.title + "</a></h2>";
+            content += blogs.content.Replace('"', '\'');
+            content += "<p class='fecha' style='margin-top:10px!important'>";
+            if (blogs.user_id == userId)
             {
-
-                content += "<div class='Container'><div class='row'><div class='col-sm-12'><div class='single-blog caja'><p class='fecha'>" + item.author + " <span>";
-                content += "<td>" + Convert.ToDateTime(item.blogdate).ToString("dd/MM/yyyy HH:mm") + "</td></span></p><h2><a class='titulo' href='" + Url.Action("verblog", "comunicaciones", new { blogID = item.id, area = "coadmin" }).ToString() + "'>" + item.title + "</a></h2>";
-                content += item.content.Replace('"', '\'');
-                content += "<p class='fecha'><a href='#' ><a href = '" + Url.Action("editarblog", "comunicaciones", new { area = "coadmin", blogID = item.id }).ToString() + "'><button type = 'button' class='btn btn-primary waves-effect waves-light btn-sm mr-1 mb-1'";
+                content += "<a href='#' ><a href = '" + Url.Action("editarblog", "comunicaciones", new { area = "coadmin", blogID = blogs.id }).ToString() + "'><button type = 'button' class='btn btn-primary waves-effect waves-light btn-sm mr-1 mb-1'";
                 content += "data-toggle='tooltip' data-placement='top' title='Editar'><i class='mdi mdi-lead-pencil'></i></button></a>";
-
-                content += "<a href = '" + Url.Action("verblog", "comunicaciones", new { blogID = item.id, area = "coadmin" }).ToString() + "'>";
-                content += "<button type = 'button' class='btn btn-success waves-effect waves-light btn-sm mr-1 mb-1' data-toggle='tooltip' data-placement='top' title='Ver'>";
-                content += "<i class='mdi mdi-eye'></i></button></a></a>";
-                content += "<a href = '#' class='Eliminar'  data-id='" + item.id + "' ><button type = 'button' class='btn btn-danger waves-effect waves-light btn-sm mr-1 mb-1'";
-                content += "data-toggle='tooltip' data-placement='top' title='Eliminar'><i class='mdi mdi-close'></i></button></a>" +
-                "<a href='#' class='Like' data-id='" + item.id + "' ><span><i class='fa fa-thumbs-o-up'></i> like " + item.CantLike + "</span> </a>" +
-                    "<a href = '" + Url.Action("agregarcomentario", "comunicaciones", new { area = "coadmin", blogID = item.id }).ToString() + "'><span style='padding-right: 18px;'> <i class='fa fa-comment-o'></i> Comentar </span> </a>" +
+                content += "<a href = '#' class='Eliminar'  data-id='" + blogs.id + "' ><button type = 'button' class='btn btn-danger waves-effect waves-light btn-sm mr-1 mb-1'";
+                content += "data-toggle='tooltip' data-placement='top' title='Eliminar'><i class='mdi mdi-close'></i></button></a>";
+            }                           
+            content += "<a href='#' class='Like' data-id='" + blogs.id + "' ><span><i class='fa fa-thumbs-o-up'></i> like " + blogs.CantLike + "</span> </a>" +
+                    "<a href = '" + Url.Action("agregarcomentario", "comunicaciones", new { area = "coadmin", blogID = blogs.id }).ToString() + "'><span style='padding-right: 18px;'> <i class='fa fa-comment-o'></i> Comentar </span> </a>" +
                     "</p></div></div></div></div>";
-
-
-            }
-
 
             return Json(content);
         }

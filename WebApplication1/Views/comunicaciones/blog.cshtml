@@ -1,7 +1,7 @@
 ﻿
 @{
     ViewBag.Title = "blog";
-    Page.Title = "Blog General - Brokolee Software";
+    Page.Title = "Blog general - Brokolee Software";
 }
 
 <div class="page-content-wrapper">
@@ -19,7 +19,7 @@
                     <div class="float-right">
                         <ul class="breadcrumb float-md-right">
                             <li class="breadcrumb-item"><a href="@Url.Action("panel", "control")" class="text-success"><i class="mdi mdi-home-modern"></i> Panel de control</a></li>
-                            <li class="breadcrumb-item active">Blog General</li>
+                            <li class="breadcrumb-item active">Blog general</li>
                         </ul>
                     </div>
                 </div>
@@ -58,8 +58,7 @@
                                 <thead>
                                     <tr>
                                         <th>Título</th>
-                                        <th>Autora</th>
-                                        <th>Contenido</th>
+                                        <th>Autor</th>
                                         <th>Fecha de publicación</th>
                                         <th>Opciones</th>
                                     </tr>
@@ -70,7 +69,6 @@
                                         <tr>
                                             <td>@item.title</td>
                                             <td>@item.author</td>
-                                            <td>@item.content.</td>
                                             <td class="text-center">@Convert.ToDateTime(item.blogdate).ToString("MM/dd/yyyy HH:mm")</td>
                                             <td class="text-center">
                                                 <a href="@Url.Action("verblog", "comunicaciones", new { blogID = item.id })">

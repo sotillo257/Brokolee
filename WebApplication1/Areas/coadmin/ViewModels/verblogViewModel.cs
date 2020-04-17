@@ -22,5 +22,6 @@ namespace WebApplication1.Areas.coadmin.ViewModels
         public List<blogcomment> blogcommentList { get; set; }
         public List<task> pubTaskList { get; set; }
         public List<ShowMessage> pubMessageList { get; set; }
+        public string Content { get; set; }
     }
 }
