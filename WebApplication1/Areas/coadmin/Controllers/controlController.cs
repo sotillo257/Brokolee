@@ -59,19 +59,13 @@ namespace WebApplication1.Areas.coadmin.Controllers
                             community firstCommu = communityList.LastOrDefault();
                             long selectedCommu = firstCommu.id;
                             Session["CURRENT_COMU"] = selectedCommu;
-                            viewModel.communityID1 = selectedCommu;
                         }
                         else
                         {
-                            if (Id == null)
-                            {
-                                viewModel.communityID1 = Convert.ToInt64(Session["CURRENT_COMU"]);
-                            }
-                            else
+                            if (Id != null)
                             {
                                 Session["CURRENT_COMU"] = Id;
-                                viewModel.communityID1 = Convert.ToInt64(Id);
-                            }
+                            }                            
                         }
                         viewModel.side_menu = "control_panel";
                         viewModel.side_sub_menu = "";

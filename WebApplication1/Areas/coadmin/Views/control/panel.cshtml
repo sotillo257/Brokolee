@@ -78,7 +78,7 @@
                                             </a>
                                         </td>
                                         <td>
-                                            @if (Model.communityID1 == item.id)
+                                            @if (Convert.ToInt64(Session["CURRENT_COMU"]) == item.id)
                                             {
                                                 <input class="form-control" type="checkbox" value="@item.id" checked />
                                             }

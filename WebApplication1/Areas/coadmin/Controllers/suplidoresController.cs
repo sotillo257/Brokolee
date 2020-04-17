@@ -14,6 +14,8 @@ namespace WebApplication1.Areas.coadmin.Controllers
     {
         pjrdev_condominiosEntities entities = new pjrdev_condominiosEntities();
         EFPublicRepository ep = new EFPublicRepository();
+        List<community> communityList = new List<community>();
+
         // GET: coadmin/suplidores
         public ActionResult listado(string searchStr = "", int searchCategoryId = 0)
         {
@@ -74,6 +76,10 @@ namespace WebApplication1.Areas.coadmin.Controllers
                         categoryDict.Add(item.id, category.name);
                     }
                     suplidoresViewModel viewModel = new suplidoresViewModel();
+
+                    communityList = ep.GetCommunityList(userId);
+                    viewModel.communityList = communityList;
+
                     viewModel.side_menu = "supplier_directory";
                     viewModel.side_sub_menu = "supplier_directory_listado";
                     viewModel.supplierList = supplierList;
@@ -124,6 +130,10 @@ namespace WebApplication1.Areas.coadmin.Controllers
                         supplier supplier = entities.suppliers.Find(selID);
                         category category = entities.categories.Find(supplier.category_id);
                         versuplidorViewModel viewModel = new versuplidorViewModel();
+
+                        communityList = ep.GetCommunityList(userId);
+                        viewModel.communityList = communityList;
+
                         viewModel.side_menu = "supplier_directory";
                         viewModel.side_sub_menu = "supplier_directory_versuplidor";
                         viewModel.commentList = query.ToList();
@@ -171,6 +181,10 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     user curUser = entities.users.Find(userId);
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                     agregarViewModel viewModel = new agregarViewModel();
+
+                    communityList = ep.GetCommunityList(userId);
+                    viewModel.communityList = communityList;
+
                     viewModel.side_menu = "supplier_directory";
                     viewModel.side_sub_menu = "supplier_directory_agregar";
                     viewModel.document_category_list = entities.document_type.ToList();

@@ -62,8 +62,8 @@ namespace WebApplication1.Controllers
 
                         titulosList = ep.GetTitulosByTitular(userId);
                         listComunities = ep.GetCommunityListByTitular(titulosList);
-                        viewModel.communityList = listComunities;
-                        viewModel.communityID1 = Convert.ToInt64(Session["CURRENT_COMU"]);
+                        viewModel.communityList = listComunities;                     
+
                         viewModel.side_menu = "documentos";
                         viewModel.side_sub_menu = "documentos_" + document_Type.type_name;
                         viewModel.documentList = documentList;

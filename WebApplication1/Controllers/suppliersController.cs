@@ -82,7 +82,7 @@ namespace WebApplication1.Controllers
                     titulosList = ep.GetTitulosByTitular(userId);
                     listComunities = ep.GetCommunityListByTitular(titulosList);
                     viewModel.communityList = listComunities;
-                    viewModel.communityID1 = Convert.ToInt64(Session["CURRENT_COMU"]);
+                  
                     viewModel.side_menu = "suppliers";
                     viewModel.supplierList = supplierList;
                     viewModel.document_category_list = entities.document_type.ToList();
@@ -134,7 +134,7 @@ namespace WebApplication1.Controllers
                         titulosList = ep.GetTitulosByTitular(userId);
                         listComunities = ep.GetCommunityListByTitular(titulosList);
                         viewModel.communityList = listComunities;
-                        viewModel.communityID1 = Convert.ToInt64(Session["CURRENT_COMU"]);
+                        
                         viewModel.side_menu = "suppliers";
                         viewModel.category_name = category.name;
                         viewModel.viewSupplier = supplier;

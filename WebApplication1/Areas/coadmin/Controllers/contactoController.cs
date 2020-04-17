@@ -158,7 +158,6 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     viewModel.editContactInfo = infoContact;
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = pubMessageList;                    
-                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
                     ViewBag.msgError = Error;
                     return View(viewModel);
                 }
@@ -194,7 +193,6 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     viewModel.editContactInfo = infoContact;
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = pubMessageList;
-                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
                     ViewBag.msgError = Error;
                     return View(viewModel);
                 }
@@ -240,7 +238,6 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 contactinfo.phone_number2 = phone_number2;
                 contactinfo.email = email;
                 contactinfo.user_id = user_id;
-                contactinfo.community_id = communityAct;
                 entities.SaveChanges();
                 return Redirect(Url.Action("listado", "contacto", new { area = "coadmin" }));
             }

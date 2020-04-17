@@ -135,6 +135,11 @@ namespace WebApplication1.Controllers
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                     user curUser = entities.users.Find(userId);
                     contactoViewModel viewModel = new contactoViewModel();
+
+                    titulosList = ep.GetTitulosByTitular(userId);
+                    listComunities = ep.GetCommunityListByTitular(titulosList);
+                    viewModel.communityList = listComunities;
+
                     viewModel.side_menu = "contacto";
                     viewModel.side_sub_menu = "manage_edit_headlines";
                     viewModel.document_category_list = entities.document_type.ToList();
@@ -143,7 +148,6 @@ namespace WebApplication1.Controllers
                     viewModel.editContactInfo = infoContact;
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = pubMessageList;
-                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
                     ViewBag.msgError = Error;
                     return View(viewModel);
                 }

@@ -13,6 +13,8 @@ namespace WebApplication1.Areas.coadmin.Controllers
     {
         pjrdev_condominiosEntities entities = new pjrdev_condominiosEntities();
         EFPublicRepository ep = new EFPublicRepository();
+        List<community> communityList = new List<community>();
+
         // GET: coadmin/email
         public ActionResult plantillas()
         {
@@ -34,6 +36,10 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                     List<document_type> document_category_list = entities.document_type.ToList();
                     emailViewModel viewModel = new emailViewModel();
+
+                    communityList = ep.GetCommunityList(userId);
+                    viewModel.communityList = communityList;
+
                     viewModel.side_menu = "email";
                     viewModel.side_sub_menu = "";
                     viewModel.document_category_list = document_category_list;
@@ -41,8 +47,6 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = pubMessageList;
                     viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                    viewModel.communityName = ep.GetCommunityInfo(userId)[0];
-                    viewModel.communityApart = ep.GetCommunityInfo(userId)[1];
                     return View(viewModel);
                 }
                 catch(Exception ex)

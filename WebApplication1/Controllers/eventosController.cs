@@ -41,8 +41,8 @@ namespace WebApplication1.Controllers
 
                     titulosList = ep.GetTitulosByTitular(userId);
                     listComunities = ep.GetCommunityListByTitular(titulosList);
-                    viewModel.communityList = listComunities;
-                    viewModel.communityID1 = Convert.ToInt64(Session["CURRENT_COMU"]);
+                    viewModel.communityList = listComunities;                  
+
                     viewModel.side_menu = "eventos";
                     viewModel.document_category_list = entities.document_type.ToList();
                     viewModel.curUser = curUser;
@@ -50,8 +50,6 @@ namespace WebApplication1.Controllers
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = pubMessageList;
                     viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                    viewModel.communityName = ep.GetCommunityCoInfo(userId)[0];
-                    viewModel.communityApart = ep.GetCommunityCoInfo(userId)[1];
                     return View(viewModel);
                 }
                 catch(Exception ex)
@@ -141,7 +139,7 @@ namespace WebApplication1.Controllers
                         titulosList = ep.GetTitulosByTitular(userId);
                         listComunities = ep.GetCommunityListByTitular(titulosList);
                         viewModel.communityList = listComunities;
-                        viewModel.communityID1 = Convert.ToInt64(Session["CURRENT_COMU"]);
+
                         viewModel.side_menu = "registrado";
                         viewModel.event_name = event_item.name;
                         viewModel.event_date = Convert.ToDateTime(event_item.created_at).ToString("dd/MM/yyyy");
@@ -154,8 +152,6 @@ namespace WebApplication1.Controllers
                         viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                         viewModel.pubMessageList = pubMessageList;
                         viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                        viewModel.communityName = ep.GetCommunityCoInfo(userId)[0];
-                        viewModel.communityApart = ep.GetCommunityCoInfo(userId)[1];
                         return View(viewModel);
                     }
                     catch(Exception ex)

@@ -14,6 +14,8 @@ namespace WebApplication1.Areas.coadmin.Controllers
         // GET: coadmin/plantillas
         pjrdev_condominiosEntities entities = new pjrdev_condominiosEntities();
         EFPublicRepository ep = new EFPublicRepository();
+        List<community> communityList = new List<community>();
+
         public ActionResult listado()
         {
             if (Session["USER_ID"] != null)
@@ -46,6 +48,10 @@ namespace WebApplication1.Areas.coadmin.Controllers
                         plantillaItemViewModel.ID = item.id;
                         list.Add(plantillaItemViewModel);
                     }
+
+                    communityList = ep.GetCommunityList(userId);
+                    viewModel.communityList = communityList;
+
                     viewModel.side_menu = "plantillas";
                     viewModel.side_sub_menu = "plantillas_listado";
                     viewModel.document_category_list = entities.document_type.ToList();
@@ -54,8 +60,6 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     viewModel.pubMessageList = pubMessageList;
                     viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
                     viewModel.list = list;
-                    viewModel.communityName = ep.GetCommunityInfo(userId)[0];
-                    viewModel.communityApart = ep.GetCommunityInfo(userId)[1];
                     return View(viewModel);
                 }
                 catch(Exception ex)
@@ -88,6 +92,10 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     user curUser = entities.users.Find(userId);
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                     crearPlantillasViewModel viewModel = new crearPlantillasViewModel();
+
+                    communityList = ep.GetCommunityList(userId);
+                    viewModel.communityList = communityList;
+
                     viewModel.side_menu = "plantillas";
                     viewModel.side_sub_menu = "plantillas_crear";
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
@@ -96,8 +104,6 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     viewModel.pubMessageList = pubMessageList;
                     viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
                     viewModel.typeList = entities.emailtypes.ToList();
-                    viewModel.communityName = ep.GetCommunityInfo(userId)[0];
-                    viewModel.communityApart = ep.GetCommunityInfo(userId)[1];
                     return View(viewModel);
                 }
                 catch(Exception ex)

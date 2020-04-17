@@ -39,19 +39,21 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 vehiculosLists = entities.Vehiculos.Where(x => x.is_del != true && x.IdTitulo == Id).ToList();
                 Titulo titulo = entities.Titulos.Find(Id);
                 listadoVehiculosViewModel viewModel = new listadoVehiculosViewModel();
+
+                List<community> communityList = new List<community>();
+                communityList = ep.GetCommunityList(userId);
+                viewModel.communityList = communityList;
+
                 viewModel.titulo = titulo;
                 viewModel.side_menu = "titulares";
                 viewModel.side_sub_menu = "titulares_listado";
                 viewModel.document_category_list = entities.document_type.ToList();
                 viewModel.vehiculosList = vehiculosLists;
                 viewModel.curUser = curUser;
-                viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                viewModel.communityName = ep.GetCommunityInfo(userId)[0];
-                viewModel.communityApart = ep.GetCommunityInfo(userId)[1];
+                viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);               
                 viewModel.CantidadDeVehiculos = vehiculosLists.Count();
                 viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                 viewModel.pubMessageList = pubMessageList;
-                viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
                 return View(viewModel);
             }
             else
@@ -69,17 +71,19 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                 Titulo titulo = entities.Titulos.Find(Id);
                 listadoVehiculosViewModel viewModel = new listadoVehiculosViewModel();
+
+                List<community> communityList = new List<community>();
+                communityList = ep.GetCommunityList(userId);
+                viewModel.communityList = communityList;
+
                 viewModel.titulo = titulo;
                 viewModel.side_menu = "titulares";
                 viewModel.side_sub_menu = "titulares_agregar";
                 viewModel.document_category_list = entities.document_type.ToList();
                 viewModel.curUser = curUser;
                 viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                viewModel.communityName = ep.GetCommunityInfo(userId)[0];
-                viewModel.communityApart = ep.GetCommunityInfo(userId)[1];
                 viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                 viewModel.pubMessageList = pubMessageList;
-                viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
                 viewModel.communityList = entities.communities.ToList();
                 ViewBag.msgError = Error;
                 return View(viewModel);
@@ -101,6 +105,11 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                     Vehiculo vehiculo = entities.Vehiculos.Find(id);
                     editarVehiculoViewModel viewModel = new editarVehiculoViewModel();
+
+                    List<community> communityList = new List<community>();
+                    communityList = ep.GetCommunityList(userId);
+                    viewModel.communityList = communityList;
+
                     viewModel.side_menu = "titulares";
                     viewModel.side_sub_menu = "manage_edit_headlines";
                     viewModel.document_category_list = entities.document_type.ToList();
@@ -109,7 +118,6 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);                    
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = pubMessageList;
-                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
                     ViewBag.msgError = Error;
                     return View(viewModel);
                 }
@@ -135,6 +143,11 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                     Vehiculo vehiculo = entities.Vehiculos.Find(id);
                     editarVehiculoViewModel viewModel = new editarVehiculoViewModel();
+
+                    List<community> communityList = new List<community>();
+                    communityList = ep.GetCommunityList(userId);
+                    viewModel.communityList = communityList;
+
                     viewModel.side_menu = "titulares";
                     viewModel.side_sub_menu = "manage_edit_headlines";
                     viewModel.document_category_list = entities.document_type.ToList();
@@ -143,7 +156,6 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);                   
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = pubMessageList;
-                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
                     return View(viewModel);
                 }
                 else
@@ -265,8 +277,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
 
                 List<community> communityList = new List<community>();
                 communityList = ep.GetCommunityList(userId);
-                viewModel.communityList = communityList;
-                viewModel.communityID1 = communityAct;
+                viewModel.communityList = communityList;               
 
                 viewModel.side_menu = "titulares";
                 viewModel.side_sub_menu = "titulares_listado";
@@ -298,8 +309,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
                 List<community> communityList = new List<community>();
                 communityList = ep.GetCommunityList(userId);
-                viewModel.communityList = communityList;
-                viewModel.communityID1 = communityAct;
+                viewModel.communityList = communityList;                
 
                 viewModel.side_menu = "titulares";
                 viewModel.side_sub_menu = "titulares_agregar";
@@ -334,8 +344,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
                     List<community> communityList = new List<community>();
                     communityList = ep.GetCommunityList(userId);
-                    viewModel.communityList = communityList;
-                    viewModel.communityID1 = communityAct;
+                    viewModel.communityList = communityList;                    
 
                     viewModel.side_menu = "titulares";
                     viewModel.side_sub_menu = "manage_edit_headlines";
@@ -375,8 +384,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
                     List<community> communityList = new List<community>();
                     communityList = ep.GetCommunityList(userId);
-                    viewModel.communityList = communityList;
-                    viewModel.communityID1 = communityAct;
+                    viewModel.communityList = communityList;                    
 
                     viewModel.side_menu = "titulares";
                     viewModel.side_sub_menu = "manage_edit_headlines";
@@ -557,8 +565,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
 
                 List<community> communityList = new List<community>();
                 communityList = ep.GetCommunityList(userId);
-                viewModel.communityList = communityList;
-                viewModel.communityID1 = communityAct;
+                viewModel.communityList = communityList;                
 
                 viewModel.side_menu = "titulares";
                 viewModel.side_sub_menu = "titulares_listado";
@@ -590,8 +597,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
                 List<community> communityList = new List<community>();
                 communityList = ep.GetCommunityList(userId);
-                viewModel.communityList = communityList;
-                viewModel.communityID1 = communityAct;
+                viewModel.communityList = communityList;                
 
                 viewModel.side_menu = "titulares";
                 viewModel.side_sub_menu = "titulares_agregar";
@@ -625,8 +631,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
                     List<community> communityList = new List<community>();
                     communityList = ep.GetCommunityList(userId);
-                    viewModel.communityList = communityList;
-                    viewModel.communityID1 = communityAct;
+                    viewModel.communityList = communityList;                    
 
                     viewModel.side_menu = "titulares";
                     viewModel.side_sub_menu = "manage_edit_headlines";
@@ -638,9 +643,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = pubMessageList;
                     viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                    return View(viewModel);
-                    Session["ACC_USER_ID"] = Convert.ToInt64(id);
-                    return View(viewModel);
+                    return View(viewModel);                  
                 }
                 else
                 {
@@ -668,8 +671,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
                     List<community> communityList = new List<community>();
                     communityList = ep.GetCommunityList(userId);
-                    viewModel.communityList = communityList;
-                    viewModel.communityID1 = communityAct;
+                    viewModel.communityList = communityList;                    
 
                     viewModel.side_menu = "titulares";
                     viewModel.side_sub_menu = "manage_edit_headlines";
@@ -680,7 +682,6 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     viewModel.password = ep.Decrypt(editUser.password);
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = pubMessageList;
-                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
                     ViewBag.msgError = Error;
                     return View(viewModel);
                 }

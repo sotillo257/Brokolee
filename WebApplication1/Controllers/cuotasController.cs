@@ -44,8 +44,7 @@ namespace WebApplication1.Controllers
                     titulosList = ep.GetTitulosByTitular(userId);
                     listComunities = ep.GetCommunityListByTitular(titulosList);
                     viewModel.communityList = listComunities;
-                    viewModel.communityID1 = communityAct;
-
+                                    
                     viewModel.side_menu = "cuotas";
                     viewModel.side_sub_menu = "cuotas_balance";
                     viewModel.document_category_list = entities.document_type.ToList();
@@ -134,7 +133,7 @@ namespace WebApplication1.Controllers
                     titulosList = ep.GetTitulosByTitular(userId);
                     listComunities = ep.GetCommunityListByTitular(titulosList);
                     viewModel.communityList = listComunities;
-                    viewModel.communityID1 = Convert.ToInt64(Session["CURRENT_COMU"]);
+
                     viewModel.side_menu = "cuotas";
                     viewModel.side_sub_menu = "cuotas_estado";
                     viewModel.document_category_list = entities.document_type.ToList();
@@ -179,7 +178,7 @@ namespace WebApplication1.Controllers
                     user curUser = entities.users.Find(userId);
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                     conceptoViewModel viewModel = new conceptoViewModel();
-                    viewModel.communityID1 = Convert.ToInt64(Session["CURRENT_COMU"]);
+
                     titulosList = ep.GetTitulosByTitular(userId);
                     listComunities = ep.GetCommunityListByTitular(titulosList);
                     viewModel.communityList = listComunities;

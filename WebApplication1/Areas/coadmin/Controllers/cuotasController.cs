@@ -13,6 +13,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
     {
         pjrdev_condominiosEntities entities = new pjrdev_condominiosEntities();
         EFPublicRepository ep = new EFPublicRepository();
+        List<community> communityList = new List<community>();
         // GET: coadmin/cuotas
         public ActionResult listado()
         {
@@ -33,6 +34,10 @@ namespace WebApplication1.Areas.coadmin.Controllers
 
                     user curUser = entities.users.Find(userId);
                     listadoCuotasViewModel viewModel = new listadoCuotasViewModel();
+
+                    communityList = ep.GetCommunityList(userId);
+                    viewModel.communityList = communityList;
+
                     Dictionary<long, string> bankDict = new Dictionary<long, string>();
 
                     long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
@@ -88,6 +93,10 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     List<bank> bankList = entities.banks.Where(m => m.user_id == userId).ToList();
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                     agregarCuotasViewModel viewModel = new agregarCuotasViewModel();
+
+                    communityList = ep.GetCommunityList(userId);
+                    viewModel.communityList = communityList;
+
                     viewModel.side_menu = "cuotas";
                     viewModel.side_sub_menu = "cuotas_agregar";
                     viewModel.document_category_list = entities.document_type.ToList();
@@ -139,6 +148,10 @@ namespace WebApplication1.Areas.coadmin.Controllers
                         List<bank> bankList = entities.banks.Where(m => m.user_id == userId).ToList();
                         List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                         agregarCuotasViewModel viewModel = new agregarCuotasViewModel();
+
+                        communityList = ep.GetCommunityList(userId);
+                        viewModel.communityList = communityList;
+
                         viewModel.side_menu = "cuotas";
                         viewModel.side_sub_menu = "cuotas_editar";
                         viewModel.document_category_list = entities.document_type.ToList();
@@ -146,8 +159,6 @@ namespace WebApplication1.Areas.coadmin.Controllers
                         viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                         viewModel.pubMessageList = pubMessageList;
                         viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                        viewModel.communityName = ep.GetCommunityCoInfo(userId)[0];
-                        viewModel.communityApart = ep.GetCommunityCoInfo(userId)[1];
                         viewModel.feedId = Convert.ToInt64(editID);
                         viewModel.bankList = bankList;
                         viewModel.feeName = feeItem.name;
@@ -193,6 +204,10 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     user curUser = entities.users.Find(userId);
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                     cuentaCuotasViewModel viewModel = new cuentaCuotasViewModel();
+
+                    communityList = ep.GetCommunityList(userId);
+                    viewModel.communityList = communityList;
+
                     viewModel.side_menu = "cuotas";
                     viewModel.side_sub_menu = "cuotas_cuenta";
                     viewModel.document_category_list = entities.document_type.ToList();
@@ -200,8 +215,6 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = pubMessageList;
                     viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                    viewModel.communityName = ep.GetCommunityCoInfo(userId)[0];
-                    viewModel.communityApart = ep.GetCommunityCoInfo(userId)[1];
                     return View(viewModel);
                 }
                 catch(Exception ex)
@@ -270,6 +283,10 @@ namespace WebApplication1.Areas.coadmin.Controllers
 
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                     pagosCuotasViewModel viewModel = new pagosCuotasViewModel();
+
+                    communityList = ep.GetCommunityList(userId);
+                    viewModel.communityList = communityList;
+
                     viewModel.side_menu = "cuotas";
                     viewModel.side_sub_menu = "cuotas_pagos";
                     viewModel.document_category_list = entities.document_type.ToList();

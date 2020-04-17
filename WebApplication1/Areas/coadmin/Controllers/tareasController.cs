@@ -13,6 +13,8 @@ namespace WebApplication1.Areas.coadmin.Controllers
     {
         pjrdev_condominiosEntities entities = new pjrdev_condominiosEntities();
         EFPublicRepository ep = new EFPublicRepository();
+        List<community> communityList = new List<community>();
+
         // GET: coadmin/tareas
         public ActionResult listado(string searchStr = "")
         {
@@ -50,6 +52,9 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     }
 
                     tareasViewModel viewModel = new tareasViewModel();
+                    communityList = ep.GetCommunityList(userId);
+                    viewModel.communityList = communityList;
+
                     List<user> titularList = new List<user>();
                     var query2 = (from r in entities.users
                                  where ( r.role == 4) && r.is_del != true
@@ -97,6 +102,10 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     user curUser = entities.users.Find(userId);
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                     tareasagregarViewModel viewModel = new tareasagregarViewModel();
+
+                    communityList = ep.GetCommunityList(userId);
+                    viewModel.communityList = communityList;
+
                     viewModel.side_menu = "task_process";
                     viewModel.side_sub_menu = "task_process_agregar";
                     viewModel.document_category_list = entities.document_type.ToList();
@@ -104,8 +113,6 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = pubMessageList;
                     viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                    viewModel.communityName = ep.GetCommunityInfo(userId)[0];
-                    viewModel.communityApart = ep.GetCommunityInfo(userId)[1];
                     return View(viewModel);
                 }
                 catch(Exception ex)
@@ -183,6 +190,10 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                     task editTask = entities.tasks.Find(taskID);
                     editarTareasViewModel viewModel = new editarTareasViewModel();
+
+                    communityList = ep.GetCommunityList(userId);
+                    viewModel.communityList = communityList;
+
                     viewModel.side_menu = "task_process";
                     viewModel.side_sub_menu = "task_process_editar";
                     viewModel.document_category_list = entities.document_type.ToList();
@@ -191,8 +202,6 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = pubMessageList;
                     viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                    viewModel.communityName = ep.GetCommunityInfo(userId)[0];
-                    viewModel.communityApart = ep.GetCommunityInfo(userId)[1];
                     return View(viewModel);
                 }
                 else
@@ -263,6 +272,10 @@ namespace WebApplication1.Areas.coadmin.Controllers
                                   select r);
                 }
                 tareasViewModel viewModel = new tareasViewModel();
+
+                communityList = ep.GetCommunityList(userId);
+                viewModel.communityList = communityList;
+
                 viewModel.side_menu = "task_process";
                 viewModel.side_sub_menu = "task_process_completadas";
                 viewModel.document_category_list = entities.document_type.ToList();
@@ -272,8 +285,6 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                 viewModel.pubMessageList = pubMessageList;
                 viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                viewModel.communityName = ep.GetCommunityInfo(userId)[0];
-                viewModel.communityApart = ep.GetCommunityInfo(userId)[1];
                 return View(viewModel);
             } else
             {
@@ -337,6 +348,10 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     }
 
                     vertareaViewModel viewModel = new vertareaViewModel();
+
+                    communityList = ep.GetCommunityList(userId);
+                    viewModel.communityList = communityList;
+
                     viewModel.side_menu = "task_process";
                     viewModel.side_sub_menu = "task_process_ver";
                     viewModel.document_category_list = entities.document_type.ToList();
@@ -346,8 +361,6 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = pubMessageList;
                     viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                    viewModel.communityName = ep.GetCommunityInfo(userId)[0];
-                    viewModel.communityApart = ep.GetCommunityInfo(userId)[1];
                     return View(viewModel);
                 }
                 else

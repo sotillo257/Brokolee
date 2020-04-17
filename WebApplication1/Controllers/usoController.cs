@@ -50,7 +50,7 @@ namespace WebApplication1.Controllers
                     titulosList = ep.GetTitulosByTitular(userId);
                     listComunities = ep.GetCommunityListByTitular(titulosList);
                     viewModel.communityList = listComunities;
-                    viewModel.communityID1 = Convert.ToInt64(Session["CURRENT_COMU"]);
+
                     viewModel.side_menu = "uso";
                     viewModel.side_sub_menu = "uso_privacidad";
                     viewModel.document_category_list = entities.document_type.ToList();
@@ -91,7 +91,7 @@ namespace WebApplication1.Controllers
                 titulosList = ep.GetTitulosByTitular(userId);
                 listComunities = ep.GetCommunityListByTitular(titulosList);
                 viewModel.communityList = listComunities;
-                viewModel.communityID1 = Convert.ToInt64(Session["CURRENT_COMU"]);
+
                 viewModel.side_menu = "uso";
                 viewModel.side_sub_menu = "uso_terminos";
                 viewModel.document_category_list = entities.document_type.ToList();
@@ -128,7 +128,7 @@ namespace WebApplication1.Controllers
                 titulosList = ep.GetTitulosByTitular(userId);
                 listComunities = ep.GetCommunityListByTitular(titulosList);
                 viewModel.communityList = listComunities;
-                viewModel.communityID1 = Convert.ToInt64(Session["CURRENT_COMU"]);
+             
                 viewModel.side_menu = "uso";
                 viewModel.side_sub_menu = "uso_derechos";
                 viewModel.document_category_list = entities.document_type.ToList();

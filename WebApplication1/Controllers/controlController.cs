@@ -217,9 +217,7 @@ namespace WebApplication1.Controllers
                     viewModel.titulo = titulo;
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = pubMessageList;
-                    viewModel.communityID1 = Convert.ToInt64(Session["CURRENT_COMU"]);
 
-                    List<Titulo> titulosList = new List<Titulo>();
                     titulosList = ep.GetTitulosByTitular(userId);
                     listComunities = ep.GetCommunityListByTitular(titulosList);
                     viewModel.communityList = listComunities;
@@ -260,11 +258,8 @@ namespace WebApplication1.Controllers
                 viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);                
                 viewModel.CantidadDeVehiculos = vehiculosLists.Count();
                 viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
-                viewModel.pubMessageList = pubMessageList;
-                viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-
-                viewModel.communityID1 = Convert.ToInt64(Session["CURRENT_COMU"]);
-                List<Titulo> titulosList = new List<Titulo>();
+                viewModel.pubMessageList = pubMessageList;    
+               
                 titulosList = ep.GetTitulosByTitular(userId);
                 listComunities = ep.GetCommunityListByTitular(titulosList);
                 viewModel.communityList = listComunities;
@@ -299,12 +294,9 @@ namespace WebApplication1.Controllers
                     viewModel.pubMessageList = pubMessageList;
                     viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
 
-                    List<Titulo> titulosList = new List<Titulo>();
                     titulosList = ep.GetTitulosByTitular(userId);
                     listComunities = ep.GetCommunityListByTitular(titulosList);
                     viewModel.communityList = listComunities;
-                    viewModel.communityID1 = Convert.ToInt64(Session["CURRENT_COMU"]);
-
                     return View(viewModel);
                 }
                 else

@@ -545,6 +545,8 @@ namespace WebApplication1.Areas.coadmin.Controllers
     {
         pjrdev_condominiosEntities entities = new pjrdev_condominiosEntities();
         EFPublicRepository ep = new EFPublicRepository();
+        List<community> communityList = new List<community>();
+
         // GET: coadmin/comunicaciones
         public ActionResult blog()
         {
@@ -554,14 +556,15 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 user curUser = entities.users.Find(userId);
                 List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                 comunicacionesViewModel viewModel = new comunicacionesViewModel();
+
+                communityList = ep.GetCommunityList(userId);
+                viewModel.communityList = communityList;
+
                 viewModel.side_menu = "comunicaciones";
                 viewModel.side_sub_menu = "comunicaciones_blog";
                 viewModel.document_category_list = entities.document_type.ToList();
-                viewModel.curUser = curUser;
-                viewModel.communityName = ep.GetCommunityInfo(userId)[0];
-                viewModel.communityApart = ep.GetCommunityInfo(userId)[1];               
+                viewModel.curUser = curUser;                            
                 viewModel.Content = userId.ToString();
-
                 long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
                 List<blog> blogs = entities.blogs.Where(m => m.community_id == communityAct).ToList();
 
@@ -588,12 +591,14 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 user curUser = entities.users.Find(userId);
                 List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                 agregarBlogViewModel viewModel = new agregarBlogViewModel();
+
+                communityList = ep.GetCommunityList(userId);
+                viewModel.communityList = communityList;
+
                 viewModel.side_menu = "agregarblog";
                 viewModel.side_sub_menu = "agregarblog";
                 viewModel.document_category_list = entities.document_type.ToList();
                 viewModel.curUser = curUser;
-                viewModel.communityName = ep.GetCommunityInfo(userId)[0];
-                viewModel.communityApart = ep.GetCommunityInfo(userId)[1];
                 viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                 viewModel.pubMessageList = pubMessageList;
                 viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
@@ -616,12 +621,14 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     user curUser = entities.users.Find(userId);
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                     agregarComentarioViewModel viewModel = new agregarComentarioViewModel();
+
+                    communityList = ep.GetCommunityList(userId);
+                    viewModel.communityList = communityList;
+
                     viewModel.side_menu = "agregarcomentario";
                     viewModel.side_sub_menu = "agregarcomentario";
                     viewModel.document_category_list = entities.document_type.ToList();
                     viewModel.curUser = curUser;
-                    viewModel.communityName = ep.GetCommunityInfo(userId)[0];
-                    viewModel.communityApart = ep.GetCommunityInfo(userId)[1];
                     viewModel.blogID = Convert.ToInt64(blogID);
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = pubMessageList;
@@ -649,6 +656,10 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 List<onlineuser> onlineUserList = entities.onlineusers
                     .Where(m => m.user_id != userId).ToList();
                 comunicacionesViewModel viewModel = new comunicacionesViewModel();
+
+                communityList = ep.GetCommunityList(userId);
+                viewModel.communityList = communityList;
+
                 viewModel.side_menu = "comunicaciones";
                 viewModel.side_sub_menu = "comunicaciones_privados";
                 viewModel.document_category_list = entities.document_type.ToList();
@@ -690,12 +701,14 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     user curUser = entities.users.Find(userId);
                     blog blog = entities.blogs.Find(blogID);
                     editarblogViewModel viewModel = new editarblogViewModel();
+
+                    communityList = ep.GetCommunityList(userId);
+                    viewModel.communityList = communityList;
+
                     viewModel.side_menu = "comunicaciones";
                     viewModel.side_sub_menu = "comunicaciones";
                     viewModel.document_category_list = entities.document_type.ToList();
                     viewModel.curUser = curUser;
-                    viewModel.communityName = ep.GetCommunityInfo(userId)[0];
-                    viewModel.communityApart = ep.GetCommunityInfo(userId)[1];
                     viewModel.editBlog = blog;
                     viewModel.blogID = Convert.ToInt64(blogID);
                     viewModel.blogcommentList = entities.blogcomments.Where(m => m.blog_id == blogID).ToList();
@@ -726,12 +739,14 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     user curUser = entities.users.Find(userId);
                     blog blog = entities.blogs.Find(blogID);
                     verblogViewModel viewModel = new verblogViewModel();
+
+                    communityList = ep.GetCommunityList(userId);
+                    viewModel.communityList = communityList;
+
                     viewModel.side_menu = "comunicaciones";
                     viewModel.side_sub_menu = "comunicaciones";
                     viewModel.document_category_list = entities.document_type.ToList();
                     viewModel.curUser = curUser;
-                    viewModel.communityName = ep.GetCommunityInfo(userId)[0];
-                    viewModel.communityApart = ep.GetCommunityInfo(userId)[1];
                     viewModel.viewBlog = blog;
                     viewModel.blogID = Convert.ToInt64(blogID);
                     viewModel.blogcommentList = entities.blogcomments.Where(m => m.blog_id == blogID).ToList();

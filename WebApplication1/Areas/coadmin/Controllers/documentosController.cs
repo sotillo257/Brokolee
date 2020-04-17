@@ -17,6 +17,8 @@ namespace WebApplication1.Areas.coadmin.Controllers
         // GET: coadmin/documentos
         pjrdev_condominiosEntities entities = new pjrdev_condominiosEntities();
         EFPublicRepository ep = new EFPublicRepository();
+        List<community> communityList = new List<community>();
+
         public ActionResult listado(int? id, string searchStr = "")
         {
             if (Session["USER_ID"] != null)
@@ -57,6 +59,10 @@ namespace WebApplication1.Areas.coadmin.Controllers
                         }
                         List<document_type> document_category_list = entities.document_type.ToList();
                         documentosViewModel viewModel = new documentosViewModel();
+
+                        communityList = ep.GetCommunityList(userId);
+                        viewModel.communityList = communityList;
+
                         document_type document_type = entities.document_type.Find(id);
                         viewModel.side_menu = "documentos";
                         viewModel.side_sub_menu = "documentos_" + document_type.type_name;
@@ -68,8 +74,6 @@ namespace WebApplication1.Areas.coadmin.Controllers
                         viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                         viewModel.pubMessageList = pubMessageList;
                         viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                        viewModel.communityName = ep.GetCommunityInfo(userId)[0];
-                        viewModel.communityApart = ep.GetCommunityInfo(userId)[1];
                         return View(viewModel);
                     }
                     catch(Exception ex)
@@ -123,6 +127,10 @@ namespace WebApplication1.Areas.coadmin.Controllers
                             documentTypeItemList.Add(itemViewModel);
                         }
                         editarcategoriaViewModel viewModel = new editarcategoriaViewModel();
+
+                        communityList = ep.GetCommunityList(userId);
+                        viewModel.communityList = communityList;
+
                         viewModel.side_menu = "documentos";
                         viewModel.side_sub_menu = "documentos_editarcategoria";
                         viewModel.document_category_list = document_category_list;
@@ -132,8 +140,6 @@ namespace WebApplication1.Areas.coadmin.Controllers
                         viewModel.pubMessageList = pubMessageList;
                         viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
                         viewModel.documentTypeItemList = documentTypeItemList;
-                        viewModel.communityName = ep.GetCommunityInfo(userId)[0];
-                        viewModel.communityApart = ep.GetCommunityInfo(userId)[1];
                         return View(viewModel);
                     }
                     catch(Exception ex)
@@ -183,6 +189,10 @@ namespace WebApplication1.Areas.coadmin.Controllers
                         documentTypeItemList.Add(itemViewModel);
                     }
                     categoriaViewModel viewModel = new categoriaViewModel();
+
+                    communityList = ep.GetCommunityList(userId);
+                    viewModel.communityList = communityList;
+
                     viewModel.side_menu = "documentos";
                     viewModel.side_sub_menu = "documentos_categoria";
                     viewModel.document_category_list = document_category_list;
@@ -192,8 +202,6 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     viewModel.pubMessageList = pubMessageList;
                     viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
                     viewModel.documentTypeItemList = documentTypeItemList;
-                    viewModel.communityName = ep.GetCommunityInfo(userId)[0];
-                    viewModel.communityApart = ep.GetCommunityInfo(userId)[1];
                     return View(viewModel);
                 } 
                 catch(Exception ex)
@@ -227,6 +235,10 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     user curUser = entities.users.Find(userId);
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                     documentosViewModel viewModel = new documentosViewModel();
+
+                    communityList = ep.GetCommunityList(userId);
+                    viewModel.communityList = communityList;
+
                     viewModel.side_menu = "documentos";
                     viewModel.side_sub_menu = "documentos_agregar";
                     viewModel.document_category_list = entities.document_type.ToList();
@@ -234,8 +246,6 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = pubMessageList;
                     viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                    viewModel.communityName = ep.GetCommunityInfo(userId)[0];
-                    viewModel.communityApart = ep.GetCommunityInfo(userId)[1];
 
 
                     return View(viewModel);
@@ -277,6 +287,10 @@ namespace WebApplication1.Areas.coadmin.Controllers
                         List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                         document viewDocument = entities.documents.Find(viewID);
                         verDocumentViewModel viewModel = new verDocumentViewModel();
+
+                        communityList = ep.GetCommunityList(userId);
+                        viewModel.communityList = communityList;
+
                         viewModel.side_menu = "documentos";
                         viewModel.side_sub_menu = "documentos_ver";
                         viewModel.document_category_list = entities.document_type.ToList();
@@ -285,8 +299,6 @@ namespace WebApplication1.Areas.coadmin.Controllers
                         viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                         viewModel.pubMessageList = pubMessageList;
                         viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                        viewModel.communityName = ep.GetCommunityInfo(userId)[0];
-                        viewModel.communityApart = ep.GetCommunityInfo(userId)[1];
                         return View(viewModel);
                     }
                     catch(Exception ex)
@@ -326,6 +338,10 @@ namespace WebApplication1.Areas.coadmin.Controllers
                         List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                         document editDocument = entities.documents.Find(editID);
                         editDocumentViewModel viewModel = new editDocumentViewModel();
+
+                        communityList = ep.GetCommunityList(userId);
+                        viewModel.communityList = communityList;
+
                         viewModel.side_menu = "documentos";
                         viewModel.side_sub_menu = "documentos_editar";
                         viewModel.document_category_list = entities.document_type.ToList();
@@ -334,8 +350,6 @@ namespace WebApplication1.Areas.coadmin.Controllers
                         viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                         viewModel.pubMessageList = pubMessageList;
                         viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                        viewModel.communityName = ep.GetCommunityInfo(userId)[0];
-                        viewModel.communityApart = ep.GetCommunityInfo(userId)[1];
                         return View(viewModel);
                     }
                     catch(Exception ex)
@@ -417,7 +431,6 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     editDocument.first_name = first_name;
                     editDocument.type_id = document_category;
                     editDocument.uploaded_by = uploaded_by;
-                    editDocument.community_id = Convert.ToInt64(Session["CURRENT_COMU"]);
                     //editDocument.link = link;
                     editDocument.uploaded_date = DateTime.ParseExact(uploaded_date, "yyyy-MM-dd",
                         System.Globalization.CultureInfo.CurrentCulture);

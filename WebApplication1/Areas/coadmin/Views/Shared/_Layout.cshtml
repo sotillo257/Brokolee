@@ -131,7 +131,7 @@
                             <select class="form-control selectComunidad" onchange="changeComunidad(this.value)" name="communitySelect">
                                 @foreach (var item in Model.communityList)
                                 {
-                                    if (Model.communityID1 == item.id)
+                                    if (Convert.ToInt64(Session["CURRENT_COMU"]) == item.id)
                                     {
                                         <option value="@item.id" selected>@item.first_name</option>
                                     }

@@ -44,7 +44,7 @@ namespace WebApplication1.Controllers
                     titulosList = ep.GetTitulosByTitular(userId);
                     listComunities = ep.GetCommunityListByTitular(titulosList);
                     viewModel.communityList = listComunities;
-                    viewModel.communityID1 = Convert.ToInt64(Session["CURRENT_COMU"]);
+
                     viewModel.side_menu = "comunicaciones";
                     viewModel.side_sub_menu = "comunicaciones_blog";
                     viewModel.document_category_list = entities.document_type.ToList();
@@ -95,7 +95,7 @@ namespace WebApplication1.Controllers
                     titulosList = ep.GetTitulosByTitular(userId);
                     listComunities = ep.GetCommunityListByTitular(titulosList);
                     viewModel.communityList = listComunities;
-                    viewModel.communityID1 = Convert.ToInt64(Session["CURRENT_COMU"]);
+
                     viewModel.side_menu = "comunicaciones";
                     viewModel.side_sub_menu = "comunicaciones_agregarblog";
                     viewModel.document_category_list = entities.document_type.ToList();
@@ -142,7 +142,7 @@ namespace WebApplication1.Controllers
                         titulosList = ep.GetTitulosByTitular(userId);
                         listComunities = ep.GetCommunityListByTitular(titulosList);
                         viewModel.communityList = listComunities;
-                        viewModel.communityID1 = Convert.ToInt64(Session["CURRENT_COMU"]);
+             
                         viewModel.side_menu = "comunicaciones";
                         viewModel.side_sub_menu = "comunicaciones_agregarcomentario";
                         viewModel.document_category_list = entities.document_type.ToList();
@@ -195,7 +195,7 @@ namespace WebApplication1.Controllers
                     titulosList = ep.GetTitulosByTitular(userId);
                     listComunities = ep.GetCommunityListByTitular(titulosList);
                     viewmodel.communityList = listComunities;
-                    viewmodel.communityID1 = Convert.ToInt64(Session["CURRENT_COMU"]);
+       
                     viewmodel.side_menu = "comunicaciones";
                     viewmodel.side_sub_menu = "comunicaciones_privados";
                     viewmodel.document_category_list = entities.document_type.ToList();
@@ -259,7 +259,7 @@ namespace WebApplication1.Controllers
                         titulosList = ep.GetTitulosByTitular(userId);
                         listComunities = ep.GetCommunityListByTitular(titulosList);
                         viewModel.communityList = listComunities;
-                        viewModel.communityID1 = Convert.ToInt64(Session["CURRENT_COMU"]);
+        
                         viewModel.side_menu = "comunicaciones";
                         viewModel.side_sub_menu = "comunicaciones_verblog";
                         viewModel.document_category_list = entities.document_type.ToList();

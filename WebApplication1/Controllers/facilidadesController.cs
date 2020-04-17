@@ -48,7 +48,7 @@ namespace WebApplication1.Controllers
                     titulosList = ep.GetTitulosByTitular(userId);
                     listComunities = ep.GetCommunityListByTitular(titulosList);
                     viewModel.communityList = listComunities;
-                    viewModel.communityID1 = Convert.ToInt64(Session["CURRENT_COMU"]);
+       
                     viewModel.side_menu = "facilidades";
                     viewModel.side_sub_menu = "facilidades_disponibles";
                     viewModel.facilitieList = facilitieList;
@@ -105,7 +105,7 @@ namespace WebApplication1.Controllers
                     titulosList = ep.GetTitulosByTitular(userId);
                     listComunities = ep.GetCommunityListByTitular(titulosList);
                     viewModel.communityList = listComunities;
-                    viewModel.communityID1 = Convert.ToInt64(Session["CURRENT_COMU"]);
+
                     viewModel.side_menu = "facilidades";
                     viewModel.side_sub_menu = "facilidades_reservas";
                     viewModel.document_category_list = entities.document_type.ToList();
@@ -151,7 +151,7 @@ namespace WebApplication1.Controllers
                     titulosList = ep.GetTitulosByTitular(userId);
                     listComunities = ep.GetCommunityListByTitular(titulosList);
                     viewModel.communityList = listComunities;
-                    viewModel.communityID1 = Convert.ToInt64(Session["CURRENT_COMU"]);
+ 
                     viewModel.side_menu = "reservar";
                     viewModel.side_sub_menu = "facilidades_reservar";
                     viewModel.curUser = curUser;
@@ -197,7 +197,7 @@ namespace WebApplication1.Controllers
                     titulosList = ep.GetTitulosByTitular(userId);
                     listComunities = ep.GetCommunityListByTitular(titulosList);
                     viewModel.communityList = listComunities;
-                    viewModel.communityID1 = Convert.ToInt64(Session["CURRENT_COMU"]);
+
                     viewModel.side_menu = "reservartwo";
                     viewModel.side_sub_menu = "facilidades_reservartwo";
                     viewModel.curUser = curUser;

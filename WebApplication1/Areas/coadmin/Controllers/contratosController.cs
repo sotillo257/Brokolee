@@ -14,6 +14,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
     {
         pjrdev_condominiosEntities entities = new pjrdev_condominiosEntities();
         EFPublicRepository ep = new EFPublicRepository();
+        List<community> communityList = new List<community>();
         // GET: coadmin/contratos
         public ActionResult listado(string searchStr = "")
         {
@@ -49,6 +50,10 @@ namespace WebApplication1.Areas.coadmin.Controllers
                         contractList = query2.ToList();                     
                     }
                     contratosViewModel viewModel = new contratosViewModel();
+
+                    communityList = ep.GetCommunityList(userId);
+                    viewModel.communityList = communityList;
+
                     viewModel.side_menu = "contratos";
                     viewModel.side_sub_menu = "contratos_listado";
                     viewModel.contractList = contractList;
@@ -58,8 +63,6 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = pubMessageList;
                     viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                    viewModel.communityName = ep.GetCommunityInfo(userId)[0];
-                    viewModel.communityApart = ep.GetCommunityInfo(userId)[1];
                     return View(viewModel);
                 }
                 catch(Exception ex)
@@ -92,6 +95,10 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     user curUser = entities.users.Find(userId);
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                     contratosViewModel viewModel = new contratosViewModel();
+
+                    communityList = ep.GetCommunityList(userId);
+                    viewModel.communityList = communityList;
+
                     viewModel.side_menu = "contratos";
                     viewModel.side_sub_menu = "contratos_agregar";
                     viewModel.document_category_list = entities.document_type.ToList();
@@ -99,8 +106,6 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = pubMessageList;
                     viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                    viewModel.communityName = ep.GetCommunityInfo(userId)[0];
-                    viewModel.communityApart = ep.GetCommunityInfo(userId)[1];
                     return View(viewModel);
                 }
                 catch(Exception ex)
@@ -146,6 +151,10 @@ namespace WebApplication1.Areas.coadmin.Controllers
 
                     List<document_type> document_category_list = entities.document_type.ToList();
                     contratosViewModel viewModel = new contratosViewModel();
+
+                    communityList = ep.GetCommunityList(userId);
+                    viewModel.communityList = communityList;
+
                     viewModel.side_menu = "contratos";
                     viewModel.side_sub_menu = "contratos_archivados";
                     viewModel.document_category_list = document_category_list;
@@ -155,8 +164,6 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = pubMessageList;
                     viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                    viewModel.communityName = ep.GetCommunityInfo(userId)[0];
-                    viewModel.communityApart = ep.GetCommunityInfo(userId)[1];
                     return View(viewModel);
                 }
                 catch(Exception ex)
@@ -192,6 +199,10 @@ namespace WebApplication1.Areas.coadmin.Controllers
                         List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                         contract editContract = entities.contracts.Find(contractID);
                         editarContractViewModel viewModel = new editarContractViewModel();
+
+                        communityList = ep.GetCommunityList(userId);
+                        viewModel.communityList = communityList;
+
                         viewModel.side_menu = "contratos";
                         viewModel.side_sub_menu = "contratos_editar";
                         viewModel.document_category_list = entities.document_type.ToList();
@@ -200,8 +211,6 @@ namespace WebApplication1.Areas.coadmin.Controllers
                         viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                         viewModel.pubMessageList = pubMessageList;
                         viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                        viewModel.communityName = ep.GetCommunityInfo(userId)[0];
-                        viewModel.communityApart = ep.GetCommunityInfo(userId)[1];
                         return View(viewModel);
                     }
                     catch(Exception ex)

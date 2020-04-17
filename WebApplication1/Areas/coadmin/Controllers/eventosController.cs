@@ -14,6 +14,8 @@ namespace WebApplication1.Areas.coadmin.Controllers
     {
         pjrdev_condominiosEntities entities = new pjrdev_condominiosEntities();
         EFPublicRepository ep = new EFPublicRepository();
+        List<community> communityList = new List<community>();
+
         // GET: coadmin/eventos
         public ActionResult registrados(string searchStr = "")
         {
@@ -51,6 +53,10 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     }
 
                     eventosViewModel viewModel = new eventosViewModel();
+
+                    communityList = ep.GetCommunityList(userId);
+                    viewModel.communityList = communityList;
+
                     viewModel.side_menu = "event_calendar";
                     viewModel.side_sub_menu = "event_calendar_recorded";
                     viewModel.document_category_list = entities.document_type.ToList();
@@ -93,6 +99,10 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                     List<document_type> document_category_list = entities.document_type.ToList();
                     eventosViewModel viewModel = new eventosViewModel();
+
+                    communityList = ep.GetCommunityList(userId);
+                    viewModel.communityList = communityList;
+
                     viewModel.side_menu = "event_calendar";
                     viewModel.side_sub_menu = "event_calendar_otros";
                     viewModel.curUser = curUser;
@@ -135,6 +145,10 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                     List<document_type> document_category_list = entities.document_type.ToList();
                     eventosViewModel viewModel = new eventosViewModel();
+
+                    communityList = ep.GetCommunityList(userId);
+                    viewModel.communityList = communityList;
+
                     viewModel.side_menu = "event_calendar";
                     viewModel.side_sub_menu = "event_calendar_agregar";
                     viewModel.curUser = curUser;
@@ -193,6 +207,10 @@ namespace WebApplication1.Areas.coadmin.Controllers
 
                     List<document_type> document_category_list = entities.document_type.ToList();
                     eventosViewModel viewModel = new eventosViewModel();
+
+                    communityList = ep.GetCommunityList(userId);
+                    viewModel.communityList = communityList;
+
                     viewModel.side_menu = "event_calendar";
                     viewModel.side_sub_menu = "event_calendar_inactivos";
                     viewModel.document_category_list = document_category_list;
@@ -202,8 +220,6 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = pubMessageList;
                     viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                    viewModel.communityName = ep.GetCommunityInfo(userId)[0];
-                    viewModel.communityApart = ep.GetCommunityInfo(userId)[1];
                     return View(viewModel);
                 }
                 catch(Exception ex)
@@ -239,6 +255,10 @@ namespace WebApplication1.Areas.coadmin.Controllers
                         user curUser = entities.users.Find(userId);
                         List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                         editEventViewModel viewModel = new editEventViewModel();
+
+                        communityList = ep.GetCommunityList(userId);
+                        viewModel.communityList = communityList;
+
                         @event editEvent = entities.events.Find(editID);
                         viewModel.side_menu = "event_calendar";
                         viewModel.side_sub_menu = "event_calendar_editar";
@@ -248,8 +268,6 @@ namespace WebApplication1.Areas.coadmin.Controllers
                         viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                         viewModel.pubMessageList = pubMessageList;
                         viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                        viewModel.communityName = ep.GetCommunityInfo(userId)[0];
-                        viewModel.communityApart = ep.GetCommunityInfo(userId)[1];
                         return View(viewModel);
                     }
                     catch(Exception ex)
@@ -290,6 +308,10 @@ namespace WebApplication1.Areas.coadmin.Controllers
                         List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                         @event event_item = entities.events.Find(id);
                         registradoViewModel viewmodel = new registradoViewModel();
+
+                        communityList = ep.GetCommunityList(userId);
+                        viewmodel.communityList = communityList;
+
                         viewmodel.side_menu = "registrado";
                         viewmodel.event_name = event_item.name;
                         viewmodel.event_date = Convert.ToDateTime(event_item.event_date).ToString("dd/MM/yyyy");
@@ -304,8 +326,6 @@ namespace WebApplication1.Areas.coadmin.Controllers
                         viewmodel.pubTaskList = ep.GetNotifiTaskList(userId);
                         viewmodel.pubMessageList = pubMessageList;
                         viewmodel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                        viewmodel.communityName = ep.GetCommunityInfo(userId)[0];
-                        viewmodel.communityApart = ep.GetCommunityInfo(userId)[1];
                         return View(viewmodel);
                     }
                     catch(Exception ex)
@@ -339,7 +359,6 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 editevent.description = description;
                 editevent.note = note;
                 editevent.share = share;
-                editevent.community_id = communityAct;
                 entities.SaveChanges();
                 return Redirect(Url.Action("registrados", "eventos", new { area = "coadmin" }));
             } catch (DbEntityValidationException e)
