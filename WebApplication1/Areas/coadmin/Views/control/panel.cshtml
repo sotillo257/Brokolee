@@ -80,11 +80,11 @@
                                         <td>
                                             @if (Convert.ToInt64(Session["CURRENT_COMU"]) == item.id)
                                             {
-                                                <input class="form-control" type="checkbox" value="@item.id" checked />
+                                                <input class="form-control" type="checkbox"  onchange="ChangeCommunity(this)" value="@item.id" checked />
                                             }
                                             else
                                             {
-                                                <input class="form-control" type="checkbox" value="@item.id" />
+                                                <input class="form-control" type="checkbox"  onchange="ChangeCommunity(this)" value="@item.id" />
                                             }
                                         </td>
                                     </tr>

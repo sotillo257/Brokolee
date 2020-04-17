@@ -128,7 +128,7 @@
                         }
                         else
                         {
-                            <select class="form-control selectComunidad" onchange="changeComunidad(this.value)" name="communitySelect">
+                            <select class="form-control selectComunidad"  onchange="ChangeCommunity(this)" name="communitySelect">
                                 @foreach (var item in Model.communityList)
                                 {
                                     if (Convert.ToInt64(Session["CURRENT_COMU"]) == item.id)
@@ -1646,7 +1646,36 @@
         }
 
 
-        
+         //Onchange ComboBox de comunity
+
+        function ChangeCommunity(self) {
+             console.log(1);
+            onChangeCommunity($(self).val());  
+        }
+
+        //Cambiar idCommunity en la session
+         function onChangeCommunity(id) {
+           // var id = $(self).data('id');
+            var formData = new FormData();
+            formData.append('id', id);
+            var url = "@Url.Action("ChangeCommunity", "control", new { area = "coadmin" })";
+
+            $.ajax({
+                url: url,
+                type: "post",
+                data: formData,
+                success: function (result) {
+                    $("#ck-body-loading-overlay").hide();
+                    if (result.result === "error") {
+                        console.log('couln\'t get roles');
+                    } else {
+                        location.reload();
+                    }
+                },
+                processData: false,
+                contentType: false
+            });
+        }
 
         //*****
         function onResidentPrint(self){
