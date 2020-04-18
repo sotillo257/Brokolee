@@ -915,13 +915,14 @@ namespace WebApplication1.Areas.coadmin.Controllers
         public JsonResult ArmarBlogs(long ID)
         {
             long userId = (long)Session["USER_ID"];
+            int role = (int)Session["USER_ROLE"];
             string content = "";           
             blog blogs = entities.blogs.Find(ID);
             content += "<div class='Container'><div class='row'><div class='col-sm-12'><div class='single-blog caja'><p class='fecha'><i class='mdi mdi-worker text-primary'></i>" + blogs.author + " <span>";
             content += "<td>" + Convert.ToDateTime(blogs.blogdate).ToString("dd/MM/yyyy HH:mm") + "</td></span></p><h2><a class='titulo' href='" + Url.Action("verblog", "comunicaciones", new { blogID = blogs.id, area = "coadmin" }).ToString() + "'>" + blogs.title + "</a></h2>";
             content += blogs.content.Replace('"', '\'');
             content += "<p class='fecha' style='padding-top:15px!important'>";
-            if (blogs.user_id == userId)
+            if (blogs.user_id == userId || role == 3 || role == 2)
             {
                 content += "<a href='#' ><a href = '" + Url.Action("editarblog", "comunicaciones", new { area = "coadmin", blogID = blogs.id }).ToString() + "'><button type = 'button' class='btn btn-primary waves-effect waves-light btn-sm mr-1 mb-1'";
                 content += "data-toggle='tooltip' data-placement='top' title='Editar'><i class='mdi mdi-lead-pencil'></i></button></a>";

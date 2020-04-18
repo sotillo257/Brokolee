@@ -17,6 +17,10 @@
         font-size: 16px;
         color: cornflowerblue;
     }
+
+    .page-content-wrapper{
+        margin-bottom: 10px!important;
+    }
 </style>
 
 
@@ -54,6 +58,41 @@
         </div>
         <!-- end back button -->
         <div id="divContenido"></div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <div class="row form-material">
+            <div class="col-md-6">
+                <h5 class="d-inline-block">Comentarios</h5>
+            </div>
+
+        </div>
+
+        <div class="table-responsive">
+            <table id="dataTable-documentos-legales"
+                   class="table table-striped table-bordered normal"
+                   style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Comentario</th>
+                        <th>Fecha de publicación</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.blogcommentList)
+                    {
+                        <tr>
+                            <td>@item.name</td>
+                            <td>@item.comment.</td>
+                            <td class="text-center">@Convert.ToDateTime(item.postdate).ToString("MM/dd/yyyy HH:mm")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
 
         <!-- back button -->
         <div class="row pb-4">
@@ -109,7 +148,7 @@
                 data: compania[0],
                         success: function (result) {
                             if (result.result == "success") {
-                                location.reload();
+                                 window.location.href = "@Url.Action("blog", "comunicaciones", new { area = "coadmin"})";
                             } else {
                                 alert("Error al eliminar el blog: "+ result.exception);
                             }
