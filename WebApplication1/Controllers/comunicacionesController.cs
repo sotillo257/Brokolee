@@ -51,7 +51,7 @@ namespace WebApplication1.Controllers
                     viewModel.curUser = curUser;
 
                     long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
-                    List<blog> blogs = entities.blogs.Where(m => m.community_id == communityAct).ToList();
+                    List<blog> blogs = entities.blogs.Where(m => m.community_id == communityAct || m.user.role == 3).ToList();
 
                     viewModel.blogList = blogs;
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);

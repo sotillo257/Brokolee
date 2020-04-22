@@ -19,8 +19,7 @@ namespace WebApplication1.Areas.webmaster.ViewModels
         public List<document_type> document_category_list { get; set; }
         public user editAdmin { get; set; }
         public List<community> communityList { get; set; }
-        public long communityID1 { get; set; }
-        public long communityID2 { get; set; }
+        public List<communuser> communityID1 { get; set; }       
         public List<task> pubTaskList { get; set; }
         public List<ShowMessage> pubMessageList { get; set; }
     }

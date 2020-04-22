@@ -4,7 +4,10 @@
     Page.Title = "Agregar administrador - Brokolee Software";
 }
 
-<script src="~/Scripts/jquery-3.1.1.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link href="~/Content/Select-Multiple.css" rel="stylesheet" />
+
 
 <style media="screen">
     #inputGroupFile04 {
@@ -70,7 +73,7 @@
                             <div class="form-group row">
                                 <div id="img-fluid" class="col-sm-3">
                                 </div>
-                                
+
                                 <div class="col-sm-9">
                                     <div class="input-group mt-2">
                                         <div class="custom-file">
@@ -139,7 +142,7 @@
                             <div class="form-group row">
                                 <label class="col-sm-3 col-form-label">Comunidad</label>
                                 <div class="col-sm-9">
-                                    <select class="form-control"  name="communityID" 
+                                    <select class="form-control" multiple="multiple" name="communityID"
                                             data-toggle="tooltip" title="Nombre de la comunidad">
                                         @foreach (var item in Model.communityList)
                                         {
@@ -182,6 +185,7 @@
 
 </div> <!-- Page content Wrapper -->
 
+<script src="~/Scripts/Select-Multiple.js"></script>
 
 <script type="text/javascript">
 

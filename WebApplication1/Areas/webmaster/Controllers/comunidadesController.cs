@@ -123,12 +123,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                     user curUser = entities.users.Find(userId);
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                     community editCommunity = entities.communities.Find(id);
-                    editarCommunViewModel viewModel = new editarCommunViewModel();
-                    List<user> coadminList = new List<user>();
-                    var query = (from r in entities.users
-                                 where (r.role == 2 || r.role == 4) && r.is_del != true
-                                 select r);
-                    coadminList = query.ToList();
+                    editarCommunViewModel viewModel = new editarCommunViewModel();                                      
                     viewModel.curUser = curUser;
                     viewModel.side_menu = "comunidades";
                     viewModel.side_sub_menu = "comunidades_editar";
@@ -136,8 +131,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                     viewModel.editCommunity = editCommunity;
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = pubMessageList;
-                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                    viewModel.coadminList = coadminList;
+                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);                    
                     return View(viewModel);
                 }
                 else
@@ -203,7 +197,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
 
         [HttpPost]        
         public ActionResult newcommunity(string first_name,
-            string description,List<string> adminlist, long packageId, string apartment)
+            string description, long packageId, string apartment)
         {
             try
             {
@@ -218,14 +212,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
 
                 entities.communities.Add(newCommunity);
                 entities.SaveChanges();
-                communuser communuser = new communuser();
-                foreach (var item in adminlist)
-                {
-                    communuser.commun_id = newCommunity.id;
-                    communuser.user_id = long.Parse(item);
-                    entities.communusers.Add(communuser);
-                    entities.SaveChanges();
-                }
+                
                 
                
                 return Redirect(Url.Action("listado", "comunidades", new { area = "webmaster" }));
@@ -243,7 +230,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
 
         [HttpPost]
         public ActionResult editcommunity(long communityID, string first_name,
-            string description, List<string> adminlist, long packageId, string apartment)
+            string description, long packageId, string apartment)
         {
             try
             {
@@ -256,14 +243,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 editCommunity.apart = apartment;
                 entities.SaveChanges();
                 entities.communusers.RemoveRange(editCommunity.communusers);
-               communuser communuser = new communuser();
-                foreach (var item in adminlist)
-                {
-                    communuser.commun_id = editCommunity.id;
-                    communuser.user_id = long.Parse(item);
-                    entities.communusers.Add(communuser);
-                    entities.SaveChanges();
-                }
+               
                 return Redirect(Url.Action("listado", "comunidades", new { area = "webmaster" }));
             }
             catch (Exception ex)

@@ -6,6 +6,10 @@
 
 <script src="~/Scripts/jquery-3.1.1.min.js"></script>
 
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link href="~/Content/Select-Multiple.css" rel="stylesheet" />
+
 <style media="screen">
     #inputGroupFile04 {
         max-width: 130px;
@@ -73,7 +77,7 @@
                             <div class="form-divider"></div>
                             <div class="form-group row">
 
-                                <div id="img-fluid"  class="col-sm-3">
+                                <div id="img-fluid" class="col-sm-3">
                                     @if (Model.editAdmin.user_img != null)
                                     {
                                         <img src="~/Upload/User_Logo/@Model.editAdmin.user_img" alt="user-img" class="img-fluid" />
@@ -85,12 +89,12 @@
                                 </div>
 
 
-                               
-                               <div class="col-sm-9">
+
+                                <div class="col-sm-9">
                                     <div class="input-group mt-2">
                                         <div class="custom-file">
                                             <input type="file" class="custom-file-input" id="inputGroupFile04" name="user_logo"
-                                                   data-toggle="tooltip"  />
+                                                   data-toggle="tooltip" />
                                             <label class="custom-file-label" for="inputGroupFile04">Seleccionar imagen a editar</label>
                                         </div>
                                         <div class="col-sm-3">
@@ -115,7 +119,7 @@
                                 <div class="col-sm-9">
                                     <input class="form-control" type="text" value="@Model.editAdmin.last_name1"
                                            placeholder="Apellido paterno" id="example-email-input" name="last_name1" required
-                                           data-toggle="tooltip"  />
+                                           data-toggle="tooltip" />
                                     @*<small class="form-text text-muted">Apellido Paterno del Administrador</small>*@
                                 </div>
                             </div>
@@ -126,7 +130,7 @@
                                     <input class="form-control" type="text" value="@Model.editAdmin.mother_last_name1"
                                            placeholder="Apellido materno" id="example-email-input" name="mother_last_name1"
                                            data-toggle="tooltip" />
-                                   @* <small class="form-text text-muted">Apellido Materno del Administrador</small>*@
+                                    @* <small class="form-text text-muted">Apellido Materno del Administrador</small>*@
                                 </div>
                             </div>
                             <div class="form-divider"></div>
@@ -136,7 +140,7 @@
                                     <input class="form-control" type="email" value="@Model.editAdmin.email"
                                            placeholder="Email" id="example-email-input" name="email"
                                            data-toggle="tooltip" />
-                                   @* <small class="form-text text-muted">Email del administrador</small>*@
+                                    @* <small class="form-text text-muted">Email del administrador</small>*@
                                 </div>
                             </div>
                             <div class="form-divider"></div>
@@ -146,25 +150,33 @@
                                     <input class="form-control" type="password" value="@Model.editPassword"
                                            placeholder="Contraseña" id="example-password-input" name="password"
                                            data-toggle="tooltip" />
-                                   @* <small class="form-text text-muted">Contraseña utilizada para ingresar al sistema</small>*@
+                                    @* <small class="form-text text-muted">Contraseña utilizada para ingresar al sistema</small>*@
                                 </div>
                             </div>
                             <div class="form-divider"></div>
                             <div class="form-group row">
                                 <label class="col-sm-3 col-form-label">Comunidad</label>
                                 <div class="col-sm-9">
-                                    <select class="form-control" name="communityID1" required
-                                            data-toggle="tooltip" >
+                                    <select class="form-control" multiple="multiple" name="communityID" required
+                                            data-toggle="tooltip">
                                         @foreach (var item in Model.communityList)
                                         {
-                                            if (Model.communityID1 == item.id)
+                                            bool bandera = true;
+                                            foreach (var item2 in Model.communityID1)
                                             {
-                                                <option value="@item.id" selected>@item.first_name</option>
+
+                                                if (item2.commun_id == item.id)
+                                                {
+                                                    bandera = false;
+                                                    <option value="@item.id" selected>@item.first_name</option>
+                                                }
                                             }
-                                            else
+
+                                            if (bandera)
                                             {
                                                 <option value="@item.id">@item.first_name</option>
                                             }
+
                                         }
                                     </select>
                                     @*<small class="form-text text-muted">Categoría del suplidor</small>*@
@@ -211,7 +223,7 @@
 
 </div> <!-- Page content Wrapper -->
 
-
+<script src="~/Scripts/Select-Multiple.js"></script>
 <script type="text/javascript">
 
     (function () {

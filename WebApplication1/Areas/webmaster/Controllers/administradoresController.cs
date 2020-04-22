@@ -94,23 +94,16 @@ namespace WebApplication1.Areas.webmaster.Controllers
                     user curUser = entities.users.Find(userId);
                     user editAdmin = entities.users.Find(id);
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
-                    communuser communuserResult = entities.communusers.Where(m => m.user_id == id).FirstOrDefault();
+                    List<communuser> communuserResult = entities.communusers.Where(m => m.user_id == id).ToList();
                     editarAdminViewModel viewModel = new editarAdminViewModel();
                     viewModel.side_menu = "administradores";
                     viewModel.side_sub_menu = "administradores_editar";
                     viewModel.document_category_list = entities.document_type.ToList();
                     viewModel.curUser = curUser;
                     viewModel.editAdmin = editAdmin;
-                    if (communuserResult != null)
-                    {
-                        viewModel.communityID1 = communuserResult.commun_id;
-                    }
-                    else
-                    {
-                        viewModel.communityID1 = -1;
-                    }
+                    viewModel.communityID1 = communuserResult;
                     viewModel.editPassword = ep.Decrypt(editAdmin.password);
-                    viewModel.communityList = entities.communities.ToList();
+                    viewModel.communityList = entities.communities.Where(x => x.is_active == true).ToList();
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = pubMessageList;
                     viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
@@ -137,23 +130,16 @@ namespace WebApplication1.Areas.webmaster.Controllers
                     user curUser = entities.users.Find(userId);
                     user editAdmin = entities.users.Find(id);
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
-                    communuser communuserResult = entities.communusers.Where(m => m.user_id == id).FirstOrDefault();
+                    List<communuser> communuserResult = entities.communusers.Where(m => m.user_id == id).ToList();
                     editarAdminViewModel viewModel = new editarAdminViewModel();
                     viewModel.side_menu = "administradores";
                     viewModel.side_sub_menu = "administradores_editar";
                     viewModel.document_category_list = entities.document_type.ToList();
                     viewModel.curUser = curUser;
                     viewModel.editAdmin = editAdmin;
-                    if (communuserResult != null)
-                    {
-                        viewModel.communityID1 = communuserResult.commun_id;
-                    }
-                    else
-                    {
-                        viewModel.communityID1 = -1;
-                    }
+                    viewModel.communityID1 = communuserResult;                    
                     viewModel.editPassword = ep.Decrypt(editAdmin.password);
-                    viewModel.communityList = entities.communities.ToList();
+                    viewModel.communityList = entities.communities.Where(x => x.is_active == true).ToList();
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = pubMessageList;
                     viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
@@ -170,9 +156,9 @@ namespace WebApplication1.Areas.webmaster.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> newadmin(HttpPostedFileBase user_logo, string first_name1, 
+        public async Task<ActionResult> newadmin(HttpPostedFileBase user_logo, string first_name1,
             string last_name1, string mother_last_name1, string email, string password,
-            long communityID
+            List<string> communityID
             )
         {
             try
@@ -207,21 +193,20 @@ namespace WebApplication1.Areas.webmaster.Controllers
                     newAdmin.user_img = fileName;
                 }
                 entities.users.Add(newAdmin);
-                communuser communuserResult = entities.communusers.Where(m => m.user_id == newAdmin.id).FirstOrDefault();
-                if (communuserResult == null)
+                entities.SaveChanges();
+
+                foreach (var item in communityID)
                 {
-                    communuser communuser = new communuser();
-                    communuser.user_id = newAdmin.id;
-                    communuser.commun_id = communityID;
-                    entities.communusers.Add(communuser);
-                } else
-                {
-                    communuserResult.commun_id = communityID;
+                   communuser communuser = new communuser();
+                   communuser.user_id = newAdmin.id;
+                   communuser.commun_id = long.Parse(item);
+                   entities.communusers.Add(communuser);
+                   entities.SaveChanges();                                                                         
                 }
 
-                community community = entities.communities.Find(communityID);
-                community.is_active = true;
-                entities.SaveChanges();
+                //community community = entities.communities.Find(communityID);
+                //community.is_active = true;
+                
                 string patialView = "~/Views/iniciar/emailing.cshtml";
                 emailingViewModel viewModel = new emailingViewModel();
                 viewModel.firstName = first_name1;
@@ -242,7 +227,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
         [HttpPost]
         public ActionResult editadmin(long adminID, HttpPostedFileBase user_logo,
             string first_name1, string last_name1, string mother_last_name1,
-            string email, string password, long communityID1)
+            string email, string password, List<string> communityID)
         {
             try
             {
@@ -269,20 +254,28 @@ namespace WebApplication1.Areas.webmaster.Controllers
                     user_logo.SaveAs(path);
                     editAdmin.user_img = fileName;
                 }
-
-                communuser communuserResult = entities.communusers.Where(m => m.user_id == adminID).FirstOrDefault();
-                if (communuserResult == null)
-                {
-                    communuser communuser = new communuser();
-                    communuser.user_id = adminID;
-                    communuser.commun_id = communityID1;
-                    entities.communusers.Add(communuser);
-                }
-                else
-                {
-                    communuserResult.commun_id = communityID1;
-                }
                 entities.SaveChanges();
+
+                List<communuser> comxuserAnterior = entities.communusers.Where(x=> x.user_id == editAdmin.id).ToList();                
+                foreach (var item in comxuserAnterior)
+                {
+                    entities.communusers.Remove(item);
+                    entities.SaveChanges();                    
+                }
+
+                foreach (var item in communityID)
+                {
+                    long itemID = Convert.ToInt64(item);
+                    communuser communuserResult = entities.communusers.Where(m => m.user_id == editAdmin.id && m.commun_id == itemID).FirstOrDefault();
+                    if (communuserResult == null)
+                    {
+                        communuser communuser = new communuser();
+                        communuser.user_id = editAdmin.id;
+                        communuser.commun_id = itemID;
+                        entities.communusers.Add(communuser);
+                        entities.SaveChanges();
+                    }
+                }               
                 return Redirect(Url.Action("listado", "administradores", new { area = "webmaster" }));
             } catch(Exception ex)
             {
@@ -347,6 +340,15 @@ namespace WebApplication1.Areas.webmaster.Controllers
                     entities.blogcomments.RemoveRange(blogcomments);
                 }
                 entities.blogs.RemoveRange(blogs);
+
+                ///Delete comunities
+                List<communuser> comxuserAnterior = entities.communusers.Where(x => x.user_id == delID).ToList();
+                foreach (var item in comxuserAnterior)
+                {
+                    entities.communusers.Remove(item);
+                    entities.SaveChanges();
+                }
+
                 // Delete bank info
                 List<bank> banks = entities.banks.Where(m => m.user_id == delID).ToList();
                 foreach(var item in banks)

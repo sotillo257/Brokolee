@@ -4,6 +4,10 @@
     Page.Title = "Ver administrador - Brokolee Software";
 }
 
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link href="~/Content/Select-Multiple.css" rel="stylesheet" />
+
 <style media="screen">
     #inputGroupFile04 {
         max-width: 130px;
@@ -80,7 +84,7 @@
                                     {
                                         <img src="~/assets/images/user.svg" alt="user-img" class="img-fluid" />
                                     }
-                                </div>                          
+                                </div>
                             </div>
                             <div class="form-divider"></div>
                             <div class="form-group row">
@@ -136,18 +140,26 @@
                             <div class="form-group row">
                                 <label class="col-sm-3 col-form-label">Comunidad</label>
                                 <div class="col-sm-9">
-                                    <select class="form-control" readonly name="communityID1" required
+                                    <select class="form-control" multiple="multiple" readonly name="communityID" required
                                             data-toggle="tooltip">
                                         @foreach (var item in Model.communityList)
                                         {
-                                            if (Model.communityID1 == item.id)
+                                            bool bandera = true;
+                                            foreach (var item2 in Model.communityID1)
                                             {
-                                                <option value="@item.id" selected>@item.first_name</option>
+
+                                                if (item2.commun_id == item.id)
+                                                {
+                                                    bandera = false;
+                                                    <option value="@item.id" selected>@item.first_name</option>
+                                                }
                                             }
-                                            else
+
+                                            if (bandera)
                                             {
                                                 <option value="@item.id">@item.first_name</option>
                                             }
+
                                         }
                                     </select>
                                     @*<small class="form-text text-muted">Categoría del suplidor</small>*@
@@ -174,7 +186,7 @@
                                         <small class="form-text text-muted">Categoría del suplidor</small>
                                     </div>
                                 </div>*@
-                          
+
                         </div>
                     }
                 </div>
@@ -191,7 +203,7 @@
     </div><!-- container -->
 
 </div> <!-- Page content Wrapper -->
-
+<script src="~/Scripts/Select-Multiple.js"></script>
 
 <script type="text/javascript">
 

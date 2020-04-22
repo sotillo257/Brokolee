@@ -55,13 +55,13 @@
                                 <div class="col-sm-9">
                                     @if (Model.editContactInfo == null)
                                     {
-                                        <input class="form-control" type="email" value="" required name="company_admin"
+                                        <input class="form-control" type="text" value="" required name="company_admin"
                                                 data-toggle="tooltip" title="Nombre de compañía de administración"
                                                placeholder="Compañía administración" id="example-email-input">
                                     }
                                     else
                                     {
-                                        <input class="form-control" type="email" value="@Model.editContactInfo.company_admin"
+                                        <input class="form-control" type="text" value="@Model.editContactInfo.company_admin"
                                                required name="company_admin"
                                                data-toggle="tooltip" title="Nombre de compañía de administración"
                                                placeholder="Compañía administración" id="example-email-input">
