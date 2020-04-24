@@ -162,50 +162,50 @@ namespace WebApplication1.Areas.coadmin.Controllers
             }
         }
 
-        public ActionResult agregar()
-        {
-            if (Session["USER_ID"] != null)
-            {
-                try
-                {
-                    long userId = 0;
-                    if (Convert.ToInt32(Session["USER_ROLE"]) >= 1)
-                    {
-                        userId = (long)Session["USER_ID"];
-                    }
-                    else if (Convert.ToInt32(Session["USER_ROLE"]) > 1
-                    && Session["ACC_USER_ID"] != null)
-                    {
-                        userId = (long)Session["ACC_USER_ID"];
-                    }
-                    user curUser = entities.users.Find(userId);
-                    List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
-                    agregarViewModel viewModel = new agregarViewModel();
+        //public ActionResult agregar()
+        //{
+        //    if (Session["USER_ID"] != null)
+        //    {
+        //        try
+        //        {
+        //            long userId = 0;
+        //            if (Convert.ToInt32(Session["USER_ROLE"]) >= 1)
+        //            {
+        //                userId = (long)Session["USER_ID"];
+        //            }
+        //            else if (Convert.ToInt32(Session["USER_ROLE"]) > 1
+        //            && Session["ACC_USER_ID"] != null)
+        //            {
+        //                userId = (long)Session["ACC_USER_ID"];
+        //            }
+        //            user curUser = entities.users.Find(userId);
+        //            List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
+        //            agregarViewModel viewModel = new agregarViewModel();
 
-                    communityList = ep.GetCommunityList(userId);
-                    viewModel.communityList = communityList;
+        //            communityList = ep.GetCommunityList(userId);
+        //            viewModel.communityList = communityList;
 
-                    viewModel.side_menu = "supplier_directory";
-                    viewModel.side_sub_menu = "supplier_directory_agregar";
-                    viewModel.document_category_list = entities.document_type.ToList();
-                    viewModel.categoryList = entities.categories.ToList();
-                    viewModel.curUser = curUser;
-                    viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
-                    viewModel.pubMessageList = pubMessageList;
-                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);                    
-                    return View(viewModel);
-                }
-                catch(Exception ex)
-                {
-                    return Redirect(Url.Action("Index", "Error"));
-                }
+        //            viewModel.side_menu = "supplier_directory";
+        //            viewModel.side_sub_menu = "supplier_directory_agregar";
+        //            viewModel.document_category_list = entities.document_type.ToList();
+        //            viewModel.categoryList = entities.categories.ToList();
+        //            viewModel.curUser = curUser;
+        //            viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
+        //            viewModel.pubMessageList = pubMessageList;
+        //            viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);                    
+        //            return View(viewModel);
+        //        }
+        //        catch(Exception ex)
+        //        {
+        //            return Redirect(Url.Action("Index", "Error"));
+        //        }
                 
-            } else
-            {
-                return Redirect(ep.GetLogoutUrl());
-            }
+        //    } else
+        //    {
+        //        return Redirect(ep.GetLogoutUrl());
+        //    }
             
-        }
+        //}
 
         //public ActionResult editar(long? editID)
         //{
