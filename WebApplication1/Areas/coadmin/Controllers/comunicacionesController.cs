@@ -802,7 +802,6 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 blog.content = content;
                 blog.blogdate = DateTime.Now;
                 blog.author = author;
-                blog.user_id = userId;
                 // entities.blogs.Add(blog);
                 entities.SaveChanges();
                 return Redirect(Url.Action("blog", "comunicaciones", new { area = "coadmin" }));
