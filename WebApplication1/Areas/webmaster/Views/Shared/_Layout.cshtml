@@ -27,6 +27,10 @@
     <link href="~/assets/css/style.css" rel="stylesheet" type="text/css">
     <link href="~/assets/css/custom.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+    <link rel="stylesheet" href="~/Content/bootstrap/bootstrap-multiselect.css">
+
+
     <style>
         .search-form {
             display: inline-flex;
@@ -108,25 +112,25 @@
                         <h6>@Model.curUser.first_name1 @Model.curUser.last_name1</h6>
                         @*<a class="text-success" href="#">@Model.communityList<span class="waves-block">@Model.communityApart</span></a>*@
                         @*@if (Model.communityList.Count == 0)
-                        {
-                            <span class="waves-block">Sin comunidades</span>
-                        }
-                        else
-                        {
-                            <select class="form-control selectComunidad" onchange="ChangeCommunity(this)" name="communitySelect">
-                                @foreach (var item in Model.communityList)
-                                {
-                                    if (Convert.ToInt64(Session["CURRENT_COMU"]) == item.id)
+                            {
+                                <span class="waves-block">Sin comunidades</span>
+                            }
+                            else
+                            {
+                                <select class="form-control selectComunidad" onchange="ChangeCommunity(this)" name="communitySelect">
+                                    @foreach (var item in Model.communityList)
                                     {
-                                        <option value="@item.id" selected>@item.first_name</option>
+                                        if (Convert.ToInt64(Session["CURRENT_COMU"]) == item.id)
+                                        {
+                                            <option value="@item.id" selected>@item.first_name</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@item.id">@item.first_name</option>
+                                        }
                                     }
-                                    else
-                                    {
-                                        <option value="@item.id">@item.first_name</option>
-                                    }
-                                }
-                            </select>
-                        }*@
+                                </select>
+                            }*@
                         <p class="text-primary text-uppercase"><sub><i class="mdi mdi-checkbox-blank-circle"></i> Activo</sub></p>
                     </div>
 
@@ -271,151 +275,151 @@
 
 
                         @*<li class="has_sub">
-            @if (Model.side_menu == "facilidades")
-            {
-                <a href="javascript:void(0);" class="waves-effect waves-light active"><i class="mdi mdi-apps"></i><span> Facilidades </span> <span class="float-right"><i class="mdi mdi-chevron-right"></i></span></a>
-                <ul class="list-unstyled">
-                    @if (Model.side_sub_menu == "facilidades_disponibles")
-                    {
-                        <li class="active">
-                            <a href="@Url.Action("disponibles", "facilidades", new { area = "webmaster" })" class="active">Facilidades disponibles</a>
-                        </li>
-                    }
-                    else
-                    {
-                        <li>
-                            <a href="@Url.Action("disponibles", "facilidades", new { area = "webmaster" })">Facilidades disponibles</a>
-                        </li>
-                    }
+                                @if (Model.side_menu == "facilidades")
+                                {
+                                    <a href="javascript:void(0);" class="waves-effect waves-light active"><i class="mdi mdi-apps"></i><span> Facilidades </span> <span class="float-right"><i class="mdi mdi-chevron-right"></i></span></a>
+                                    <ul class="list-unstyled">
+                                        @if (Model.side_sub_menu == "facilidades_disponibles")
+                                        {
+                                            <li class="active">
+                                                <a href="@Url.Action("disponibles", "facilidades", new { area = "webmaster" })" class="active">Facilidades disponibles</a>
+                                            </li>
+                                        }
+                                        else
+                                        {
+                                            <li>
+                                                <a href="@Url.Action("disponibles", "facilidades", new { area = "webmaster" })">Facilidades disponibles</a>
+                                            </li>
+                                        }
 
-                    @if (Model.side_sub_menu == "facilidades_agregar")
-                    {
-                        <li class="active">
-                            <a href="@Url.Action("agregar", "facilidades", new { area = "webmaster" })" class="active">Agregar facilidad</a>
-                        </li>
-                    }
-                    else
-                    {
-                        <li>
-                            <a href="@Url.Action("agregar", "facilidades", new { area = "webmaster" })">Agregar facilidad</a>
-                        </li>
-                    }
+                                        @if (Model.side_sub_menu == "facilidades_agregar")
+                                        {
+                                            <li class="active">
+                                                <a href="@Url.Action("agregar", "facilidades", new { area = "webmaster" })" class="active">Agregar facilidad</a>
+                                            </li>
+                                        }
+                                        else
+                                        {
+                                            <li>
+                                                <a href="@Url.Action("agregar", "facilidades", new { area = "webmaster" })">Agregar facilidad</a>
+                                            </li>
+                                        }
 
-                    @if (Model.side_sub_menu == "facilidades_reservar")
-                    {
-                        <li class="active">
-                            <a href="@Url.Action("reservar", "facilidades", new { area = "webmaster" })" class="active">Reservar facilidad</a>
-                        </li>
-                    }
-                    else
-                    {
-                        <li>
-                            <a href="@Url.Action("reservar", "facilidades", new { area = "webmaster" })">Reservar facilidad</a>
-                        </li>
-                    }
+                                        @if (Model.side_sub_menu == "facilidades_reservar")
+                                        {
+                                            <li class="active">
+                                                <a href="@Url.Action("reservar", "facilidades", new { area = "webmaster" })" class="active">Reservar facilidad</a>
+                                            </li>
+                                        }
+                                        else
+                                        {
+                                            <li>
+                                                <a href="@Url.Action("reservar", "facilidades", new { area = "webmaster" })">Reservar facilidad</a>
+                                            </li>
+                                        }
 
-                    @if (Model.side_sub_menu == "facilidades_solicitudes")
-                    {
-                        <li class="active">
-                            <a href="@Url.Action("solicitudes", "facilidades", new { area = "webmaster" })" class="active">Solicitudes de aprobación</a>
-                        </li>
-                    }
-                    else
-                    {
-                        <li>
-                            <a href="@Url.Action("solicitudes", "facilidades", new { area = "webmaster" })">Solicitudes de aprobación</a>
-                        </li>
-                    }
-                </ul>
-            }
-            else
-            {
-                <a href="javascript:void(0);" class="waves-effect waves-light"><i class="mdi mdi-apps"></i><span> Facilidades </span> <span class="float-right"><i class="mdi mdi-chevron-right"></i></span></a>
-                <ul class="list-unstyled">
-                    <li><a href="@Url.Action("disponibles", "facilidades", new { area = "webmaster" })">Facilidades disponibles</a></li>
-                    <li><a href="@Url.Action("agregar", "facilidades", new { area = "webmaster" })">Agregar facilidad</a></li>
-                    <li><a href="@Url.Action("reservar", "facilidades", new { area = "webmaster" })">Reservar facilidad</a></li>
-                    <li><a href="@Url.Action("solicitudes", "facilidades", new { area = "webmaster" })">Solicitudes de aprobación</a></li>
-                </ul>
-            }
-        </li>
+                                        @if (Model.side_sub_menu == "facilidades_solicitudes")
+                                        {
+                                            <li class="active">
+                                                <a href="@Url.Action("solicitudes", "facilidades", new { area = "webmaster" })" class="active">Solicitudes de aprobación</a>
+                                            </li>
+                                        }
+                                        else
+                                        {
+                                            <li>
+                                                <a href="@Url.Action("solicitudes", "facilidades", new { area = "webmaster" })">Solicitudes de aprobación</a>
+                                            </li>
+                                        }
+                                    </ul>
+                                }
+                                else
+                                {
+                                    <a href="javascript:void(0);" class="waves-effect waves-light"><i class="mdi mdi-apps"></i><span> Facilidades </span> <span class="float-right"><i class="mdi mdi-chevron-right"></i></span></a>
+                                    <ul class="list-unstyled">
+                                        <li><a href="@Url.Action("disponibles", "facilidades", new { area = "webmaster" })">Facilidades disponibles</a></li>
+                                        <li><a href="@Url.Action("agregar", "facilidades", new { area = "webmaster" })">Agregar facilidad</a></li>
+                                        <li><a href="@Url.Action("reservar", "facilidades", new { area = "webmaster" })">Reservar facilidad</a></li>
+                                        <li><a href="@Url.Action("solicitudes", "facilidades", new { area = "webmaster" })">Solicitudes de aprobación</a></li>
+                                    </ul>
+                                }
+                            </li>
 
-        <li class="has_sub">
-            @if (Model.side_menu == "contratos")
-            {
-                <a href="javascript:void(0);" class="waves-effect waves-light"><i class="mdi mdi-file-multiple"></i> <span> Contratos </span> <span class="float-right"><i class="mdi mdi-chevron-right"></i></span></a>
-                <ul class="list-unstyled">
-                    @if (Model.side_sub_menu == "contratos_listado")
-                    {
-                        <li class="active">
-                            <a href="@Url.Action("listado", "contratos", new { area = "webmaster" })" class="active">Listado de contratos</a>
-                        </li>
-                    }
-                    else
-                    {
-                        <li>
-                            <a href="@Url.Action("listado", "contratos", new { area = "webmaster" })">Listado de contratos</a>
-                        </li>
-                    }
+                            <li class="has_sub">
+                                @if (Model.side_menu == "contratos")
+                                {
+                                    <a href="javascript:void(0);" class="waves-effect waves-light"><i class="mdi mdi-file-multiple"></i> <span> Contratos </span> <span class="float-right"><i class="mdi mdi-chevron-right"></i></span></a>
+                                    <ul class="list-unstyled">
+                                        @if (Model.side_sub_menu == "contratos_listado")
+                                        {
+                                            <li class="active">
+                                                <a href="@Url.Action("listado", "contratos", new { area = "webmaster" })" class="active">Listado de contratos</a>
+                                            </li>
+                                        }
+                                        else
+                                        {
+                                            <li>
+                                                <a href="@Url.Action("listado", "contratos", new { area = "webmaster" })">Listado de contratos</a>
+                                            </li>
+                                        }
 
-                    @if (Model.side_sub_menu == "contratos_agregar")
-                    {
-                        <li class="active">
-                            <a href="@Url.Action("agregar", "contratos", new { area = "webmaster" })" class="active">Agregar contrato</a>
-                        </li>
-                    }
-                    else
-                    {
-                        <li>
-                            <a href="@Url.Action("agregar", "contratos", new { area = "webmaster" })">Agregar contrato</a>
-                        </li>
-                    }
+                                        @if (Model.side_sub_menu == "contratos_agregar")
+                                        {
+                                            <li class="active">
+                                                <a href="@Url.Action("agregar", "contratos", new { area = "webmaster" })" class="active">Agregar contrato</a>
+                                            </li>
+                                        }
+                                        else
+                                        {
+                                            <li>
+                                                <a href="@Url.Action("agregar", "contratos", new { area = "webmaster" })">Agregar contrato</a>
+                                            </li>
+                                        }
 
-                    @if (Model.side_sub_menu == "contratos_archivados")
-                    {
-                        <li class="active">
-                            <a href="@Url.Action("archivados", "contratos", new { area = "webmaster" })" class="active">Contratos archivados</a>
-                        </li>
-                    }
-                    else
-                    {
-                        <li>
-                            <a href="@Url.Action("archivados", "contratos", new { area = "webmaster" })">Contratos archivados</a>
-                        </li>
-                    }
-                </ul>
-            }
-            else
-            {
-                <a href="javascript:void(0);" class="waves-effect waves-light"><i class="mdi mdi-file-multiple"></i> <span> Contratos </span> <span class="float-right"><i class="mdi mdi-chevron-right"></i></span></a>
-                <ul class="list-unstyled">
-                    <li><a href="@Url.Action("listado", "contratos", new { area = "webmaster" })">Listado de contratos</a></li>
-                    <li><a href="@Url.Action("agregar", "contratos", new { area = "webmaster" })">Agregar contrato</a></li>
-                    <li><a href="@Url.Action("archivados", "contratos", new { area = "webmaster" })">Contratos archivados</a></li>
-                </ul>
-            }
-        </li>*@
+                                        @if (Model.side_sub_menu == "contratos_archivados")
+                                        {
+                                            <li class="active">
+                                                <a href="@Url.Action("archivados", "contratos", new { area = "webmaster" })" class="active">Contratos archivados</a>
+                                            </li>
+                                        }
+                                        else
+                                        {
+                                            <li>
+                                                <a href="@Url.Action("archivados", "contratos", new { area = "webmaster" })">Contratos archivados</a>
+                                            </li>
+                                        }
+                                    </ul>
+                                }
+                                else
+                                {
+                                    <a href="javascript:void(0);" class="waves-effect waves-light"><i class="mdi mdi-file-multiple"></i> <span> Contratos </span> <span class="float-right"><i class="mdi mdi-chevron-right"></i></span></a>
+                                    <ul class="list-unstyled">
+                                        <li><a href="@Url.Action("listado", "contratos", new { area = "webmaster" })">Listado de contratos</a></li>
+                                        <li><a href="@Url.Action("agregar", "contratos", new { area = "webmaster" })">Agregar contrato</a></li>
+                                        <li><a href="@Url.Action("archivados", "contratos", new { area = "webmaster" })">Contratos archivados</a></li>
+                                    </ul>
+                                }
+                            </li>*@
 
                         @*@if (Model.side_menu == "contacto")
-        {
-            <li class="active">
-                <a href="@Url.Action("informacion", "contacto", new { area = "webmaster" })"
-                   class="waves-effect waves-light active">
-                    <i class="mdi mdi-contact-mail"></i>
-                    <span> Información de contacto </span>
-                </a>
-            </li>
-        }
-        else
-        {
-            <li>
-                <a href="@Url.Action("informacion", "contacto", new { area = "webmaster" })"
-                   class="waves-effect waves-light">
-                    <i class="mdi mdi-contact-mail"></i>
-                    <span> Información de contacto </span>
-                </a>
-            </li>
-        }*@
+                            {
+                                <li class="active">
+                                    <a href="@Url.Action("informacion", "contacto", new { area = "webmaster" })"
+                                       class="waves-effect waves-light active">
+                                        <i class="mdi mdi-contact-mail"></i>
+                                        <span> Información de contacto </span>
+                                    </a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li>
+                                    <a href="@Url.Action("informacion", "contacto", new { area = "webmaster" })"
+                                       class="waves-effect waves-light">
+                                        <i class="mdi mdi-contact-mail"></i>
+                                        <span> Información de contacto </span>
+                                    </a>
+                                </li>
+                            }*@
 
 
                         <li class="has_sub">
@@ -456,17 +460,17 @@
                                     }
 
                                     @*@if (Model.side_sub_menu == "plantillas_tema")
-                    {
-                        <li class="active">
-                            <a href="@Url.Action("tema", "plantillas", new { area = "webmaster" })" class="active">Tema Plantilla</a>
-                        </li>
-                    }
-                    else
-                    {
-                        <li>
-                            <a href="@Url.Action("tema", "plantillas", new { area = "webmaster" })">Tema Plantilla</a>
-                        </li>
-                    }*@
+                                        {
+                                            <li class="active">
+                                                <a href="@Url.Action("tema", "plantillas", new { area = "webmaster" })" class="active">Tema Plantilla</a>
+                                            </li>
+                                        }
+                                        else
+                                        {
+                                            <li>
+                                                <a href="@Url.Action("tema", "plantillas", new { area = "webmaster" })">Tema Plantilla</a>
+                                            </li>
+                                        }*@
                                 </ul>
                             }
                             else
@@ -481,46 +485,46 @@
                         </li>
 
                         @*<li class="has_sub">
-            @if (Model.side_menu == "tooltips")
-            {
-                <a href="javascript:void(0);" class="waves-effect waves-light active"><i class="mdi mdi-message-text"></i> <span> Tooltips </span> <span class="float-right"><i class="mdi mdi-chevron-right"></i></span></a>
-                <ul class="list-unstyled">
-                    @if (Model.side_menu == "tooltips_titular")
-                    {
-                        <li class="active">
-                            <a href="@Url.Action("listado", "tooltips", new { area = "webmaster", t = "titular" })" class="active">Titulares</a>
-                        </li>
-                    }
-                    else
-                    {
-                        <li>
-                            <a href="@Url.Action("listado", "tooltips", new { area = "webmaster", t = "titular" })">Titulares</a>
-                        </li>
-                    }
+                                @if (Model.side_menu == "tooltips")
+                                {
+                                    <a href="javascript:void(0);" class="waves-effect waves-light active"><i class="mdi mdi-message-text"></i> <span> Tooltips </span> <span class="float-right"><i class="mdi mdi-chevron-right"></i></span></a>
+                                    <ul class="list-unstyled">
+                                        @if (Model.side_menu == "tooltips_titular")
+                                        {
+                                            <li class="active">
+                                                <a href="@Url.Action("listado", "tooltips", new { area = "webmaster", t = "titular" })" class="active">Titulares</a>
+                                            </li>
+                                        }
+                                        else
+                                        {
+                                            <li>
+                                                <a href="@Url.Action("listado", "tooltips", new { area = "webmaster", t = "titular" })">Titulares</a>
+                                            </li>
+                                        }
 
-                    @if (Model.side_sub_menu == "tooltips_coamdin")
-                    {
-                        <li class="active">
-                            <a href="@Url.Action("listado", "tooltips", new { area = "webmaster", t = "coadmin" })" class="active">Administradores</a>
-                        </li>
-                    }
-                    else
-                    {
-                        <li>
-                            <a href="@Url.Action("listado", "tooltips", new { area = "webmaster", t = "coadmin" })">Administradores</a>
-                        </li>
-                    }
-                </ul>
-            }
-            else
-            {
-                <a href="javascript:void(0);" class="waves-effect waves-light"><i class="mdi mdi-message-text"></i> <span> Tooltips </span> <span class="float-right"><i class="mdi mdi-chevron-right"></i></span></a>
-                <ul class="list-unstyled">
-                    <li><a href="@Url.Action("listado", "tooltips", new { area = "webmaster", t = "titular" })">Titulares</a></li>
-                    <li><a href="@Url.Action("listado", "tooltips", new { area = "webmaster", t = "coadmin" })">Administradores</a></li>
-                </ul>
-            }
-        </li>*@
+                                        @if (Model.side_sub_menu == "tooltips_coamdin")
+                                        {
+                                            <li class="active">
+                                                <a href="@Url.Action("listado", "tooltips", new { area = "webmaster", t = "coadmin" })" class="active">Administradores</a>
+                                            </li>
+                                        }
+                                        else
+                                        {
+                                            <li>
+                                                <a href="@Url.Action("listado", "tooltips", new { area = "webmaster", t = "coadmin" })">Administradores</a>
+                                            </li>
+                                        }
+                                    </ul>
+                                }
+                                else
+                                {
+                                    <a href="javascript:void(0);" class="waves-effect waves-light"><i class="mdi mdi-message-text"></i> <span> Tooltips </span> <span class="float-right"><i class="mdi mdi-chevron-right"></i></span></a>
+                                    <ul class="list-unstyled">
+                                        <li><a href="@Url.Action("listado", "tooltips", new { area = "webmaster", t = "titular" })">Titulares</a></li>
+                                        <li><a href="@Url.Action("listado", "tooltips", new { area = "webmaster", t = "coadmin" })">Administradores</a></li>
+                                    </ul>
+                                }
+                            </li>*@
 
                         <li>
                             @if (Model.side_menu == "tecnico")
@@ -776,7 +780,7 @@
     <!-- END wrapper -->
     <!-- jQuery  -->
     <script type="text/javascript" src="~/assets/js/jquery.min.js"></script>
-    <script type="text/javascript" src="~/assets/js/popper.min.js"></script>
+    <script type="text/javascript" src="~/assets/js/popper.min.js"></script>  
     <script type="text/javascript" src="~/assets/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="~/assets/js/modernizr.min.js"></script>
     <script type="text/javascript" src="~/assets/js/detect.js"></script>
@@ -786,6 +790,8 @@
     <script type="text/javascript" src="~/assets/js/waves.js"></script>
     <script type="text/javascript" src="~/assets/js/jquery.nicescroll.js"></script>
     <script type="text/javascript" src="~/assets/js/jquery.scrollTo.min.js"></script>
+
+    <script src="~/Scripts/bootstrap-multiselect.js"></script>
 
     <!-- Required datatable js -->
     <script type="text/javascript" src="~/assets/plugins/datatables/jquery.dataTables.min.js"></script>
@@ -817,7 +823,7 @@
     <script type="text/javascript" src="~/Scripts/jquery.signalR-2.3.0.js"></script>
     <!--Reference the autogenerated SignalR hub script. -->
     <script type="text/javascript" src="/signalr/hubs"></script>
-    <script src="https://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+    <script src="https://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>   
 
     <!--empieza un script-->
     <script type="text/javascript">
@@ -1533,7 +1539,7 @@
         //
 
         function onDeleteWebmaster(self) {
-            
+
             var id = $(self).data('id');
             var formData = new FormData();
             formData.append("delID", id);
@@ -1601,7 +1607,7 @@
             formData.append("delID", id);
 
             var url = "@Url.Action("DeleteTitulares", "titulares", new { area = "webmaster" })";
-          
+
              var respuesta = confirm("estas seguro que deseas eliminar el titular");
         if (respuesta == true) {
 
@@ -1626,13 +1632,13 @@
 
         }
 
-           
-            
 
-           
+
+
+
         }
         function onDeleteCommunity(self) {
-            
+
             var id = $(self).data("id");
             var formData = new FormData();
             formData.append("id", id);
@@ -1665,7 +1671,7 @@
         }
 
              function onDeleteBlog(self) {
-            
+
             var id = $(self).data("id");
             var formData = new FormData();
             formData.append("id", id);

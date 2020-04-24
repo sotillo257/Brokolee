@@ -4,10 +4,6 @@
     Page.Title = "Ver administrador - Brokolee Software";
 }
 
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<link href="~/Content/Select-Multiple.css" rel="stylesheet" />
-
 <style media="screen">
     #inputGroupFile04 {
         max-width: 130px;
@@ -140,8 +136,7 @@
                             <div class="form-group row">
                                 <label class="col-sm-3 col-form-label">Comunidad</label>
                                 <div class="col-sm-9">
-                                    <select class="form-control" multiple="multiple" readonly name="communityID" required
-                                            data-toggle="tooltip">
+                                    <select id="selectComuniVer" name="communityID" multiple class="selectpicker form-control" data-selected-text-format="count > 2" data-container="body" data-live-search="true" data-hide-disabled="false" data-virtual-scroll="true">
                                         @foreach (var item in Model.communityList)
                                         {
                                             bool bandera = true;
@@ -151,18 +146,13 @@
                                                 if (item2.commun_id == item.id)
                                                 {
                                                     bandera = false;
-                                                    <option value="@item.id" selected>@item.first_name</option>
+                                                    <option disabled value="@item.id" selected>@item.first_name</option>
                                                 }
-                                            }
-
-                                            if (bandera)
-                                            {
-                                                <option value="@item.id">@item.first_name</option>
-                                            }
+                                            }                                           
 
                                         }
                                     </select>
-                                    @*<small class="form-text text-muted">Categoría del suplidor</small>*@
+                                    <small class="form-text text-muted">Lista de comunidades</small>
                                 </div>
                             </div>
                             @*<div class="form-divider"></div>
@@ -203,7 +193,6 @@
     </div><!-- container -->
 
 </div> <!-- Page content Wrapper -->
-<script src="~/Scripts/Select-Multiple.js"></script>
 
 <script type="text/javascript">
 
