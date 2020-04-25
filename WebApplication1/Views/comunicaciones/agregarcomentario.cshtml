@@ -1,7 +1,8 @@
 ﻿
+
 @{
     ViewBag.Title = "blog";
-    Page.Title = "Blog Comentario Agregar - Brokolee Software";
+    Page.Title = "Agregar comentario - Brokolee Software";
 }
 
 <div class="page-content-wrapper">
@@ -13,13 +14,13 @@
                 <div class="page-title-box">
                     <div class="float-left">
                         <div class="breadcrumb float-md-right">
-                            <h4 class="page-title">Agregar Blog</h4>
+                            <h4 class="page-title">Agregar comentario</h4>
                         </div>
                     </div>
                     <div class="float-right">
                         <ul class="breadcrumb float-md-right">
                             <li class="breadcrumb-item"><a href="@Url.Action("panel", "control")" class="text-success"><i class="mdi mdi-home-modern"></i> Panel de control</a></li>
-                            <li class="breadcrumb-item active">Agregar Blog</li>
+                            <li class="breadcrumb-item active">Agregar comentario</li>
                         </ul>
                     </div>
                 </div>
@@ -47,19 +48,9 @@
                     }))
                     {
                         @Html.AntiForgeryToken()
-                        <input name="blogID" value="@Model.blogID" type="hidden"/>
+                        <input name="blogID" value="@Model.blogID" type="hidden" />
                         <div class="card-body">
-                            <h5 class="d-inline-block">Nuevo Blog Comentario</h5>
-                            <div class="form-divider"></div>
-                            <div class="form-group row">
-                                <label for="example-email-input-1" class="col-sm-3 col-form-label">Nombre</label>
-                                <div class="col-sm-9">
-                                    <input class="form-control" type="text" value="" name="name"
-                                           data-toggle="tooltip" title="Título descriptivo del blog"
-                                           placeholder="Nombre" id="example-email-input-1" required />
-                                    <small class="form-text text-muted">Nombre descriptivo del blog</small>
-                                </div>
-                            </div>
+                            <h5 class="d-inline-block">Nuevo comentario</h5>
                             <div class="form-divider"></div>
                             <div class="form-group row">
                                 <label for="example-email-input-3" class="col-sm-3 col-form-label">Comentario</label>
@@ -71,7 +62,7 @@
                             </div>
                             <div class="form-divider"></div>
                             <a href=""><button type="submit" class="btn btn-primary waves-effect waves-light">Agregar Comentario</button></a>
-                            <a href=""><button type="button" class="btn btn-danger waves-effect waves-light">Cancelar</button></a>
+                            <a href="@Url.Action("blog", "comunicaciones")"><button type="button" class="btn btn-danger waves-effect waves-light">Cancelar</button></a>
                         </div>
                     }
                 </div>

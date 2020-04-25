@@ -30,7 +30,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 viewModel.side_sub_menu = "comunicaciones_blog";
                 viewModel.document_category_list = entities.document_type.ToList();
                 viewModel.curUser = curUser;                
-                viewModel.Content = userId.ToString();                
+                viewModel.Content = userId.ToString();
                 List<blog> blogs = entities.blogs.ToList();
 
                 viewModel.blogList = blogs;
@@ -217,7 +217,9 @@ namespace WebApplication1.Areas.webmaster.Controllers
             {
                 blogcomment blogcomment = new blogcomment();
                 blog blog = entities.blogs.Find(blogID);
-                blogcomment.name = blog.author;
+                long userId = (long)Session["USER_ID"];
+                user curUser = entities.users.Find(userId);
+                blogcomment.name = curUser.first_name1 + " " + curUser.last_name1; 
                 blogcomment.comment = comment;
                 blogcomment.blog_id = blogID;
                 blogcomment.postdate = DateTime.Now;
@@ -247,7 +249,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 blog.author = author;
                // entities.blogs.Add(blog);
                 entities.SaveChanges();
-                return Redirect(Url.Action("blog", "comunicaciones", new { area="webmaster" }));
+                return Redirect(Url.Action("verblog", "comunicaciones", new { area="webmaster", blogID = editID }));
             }
             catch(Exception ex)
             {
@@ -359,17 +361,31 @@ namespace WebApplication1.Areas.webmaster.Controllers
             int role = (int)Session["USER_ROLE"];
             string content = "";
             blog blogs = entities.blogs.Find(ID);
-            content += "<div class='Container'><div class='row'><div class='col-sm-12'><div class='single-blog caja'><p class='fecha'><i class='mdi mdi-worker text-primary'></i>" + blogs.author + " <span>";
-            content += "<td>" + Convert.ToDateTime(blogs.blogdate).ToString("dd/MM/yyyy HH:mm") + "</td></span></p><h2><a class='titulo' href='" + Url.Action("verblog", "comunicaciones", new { blogID = blogs.id, area = "webmaster" }).ToString() + "'>" + blogs.title + "</a></h2>";
+            community comuBlog = entities.communities.Find(blogs.community_id);
+            content += "<div class='Container'><div class='row'><div class='col-sm-12'><div class='single-blog caja'><h2 class='encabezadoBlog'>" + blogs.title + "<span><td>" + Convert.ToDateTime(blogs.blogdate).ToString("dd/MM/yyyy HH:mm") + "</td></span></h2>";
+            content += "<p class='autor'><i class='mdi mdi-worker text-primary'></i>" + blogs.author;
+            if (blogs.user.role == 3)
+            {
+                content += "<span><td>Todas las comunidades</td></span></p>";
+            }
+            else
+            {
+                if (blogs.community_id != null && comuBlog != null)
+                {
+                    content += "<span><td>Comunidad: " + comuBlog.first_name + "</td></span></p>";
+                }
+                else
+                {
+                    content += "<span><td>No hay comunidad asociada</td></span></p>";
+                }           
+                
+            }
             content += blogs.content.Replace('"', '\'');
             content += "<p class='fecha' style='padding-top:15px!important'>";
-            if (blogs.user_id == userId || role == 3 || role == 2)
-            {
-                content += "<a href='#' ><a href = '" + Url.Action("editarblog", "comunicaciones", new { area = "webmaster", blogID = blogs.id }).ToString() + "'><button type = 'button' class='btn btn-primary waves-effect waves-light btn-sm mr-1 mb-1'";
-                content += "data-toggle='tooltip' data-placement='top' title='Editar'><i class='mdi mdi-lead-pencil'></i></button></a>";
-                content += "<a href = '#' class='Eliminar'  data-id='" + blogs.id + "' ><button type = 'button' class='btn btn-danger waves-effect waves-light btn-sm mr-1 mb-1'";
-                content += "data-toggle='tooltip' data-placement='top' title='Eliminar'><i class='mdi mdi-close'></i></button></a>";
-            }
+            content += "<a href='#' ><a href = '" + Url.Action("editarblog", "comunicaciones", new { area = "webmaster", blogID = blogs.id }).ToString() + "'><button type = 'button' class='btn btn-primary waves-effect waves-light btn-sm mr-1 mb-1'";
+            content += "data-toggle='tooltip' data-placement='top' title='Editar'><i class='mdi mdi-lead-pencil'></i></button></a>";
+            content += "<a href = '#' class='Eliminar'  data-id='" + blogs.id + "' ><button type = 'button' class='btn btn-danger waves-effect waves-light btn-sm mr-1 mb-1'";
+            content += "data-toggle='tooltip' data-placement='top' title='Eliminar'><i class='mdi mdi-close'></i></button></a>";           
             content += "<a href='#' class='Like' data-id='" + blogs.id + "' ><span><i class='fa fa-thumbs-o-up'></i> like " + blogs.CantLike + "</span> </a>" +
                     "<a href = '" + Url.Action("agregarcomentario", "comunicaciones", new { area = "webmaster", blogID = blogs.id }).ToString() + "'><span style='padding-right: 18px;'> <i class='fa fa-comment-o'></i> Comentar </span> </a>" +
                     "</p></div></div></div></div>";

@@ -52,7 +52,7 @@
                             </div>
                         </div>
                         <div class="table-responsive">
-                            <table id="dataTable-documentos-legales" class="table table-striped table-bordered normal"
+                            <table id="blogTable" class="table table-striped table-bordered normal"
                                    style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                 <thead>
                                     <tr>
@@ -97,93 +97,4 @@
     </div><!-- container -->
 
 </div> <!-- Page content Wrapper -->
-<script>
-    $('table').dataTable({
-        "pageLength": -1,
-        "order": [[0,"desc"]]
-    });
-</script>
-@*<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script>
 
-
-        console.log('@Model.Content');
-
-
-           var url = "@Url.Action("ArmarBlogs", "comunicaciones", new { area = "coadmin" })";
-         var compania = new Array();
-        var formData = new FormData();
-
-        formData.append('ID', '@Model.Content');
-
-        compania.push(formData);
-        $.ajax({
-            url: url,
-            type: "post",
-            data: compania[0],
-                    success: function (result) {
-                        $("#divContenido").append(result);
-                    },
-                    processData: false,
-                    contentType: false
-        });
-        //.ToString()
-
-
-
-        $(document).ready(function () {
-              $(".Eliminar").on('click', function () {
-                var url = "@Url.Action("eliminarBlog", "comunicaciones", new { area = "coadmin"})";
-                 var compania = new Array();
-              var formData = new FormData();
-
-
-                 var id = $(".Eliminar").attr('data-id');
-                formData.append('blogID',  id);
-
-                compania.push(formData);
-                $.ajax({
-                    url: url,
-                    type: "post",
-                    data: compania[0],
-                            success: function (result) {
-                                if (result.result == "success") {
-                                    location.reload();
-                                } else {
-                                    alert("Error al eliminar el blog: "+ result.exception);
-                                }
-                            },
-                            processData: false,
-                            contentType: false
-                });
-            });
-
-             $(".Like").on('click', function () {
-                var url = "@Url.Action("AgregarLikeblog", "comunicaciones", new { area = "coadmin" })";
-                 var compania = new Array();
-              var formData = new FormData();
-
-
-                 var id = $(".Like").attr('data-id');
-                formData.append('ID',  id);
-
-                compania.push(formData);
-                $.ajax({
-                    url: url,
-                    type: "post",
-                    data: compania[0],
-                            success: function (result) {
-                                //  $("#divContenido").append(result);
-                                console.log(result);
-                            },
-                            processData: false,
-                            contentType: false
-                });
-            });
-
-        });
-
-
-
-
-    </script>*@

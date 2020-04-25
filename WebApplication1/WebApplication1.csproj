@@ -762,6 +762,7 @@
     <Compile Include="ViewModels\contactoViewModel.cs" />
     <Compile Include="ViewModels\controlViewModel.cs" />
     <Compile Include="ViewModels\documentosViewModel.cs" />
+    <Compile Include="ViewModels\editarblogViewModel.cs" />
     <Compile Include="ViewModels\editarTituloViewModel.cs" />
     <Compile Include="ViewModels\editarVehiculoViewModel.cs" />
     <Compile Include="ViewModels\emailingViewModel.cs" />
@@ -1650,6 +1651,7 @@
     <Content Include="Views\control\verVehiculo.cshtml" />
     <Content Include="Views\contacto\listado.cshtml" />
     <Content Include="Views\contacto\ver.cshtml" />
+    <Content Include="Views\comunicaciones\editarblog.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -391,12 +391,14 @@ namespace WebApplication1.Controllers
         }
 
         [HttpPost]
-        public ActionResult newblogcomentario(string name, string comment, long blogID)
+        public ActionResult newblogcomentario(string comment, long blogID)
         {
             try
             {
                 blogcomment blogcomment = new blogcomment();
-                blogcomment.name = name;
+                long userId = (long)Session["USER_ID"];
+                user curUser = entities.users.Find(userId);
+                blogcomment.name = curUser.first_name1 + " " + curUser.last_name1;
                 blogcomment.comment = comment;
                 blogcomment.blog_id = blogID;
                 blogcomment.postdate = DateTime.Now;
@@ -434,6 +436,67 @@ namespace WebApplication1.Controllers
             }
         }
 
+        public ActionResult editarblog(long? blogID)
+        {
+            if (Session["USER_ID"] != null)
+            {
+                if (blogID != null)
+                {
+                    long userId = (long)Session["USER_ID"];
+                    List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
+                    user curUser = entities.users.Find(userId);
+                    blog blog = entities.blogs.Find(blogID);
+                    editarblogViewModel viewModel = new editarblogViewModel();
+
+                    titulosList = ep.GetTitulosByTitular(userId);
+                    listComunities = ep.GetCommunityListByTitular(titulosList);
+                    viewModel.communityList = listComunities;
+
+                    viewModel.side_menu = "comunicaciones";
+                    viewModel.side_sub_menu = "comunicaciones";
+                    viewModel.document_category_list = entities.document_type.ToList();
+                    viewModel.curUser = curUser;
+                    viewModel.editBlog = blog;
+                    viewModel.blogID = Convert.ToInt64(blogID);
+                    viewModel.blogcommentList = entities.blogcomments.Where(m => m.blog_id == blogID).ToList();
+                    viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
+                    viewModel.pubMessageList = pubMessageList;
+                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                    return View(viewModel);
+                }
+                else
+                {
+                    return Redirect(Url.Action("NotFound", "Error"));
+                }
+            }
+            else
+            {
+                return Redirect(ep.GetLogoutUrl());
+            }
+        }
+
+        [HttpPost]
+        [ValidateInput(false)]
+        public ActionResult editblog(long editID, string title, string author, string content)
+        {
+            try
+            {
+                long userId = (long)Session["USER_ID"];
+                blog blog = entities.blogs.Find(editID);
+                blog.title = title;
+                blog.content = content;
+                blog.blogdate = DateTime.Now;
+                blog.author = author;
+                // entities.blogs.Add(blog);
+                entities.SaveChanges();
+                return Redirect(Url.Action("verblog", "comunicaciones", new { blogID = editID }));
+            }
+            catch (Exception ex)
+            {
+                return Redirect(Url.Action("editarblog", "comunicaciones"));
+            }
+        }
+
         [HttpPost]
         public JsonResult ArmarBlogs(long ID)
         {
@@ -441,11 +504,11 @@ namespace WebApplication1.Controllers
             int role = (int)Session["USER_ROLE"];
             string content = "";
             blog blogs = entities.blogs.Find(ID);
-            content += "<div class='Container'><div class='row'><div class='col-sm-12'><div class='single-blog caja'><p class='fecha'><i class='mdi mdi-worker text-primary'></i>" + blogs.author + " <span>";
-            content += "<td>" + Convert.ToDateTime(blogs.blogdate).ToString("dd/MM/yyyy HH:mm") + "</td></span></p><h2><a class='titulo' href='" + Url.Action("verblog", "comunicaciones", new { blogID = blogs.id }).ToString() + "'>" + blogs.title + "</a></h2>";
+            content += "<div class='Container'><div class='row'><div class='col-sm-12'><div class='single-blog caja'><h2 class='encabezadoBlog'>" + blogs.title + "<span><td>" + Convert.ToDateTime(blogs.blogdate).ToString("dd/MM/yyyy HH:mm") + "</td></span></h2>";
+            content += "<p class='fecha'><i class='mdi mdi-worker text-primary'></i>" + blogs.author + "</p>";
             content += blogs.content.Replace('"', '\'');
             content += "<p class='fecha' style='padding-top:15px!important'>";
-            if (blogs.user_id == userId || role == 3 || role == 2)
+            if (blogs.user_id == userId)
             {
                 content += "<a href='#' ><a href = '" + Url.Action("editarblog", "comunicaciones", new { blogID = blogs.id }).ToString() + "'><button type = 'button' class='btn btn-primary waves-effect waves-light btn-sm mr-1 mb-1'";
                 content += "data-toggle='tooltip' data-placement='top' title='Editar'><i class='mdi mdi-lead-pencil'></i></button></a>";

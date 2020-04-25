@@ -22,7 +22,7 @@
                     </div>
                     <div class="float-right">
                         <ul class="breadcrumb float-md-right">
-                            <li class="breadcrumb-item"><a href="@Url.Action("panel", "control")" class="text-success"><i class="mdi mdi-home-modern"></i> Panel de control</a></li>
+                            <li class="breadcrumb-item"><a href="@Url.Action("panel", "control", new { area = "coadmin" })" class="text-success"><i class="mdi mdi-home-modern"></i> Panel de control</a></li>
                             <li class="breadcrumb-item active">Editar entrada</li>
                         </ul>
                     </div>
@@ -47,7 +47,8 @@
                     {
                         id = "editblogForm",
                         @class = "",
-                        enctype = "multipart/form-data"
+                        enctype = "multipart/form-data",
+                        area = "coadmin"
                     }))
                     {
                         @Html.AntiForgeryToken()
@@ -85,7 +86,7 @@
                             </div>
                             <div class="form-divider"></div>
                             <a href=""><button type="submit" class="btn btn-primary waves-effect waves-light">Guardar</button></a>
-                            <a href="@Url.Action("blog", "comunicaciones")"><button type="button" class="btn btn-danger waves-effect waves-light">Cancelar</button></a>
+                            <a href="@Url.Action("blog", "comunicaciones", new { area="coadmin" })"><button type="button" class="btn btn-danger waves-effect waves-light">Cancelar</button></a>
                         </div>
                     }
                 </div>
