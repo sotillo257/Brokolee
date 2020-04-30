@@ -40,7 +40,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                         communityDict.Add(item.id, community.first_name);
                     } else
                     {
-                        communityDict.Add(item.id, "No community");
+                        communityDict.Add(item.id, "Sin comunidades");
                     }
                 }
                 listadoAdminViewModel viewModel = new listadoAdminViewModel();

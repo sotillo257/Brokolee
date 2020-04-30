@@ -75,40 +75,47 @@ namespace WebApplication1.Controllers
         {
             if (Session["USER_ID"] != null)
             {
-                try
+                if (Session["CURRENT_COMU"] != null)
                 {
-                    long userId = 0;
-                    if (Convert.ToInt32(Session["USER_ROLE"]) == 1)
+                    try
                     {
-                        userId = (long)Session["USER_ID"];
+                        long userId = 0;
+                        if (Convert.ToInt32(Session["USER_ROLE"]) == 1)
+                        {
+                            userId = (long)Session["USER_ID"];
+                        }
+                        else if (Convert.ToInt32(Session["USER_ROLE"]) > 1
+                        && Session["ACC_USER_ID"] != null)
+                        {
+                            userId = (long)Session["ACC_USER_ID"];
+                        }
+
+                        user curUser = entities.users.Find(userId);
+                        List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
+                        agregarBlogViewModel viewModel = new agregarBlogViewModel();
+
+                        titulosList = ep.GetTitulosByTitular(userId);
+                        listComunities = ep.GetCommunityListByTitular(titulosList);
+                        viewModel.communityList = listComunities;
+
+                        viewModel.side_menu = "comunicaciones";
+                        viewModel.side_sub_menu = "comunicaciones_agregarblog";
+                        viewModel.document_category_list = entities.document_type.ToList();
+                        viewModel.curUser = curUser;
+                        viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
+                        viewModel.pubMessageList = pubMessageList;
+                        viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                        return View(viewModel);
                     }
-                    else if (Convert.ToInt32(Session["USER_ROLE"]) > 1
-                    && Session["ACC_USER_ID"] != null)
+                    catch (Exception ex)
                     {
-                        userId = (long)Session["ACC_USER_ID"];
+                        return Redirect(Url.Action("Index", "Error"));
                     }
-
-                    user curUser = entities.users.Find(userId);
-                    List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
-                    agregarBlogViewModel viewModel = new agregarBlogViewModel();
-
-                    titulosList = ep.GetTitulosByTitular(userId);
-                    listComunities = ep.GetCommunityListByTitular(titulosList);
-                    viewModel.communityList = listComunities;
-
-                    viewModel.side_menu = "comunicaciones";
-                    viewModel.side_sub_menu = "comunicaciones_agregarblog";
-                    viewModel.document_category_list = entities.document_type.ToList();
-                    viewModel.curUser = curUser;
-                    viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
-                    viewModel.pubMessageList = pubMessageList;
-                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);                   
-                    return View(viewModel);
                 }
-                catch(Exception ex)
+                else
                 {
-                    return Redirect(Url.Action("Index", "Error"));
-                }
+                    return Redirect(Url.Action("blog", "comunicaciones"));
+                }               
             }
             else
             {
@@ -440,34 +447,41 @@ namespace WebApplication1.Controllers
         {
             if (Session["USER_ID"] != null)
             {
-                if (blogID != null)
+                if (Session["CURRENT_COMU"] != null)
                 {
-                    long userId = (long)Session["USER_ID"];
-                    List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
-                    user curUser = entities.users.Find(userId);
-                    blog blog = entities.blogs.Find(blogID);
-                    editarblogViewModel viewModel = new editarblogViewModel();
+                    if (blogID != null)
+                    {
+                        long userId = (long)Session["USER_ID"];
+                        List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
+                        user curUser = entities.users.Find(userId);
+                        blog blog = entities.blogs.Find(blogID);
+                        editarblogViewModel viewModel = new editarblogViewModel();
 
-                    titulosList = ep.GetTitulosByTitular(userId);
-                    listComunities = ep.GetCommunityListByTitular(titulosList);
-                    viewModel.communityList = listComunities;
+                        titulosList = ep.GetTitulosByTitular(userId);
+                        listComunities = ep.GetCommunityListByTitular(titulosList);
+                        viewModel.communityList = listComunities;
 
-                    viewModel.side_menu = "comunicaciones";
-                    viewModel.side_sub_menu = "comunicaciones";
-                    viewModel.document_category_list = entities.document_type.ToList();
-                    viewModel.curUser = curUser;
-                    viewModel.editBlog = blog;
-                    viewModel.blogID = Convert.ToInt64(blogID);
-                    viewModel.blogcommentList = entities.blogcomments.Where(m => m.blog_id == blogID).ToList();
-                    viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
-                    viewModel.pubMessageList = pubMessageList;
-                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                    return View(viewModel);
+                        viewModel.side_menu = "comunicaciones";
+                        viewModel.side_sub_menu = "comunicaciones";
+                        viewModel.document_category_list = entities.document_type.ToList();
+                        viewModel.curUser = curUser;
+                        viewModel.editBlog = blog;
+                        viewModel.blogID = Convert.ToInt64(blogID);
+                        viewModel.blogcommentList = entities.blogcomments.Where(m => m.blog_id == blogID).ToList();
+                        viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
+                        viewModel.pubMessageList = pubMessageList;
+                        viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                        return View(viewModel);
+                    }
+                    else
+                    {
+                        return Redirect(Url.Action("NotFound", "Error"));
+                    }
                 }
                 else
                 {
-                    return Redirect(Url.Action("NotFound", "Error"));
-                }
+                    return Redirect(Url.Action("blog", "comunicaciones"));
+                }              
             }
             else
             {

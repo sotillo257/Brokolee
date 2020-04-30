@@ -18,7 +18,7 @@ namespace WebApplication1.Controllers
         List<community> listComunities = new List<community>();       
 
         // GET: community          
-        public ActionResult community(long? Id)
+        public ActionResult community()
         {           
             if (Session["USER_ID"] != null)
             {
@@ -40,7 +40,7 @@ namespace WebApplication1.Controllers
 
                     titulosList = ep.GetTitulosByTitular(userId);
                     listComunities = ep.GetCommunityListByTitular(titulosList);                      
-                    viewModel.communityList = listComunities;
+                    
                     if (listComunities.Count == 0)
                     {                        
                         viewModel.side_menu = "control";
@@ -58,25 +58,33 @@ namespace WebApplication1.Controllers
                         if (Session["CURRENT_COMU"] == null)
                         {
                             long selectedCommu = 0;
-                            community firstCommu = listComunities.LastOrDefault();
+                            community firstCommu = listComunities.FirstOrDefault();
                             selectedCommu = firstCommu.id;
                             Session["CURRENT_COMU"] = selectedCommu;
                             viewModel.communityID1 = selectedCommu;
                         }
                         else
                         {
-                            if (Id == null)
+                            long Id = Convert.ToInt64(Session["CURRENT_COMU"]);
+                            List<community> ordenCommunity = new List<community>();
+                            community selectedCommu = entities.communities.Find(Id);
+                            ordenCommunity.Add(selectedCommu);
+                            foreach (community item in listComunities)
                             {
-                                long comId = Convert.ToInt64(Session["CURRENT_COMU"]);
-                                viewModel.communityID1 = comId;
+                                if (item.id != selectedCommu.id)
+                                {
+                                    ordenCommunity.Add(item);
+                                }
                             }
-                            else
+
+                            listComunities.Clear();
+
+                            foreach (community item2 in ordenCommunity)
                             {
-                                Session["CURRENT_COMU"] = Id;
-                                viewModel.communityID1 = Convert.ToInt64(Id);
+                                listComunities.Add(item2);
                             }
                         }
-
+                        viewModel.communityList = listComunities;
                         viewModel.side_menu = "control";
                         viewModel.side_sub_menu = "control";
                         viewModel.document_category_list = entities.document_type.ToList();

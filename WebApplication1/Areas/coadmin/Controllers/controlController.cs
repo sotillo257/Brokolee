@@ -16,7 +16,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
         List<community> communityList = new List<community>();      
 
         // GET: coadmin/control
-        public ActionResult panel(long? Id)
+        public ActionResult panel()
         {
             controlViewModel viewModel = new controlViewModel();
             if (Session["USER_ID"] != null)
@@ -37,8 +37,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                     List<document_type> document_category_list = entities.document_type.ToList();                                       
 
-                    communityList = ep.GetCommunityList(userId);
-                    viewModel.communityList = communityList;
+                    communityList = ep.GetCommunityList(userId);                    
 
                     if(communityList.Count == 0)
                     {
@@ -56,17 +55,33 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     {
                         if (Session["CURRENT_COMU"] == null)
                         {
-                            community firstCommu = communityList.LastOrDefault();
+                            community firstCommu = communityList.FirstOrDefault();
                             long selectedCommu = firstCommu.id;
                             Session["CURRENT_COMU"] = selectedCommu;
                         }
                         else
                         {
-                            if (Id != null)
+
+                            long Id = Convert.ToInt64(Session["CURRENT_COMU"]);
+                            List<community> ordenCommunity = new List<community>();
+                            community selectedCommu = entities.communities.Find(Id);
+                            ordenCommunity.Add(selectedCommu);
+                            foreach (community item in communityList)
                             {
-                                Session["CURRENT_COMU"] = Id;
+                                if (item.id != selectedCommu.id)
+                                {
+                                    ordenCommunity.Add(item);
+                                }                                
+                            }
+
+                            communityList.Clear();
+
+                            foreach (community item2 in ordenCommunity)
+                            {
+                                communityList.Add(item2);
                             }                            
                         }
+                        viewModel.communityList = communityList;
                         viewModel.side_menu = "control_panel";
                         viewModel.side_sub_menu = "";
                         viewModel.document_category_list = document_category_list;
