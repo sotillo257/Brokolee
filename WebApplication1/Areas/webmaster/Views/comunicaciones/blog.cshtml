@@ -68,7 +68,7 @@
                                         <tr>
                                             <td>@item.title</td>
                                             <td>@item.author</td>
-                                            <td class="text-center">@Convert.ToDateTime(item.blogdate).ToString("MM/dd/yyyy HH:mm")</td>
+                                            <td class="text-center"><span style="display:none">@Convert.ToDateTime(item.blogdate).ToString("yyyy/MM/dd HH:mm")</span>@Convert.ToDateTime(item.blogdate).ToString("MM/dd/yyyy HH:mm")</td>
                                             <td class="text-center">
                                                 <a href="@Url.Action("verblog", "comunicaciones", new { area = "webmaster", blogID = item.id })">
                                                     <button type="button" class="btn btn-success waves-effect waves-light btn-sm mr-1 mb-1"

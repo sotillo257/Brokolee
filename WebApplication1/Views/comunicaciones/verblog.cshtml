@@ -102,7 +102,7 @@
                         <tr>
                             <td>@item.name</td>
                             <td>@item.comment.</td>
-                            <td class="text-center">@Convert.ToDateTime(item.postdate).ToString("MM/dd/yyyy HH:mm")</td>
+                            <td class="text-center"><span style="display:none!important">@Convert.ToDateTime(item.blogdate).ToString("yyyy/MM/dd HH:mm")</span>@Convert.ToDateTime(item.postdate).ToString("MM/dd/yyyy HH:mm")</td>
                         </tr>
                     }
                 </tbody>
