@@ -73,7 +73,15 @@
                                 <h5 class="d-inline-block">Listado de eventos</h5>
                             </div>
                             <div class="col-md-6 mb-1">
-                                <a href="@Url.Action("agregar", "eventos", new { area = "coadmin" })"><button type="button" class="btn btn-primary waves-effect waves-light float-xl-right float-lg-right float-md-left">Agregar evento</button></a>
+                                @if (Session["CURRENT_COMU"] !=null)
+                                {
+                                    <a href="@Url.Action("agregar", "eventos", new { area = "coadmin" })"><button type="button" class="btn btn-primary waves-effect waves-light float-xl-right float-lg-right float-md-left">Agregar evento</button></a>
+                                }
+                                else
+                                {
+                                    <a><button disabled type="button" class="btn btn-primary waves-effect waves-light float-xl-right float-lg-right float-md-left">Agregar evento</button></a>
+                                }
+
                             </div>
                         </div>
 

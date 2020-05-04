@@ -68,7 +68,7 @@
                                         <th class="f-b">Fecha de adquisición</th>
                                         <th class="f-b">Propiedad</th>
                                         <th class="f-b">¿Está arrendada?</th>
-                                        <th class="f-b">Estado</th>
+                                        @*<th class="f-b">Estado</th>*@
                                         <th class="text-center f-b">Opciones</th>
                                     </tr>
                                 </thead>
@@ -87,7 +87,7 @@
                                         {
                                             <td>No</td>
                                         }
-                                        <td class="text-center">
+                                        @*<td class="text-center">
                                             @if (item.is_active == true)
                                             {
                                                 <button type="button" class="btn btn-primary waves-effect waves-light btn-sm">Activo</button>
@@ -96,7 +96,7 @@
                                             {
                                                 <button type="button" class="btn btn-danger waves-effect waves-light btn-sm">Inactivo</button>
                                             }
-                                        </td>
+                                        </td>*@
                                         <td class="text-center">
                                             <a href="@Url.Action("verTitulo", "control", new { id = item.Id })">
                                                 <button type="button"

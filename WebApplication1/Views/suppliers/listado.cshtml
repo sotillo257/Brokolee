@@ -1,7 +1,7 @@
 ﻿
 @{
     ViewBag.Title = "listado";
-    Page.Title = "Directorio de Suplidores - Brokolee Software";
+    Page.Title = "Directorio de suplidores - Brokolee Software";
 }
 
 <div class="page-content-wrapper">
@@ -19,7 +19,7 @@
                     <div class="float-right">
                         <ul class="breadcrumb float-md-right">
                             <li class="breadcrumb-item"><a href="@Url.Action("panel", "control")" class="text-success"><i class="mdi mdi-home-modern"></i> Panel de control</a></li>
-                            <li class="breadcrumb-item active">Directorio de Suplidores</li>
+                            <li class="breadcrumb-item active">Directorio de suplidores</li>
                         </ul>
                     </div>
                 </div>
@@ -48,25 +48,31 @@
                                     </span>
                                 </div>
                                 <div class="input-group col-md-6">
-                                    <label class="col-sm-6 col-md-4 col-form-label">Buscar por Categoría</label>
-                                    <div class="col-sm-6 col-md-8">
-                                        <select class="form-control" name="searchCategoryId"
-                                                id="id-search-category"
-                                                onchange="onSearchSupplierCategory()">
-                                            <option value="0">Elije una categoría</option>
-                                            @foreach (var item in Model.categoryList)
-                                            {
-                                                if (Model.searchCategoryId == item.Id)
+
+                                    @if (Model.supplierList.Count != 0)
+                                    {
+                                        <label class="col-sm-6 col-md-4 col-form-label">Buscar por categoría</label>
+                                        <div class="col-sm-6 col-md-8">
+                                            <select class="form-control" name="searchCategoryId"
+                                                    id="id-search-category"
+                                                    onchange="onSearchSupplierCategory()">
+                                                <option value="0">Elije una categoría</option>
+                                                @foreach (var item in Model.categoryList)
                                                 {
-                                                    <option value="@item.Id" selected>@item.name</option>
+                                                    if (Model.searchCategoryId == item.Id)
+                                                    {
+                                                        <option value="@item.Id" selected>@item.name</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@item.Id">@item.name</option>
+                                                    }
                                                 }
-                                                else
-                                                {
-                                                    <option value="@item.Id">@item.name</option>
-                                                }
-                                            }
-                                        </select>
-                                    </div>
+                                            </select>
+                                        </div>
+                                    }
+
+
                                 </div>
                             }
                         </div>
@@ -94,7 +100,7 @@
                                         <th>Suplidor</th>
                                         <th>Municipio</th>
                                         <th>Categoría</th>
-                                        <th>Descripción Breve</th>
+                                        <th>Descripción</th>
                                         <th>Valoración</th>
                                         <th>Comentarios</th>
                                         <th class="text-center">Ver</th>

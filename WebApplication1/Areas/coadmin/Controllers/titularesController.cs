@@ -517,7 +517,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
 
         #region TITULAR
 
-        public ActionResult listado(long? Id, string searchStr = "")
+        public ActionResult listado(string searchStr = "")
         {
             if (Session["USER_ID"] != null)
             {
@@ -528,37 +528,32 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 List<user> titularList = new List<user>();
 
                 long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
-                if (Id != null)
+                if (Session["CURRENT_COMU"] != null)
                 {
-                    Session["CURRENT_COMU"] = Id;
-                    communityAct = Convert.ToInt64(Id);                  
-                }
+                    if (searchStr == "")
+                    {
+                        var query1 = (from r in entities.users
+                                      where
+                     r.role == 1 && r.is_del != true && ((r.create_userid == userId && r.Titulos.Count == 0) || r.Titulos.Any(x => x.IdCommunity == communityAct))
+                                      select r);
+                        titularList = query1.ToList();
 
-                if (searchStr == "")
-                {
-                    var query1 = (from r in entities.users                                    
-                                  where
-         r.role == 1 && r.is_del != true && ((r.create_userid == userId && r.Titulos.Count == 0) || r.Titulos.Any(x => x.IdCommunity == communityAct))
-                                  select r);
-                    titularList = query1.ToList();
-
+                    }
+                    else
+                    {
+                        var query = (from r in entities.users
+                                     where r.role == 1 &&
+                                     (r.first_name1.Contains(searchStr) == true
+                                     || r.last_name1.Contains(searchStr) == true)
+                                     && r.is_del != true && ((r.create_userid == userId && r.Titulos.Count == 0) || r.Titulos.Any(x => x.IdCommunity == communityAct))
+                                     select r);
+                        titularList = query.ToList();
+                    }
                 }
                 else
                 {
-                    var query = (from r in entities.users
-                                 where r.role == 1 &&
-                                 (r.first_name1.Contains(searchStr) == true
-                                 || r.last_name1.Contains(searchStr) == true)
-                                 && r.is_del != true && ((r.create_userid == userId && r.Titulos.Count == 0) || r.Titulos.Any(x => x.IdCommunity == communityAct))
-                                 select r);
-                    titularList = query.ToList();
-                }
-
-                foreach (var item in titularList)
-                {
-                    string communityName = ep.GetCommunityCoInfo(item.id)[0];
-                    communityDict.Add(item.id, communityName);
-                }
+                    titularList.Clear();
+                }               
 
                 listadoTitularesViewModel viewModel = new listadoTitularesViewModel();
 
@@ -844,8 +839,8 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 entities.payments.RemoveRange(payments);
                 List<onlineuser> onlineusers = entities.onlineusers.Where(m => m.user_id == delID).ToList();
                 entities.onlineusers.RemoveRange(onlineusers);
-                user delUser = entities.users.Find(delID);
-                
+                user delUser = entities.users.Find(delID);                           
+
                 entities.users.Remove(delUser);
                 entities.SaveChanges();
                 return Json(new { result = "success" });
@@ -933,6 +928,16 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 entities.usoes.RemoveRange(usos);
                 List<emailtheme> emailthemes = entities.emailthemes.Where(m => m.user_id == delID).ToList();
                 entities.emailthemes.RemoveRange(emailthemes);
+
+                //Delete Titulos
+                List<Titulo> titulosd = entities.Titulos.Where(m => m.user.id == delID).ToList();
+                foreach (var item2 in titulosd)
+                {
+                    List<Vehiculo> vehiculosd = entities.Vehiculos.Where(m => m.Titulo.Id == item2.Id).ToList();
+                    entities.Vehiculos.RemoveRange(vehiculosd);
+                }
+                entities.Titulos.RemoveRange(titulosd);
+
                 user delUser = entities.users.Find(delID);
                 delUser.is_del = true;
                 entities.SaveChanges();
@@ -996,17 +1001,23 @@ namespace WebApplication1.Areas.coadmin.Controllers
         public FileResult ExportCSV(string searchStr = "")
         {
             List<user> userList = new List<user>();
+            long userId = (long)Session["USER_ID"];
+            long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
+           
             if (searchStr == "")
-            {
-                var query = (from r in entities.users where r.role == 1 && r.is_del != true select r);
-                userList = query.ToList();                
+            {               
+
+                var query1 = (from r in entities.users where r.role == 1 && r.is_del != true 
+                              && ((r.create_userid == userId && r.Titulos.Count == 0) || r.Titulos.Any(x => x.IdCommunity == communityAct))
+                              select r);
+                userList = query1.ToList();
+
             }
             else
-            {
+            {                
                 var query1 = (from r in entities.users
-                              where r.role == 1
-                              && (r.first_name1.Contains(searchStr) || r.last_name1.Contains(searchStr))
-                              && r.is_del != true
+                              where r.role == 1 && (r.first_name1.Contains(searchStr) || r.last_name1.Contains(searchStr)) && r.is_del != true
+                             && ((r.create_userid == userId && r.Titulos.Count == 0) || r.Titulos.Any(x => x.IdCommunity == communityAct))
                               select r);
                 userList = query1.ToList();
             }

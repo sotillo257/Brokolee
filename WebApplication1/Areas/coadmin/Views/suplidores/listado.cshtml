@@ -49,27 +49,30 @@
                                     </span>
                                 </div>
                                 <div class="input-group col-md-6">
-                                    <label class="col-sm-6 col-md-4 col-form-label">Buscar por categoría</label>
-                                    <div class="col-sm-6 col-md-8">
-                                        <select class="form-control" id="id-search-category"
-                                                name="searchCategoryId"
-                                                onchange="onSearchSupplierCategory()">
-                                            <option value="0">Elije una categoría</option>
-                                            @foreach (var item in Model.categoryList)
-                                            {
-                                                if (Model.searchCategoryId == item.Id)
+                                    @if (Model.supplierList.Count != 0)
+                                    {
+                                        <label class="col-sm-6 col-md-4 col-form-label">Buscar por categoría</label>
+                                        <div class="col-sm-6 col-md-8">
+                                            <select class="form-control" id="id-search-category"
+                                                    name="searchCategoryId"
+                                                    onchange="onSearchSupplierCategory()">
+                                                <option value="0">Elije una categoría</option>
+                                                @foreach (var item in Model.categoryList)
                                                 {
-                                                    <option value="@item.Id" selected>@item.name</option>
-                                                }
-                                                else
-                                                {
-                                                    <option value="@item.Id">@item.name</option>
-                                                }
+                                                    if (Model.searchCategoryId == item.Id)
+                                                    {
+                                                        <option value="@item.Id" selected>@item.name</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@item.Id">@item.name</option>
+                                                    }
 
-                                            }
-                                        </select>
+                                                }
+                                            </select>
+                                        </div>
+                                    }
                                     </div>
-                                </div>
                             }
                         </div>
                     </div>

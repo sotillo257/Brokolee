@@ -39,18 +39,27 @@ namespace WebApplication1.Areas.coadmin.Controllers
 
                     long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
 
-                    if (searchStr == "")
+                    if (Session["CURRENT_COMU"] != null)
                     {
-                        var query = (from r in entities.events where r.community_id == communityAct select r);
-                        eventList = query.ToList();
+                        if (searchStr == "")
+                        {
+                            var query = (from r in entities.events where r.community_id == communityAct select r);
+                            eventList = query.ToList();
+                        }
+                        else
+                        {
+                            var query = (from r in entities.events
+                                         where r.name.Contains(searchStr) == true && r.community_id == communityAct
+                                         select r);
+                            eventList = query.ToList();
+                        }
+
                     }
                     else
                     {
-                        var query = (from r in entities.events
-                                     where r.name.Contains(searchStr) == true && r.community_id == communityAct
-                                     select r);
-                        eventList = query.ToList();
+                        eventList.Clear();
                     }
+
 
                     eventosViewModel viewModel = new eventosViewModel();
 
@@ -128,40 +137,48 @@ namespace WebApplication1.Areas.coadmin.Controllers
         {
             if (Session["USER_ID"] != null)
             {
-                try
+                if(Session["CURRENT_COMU"] != null)
                 {
-                    long userId = 0;
-                    if (Convert.ToInt32(Session["USER_ROLE"]) == 2)
+                    try
                     {
-                        userId = (long)Session["USER_ID"];
+                        long userId = 0;
+                        if (Convert.ToInt32(Session["USER_ROLE"]) == 2)
+                        {
+                            userId = (long)Session["USER_ID"];
+                        }
+                        else if (Convert.ToInt32(Session["USER_ROLE"]) > 2
+                        && Session["ACC_USER_ID"] != null)
+                        {
+                            userId = (long)Session["ACC_USER_ID"];
+                        }
+
+                        user curUser = entities.users.Find(userId);
+                        List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
+                        List<document_type> document_category_list = entities.document_type.ToList();
+                        eventosViewModel viewModel = new eventosViewModel();
+
+                        communityList = ep.GetCommunityList(userId);
+                        viewModel.communityList = communityList;
+
+                        viewModel.side_menu = "event_calendar";
+                        viewModel.side_sub_menu = "event_calendar_agregar";
+                        viewModel.curUser = curUser;
+                        viewModel.document_category_list = document_category_list;
+                        viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
+                        viewModel.pubMessageList = pubMessageList;
+                        viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                        return View(viewModel);
                     }
-                    else if (Convert.ToInt32(Session["USER_ROLE"]) > 2
-                    && Session["ACC_USER_ID"] != null)
+                    catch (Exception ex)
                     {
-                        userId = (long)Session["ACC_USER_ID"];
+                        return Redirect(Url.Action("Index", "Error"));
                     }
-
-                    user curUser = entities.users.Find(userId);
-                    List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
-                    List<document_type> document_category_list = entities.document_type.ToList();
-                    eventosViewModel viewModel = new eventosViewModel();
-
-                    communityList = ep.GetCommunityList(userId);
-                    viewModel.communityList = communityList;
-
-                    viewModel.side_menu = "event_calendar";
-                    viewModel.side_sub_menu = "event_calendar_agregar";
-                    viewModel.curUser = curUser;
-                    viewModel.document_category_list = document_category_list;
-                    viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
-                    viewModel.pubMessageList = pubMessageList;
-                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);              
-                    return View(viewModel);
                 }
-                catch(Exception ex)
+                else
                 {
-                    return Redirect(Url.Action("Index", "Error"));
+                    return Redirect(Url.Action("otros", "eventos", new { area = "coadmin" }));
                 }
+                
             }
             else
             {
@@ -437,17 +454,24 @@ namespace WebApplication1.Areas.coadmin.Controllers
 
                     long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
 
-                    if (searchStr == "")
+                    if (Session["CURRENT_COMU"] != null)
                     {
-                        var query = (from r in entities.events where r.community_id == communityAct select r);
-                        eventList = query.ToList();
+                        if (searchStr == "")
+                        {
+                            var query = (from r in entities.events where r.community_id == communityAct select r);
+                            eventList = query.ToList();
+                        }
+                        else
+                        {
+                            var query = (from r in entities.events
+                                         where r.name.Contains(searchStr) == true && r.community_id == communityAct
+                                         select r);
+                            eventList = query.ToList();
+                        }
                     }
                     else
                     {
-                        var query = (from r in entities.events
-                                     where r.name.Contains(searchStr) == true && r.community_id == communityAct
-                                     select r);
-                        eventList = query.ToList();
+                        eventList.Clear();
                     }
 
                     foreach (var item in eventList)

@@ -36,7 +36,16 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 viewModel.curUser = curUser;                            
                 viewModel.Content = userId.ToString();
                 long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
-                List<blog> blogs = entities.blogs.Where(m => m.community_id == communityAct || m.user.role == 3).ToList();
+
+                List<blog> blogs = new List<blog>();
+                if (Session["CURRENT_COMU"] != null)
+                {
+                    blogs = entities.blogs.Where(m => m.community_id == communityAct || m.user.role == 3).ToList();
+                }
+                else
+                {
+                    blogs = entities.blogs.Where(m => m.user.role == 3).ToList();
+                }
 
                 viewModel.blogList = blogs;
                 //  ViewBag.blogList = JsonConvert.SerializeObject(blogs);

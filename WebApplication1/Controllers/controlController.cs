@@ -50,7 +50,8 @@ namespace WebApplication1.Controllers
                         viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                         viewModel.pubMessageList = pubMessageList;
                         viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                        viewModel.titulosList = titulosList;                        
+                        viewModel.titulosList = titulosList;
+                        viewModel.communityList = listComunities;
                         return View(viewModel);
                     }
                     else

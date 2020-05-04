@@ -43,20 +43,27 @@ namespace WebApplication1.Controllers
 
                         long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
 
-                        if (searchStr == "")
+                        if (Session["CURRENT_COMU"] != null)
                         {
-                            var query = (from r in entities.documents
-                                         where r.type_id == type_id && r.community_id == communityAct
-                                         select r);
-                            documentList = query.ToList();
+                            if (searchStr == "")
+                            {
+                                var query = (from r in entities.documents
+                                             where r.type_id == type_id && r.community_id == communityAct
+                                             select r);
+                                documentList = query.ToList();
+                            }
+                            else
+                            {
+                                var query = (from r in entities.documents
+                                             where r.type_id == type_id && (r.first_name.Contains(searchStr) == true) && r.community_id == communityAct
+                                             select r);
+                                documentList = query.ToList();
+                            }
                         }
                         else
                         {
-                            var query = (from r in entities.documents
-                                         where r.type_id == type_id && (r.first_name.Contains(searchStr) == true) && r.community_id == communityAct
-                                         select r);
-                            documentList = query.ToList();
-                        }
+                            documentList.Clear();
+                        }                        
 
                         documentosViewModel viewModel = new documentosViewModel();
 

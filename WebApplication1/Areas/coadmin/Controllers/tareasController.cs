@@ -38,18 +38,26 @@ namespace WebApplication1.Areas.coadmin.Controllers
 
                     long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
 
-                    if (searchStr == "")
+                    if (Session["CURRENT_COMU"] != null)
                     {
-                        var query = (from r in entities.tasks where r.community_id == communityAct select r);
-                        taskList = query.ToList();
+                        if (searchStr == "")
+                        {
+                            var query = (from r in entities.tasks where r.community_id == communityAct select r);
+                            taskList = query.ToList();
+                        }
+                        else
+                        {
+                            var query1 = (from r in entities.tasks
+                                          where r.task_name.Contains(searchStr) == true && r.community_id == communityAct
+                                          select r);
+                            taskList = query1.ToList();
+                        }
                     }
                     else
                     {
-                        var query1 = (from r in entities.tasks
-                                      where r.task_name.Contains(searchStr) == true && r.community_id == communityAct
-                                      select r);
-                        taskList = query1.ToList();
+                        taskList.Clear();
                     }
+                       
 
                     tareasViewModel viewModel = new tareasViewModel();
                     communityList = ep.GetCommunityList(userId);
@@ -87,38 +95,46 @@ namespace WebApplication1.Areas.coadmin.Controllers
         {
             if (Session["USER_ID"] != null)
             {
-                try
+                if (Session["CURRENT_COMU"] != null)
                 {
-                    long userId = 0;
-                    if (Convert.ToInt32(Session["USER_ROLE"]) >= 1)
+                    try
                     {
-                        userId = (long)Session["USER_ID"];
+                        long userId = 0;
+                        if (Convert.ToInt32(Session["USER_ROLE"]) >= 1)
+                        {
+                            userId = (long)Session["USER_ID"];
+                        }
+                        else if (Convert.ToInt32(Session["USER_ROLE"]) > 1
+                        && Session["ACC_USER_ID"] != null)
+                        {
+                            userId = (long)Session["ACC_USER_ID"];
+                        }
+                        user curUser = entities.users.Find(userId);
+                        List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
+                        tareasagregarViewModel viewModel = new tareasagregarViewModel();
+
+                        communityList = ep.GetCommunityList(userId);
+                        viewModel.communityList = communityList;
+
+                        viewModel.side_menu = "task_process";
+                        viewModel.side_sub_menu = "task_process_agregar";
+                        viewModel.document_category_list = entities.document_type.ToList();
+                        viewModel.curUser = curUser;
+                        viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
+                        viewModel.pubMessageList = pubMessageList;
+                        viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                        return View(viewModel);
                     }
-                    else if (Convert.ToInt32(Session["USER_ROLE"]) > 1
-                    && Session["ACC_USER_ID"] != null)
+                    catch (Exception ex)
                     {
-                        userId = (long)Session["ACC_USER_ID"];
+                        return Redirect(Url.Action("Index", "Error"));
                     }
-                    user curUser = entities.users.Find(userId);
-                    List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
-                    tareasagregarViewModel viewModel = new tareasagregarViewModel();
-
-                    communityList = ep.GetCommunityList(userId);
-                    viewModel.communityList = communityList;
-
-                    viewModel.side_menu = "task_process";
-                    viewModel.side_sub_menu = "task_process_agregar";
-                    viewModel.document_category_list = entities.document_type.ToList();
-                    viewModel.curUser = curUser;
-                    viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
-                    viewModel.pubMessageList = pubMessageList;
-                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                    return View(viewModel);
                 }
-                catch(Exception ex)
+                else
                 {
-                    return Redirect(Url.Action("Index", "Error"));
+                    return Redirect(Url.Action("listado", "tareas", new { area = "coadmin" }));
                 }
+                    
                                 
             } else
             {
@@ -181,33 +197,39 @@ namespace WebApplication1.Areas.coadmin.Controllers
 
         public ActionResult editar(long? taskID)
         {
-            if (Session["USER_ID"] != null)
-            {
-                if (taskID != null)
+            if (Session["USER_ID"] != null) { 
+                if (Session["CURRENT_COMU"] != null)
                 {
-                    long userId = (long)Session["USER_ID"];
-                    user curUser = entities.users.Find(userId);
-                    List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
-                    task editTask = entities.tasks.Find(taskID);
-                    editarTareasViewModel viewModel = new editarTareasViewModel();
+                    if (taskID != null)
+                    {
+                        long userId = (long)Session["USER_ID"];
+                        user curUser = entities.users.Find(userId);
+                        List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
+                        task editTask = entities.tasks.Find(taskID);
+                        editarTareasViewModel viewModel = new editarTareasViewModel();
 
-                    communityList = ep.GetCommunityList(userId);
-                    viewModel.communityList = communityList;
+                        communityList = ep.GetCommunityList(userId);
+                        viewModel.communityList = communityList;
 
-                    viewModel.side_menu = "task_process";
-                    viewModel.side_sub_menu = "task_process_editar";
-                    viewModel.document_category_list = entities.document_type.ToList();
-                    viewModel.editTask = editTask;
-                    viewModel.curUser = curUser;
-                    viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
-                    viewModel.pubMessageList = pubMessageList;
-                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                    return View(viewModel);
+                        viewModel.side_menu = "task_process";
+                        viewModel.side_sub_menu = "task_process_editar";
+                        viewModel.document_category_list = entities.document_type.ToList();
+                        viewModel.editTask = editTask;
+                        viewModel.curUser = curUser;
+                        viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
+                        viewModel.pubMessageList = pubMessageList;
+                        viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                        return View(viewModel);
+                    }
+                    else
+                    {
+                        return Redirect(Url.Action("NotFound", "Error"));
+                    }
                 }
                 else
                 {
-                    return Redirect(Url.Action("NotFound", "Error"));
-                }                
+                    return Redirect(Url.Action("listado", "tareas", new { area = "coadmin" }));
+                }                                          
             } else
             {
                 return Redirect(ep.GetLogoutUrl());
@@ -261,16 +283,27 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 List<task> taskList = new List<task>();
 
                 long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
-                if (searchStr == "")
+
+                if (Session["CURRENT_COMU"] != null)
                 {
-                    var query = (from r in entities.tasks where r.completed_date != null && r.community_id == communityAct select r);
-                    taskList = query.ToList();
-                } else
-                {
-                    var query1 = (from r in entities.tasks
-                                  where r.completed_date != null && r.task_name.Contains(searchStr) == true && r.community_id == communityAct
-                                  select r);
+                    if (searchStr == "")
+                    {
+                        var query = (from r in entities.tasks where r.completed_date != null && r.community_id == communityAct select r);
+                        taskList = query.ToList();
+                    }
+                    else
+                    {
+                        var query1 = (from r in entities.tasks
+                                      where r.completed_date != null && r.task_name.Contains(searchStr) == true && r.community_id == communityAct
+                                      select r);
+                    }
                 }
+                else
+                {
+                    taskList.Clear();
+                }
+                   
+                
                 tareasViewModel viewModel = new tareasViewModel();
 
                 communityList = ep.GetCommunityList(userId);

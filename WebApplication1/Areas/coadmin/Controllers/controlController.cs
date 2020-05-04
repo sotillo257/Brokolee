@@ -49,6 +49,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                         viewModel.pubMessageList = pubMessageList;
                         viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
                         viewModel.isPartial = false;
+                        viewModel.communityList = communityList;
                         return View(viewModel);
                     }
                     else

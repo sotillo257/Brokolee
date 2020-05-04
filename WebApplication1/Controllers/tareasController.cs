@@ -41,16 +41,25 @@ namespace WebApplication1.Controllers
 
                     long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
 
-                    if (searchStr != "")
+                    if (Session["CURRENT_COMU"] != null)
                     {
-                        var query = (from r in entities.tasks where r.task_name.Contains(searchStr) == true && r.community_id == communityAct select r);
-                        taskList = query.ToList();
+                        if (searchStr != "")
+                        {
+                            var query = (from r in entities.tasks where r.task_name.Contains(searchStr) == true && r.community_id == communityAct select r);
+                            taskList = query.ToList();
+                        }
+                        else
+                        {
+                            var query = (from r in entities.tasks where r.community_id == communityAct select r);
+                            taskList = query.ToList();
+                        }
                     }
                     else
                     {
-                        var query = (from r in entities.tasks where r.community_id == communityAct select r);
-                        taskList = query.ToList();
+                        taskList.Clear();
                     }
+
+                    
 
                     tareasViewModel viewModel = new tareasViewModel();
 
@@ -98,14 +107,21 @@ namespace WebApplication1.Controllers
                     }
                     user curUser = entities.users.Find(userId);
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
-
+                    List<task> taskList = new List<task>();
                     long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
-
-                    var query = (from r in entities.tasks
-                                 where r.task_name.Contains(searchString) == true && r.community_id == communityAct
-                                 && r.completed_date != null
-                                 select r);
-                    List<task> taskList = query.ToList();
+                    if (Session["CURRENT_COMU"] != null)
+                    {
+                        var query = (from r in entities.tasks
+                                     where r.task_name.Contains(searchString) == true && r.community_id == communityAct
+                                     && r.completed_date != null
+                                     select r);
+                        taskList = query.ToList();
+                    }
+                    else
+                    {
+                        taskList.Clear();
+                    }
+                        
                     tareasViewModel viewModel = new tareasViewModel();
 
                     titulosList = ep.GetTitulosByTitular(userId);
@@ -231,38 +247,46 @@ namespace WebApplication1.Controllers
         {
             if (Session["USER_ID"] != null)
             {
-                try
+                if (Session["CURRENT_COMU"] != null)
                 {
-                    long userId = 0;
-                    if (Convert.ToInt32(Session["USER_ROLE"]) == 1)
+                    try
                     {
-                        userId = (long)Session["USER_ID"];
+                        long userId = 0;
+                        if (Convert.ToInt32(Session["USER_ROLE"]) == 1)
+                        {
+                            userId = (long)Session["USER_ID"];
+                        }
+                        else if (Convert.ToInt32(Session["USER_ROLE"]) > 1
+                        && Session["ACC_USER_ID"] != null)
+                        {
+                            userId = (long)Session["ACC_USER_ID"];
+                        }
+
+                        user curUser = entities.users.Find(userId);
+                        tareasViewModel viewModel = new tareasViewModel();
+
+                        titulosList = ep.GetTitulosByTitular(userId);
+                        listComunities = ep.GetCommunityListByTitular(titulosList);
+                        viewModel.communityList = listComunities;
+
+                        viewModel.side_menu = "tareas";
+                        viewModel.side_sub_menu = "tareas_sugerirtarea";
+                        viewModel.document_category_list = entities.document_type.ToList();
+                        viewModel.curUser = curUser;
+                        viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
+                        viewModel.pubMessageList = ep.GetChatMessages(userId);
+                        return View(viewModel);
                     }
-                    else if (Convert.ToInt32(Session["USER_ROLE"]) > 1
-                    && Session["ACC_USER_ID"] != null)
+                    catch (Exception ex)
                     {
-                        userId = (long)Session["ACC_USER_ID"];
+                        return Redirect(Url.Action("Index", "Error"));
                     }
-
-                    user curUser = entities.users.Find(userId);
-                    tareasViewModel viewModel = new tareasViewModel();
-
-                    titulosList = ep.GetTitulosByTitular(userId);
-                    listComunities = ep.GetCommunityListByTitular(titulosList);
-                    viewModel.communityList = listComunities;
-      
-                    viewModel.side_menu = "tareas";
-                    viewModel.side_sub_menu = "tareas_sugerirtarea";
-                    viewModel.document_category_list = entities.document_type.ToList();
-                    viewModel.curUser = curUser;
-                    viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
-                    viewModel.pubMessageList = ep.GetChatMessages(userId);
-                    return View(viewModel);
                 }
-                catch(Exception ex)
+                else
                 {
-                    return Redirect(Url.Action("Index", "Error"));
+                    return Redirect(Url.Action("listado", "tareas"));
                 }
+                
             } else
             {
                 return Redirect(Url.Action("iniciar", "iniciar"));

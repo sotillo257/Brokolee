@@ -557,15 +557,28 @@
                                                     <ul class="list-unstyled">
                                                         @if (Model.side_sub_menu == "documentos_agregar")
                                                         {
-                                                            <li class="active">
-                                                                <a href="@Url.Action("agregar", "documentos", new { area = "coadmin" })" class="active">Agregar documento</a>
-                                                            </li>
+                                                            if (Session["CURRENT_COMU"] != null)
+                                                            {
+                                                                <li class="active">
+                                                                    <a href="@Url.Action("agregar", "documentos", new { area = "coadmin" })" class="active">Agregar documento</a>
+                                                                </li>
+                                                            }
+
                                                         }
                                                         else
                                                         {
-                                                            <li>
-                                                                <a href="@Url.Action("agregar", "documentos", new { area = "coadmin" })">Agregar documento</a>
-                                                            </li>
+                                                            if (Session["CURRENT_COMU"] != null)
+                                                            {
+                                                                <li>
+                                                                    <a href="@Url.Action("agregar", "documentos", new { area = "coadmin" })">Agregar documento</a>
+                                                                </li>
+                                                            }
+                                                            else
+                                                            {
+                                                                <li>
+                                                                    <a>Agregar documento</a>
+                                                                </li>
+                                                            }
                                                         }
 
                                                         @if (Model.side_sub_menu == "documentos_categoria")
@@ -601,7 +614,15 @@
                                                 {
                                                     <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-file-document"></i><span> Documentos </span> <span class="float-right"><i class="mdi mdi-chevron-right"></i></span></a>
                                                     <ul class="list-unstyled">
-                                                        <li><a href="@Url.Action("agregar", "documentos", new { area = "coadmin" })">Agregar documento</a></li>
+
+                                                        @if (Session["CURRENT_COMU"] != null)
+                                                        {
+                                                            <li><a href="@Url.Action("agregar", "documentos", new { area = "coadmin" })">Agregar documento</a></li>
+                                                        }
+                                                        else
+                                                        {
+                                                            <li><a>Agregar documento</a></li>
+                                                        }
                                                         <li><a href="@Url.Action("categoria", "documentos", new { area = "coadmin" })">Crear categoría</a></li>
                                                         @foreach (var item in Model.document_category_list)
                                                         {

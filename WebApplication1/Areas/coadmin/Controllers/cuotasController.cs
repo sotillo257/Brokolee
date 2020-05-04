@@ -41,15 +41,24 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     Dictionary<long, string> bankDict = new Dictionary<long, string>();
 
                     long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
-                    List<fee> feeList = entities.fees.Where(m => m.user_id == userId && m.community_id == communityAct).ToList();
-                    foreach (var item in feeList)
+                    List<fee> feeList = new List<fee>();
+                    if (Session["CURRENT_COMU"] != null)
                     {
-                        long bankID = item.bank_id;
-                        bank bankItem = entities.banks.Find(bankID);
-                      
+                        feeList = entities.fees.Where(m => m.user_id == userId && m.community_id == communityAct).ToList();
+                        foreach (var item in feeList)
+                        {
+                            long bankID = item.bank_id;
+                            bank bankItem = entities.banks.Find(bankID);
+
                             bankDict.Add(bankID, bankItem.bank_name);
-                        
+
+                        }
                     }
+                    else
+                    {
+                        feeList.Clear();
+                    }
+                                        
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                     viewModel.feeList = feeList;
                     viewModel.side_menu = "cuotas";

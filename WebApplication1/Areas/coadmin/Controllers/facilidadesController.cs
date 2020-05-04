@@ -40,17 +40,23 @@ namespace WebApplication1.Areas.coadmin.Controllers
 
                     long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
 
-                    if (searchStr == "")
-                    {
-                        var query = (from r in entities.efacs where r.community_id == communityAct select r);
-                        efacList = query.ToList();
+                    if (Session["CURRENT_COMU"] != null) {
+                        if (searchStr == "")
+                        {
+                            var query = (from r in entities.efacs where r.community_id == communityAct select r);
+                            efacList = query.ToList();
+                        }
+                        else
+                        {
+                            var query1 = (from r in entities.efacs
+                                          where r.first_name.Contains(searchStr) == true && r.community_id == communityAct
+                                          select r);
+                            efacList = query1.ToList();
+                        }
                     }
                     else
                     {
-                        var query1 = (from r in entities.efacs
-                                      where r.first_name.Contains(searchStr) == true && r.community_id == communityAct
-                                      select r);
-                        efacList = query1.ToList();
+                        efacList.Clear();
                     }
 
                     facilidadesViewModel viewModel = new facilidadesViewModel();
@@ -84,45 +90,53 @@ namespace WebApplication1.Areas.coadmin.Controllers
         {
             if (Session["USER_ID"] != null)
             {
-                try
+                if (Session["CURRENT_COMU"] != null)
                 {
-                    long userId = 0;
-                    if (Convert.ToInt32(Session["USER_ROLE"]) == 2)
+                    try
                     {
-                        userId = (long)Session["USER_ID"];
+                        long userId = 0;
+                        if (Convert.ToInt32(Session["USER_ROLE"]) == 2)
+                        {
+                            userId = (long)Session["USER_ID"];
+                        }
+                        else if (Convert.ToInt32(Session["USER_ROLE"]) > 2
+                        && Session["ACC_USER_ID"] != null)
+                        {
+                            userId = (long)Session["ACC_USER_ID"];
+                        }
+                        user curUser = entities.users.Find(userId);
+                        List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
+                        agregarFacViewModel viewModel = new agregarFacViewModel();
+
+                        communityList = ep.GetCommunityList(userId);
+                        viewModel.communityList = communityList;
+
+                        viewModel.side_menu = "facilidades";
+                        viewModel.side_sub_menu = "facilidades_agregar";
+                        viewModel.document_category_list = entities.document_type.ToList();
+                        int[] timeList = new int[24];
+                        for (int i = 1; i < 25; i++)
+                        {
+                            timeList.SetValue(i, i - 1);
+
+                        }
+                        viewModel.timeList = timeList;
+                        viewModel.curUser = curUser;
+                        viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
+                        viewModel.pubMessageList = pubMessageList;
+                        viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                        return View(viewModel);
                     }
-                    else if (Convert.ToInt32(Session["USER_ROLE"]) > 2
-                    && Session["ACC_USER_ID"] != null)
+                    catch (Exception ex)
                     {
-                        userId = (long)Session["ACC_USER_ID"];
+                        return Redirect(Url.Action("Index", "Error"));
                     }
-                    user curUser = entities.users.Find(userId);
-                    List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
-                    agregarFacViewModel viewModel = new agregarFacViewModel();
-
-                    communityList = ep.GetCommunityList(userId);
-                    viewModel.communityList = communityList;
-
-                    viewModel.side_menu = "facilidades";
-                    viewModel.side_sub_menu = "facilidades_agregar";
-                    viewModel.document_category_list = entities.document_type.ToList();
-                    int[] timeList = new int[24];
-                    for (int i = 1; i < 25; i++)
-                    {
-                        timeList.SetValue(i, i - 1);
-
-                    }
-                    viewModel.timeList = timeList;
-                    viewModel.curUser = curUser;
-                    viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
-                    viewModel.pubMessageList = pubMessageList;
-                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                    return View(viewModel);
                 }
-                catch(Exception ex)
+                else
                 {
-                    return Redirect(Url.Action("Index", "Error"));
-                }                
+                    return Redirect(Url.Action("disponibles", "facilidades", new { area = "coadmin" }));
+                }
+                               
             } else
             {
                 return Redirect(ep.GetLogoutUrl());
@@ -211,38 +225,46 @@ namespace WebApplication1.Areas.coadmin.Controllers
         {
             if (Session["USER_ID"] != null)
             {
-                if (facID != null)
+                if (Session["CURRENT_COMU"] != null)
                 {
-                    long userId = (long)Session["USER_ID"];
-                    user curUser = entities.users.Find(userId);
-                    List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
-                    efac editFac = entities.efacs.Find(facID);
-                    editarFacViewModel viewModel = new editarFacViewModel();
-
-                    communityList = ep.GetCommunityList(userId);
-                    viewModel.communityList = communityList;
-
-                    viewModel.side_menu = "facilidades";
-                    viewModel.side_sub_menu = "facilidades_editar";
-                    viewModel.document_category_list = entities.document_type.ToList();
-                    viewModel.editFac = editFac;
-                    int[] timeList = new int[24];
-                    for (int i = 1; i < 25; i++)
+                    if (facID != null)
                     {
-                        timeList.SetValue(i, i - 1);
+                        long userId = (long)Session["USER_ID"];
+                        user curUser = entities.users.Find(userId);
+                        List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
+                        efac editFac = entities.efacs.Find(facID);
+                        editarFacViewModel viewModel = new editarFacViewModel();
 
+                        communityList = ep.GetCommunityList(userId);
+                        viewModel.communityList = communityList;
+
+                        viewModel.side_menu = "facilidades";
+                        viewModel.side_sub_menu = "facilidades_editar";
+                        viewModel.document_category_list = entities.document_type.ToList();
+                        viewModel.editFac = editFac;
+                        int[] timeList = new int[24];
+                        for (int i = 1; i < 25; i++)
+                        {
+                            timeList.SetValue(i, i - 1);
+
+                        }
+                        viewModel.timeList = timeList;
+                        viewModel.curUser = curUser;
+                        viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
+                        viewModel.pubMessageList = pubMessageList;
+                        viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                        return View(viewModel);
                     }
-                    viewModel.timeList = timeList;
-                    viewModel.curUser = curUser;
-                    viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
-                    viewModel.pubMessageList = pubMessageList;
-                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                    return View(viewModel);
+                    else
+                    {
+                        return Redirect(Url.Action("NotFound", "Error"));
+                    }
                 }
                 else
                 {
-                    return Redirect(Url.Action("NotFound", "Error"));
-                }                
+                    return Redirect(Url.Action("disponibles", "facilidades", new { area = "coadmin" }));
+                }
+                                  
             } else
             {
                 return Redirect(ep.GetLogoutUrl());
@@ -329,15 +351,24 @@ namespace WebApplication1.Areas.coadmin.Controllers
 
                 long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
 
-                if (searchStr == "")
+                if (Session["CURRENT_COMU"] != null)
                 {
-                    var query = (from r in entities.efacs where r.community_id == communityAct select r);
-                    efacList = query.ToList();
-                } else
-                {
-                    var query1 = (from r in entities.efacs where r.first_name.Contains(searchStr) == true && r.community_id == communityAct select r);
-                    efacList = query1.ToList();
+                    if (searchStr == "")
+                    {
+                        var query = (from r in entities.efacs where r.community_id == communityAct select r);
+                        efacList = query.ToList();
+                    }
+                    else
+                    {
+                        var query1 = (from r in entities.efacs where r.first_name.Contains(searchStr) == true && r.community_id == communityAct select r);
+                        efacList = query1.ToList();
+                    }
                 }
+                else
+                {
+                    efacList.Clear();
+                }
+
                 
                 facilidadesViewModel viewModel = new facilidadesViewModel();
 

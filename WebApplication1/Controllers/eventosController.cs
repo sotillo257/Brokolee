@@ -73,19 +73,25 @@ namespace WebApplication1.Controllers
                     List<@event> eventList = new List<@event>();
 
                     long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
-
-                    if (searchStr == "")
+                    if (Session["CURRENT_COMU"] != null)
                     {
-                        var query = (from r in entities.events where r.community_id == communityAct select r);
-                        eventList = query.ToList();
+                        if (searchStr == "")
+                        {
+                            var query = (from r in entities.events where r.community_id == communityAct select r);
+                            eventList = query.ToList();
+                        }
+                        else
+                        {
+                            var query = (from r in entities.events
+                                         where r.name.Contains(searchStr) == true && r.community_id == communityAct
+                                         select r);
+                            eventList = query.ToList();
+                        }
                     }
                     else
                     {
-                        var query = (from r in entities.events
-                                     where r.name.Contains(searchStr) == true && r.community_id == communityAct
-                                     select r);
-                        eventList = query.ToList();
-                    }
+                        eventList.Clear();
+                    }                    
 
                     foreach (var item in eventList)
                     {

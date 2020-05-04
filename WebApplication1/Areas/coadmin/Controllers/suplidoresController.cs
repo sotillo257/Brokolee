@@ -41,33 +41,40 @@ namespace WebApplication1.Areas.coadmin.Controllers
 
                     long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
 
-                    if (searchStr == "" && searchCategoryId == 0)
+                    if (Session["CURRENT_COMU"] != null)
                     {
-                        var query = (from r in entities.suppliers where r.community_id == communityAct select r);
-                        supplierList = query.ToList();
-                    }
-                    else if (searchStr != "" && searchCategoryId == 0)
-                    {
-                        var query1 = (from r in entities.suppliers
-                                      where r.contact_name.Contains(searchStr) == true && r.community_id == communityAct
-                                      select r);
-                        supplierList = query1.ToList();
-                    }
-                    else if (searchStr == "" && searchCategoryId != 0)
-                    {
-                        var query2 = (from r in entities.suppliers
-                                      where r.category_id == searchCategoryId && r.community_id == communityAct
-                                      select r
-                                      );
-                        supplierList = query2.ToList();
+                        if (searchStr == "" && searchCategoryId == 0)
+                        {
+                            var query = (from r in entities.suppliers where r.community_id == communityAct select r);
+                            supplierList = query.ToList();
+                        }
+                        else if (searchStr != "" && searchCategoryId == 0)
+                        {
+                            var query1 = (from r in entities.suppliers
+                                          where r.contact_name.Contains(searchStr) == true && r.community_id == communityAct
+                                          select r);
+                            supplierList = query1.ToList();
+                        }
+                        else if (searchStr == "" && searchCategoryId != 0)
+                        {
+                            var query2 = (from r in entities.suppliers
+                                          where r.category_id == searchCategoryId && r.community_id == communityAct
+                                          select r
+                                          );
+                            supplierList = query2.ToList();
+                        }
+                        else
+                        {
+                            var query3 = (from r in entities.suppliers
+                                          where r.contact_name.Contains(searchStr) == true &&
+                                          r.category_id == searchCategoryId && r.community_id == communityAct
+                                          select r);
+                            supplierList = query3.ToList();
+                        }
                     }
                     else
                     {
-                        var query3 = (from r in entities.suppliers
-                                      where r.contact_name.Contains(searchStr) == true &&
-                                      r.category_id == searchCategoryId && r.community_id == communityAct
-                                      select r);
-                        supplierList = query3.ToList();
+                        supplierList.Clear();
                     }
 
                     foreach (var item in supplierList)

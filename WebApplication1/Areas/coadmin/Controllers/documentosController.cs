@@ -42,21 +42,29 @@ namespace WebApplication1.Areas.coadmin.Controllers
                         List<document> document_list = new List<document>();
 
                         long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
-
-                        if (searchStr == "")
+                        if (Session["CURRENT_COMU"] != null)
                         {
-                            var query = (from r in entities.documents where r.type_id == id && r.community_id == communityAct select r);
-                            document_list = query.ToList();
+                            if (searchStr == "")
+                            {
+                                var query = (from r in entities.documents where r.type_id == id && r.community_id == communityAct select r);
+                                document_list = query.ToList();
 
+                            }
+                            else
+                            {
+                                var query1 = (from r in entities.documents
+                                              where r.type_id == id &&
+                                              r.first_name.Contains(searchStr) == true && r.community_id == communityAct
+                                              select r);
+                                document_list = query1.ToList();
+                            }
                         }
                         else
                         {
-                            var query1 = (from r in entities.documents
-                                          where r.type_id == id &&
-                                          r.first_name.Contains(searchStr) == true && r.community_id == communityAct
-                                          select r);
-                            document_list = query1.ToList();
+                            document_list.Clear();
                         }
+
+                           
                         List<document_type> document_category_list = entities.document_type.ToList();
                         documentosViewModel viewModel = new documentosViewModel();
 
@@ -220,43 +228,51 @@ namespace WebApplication1.Areas.coadmin.Controllers
         {
             if (Session["USER_ID"] != null)
             {
-                try
+                if (Session["CURRENT_COMU"] != null)
                 {
-                    long userId = 0;
-                    if (Convert.ToInt32(Session["USER_ROLE"]) == 2)
+                    try
                     {
-                        userId = (long)Session["USER_ID"];
+                        long userId = 0;
+                        if (Convert.ToInt32(Session["USER_ROLE"]) == 2)
+                        {
+                            userId = (long)Session["USER_ID"];
+                        }
+                        else if (Convert.ToInt32(Session["USER_ROLE"]) > 2
+                        && Session["ACC_USER_ID"] != null)
+                        {
+                            userId = (long)Session["ACC_USER_ID"];
+                        }
+                        user curUser = entities.users.Find(userId);
+                        List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
+                        documentosViewModel viewModel = new documentosViewModel();
+
+                        communityList = ep.GetCommunityList(userId);
+                        viewModel.communityList = communityList;
+
+                        viewModel.side_menu = "documentos";
+                        viewModel.side_sub_menu = "documentos_agregar";
+                        viewModel.document_category_list = entities.document_type.ToList();
+                        viewModel.curUser = curUser;
+                        viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
+                        viewModel.pubMessageList = pubMessageList;
+                        viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+
+
+                        return View(viewModel);
+
+
+
                     }
-                    else if (Convert.ToInt32(Session["USER_ROLE"]) > 2
-                    && Session["ACC_USER_ID"] != null)
+                    catch (Exception ex)
                     {
-                        userId = (long)Session["ACC_USER_ID"];
+                        return Redirect(Url.Action("Index", "Error"));
                     }
-                    user curUser = entities.users.Find(userId);
-                    List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
-                    documentosViewModel viewModel = new documentosViewModel();
-
-                    communityList = ep.GetCommunityList(userId);
-                    viewModel.communityList = communityList;
-
-                    viewModel.side_menu = "documentos";
-                    viewModel.side_sub_menu = "documentos_agregar";
-                    viewModel.document_category_list = entities.document_type.ToList();
-                    viewModel.curUser = curUser;
-                    viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
-                    viewModel.pubMessageList = pubMessageList;
-                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-
-
-                    return View(viewModel);
-
-
-
                 }
-                catch(Exception ex)
+                else
                 {
-                    return Redirect(Url.Action("Index", "Error"));
-                }               
+                    return Redirect(Url.Action("panel", "control", new { area = "coadmin" }));
+                }
+                             
             }
             else
             {
@@ -320,47 +336,55 @@ namespace WebApplication1.Areas.coadmin.Controllers
         {
             if (Session["USER_ID"] != null)
             {
-                if (editID != null)
+                if (Session["CURRENT_COMU"] != null)
                 {
-                    try
+                    if (editID != null)
                     {
-                        long userId = 0;
-                        if (Convert.ToInt32(Session["USER_ROLE"]) == 2)
+                        try
                         {
-                            userId = (long)Session["USER_ID"];
+                            long userId = 0;
+                            if (Convert.ToInt32(Session["USER_ROLE"]) == 2)
+                            {
+                                userId = (long)Session["USER_ID"];
+                            }
+                            else if (Convert.ToInt32(Session["USER_ROLE"]) > 2
+                            && Session["ACC_USER_ID"] != null)
+                            {
+                                userId = (long)Session["ACC_USER_ID"];
+                            }
+                            user curUser = entities.users.Find(userId);
+                            List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
+                            document editDocument = entities.documents.Find(editID);
+                            editDocumentViewModel viewModel = new editDocumentViewModel();
+
+                            communityList = ep.GetCommunityList(userId);
+                            viewModel.communityList = communityList;
+
+                            viewModel.side_menu = "documentos";
+                            viewModel.side_sub_menu = "documentos_editar";
+                            viewModel.document_category_list = entities.document_type.ToList();
+                            viewModel.editDocument = editDocument;
+                            viewModel.curUser = curUser;
+                            viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
+                            viewModel.pubMessageList = pubMessageList;
+                            viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                            return View(viewModel);
                         }
-                        else if (Convert.ToInt32(Session["USER_ROLE"]) > 2
-                        && Session["ACC_USER_ID"] != null)
+                        catch (Exception ex)
                         {
-                            userId = (long)Session["ACC_USER_ID"];
+                            return Redirect(Url.Action("Index", "Error"));
                         }
-                        user curUser = entities.users.Find(userId);
-                        List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
-                        document editDocument = entities.documents.Find(editID);
-                        editDocumentViewModel viewModel = new editDocumentViewModel();
-
-                        communityList = ep.GetCommunityList(userId);
-                        viewModel.communityList = communityList;
-
-                        viewModel.side_menu = "documentos";
-                        viewModel.side_sub_menu = "documentos_editar";
-                        viewModel.document_category_list = entities.document_type.ToList();
-                        viewModel.editDocument = editDocument;
-                        viewModel.curUser = curUser;
-                        viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
-                        viewModel.pubMessageList = pubMessageList;
-                        viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                        return View(viewModel);
                     }
-                    catch(Exception ex)
+                    else
                     {
-                        return Redirect(Url.Action("Index", "Error"));
-                    }                    
+                        return Redirect(Url.Action("NotFound", "Error"));
+                    }
                 }
                 else
                 {
-                    return Redirect(Url.Action("NotFound", "Error"));
-                }               
+                    return Redirect(Url.Action("panel", "control", new { area = "coadmin" }));
+                }
+                                
             } else
             {
                 return Redirect(ep.GetLogoutUrl());

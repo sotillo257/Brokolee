@@ -40,9 +40,18 @@ namespace WebApplication1.Controllers
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
 
                     long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
+                    List<efac> facilitieList = new List<efac>();
 
-                    var query = (from r in entities.efacs where r.first_name.Contains(searchString) == true && r.community_id == communityAct select r);
-                    List<efac> facilitieList = query.ToList();
+                    if (Session["CURRENT_COMU"] != null)
+                    {
+                        var query = (from r in entities.efacs where r.first_name.Contains(searchString) == true && r.community_id == communityAct select r);
+                        facilitieList = query.ToList();
+                    }
+                    else
+                    {
+                        facilitieList.Clear();
+                    }
+                   
                     facilidadesViewModel viewModel = new facilidadesViewModel();
 
                     titulosList = ep.GetTitulosByTitular(userId);
@@ -97,9 +106,18 @@ namespace WebApplication1.Controllers
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
 
                     long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
+                    List<efac> efacList = new List<efac>();
 
-                    var query = (from r in entities.efacs where r.community_id == communityAct select r);
-                    List<efac> efacList = query.ToList();
+                    if (Session["CURRENT_COMU"] != null)
+                    {
+                        var query = (from r in entities.efacs where r.community_id == communityAct select r);
+                        efacList = query.ToList();
+                    }
+                    else
+                    {
+                        efacList.Clear();
+                    }
+                   
                     reservasViewModel viewModel = new reservasViewModel();
 
                     titulosList = ep.GetTitulosByTitular(userId);

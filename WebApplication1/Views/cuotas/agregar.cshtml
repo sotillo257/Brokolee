@@ -19,7 +19,7 @@
                     <div class="float-right">
                         <ul class="breadcrumb float-md-right">
                             <li class="breadcrumb-item"><a href="index.html" class="text-success"><i class="mdi mdi-home-modern"></i> Panel de control</a></li>
-                            <li class="breadcrumb-item active">Agregar Cuenta de banco o CC</li>
+                            <li class="breadcrumb-item active">Agregar cuenta</li>
                         </ul>
                     </div>
                 </div>
@@ -38,7 +38,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="d-inline-block">Nueva Cuenta</h5>
+                        <h5 class="d-inline-block">Nueva cuenta</h5>
                         <div class="form-group row">
                             <div class="form-divider"></div>
                             <label for="example-address1-input" class="col-sm-3 col-form-label">Elija el tipo de cuenta</label>
@@ -50,7 +50,7 @@
                                 </div>
                                 <div class="form-check-inline my-2">
                                     <div class="custom-control custom-checkbox">
-                                        <label><input type="radio" id="id_radio_credit" name="tipocuenta" value="creditcard" onchange="onCreditChange(this)"> Credit Card</label>
+                                        <label><input type="radio" id="id_radio_credit" name="tipocuenta" value="creditcard" onchange="onCreditChange(this)"> Tarjeta de credito</label>
                                     </div>
                                 </div>
                             </div>
@@ -59,50 +59,50 @@
                             @Html.AntiForgeryToken()
                             <div class="banco box">
                                 <div class="form-divider"></div>
-                                <h5 class="d-inline-block m-b-20">Información de la Cuenta de banco</h5>
+                                <h5 class="d-inline-block m-b-20">Información de la cuenta de banco</h5>
                                 <div class="form-group row">
-                                    <label for="example-email-input" class="col-sm-3 col-form-label">Nombre de la Cuenta</label>
+                                    <label for="example-email-input" class="col-sm-3 col-form-label">Nombre de la cuenta</label>
                                     <div class="col-sm-9">
                                         <input class="form-control" type="text" value="" 
                                                name="account_name" required  data-toggle="tooltip"
-                                               title="Nombre de la Cuenta"
-                                               placeholder="Cuenta Personal" id="example-email-input">
-                                        <small class="form-text text-muted">Nombre de la Cuenta</small>
+                                               title="Nombre de la cuenta"
+                                               placeholder="Cuenta personal" id="example-email-input">
+                                        <small class="form-text text-muted">Nombre de la cuenta</small>
                                     </div>
                                 </div>
                                 <div class="form-divider"></div>
                                 <div class="form-group row">
-                                    <label for="example-name1-input" class="col-sm-3 col-form-label">Número de Cuenta</label>
+                                    <label for="example-name1-input" class="col-sm-3 col-form-label">Número de cuenta</label>
                                     <div class="col-sm-9">
                                         <input class="form-control" type="text" value="" 
                                                name="account_number" required
-                                               data-toggle="tooltip" title="Número de Cuenta"
+                                               data-toggle="tooltip" title="Número de cuenta"
                                                placeholder="XXX-XXXXXXXX-X-XX" id="example-name1-input">
-                                        <small class="form-text text-muted">Número de Cuenta</small>
+                                        <small class="form-text text-muted">Número de cuenta</small>
                                     </div>
                                 </div>
                                 <div class="form-divider"></div>
                                 <div class="form-group row">
-                                    <label for="example-name1-input" class="col-sm-3 col-form-label">Nombre del Banco</label>
+                                    <label for="example-name1-input" class="col-sm-3 col-form-label">Nombre del banco</label>
                                     <div class="col-sm-9">
                                         <input class="form-control" type="text" value="" name="bank_name" required 
-                                               placeholder="Nombre del Banco" id="example-name1-input" 
-                                               data-toggle="tooltip" title="Nombre del Banco"
+                                               placeholder="Nombre del banco" id="example-name1-input" 
+                                               data-toggle="tooltip" title="Nombre del banco"
                                                />
-                                        <small class="form-text text-muted">Nombre del Banco</small>
+                                        <small class="form-text text-muted">Nombre del banco</small>
                                     </div>
                                 </div>
                                 <div class="form-divider"></div>
                                 <div class="form-group row">
-                                    <label for="example-lastname1-input" class="col-sm-3 col-form-label">Número de Ruta</label>
+                                    <label for="example-lastname1-input" class="col-sm-3 col-form-label">Número de ruta</label>
                                     <div class="col-sm-9">
                                         <input class="form-control" type="text" value="" 
-                                               name="route_number" required  data-toggle="tooltip" title="Número de Ruta"
+                                               name="route_number" required  data-toggle="tooltip" title="Número de ruta"
                                                placeholder="XXX-XXXXXXXX-X-XX" id="example-lastname1-input">
-                                        <small class="form-text text-muted">Número de Ruta</small>
+                                        <small class="form-text text-muted">Número de ruta</small>
                                     </div>
                                 </div>
-                                <button type="submit" class="btn btn-primary waves-effect waves-light">Agregar Banco</button>
+                                <button type="submit" class="btn btn-primary waves-effect waves-light">Guardar</button>
                                 <a href="@Url.Action("estado", "cuotas")"><button type="button" class="btn btn-danger waves-effect waves-light">Cancelar</button></a>
                             </div>
                         </form>
@@ -111,7 +111,7 @@
                             @Html.AntiForgeryToken()
                             <div class="creditcard box">
                                 <div class="form-divider"></div>
-                                <h5 class="d-inline-block m-b-20">Información de la Tarjeta</h5>
+                                <h5 class="d-inline-block m-b-20">Información de la tarjeta</h5>
                                 <div class="row form-material">
                                     <div class="form-group row col-md-6 mb-2">
                                         <label for="example-email-input" class="col-sm-6 col-form-label">Nombre</label>
@@ -186,7 +186,7 @@
                                     </div>
                                 </div>
                                 <div class="form-divider"></div>
-                                <h5 class="d-inline-block m-b-20">Dirección de Facturación</h5>
+                                <h5 class="d-inline-block m-b-20">Dirección de facturación</h5>
                                 <div class="form-group row">
                                     <label for="example-lastname1-input" class="col-sm-3 col-form-label">Dirección</label>
                                     <div class="col-sm-9">
@@ -221,10 +221,10 @@
                                     </div>
                                     <div class="form-divider"></div>
                                     <div class="form-group row col-md-6 mb-2">
-                                        <label for="example-name1-input" class="col-sm-3 col-form-label">Código Postal</label>
+                                        <label for="example-name1-input" class="col-sm-3 col-form-label">Código postal</label>
                                         <div class="col-sm-9">
                                             <input class="form-control" type="text" value="" name="postal_code"
-                                                   placeholder="Código Postal" id="example-name1-input">
+                                                   placeholder="Código postal" id="example-name1-input">
                                         </div>
                                     </div>
                                 </div>
@@ -241,7 +241,7 @@
 
                                     </div>
                                 </div>
-                                <button type="submit" class="btn btn-primary waves-effect waves-light">Agregar Tarjeta</button>
+                                <button type="submit" class="btn btn-primary waves-effect waves-light">Guardar</button>
                                 <button type="button" class="btn btn-danger waves-effect waves-light">Cancelar</button>
 
                             </div>

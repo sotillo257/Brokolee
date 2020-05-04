@@ -643,9 +643,8 @@ namespace WebApplication1.Areas.webmaster.Controllers
                     else
                     {
                         entities.users.Add(newResident);
-                        entities.SaveChanges();
-
-                        return Redirect(Url.Action("listado", "titulares", new { area = "webmaster" }));
+                        entities.SaveChanges();                      
+                        return Redirect(Url.Action("agregarTitulo", "titulares", new { area = "webmaster", Id = newResident.id }));
                     }
                 }
                 catch (Exception ex)
@@ -797,7 +796,8 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 List<uso> usos = entities.usoes.Where(m => m.create_userid == delID).ToList();
                 entities.usoes.RemoveRange(usos);
                 List<emailtheme> emailthemes = entities.emailthemes.Where(m => m.user_id == delID).ToList();
-                entities.emailthemes.RemoveRange(emailthemes);
+                entities.emailthemes.RemoveRange(emailthemes);               
+
                 user delUser = entities.users.Find(delID);
                 delUser.is_del = true;
                 entities.SaveChanges();
@@ -843,18 +843,21 @@ namespace WebApplication1.Areas.webmaster.Controllers
         public FileResult ExportCSV(string searchStr = "")
         {
             List<user> userList = new List<user>();
+            long userId = (long)Session["USER_ID"];
+
             if (searchStr == "")
-            {
-                var query = (from r in entities.users where r.role == 1 && r.is_del != true select r);
-                userList = query.ToList();
+            {               
+                var query1 = (from r in entities.users
+                              where r.role == 1 && r.is_del != true                
+                              select r);
+                userList = query1.ToList();
 
             }
             else
             {
                 var query1 = (from r in entities.users
-                              where r.role == 1
-                              && (r.first_name1.Contains(searchStr) || r.last_name1.Contains(searchStr))
-                              && r.is_del != true select r);
+                              where r.role == 1 && (r.first_name1.Contains(searchStr) || r.last_name1.Contains(searchStr)) && r.is_del != true                            
+                              select r);
                 userList = query1.ToList();
             }
 
@@ -1131,6 +1134,16 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 entities.emailthemes.RemoveRange(emailthemes);
                 user delUser = entities.users.Find(delID);
                 delUser.is_del = true;
+
+                //Delete Titulos
+                List<Titulo> titulosd = entities.Titulos.Where(m => m.user.id == delID).ToList();
+                foreach (var item2 in titulosd)
+                {
+                    List<Vehiculo> vehiculosd = entities.Vehiculos.Where(m => m.Titulo.Id == item2.Id).ToList();
+                    entities.Vehiculos.RemoveRange(vehiculosd);
+                }
+                entities.Titulos.RemoveRange(titulosd);
+
                 entities.SaveChanges();
                 return Json(new { result = "success" });
             }

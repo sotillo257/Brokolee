@@ -53,7 +53,15 @@ namespace WebApplication1.Controllers
                     viewModel.pubMessageList = pubMessageList;
                     viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);                   
                     long adminId = (long)curUser.create_userid;
-                    List<fee> feeList = entities.fees.Where(m => m.user_id == adminId && m.community_id == communityAct).ToList();
+                    List<fee> feeList = new List<fee>();
+                    if (Session["CURRENT_COMU"] != null)
+                    {
+                        feeList = entities.fees.Where(m => m.user_id == adminId && m.community_id == communityAct).ToList();
+                    }
+                    else
+                    {
+                        feeList.Clear();
+                    }                    
                     viewModel.feeList = feeList;
                     return View(viewModel);
                 }
