@@ -175,6 +175,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 newAdmin.mother_last_name1 = mother_last_name1;
                 newAdmin.email = email;
                 newAdmin.password = ep.Encrypt(password);
+                newAdmin.create_userid = userId;
                 if (user_logo != null && user_logo.ContentLength > 0)
                 {
                     var fileName = Path.GetFileName(user_logo.FileName);
@@ -194,15 +195,17 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 }
                 entities.users.Add(newAdmin);
                 entities.SaveChanges();
-
-                foreach (var item in communityID)
+                if (communityID != null)
                 {
-                   communuser communuser = new communuser();
-                   communuser.user_id = newAdmin.id;
-                   communuser.commun_id = long.Parse(item);
-                   entities.communusers.Add(communuser);
-                   entities.SaveChanges();                                                                         
-                }
+                    foreach (var item in communityID)
+                    {
+                        communuser communuser = new communuser();
+                        communuser.user_id = newAdmin.id;
+                        communuser.commun_id = long.Parse(item);
+                        entities.communusers.Add(communuser);
+                        entities.SaveChanges();
+                    }
+                }              
 
                 //community community = entities.communities.Find(communityID);
                 //community.is_active = true;
@@ -256,26 +259,30 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 }
                 entities.SaveChanges();
 
-                List<communuser> comxuserAnterior = entities.communusers.Where(x=> x.user_id == editAdmin.id).ToList();                
-                foreach (var item in comxuserAnterior)
+                if (communityID != null)
                 {
-                    entities.communusers.Remove(item);
-                    entities.SaveChanges();                    
-                }
-
-                foreach (var item in communityID)
-                {
-                    long itemID = Convert.ToInt64(item);
-                    communuser communuserResult = entities.communusers.Where(m => m.user_id == editAdmin.id && m.commun_id == itemID).FirstOrDefault();
-                    if (communuserResult == null)
+                    List<communuser> comxuserAnterior = entities.communusers.Where(x => x.user_id == editAdmin.id).ToList();
+                    foreach (var item in comxuserAnterior)
                     {
-                        communuser communuser = new communuser();
-                        communuser.user_id = editAdmin.id;
-                        communuser.commun_id = itemID;
-                        entities.communusers.Add(communuser);
+                        entities.communusers.Remove(item);
                         entities.SaveChanges();
                     }
-                }               
+
+                    foreach (var item in communityID)
+                    {
+                        long itemID = Convert.ToInt64(item);
+                        communuser communuserResult = entities.communusers.Where(m => m.user_id == editAdmin.id && m.commun_id == itemID).FirstOrDefault();
+                        if (communuserResult == null)
+                        {
+                            communuser communuser = new communuser();
+                            communuser.user_id = editAdmin.id;
+                            communuser.commun_id = itemID;
+                            entities.communusers.Add(communuser);
+                            entities.SaveChanges();
+                        }
+                    }
+                }
+                       
                 return Redirect(Url.Action("listado", "administradores", new { area = "webmaster" }));
             } catch(Exception ex)
             {

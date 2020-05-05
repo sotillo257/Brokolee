@@ -140,7 +140,7 @@
                             <div class="form-group row">
                                 <label class="col-sm-3 col-form-label">Comunidad</label>
                                 <div class="col-sm-9">
-                                    <select required name="communityID" multiple class="selectpicker form-control" data-selected-text-format="count > 2" data-container="body" data-live-search="true" data-hide-disabled="true" data-actions-box="true" data-virtual-scroll="true">
+                                    <select name="communityID" multiple class="selectpicker form-control" data-selected-text-format="count > 2" data-container="body" data-live-search="true" data-hide-disabled="true" data-actions-box="true" data-virtual-scroll="true">
                                         @foreach (var item in Model.communityList)
                                         {
                                             <option value="@item.id">@item.first_name</option>
