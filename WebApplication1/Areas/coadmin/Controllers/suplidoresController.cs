@@ -45,20 +45,20 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     {
                         if (searchStr == "" && searchCategoryId == 0)
                         {
-                            var query = (from r in entities.suppliers where r.community_id == communityAct select r);
+                            var query = (from r in entities.suppliers select r);
                             supplierList = query.ToList();
                         }
                         else if (searchStr != "" && searchCategoryId == 0)
                         {
                             var query1 = (from r in entities.suppliers
-                                          where r.contact_name.Contains(searchStr) == true && r.community_id == communityAct
+                                          where r.contact_name.Contains(searchStr) == true
                                           select r);
                             supplierList = query1.ToList();
                         }
                         else if (searchStr == "" && searchCategoryId != 0)
                         {
                             var query2 = (from r in entities.suppliers
-                                          where r.category_id == searchCategoryId && r.community_id == communityAct
+                                          where r.category_id == searchCategoryId
                                           select r
                                           );
                             supplierList = query2.ToList();
@@ -67,7 +67,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                         {
                             var query3 = (from r in entities.suppliers
                                           where r.contact_name.Contains(searchStr) == true &&
-                                          r.category_id == searchCategoryId && r.community_id == communityAct
+                                          r.category_id == searchCategoryId
                                           select r);
                             supplierList = query3.ToList();
                         }
@@ -348,7 +348,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     System.Globalization.CultureInfo.CurrentCulture);
                 supplier.category_id = category;
                 supplier.created_at = DateTime.Now;
-                supplier.community_id = Convert.ToInt64(Session["CURRENT_COMU"]);
+                //supplier.community_id = Convert.ToInt64(Session["CURRENT_COMU"]);
                 entities.suppliers.Add(supplier);
                 entities.SaveChanges();
                 return Redirect(Url.Action("listado", "suplidores", new { area = "coadmin" }));
