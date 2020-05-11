@@ -4,145 +4,146 @@
     Page.Title = "Mensajes privados - Brokolee Software";
 }
 
-<div class="page-content-wrapper">
+    <div class="page-content-wrapper">
 
-    <div class="container-fluid">
+        <div class="container-fluid">
 
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="page-title-box">
-                    <div class="float-left">
-                        <div class="breadcrumb float-md-right">
-                            <h4 class="page-title">Mensajes privados</h4>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="page-title-box">
+                        <div class="float-left">
+                            <div class="breadcrumb float-md-right">
+                                <h4 class="page-title">Mensajes privados</h4>
+                            </div>
                         </div>
-                    </div>
-                    <div class="float-right">
-                        <ul class="breadcrumb float-md-right">
-                            <li class="breadcrumb-item"><a href="@Url.Action("panel", "control")" class="text-success"><i class="mdi mdi-home-modern"></i> Dashboard</a></li>
-                            <li class="breadcrumb-item active">Mensajes privados</li>
-                        </ul>
+                        <div class="float-right">
+                            <ul class="breadcrumb float-md-right">
+                                <li class="breadcrumb-item"><a href="@Url.Action("panel", "control")" class="text-success"><i class="mdi mdi-home-modern"></i> Dashboard</a></li>
+                                <li class="breadcrumb-item active">Mensajes privados</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <!-- end page title end breadcrumb -->
-        <div class="row">
+            <!-- end page title end breadcrumb -->
+            <div class="row">
 
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="row form-material">
-                            <div class="col-md-4 mb-4">
-                                <h5><i class="mdi mdi-comment-processing"></i> Mensajes privados <span class="float-right"><a href=""><i class="mdi mdi-lead-pencil"></i></a></span></h5>
-                                <div class="form-divider"></div>
-                                <div style="overflow-y: auto; height: 500px;" id="connected_users_list">
-                                    @foreach (var item in Model.onlineUserList)
-                                    {
-                                        <div class="m-t-20">
-                                            <a class="arrow-none waves-effect waves-light nav-user-soporte" href="#"
-                                               onclick="onSelectChatUser(this)" data-id="@item.user_id">
-                                                @if (item.user_img == null)
-                                                {
-                                                    <img src="~/assets/images/user.svg" alt="user" class="rounded-circle">
-                                                }
-                                                else
-                                                {
-                                                    <img src="~/Upload/User_Logo/@item.user_img" alt="user" class="rounded-circle">
-                                                }
-
-                                                @if (item.is_online == true)
-                                                {
-                                                    <i class="mdi mdi-checkbox-blank-circle text-primary" id="connect-user-status-@item.id"></i>
-                                                }
-                                                else
-                                                {
-                                                    <i class="mdi mdi-checkbox-blank-circle text-grey" id="connect-user-status-@item.id"></i>
-                                                }
-
-                                                <strong>@item.first_name @item.last_name</strong>
-                                            </a>
-                                        </div>
-                                    }
-                                </div>
-                            </div>
-                            <div class="col-md-8 mb-4">
-                                <a class="arrow-none waves-effect waves-light nav-user-soporte" href="#">
-                                    @if (Model.selUser != null)
-                                    {
-                                        if (Model.selUser.user_img != null)
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row form-material">
+                                <div class="col-md-4 mb-4">
+                                    <h5><i class="mdi mdi-comment-processing"></i> Mensajes privados <span class="float-right"><a href=""><i class="mdi mdi-lead-pencil"></i></a></span></h5>
+                                    <div class="form-divider"></div>
+                                    <div style="overflow-y: auto; height: 500px;" id="connected_users_list">
+                                        @foreach (var item in Model.onlineUserList)
                                         {
-                                            <img src="~/Upload/User_Logo/@Model.selUser.user_img" alt="user" id="sel-user-img" class="rounded-circle">
-                                        }
-                                        else
-                                        {
-                                            <img src="~/assets/images/user.svg" alt="user" class="rounded-circle" id="sel-user-img">
-                                        }
-
-                                        if (Model.selUser.is_online == true)
-                                        {
-                                            <i class="mdi mdi-checkbox-blank-circle text-primary" id="sel-user-status"></i>
-                                        }
-                                        else
-                                        {
-                                            <i class="mdi mdi-checkbox-blank-circle text-grey" id="sel-user-status"></i>
-                                        }
-                                        <strong id="id-sel-username">@Model.selUser.first_name @Model.selUser.last_name</strong>
-                                    }
-                                    else
-                                    {
-                                        <img src="~/assets/images/user.svg" alt="user" class="rounded-circle">
-                                        <strong id="id-sel-username">There is not connected user.</strong>
-                                    }
-
-                                </a>
-                                <div class="form-divider"></div>
-                                <div class="m-t-20">
-                                    <div class="form-group row">
-                                        <label for="example-lastname1-input"></label>
-                                        <div class="col-sm-12 mb-2">
-                                            <div style="overflow-y: auto; max-height:200px;" id="chat_box">
-                                                @if (Model.chatmessageList != null)
-                                                {
-                                                    foreach (var item in Model.chatmessageList)
+                                            <div class="m-t-20">
+                                                <a class="arrow-none waves-effect waves-light nav-user-soporte" href="#"
+                                                   onclick="onSelectChatUser(this)" data-id="@item.user_id">
+                                                    @if (item.user_img == null)
                                                     {
-                                                        if (item.from_user_id == Model.curUser.id)
+                                                        <img src="~/assets/images/user.svg" alt="user" class="rounded-circle">
+                                                    }
+                                                    else
+                                                    {
+                                                        <img src="~/Upload/User_Logo/@item.user_img" alt="user" class="rounded-circle">
+                                                    }
+
+                                                    @if (item.is_online == true)
+                                                    {
+                                                        <i class="mdi mdi-checkbox-blank-circle text-primary" id="connect-user-status-@item.id"></i>
+                                                    }
+                                                    else
+                                                    {
+                                                        <i class="mdi mdi-checkbox-blank-circle text-grey" id="connect-user-status-@item.id"></i>
+                                                    }
+
+                                                    <strong>@item.first_name @item.last_name</strong>
+                                                </a>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                                <div class="col-md-8 mb-4">
+                                    <a class="arrow-none waves-effect waves-light nav-user-soporte" href="#">
+                                        @if (Model.selUser != null)
+                                        {
+                                            if (Model.selUser.user_img != null)
+                                            {
+                                                <img src="~/Upload/User_Logo/@Model.selUser.user_img" alt="user" id="sel-user-img" class="rounded-circle">
+                                            }
+                                            else
+                                            {
+                                                <img src="~/assets/images/user.svg" alt="user" class="rounded-circle" id="sel-user-img">
+                                            }
+
+                                            if (Model.selUser.is_online == true)
+                                            {
+                                                <i class="mdi mdi-checkbox-blank-circle text-primary" id="sel-user-status"></i>
+                                            }
+                                            else
+                                            {
+                                                <i class="mdi mdi-checkbox-blank-circle text-grey" id="sel-user-status"></i>
+                                            }
+                                            <strong id="id-sel-username">@Model.selUser.first_name @Model.selUser.last_name</strong>
+                                        }
+                                        else
+                                        {
+                                            <img src="~/assets/images/user.svg" alt="user" class="rounded-circle">
+                                            <strong id="id-sel-username">There is not connected user.</strong>
+                                        }
+
+                                    </a>
+                                    <div class="form-divider"></div>
+                                    <div class="m-t-20">
+                                        <div class="form-group row">
+                                            <label for="example-lastname1-input"></label>
+                                            <div class="col-sm-12 mb-2">
+                                                <div style="overflow-y: auto; max-height:200px;" id="chat_box">
+                                                    @if (Model.chatmessageList != null)
+                                                    {
+                                                        foreach (var item in Model.chatmessageList)
                                                         {
-                                                            <div class="message-div cur-user-div" data-id="@item.id">
-                                                                <span class="cur-user-span">@Model.curUser.first_name1 @Model.curUser.last_name1:</span>
-                                                                <span>@item.message</span>
-                                                            </div>
-                                                        }
-                                                        else
-                                                        {
-                                                            <div class="message-div sel-user-div" data-id="@item.id">
-                                                                <span class="sel-user-span">@Model.selUser.first_name @Model.selUser.last_name:</span>
-                                                                <span>@item.message</span>
-                                                            </div>
+                                                            if (item.from_user_id == Model.curUser.id)
+                                                            {
+                                                                <div class="message-div cur-user-div" data-id="@item.id">
+                                                                    <span class="cur-user-span">@Model.curUser.first_name1 @Model.curUser.last_name1:</span>
+                                                                    <span>@item.message</span>
+                                                                </div>
+                                                            }
+                                                            else
+                                                            {
+                                                                <div class="message-div sel-user-div" data-id="@item.id">
+                                                                    <span class="sel-user-span">@Model.selUser.first_name @Model.selUser.last_name:</span>
+                                                                    <span>@item.message</span>
+                                                                </div>
+                                                            }
                                                         }
                                                     }
-                                                }
 
+                                                </div>
+                                                @*<textarea class="form-control" rows="10" placeholder="Mensajes"></textarea>*@
                                             </div>
-                                            @*<textarea class="form-control" rows="10" placeholder="Mensajes"></textarea>*@
-                                        </div>
-                                        <div class="col-sm-12">
-                                            <input class="form-control form-control-lg txt-chat-message" type="text" onmousedown="onSetRead()"
-                                                   placeholder="Escribir mensaje" id="txtMessage">
-                                        </div>
-                                    </div>
-                                    <div class="row form-material">
-                                        <div class="col-md-4 mb-4">
-                                            <div class="chat-extra-actions">
-                                                <input type="file" name="file_name" id="send-file-3"
-                                                       class="inputfile inputfile-3" style="display:none">
-                                                <label for="send-file-3"><i class="mdi mdi-paperclip"></i> <span>Enviar archivo...</span></label>
+                                            <div class="col-sm-12">
+                                                <input class="form-control form-control-lg txt-chat-message" type="text" onmousedown="onSetRead()"
+                                                       placeholder="Escribir mensaje" id="txtMessage">
                                             </div>
                                         </div>
-                                        <div class="col-md-8 mb-4">
-                                            <button type="button" id="btnSendMsg"
-                                                    class="btn btn-success btn-send-chat-message float-right">
-                                                Enviar
-                                            </button>
+                                        <div class="row form-material">
+                                            <div class="col-md-4 mb-4">
+                                                <div class="chat-extra-actions">
+                                                    <input type="file" name="file_name" id="send-file-3"
+                                                           class="inputfile inputfile-3" style="display:none">
+                                                    <label for="send-file-3"><i class="mdi mdi-paperclip"></i> <span>Enviar archivo...</span></label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-8 mb-4">
+                                                <button type="button" id="btnSendMsg"
+                                                        class="btn btn-success btn-send-chat-message float-right">
+                                                    Enviar
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -150,19 +151,24 @@
                         </div>
                     </div>
                 </div>
+            </div><!-- end row -->
+            <!-- back button -->
+            <div class="row pb-4">
+                <div class="col-md-6">
+                    <a href="javascript:history.back()"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+                </div>
             </div>
-        </div><!-- end row -->
-        <!-- back button -->
-        <div class="row pb-4">
-            <div class="col-md-6">
-                <a href="javascript:history.back()"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
-            </div>
-        </div>
-        <!-- end back button -->
+            <!-- end back button -->
 
-    </div><!-- container -->
-    <input id="hdUserID" value="@Model.curUser.id" type="hidden" />
-    <input id="hdToUserID" value="@Model.selUser.user_id" hidden />
-    <input id="hdUserName" value="@Model.curUser.first_name1 @Model.curUser.last_name1" type="hidden" />
-    <input id="hdToUserName" value="@Model.selUser.first_name @Model.selUser.last_name" type="hidden" />
-</div> <!-- Page content Wrapper -->
+        </div><!-- container -->
+        @if (Model.curUser != null)
+        {
+            <input id="hdUserID" value="@Model.curUser.id" type="hidden" />
+            <input id="hdUserName" value="@Model.curUser.first_name1 @Model.curUser.last_name1" type="hidden" />
+        }
+        @if (Model.selUser != null)
+        {
+            <input id="hdToUserID" value="@Model.selUser.user_id" hidden />
+            <input id="hdToUserName" value="@Model.selUser.first_name @Model.selUser.last_name" type="hidden" />
+        }
+    </div> <!-- Page content Wrapper -->

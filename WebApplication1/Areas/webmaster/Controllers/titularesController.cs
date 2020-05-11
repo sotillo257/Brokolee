@@ -510,7 +510,10 @@ namespace WebApplication1.Areas.webmaster.Controllers
                     communityDict.Add(item.id, communityName);
                 }
 
+                List<community> communityList = entities.communities.ToList();    
+
                 listadoTitularesViewModel viewModel = new listadoTitularesViewModel();
+                viewModel.communityList = communityList;
                 viewModel.side_menu = "titulares";
                 viewModel.side_sub_menu = "titulares_listado";
                 viewModel.document_category_list = entities.document_type.ToList();
