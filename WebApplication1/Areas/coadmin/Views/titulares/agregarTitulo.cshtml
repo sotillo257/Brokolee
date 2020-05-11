@@ -117,14 +117,17 @@
                             <div class="form-group row">
                                 <label class="col-sm-3 col-form-label">Comunidad</label>
                                 <div class="col-sm-9">
-                                    <select class="form-control" name="IdCommunity"
+                                    <select class="form-control" required name="IdCommunity"
                                             data-toggle="tooltip" title="Nombre de la comunidad" id="IdCommunity">
-                                        @foreach (var item in Model.communityList)
+                                        @foreach (var item in Model.communityS)
                                         {
-                                            <option value="@item.id">@item.first_name</option>
+                                            if (Session["CURRENT_COMU"] == item.id)
+                                            {
+                                                <option selected value="@item.id">@item.first_name</option>
+                                            }
                                         }
                                     </select>
-                                    <small class="form-text text-muted">Lista de comunidades</small>
+                                    <small class="form-text text-muted">Comunidad</small>
                                 </div>
                             </div>
 

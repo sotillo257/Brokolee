@@ -308,7 +308,9 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
                 List<community> communityList = new List<community>();
                 communityList = ep.GetCommunityList(userId);
-                viewModel.communityList = communityList;                
+                viewModel.communityList = communityList;
+
+                viewModel.communityS = entities.communities.Find(communityAct);
 
                 viewModel.side_menu = "titulares";
                 viewModel.side_sub_menu = "titulares_agregar";
@@ -343,7 +345,9 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
                     List<community> communityList = new List<community>();
                     communityList = ep.GetCommunityList(userId);
-                    viewModel.communityList = communityList;                    
+                    viewModel.communityList = communityList;
+
+                    viewModel.communityS = entities.communities.Find(communityAct);
 
                     viewModel.side_menu = "titulares";
                     viewModel.side_sub_menu = "manage_edit_headlines";
