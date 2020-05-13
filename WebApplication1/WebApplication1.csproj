@@ -498,6 +498,7 @@
     <Compile Include="Areas\webmaster\Controllers\paquetesController.cs" />
     <Compile Include="Areas\webmaster\Controllers\plantillasController.cs" />
     <Compile Include="Areas\webmaster\Controllers\suplidoresController.cs" />
+    <Compile Include="Areas\webmaster\Controllers\categoriasController.cs" />
     <Compile Include="Areas\webmaster\Controllers\tareasController.cs" />
     <Compile Include="Areas\webmaster\Controllers\tecnicoController.cs" />
     <Compile Include="Areas\webmaster\Controllers\temadeController.cs" />
@@ -514,6 +515,7 @@
     <Compile Include="Areas\webmaster\ViewModels\agregarFacViewModel.cs" />
     <Compile Include="Areas\webmaster\ViewModels\agregarPaqViewModel.cs" />
     <Compile Include="Areas\webmaster\ViewModels\agregarSuplidoresViewModel.cs" />
+    <Compile Include="Areas\webmaster\ViewModels\categoriesViewModel.cs" />
     <Compile Include="Areas\webmaster\ViewModels\agregarTareasViewModel.cs" />
     <Compile Include="Areas\webmaster\ViewModels\agregarTemadeViewModel.cs" />
     <Compile Include="Areas\webmaster\ViewModels\agregarTitularesViewModel.cs" />
@@ -1520,6 +1522,9 @@
     <Content Include="Areas\coadmin\Views\titulares\verTitulo.cshtml" />
     <Content Include="Areas\coadmin\Views\titulares\verVehiculo.cshtml" />
     <Content Include="Areas\coadmin\Views\contacto\ver.cshtml" />
+    <Content Include="Areas\webmaster\Views\categorias\agregar.cshtml" />
+    <Content Include="Areas\webmaster\Views\categorias\editar.cshtml" />
+    <Content Include="Areas\webmaster\Views\categorias\listado.cshtml" />
     <None Include="Properties\PublishProfiles\Default Settings.pubxml" />
     <None Include="Properties\PublishProfiles\Default Settings1.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
