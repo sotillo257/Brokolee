@@ -82,71 +82,71 @@
                             <div class="form-group row">
                                 <label for="example-brand-input" class="col-sm-3 col-form-label">Marca</label>
                                 <div class="col-sm-9">
-                                    <input class="form-control"
+                                    <input maxlength="20" class="form-control soloTexto"
                                            type="text" data-toggle="tooltip"
                                            value="@Model.vehiculo.Brand"
                                            name="brand"
                                            placeholder="Marca"
-                                           id="example-brand-input">
+                                           id="example-brand-input" required>
                                     @* <small class="form-text text-muted">Marca del vehículo</small>*@
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="example-model-input" class="col-sm-3 col-form-label">Modelo</label>
                                 <div class="col-sm-9">
-                                    <input class="form-control"
+                                    <input maxlength="20" class="form-control soloTexto"
                                            type="text"
                                            value="@Model.vehiculo.Model"
                                            name="model" data-toggle="tooltip"
                                            placeholder="Modelo"
-                                           id="example-model-input">
+                                           id="example-model-input" required>
                                     @* <small class="form-text text-muted">Modelo del vehículo</small>*@
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="example-color-input" class="col-sm-3 col-form-label">Color</label>
                                 <div class="col-sm-9">
-                                    <input class="form-control"
+                                    <input maxlength="20" class="form-control soloTexto"
                                            type="text"
                                            value="@Model.vehiculo.Color"
                                            name="colour" data-toggle="tooltip"
                                            placeholder="Color"
-                                           id="example-color-input">
+                                           id="example-color-input" required>
                                     @* <small class="form-text text-muted">Color del vehículo</small>*@
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="example-year-input" class="col-sm-3 col-form-label">Año</label>
                                 <div class="col-sm-9">
-                                    <input class="form-control" name="year"
-                                           type="number" data-toggle="tooltip"
+                                    <input maxlength="4" class="form-control soloNumero" name="year"
+                                           type="text" data-toggle="tooltip"
                                            value="@Model.vehiculo.Year"
                                            placeholder="Año"
-                                           id="example-year-input">
+                                           id="example-year-input" required>
                                     @*  <small class="form-text text-muted">Año del vehículo</small>*@
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="example-cartable-input" class="col-sm-3 col-form-label">Tablilla</label>
                                 <div class="col-sm-9">
-                                    <input class="form-control"
+                                    <input maxlength="20" class="form-control"
                                            type="text" data-toggle="tooltip"
                                            value="@Model.vehiculo.ClapBoard"
                                            name="clapboard"
                                            placeholder="Tablilla"
-                                           id="example-cartable-input">
+                                           id="example-cartable-input" required>
                                     @* <small class="form-text text-muted">Tablilla del vehículo</small>*@
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="example-numbercar-input" class="col-sm-3 col-form-label">Número de sello</label>
                                 <div class="col-sm-9">
-                                    <input class="form-control"
+                                    <input maxlength="20" class="form-control soloNumero"
                                            type="text"
                                            value="@Model.vehiculo.StampNumber"
                                            name="stamp_number" data-toggle="tooltip"
                                            placeholder="Número de sello"
-                                           id="example-numbercar-input">
+                                           id="example-numbercar-input" required>
                                     @* <small class="form-text text-muted">Número de sello del vehículo</small>*@
                                 </div>
                             </div>

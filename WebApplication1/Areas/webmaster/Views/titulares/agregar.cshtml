@@ -125,7 +125,7 @@
                         <div class="form-group row">
                             <label for="example-email-input" class="col-sm-3 col-form-label">Correo electrónico</label>
                             <div class="col-sm-9">
-                                <input class="form-control" type="email" value="" name="email" required
+                                <input maxlength="40" class="form-control" type="email" value="" name="email" required
                                        data-toggle="tooltip" title="Correo electrónico del titular"
                                        placeholder="Correo electrónico" id="example-email-input">
                                 <small class="form-text text-muted">Correo electrónico del titular</small>
@@ -135,9 +135,9 @@
                         <div class="form-group row">
                             <label for="example-password-input" class="col-sm-3 col-form-label">Contraseña</label>
                             <div class="col-sm-9">
-                                <input class="form-control" type="password" value="" name="password"
+                                <input maxlength="16" class="form-control" type="password" value="" name="password"
                                        data-toggle="tooltip" title="Contraseña utilizada para ingresar al sistema"
-                                       placeholder="Contraseña" id="example-password-input">
+                                       placeholder="Contraseña" id="example-password-input" required>
                                 <small class="form-text text-muted">Contraseña utilizada para ingresar al sistema</small>
                             </div>
                         </div>
@@ -148,27 +148,27 @@
                         <div class="form-group row">
                             <label for="example-name22-input" class="col-sm-3 col-form-label">Nombre</label>
                             <div class="col-sm-9">
-                                <input class="form-control" type="text" value="" name="first_name1"
+                                <input maxlength="30" class="form-control soloTexto" type="text" value="" name="first_name1"
                                        data-toggle="tooltip" title="Nombre del titular"
-                                       placeholder="Nombre" id="example-name22-input" />
+                                       placeholder="Nombre" id="example-name22-input" required />
                                 <small class="form-text text-muted">Nombre del titular</small>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="example-lastname2-input" class="col-sm-3 col-form-label">Apellido paterno</label>
                             <div class="col-sm-9">
-                                <input class="form-control" type="text" value="" name="last_name1"
+                                <input maxlength="15" class="form-control soloTexto" type="text" value="" name="last_name1"
                                        data-toggle="tooltip" title="Apellido paterno del titular"
-                                       placeholder="Apellido paterno" id="example-lastname22-input">
+                                       placeholder="Apellido paterno" id="example-lastname22-input" required>
                                 <small class="form-text text-muted">Apellido paterno del titular</small>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="example-lastname22m-input" class="col-sm-3 col-form-label">Apellido materno</label>
                             <div class="col-sm-9">
-                                <input class="form-control" type="text" value="" name="mother_last_name1"
+                                <input maxlength="15" class="form-control soloTexto" type="text" value="" name="mother_last_name1"
                                        data-toggle="tooltip" title="Apellido materno del titular"
-                                       placeholder="Apellido materno" id="example-lastname22m-input">
+                                       placeholder="Apellido materno" id="example-lastname22m-input" required>
                                 <small class="form-text text-muted">Apellido materno del titular</small>
                             </div>
                         </div>
@@ -176,7 +176,7 @@
                         <div class="form-group row">
                             <label for="example-tel1-input" class="col-sm-3 col-form-label">Número de teléfono</label>
                             <div class="col-sm-9">
-                                <input class="form-control" type="tel" value="" name="phone_number1"
+                                <input maxlength="15" class="form-control soloNumero" type="tel" value="" name="phone_number1"
                                        data-toggle="tooltip" title="Número de teléfono del titular"
                                        placeholder="# Teléfono" id="example-tel1-input">
                                 <small class="form-text text-muted">Número de teléfono del titular</small>
@@ -186,9 +186,9 @@
                         <div class="form-group row">
                             <label for="example-address11-input" class="col-sm-3 col-form-label">Dirección postal</label>
                             <div class="col-sm-9">
-                                <input class="form-control" type="text" value="" name="postal_address"
+                                <input maxlength="15" class="form-control" type="text" value="" name="postal_address"
                                        data-toggle="tooltip" title="Dirección postal del titular"
-                                       placeholder="Dirección postal" id="example-address11-input">
+                                       placeholder="Dirección postal" id="example-address11-input" required>
                                 <small class="form-text text-muted">Dirección postal del titular</small>
                             </div>
                         </div>
@@ -196,9 +196,9 @@
                         <div class="form-group row">
                             <label for="example-address2-inputt" class="col-sm-3 col-form-label">Dirección residencial</label>
                             <div class="col-sm-9">
-                                <input class="form-control" type="text" value="" name="residential_address"
+                                <input maxlength="156" class="form-control" type="text" value="" name="residential_address"
                                        data-toggle="tooltip" title="Dirección residencial del titular"
-                                       placeholder="Dirección residencial" id="example-address2-inputt">
+                                       placeholder="Dirección residencial" id="example-address2-inputt" required>
                                 <small class="form-text text-muted">Dirección residencial del titular</small>
                             </div>
                         </div>

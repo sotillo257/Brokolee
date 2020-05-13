@@ -54,7 +54,7 @@
                         <div class="form-group row">
                             <label for="example-email-input" class="col-sm-3 col-form-label">Nombre</label>
                             <div class="col-sm-9">
-                                <input class="form-control" type="text" value="" name="first_name" required
+                                <input maxlength="30" class="form-control soloTexto" type="text" value="" name="first_name" required
                                        placeholder="Nombre" id="example-email-input"
                                        data-toggle="tooltip" title="Nombre del paquete" />
                                 <small class="form-text text-muted">Nombre del paquete</small>
@@ -68,7 +68,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-dollar-sign"></i></span>
                                     </div>
-                                    <input type="text" class="form-control" name="payment"
+                                    <input type="number" step="any" maxlength="10" class="form-control" name="payment"
                                            data-toggle="tooltip" title="Pago recibido por el paquete adquirido" required />
                                 </div>
                                 <small class="form-text text-muted">Pago recibido por el paquete adquirido</small>

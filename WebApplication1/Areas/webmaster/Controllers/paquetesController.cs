@@ -164,7 +164,8 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 editPackage.admin_email = admin_email;
                 editPackage.community = community;
                 editPackage.description = description;
-                editPackage.payment = Convert.ToDecimal(payment);
+                string ppp = payment.Replace('.', ',');
+                editPackage.payment = Convert.ToDecimal(ppp);
                 editPackage.updated_at = DateTime.Now;
                 editPackage.suscribe_link = suscribe_link;
                 entities.SaveChanges();
@@ -191,8 +192,9 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 newPackage.community = community;
                 newPackage.admin_email = admin_email;
                 newPackage.description = description;
-                newPackage.created_at = DateTime.Now;
-                newPackage.payment = decimal.Parse(payment.Replace(',','.'));
+                newPackage.created_at = DateTime.Now;                               
+                string ppp = payment.Replace('.', ',');               
+                newPackage.payment = Convert.ToDecimal(ppp);                
                 entities.packages.Add(newPackage);
                 entities.SaveChanges();
                 newPackage = entities.packages.Find(newPackage.id);

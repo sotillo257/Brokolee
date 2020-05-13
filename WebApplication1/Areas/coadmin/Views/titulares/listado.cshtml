@@ -77,7 +77,7 @@
                                         </button>
                                     </a>
                                 }
-                                @if (Model.titularList.Count > 0)
+                                @if (Session["CURRENT_COMU"] != null )
                                 {
                                     <button class="btn btn-primary waves-effect waves-light float-xl-right float-lg-right float-md-left mr-1 mb-1"
                                             type="button" id="import_csv_btn">
@@ -92,7 +92,7 @@
                                     </button>
                                 }
 
-                                @if (Session["CURRENT_COMU"] != null)
+                                @if (Model.titularList.Count > 0)
                                 {
                                     <a href="#" onclick="onExportCSV()"><button type="button" class="btn btn-primary waves-effect waves-light float-xl-right float-lg-right float-md-left mr-1 mb-1">Exportar</button></a>
                                 }

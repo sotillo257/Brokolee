@@ -56,9 +56,9 @@
                             <div class="form-group row">
                                 <label for="example-email-input" class="col-sm-3 col-form-label">Nombre</label>
                                 <div class="col-sm-9">
-                                    <input class="form-control" type="text" value="" name="first_name"
+                                    <input maxlength="40" class="form-control" type="text" value="" name="first_name"
                                            data-toggle="tooltip" title="Nombre de la comunidad"
-                                           placeholder="Nombre" id="example-email-input" />
+                                           placeholder="Nombre" id="example-email-input" required/>
                                     <small class="form-text text-muted">Nombre de la comunidad</small>
                                 </div>
                             </div>
@@ -82,7 +82,7 @@
                                 <label class="col-sm-3 col-form-label">Paquete</label>
                                 <div class="col-sm-9">
                                     <select class="form-control" name="packageId"
-                                            data-toggle="tooltip" title="Paquete adquirido">
+                                            data-toggle="tooltip" title="Paquete adquirido" required>
                                         @foreach (var item in Model.packageList)
                                         {
                                             <option value="@item.id">@item.first_name</option>
@@ -95,7 +95,7 @@
                             <div class="form-group row">
                                 <label for="example-lastname1-input" class="col-sm-3 col-form-label">Dirección</label>
                                 <div class="col-sm-9">
-                                    <input class="form-control" name="apartment" placeholder="Dirección"
+                                    <input maxlength="90" class="form-control" name="apartment" placeholder="Dirección"
                                            data-toggle="tooltip" title="Dirección"
                                            required />
                                     <small class="form-text text-muted">Dirección</small>
@@ -105,7 +105,7 @@
                             <div class="form-group row">
                                 <label for="example-lastname1-input" class="col-sm-3 col-form-label">Descripción</label>
                                 <div class="col-sm-9">
-                                    <textarea class="form-control" rows="3" name="description"
+                                    <textarea required class="form-control" rows="3" name="description"
                                               data-toggle="tooltip" title="Descripción de la comunidad"
                                               placeholder="Descripción"></textarea>
                                     <small class="form-text text-muted">Descripción de la comunidad</small>

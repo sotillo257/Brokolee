@@ -117,7 +117,7 @@
                         <div class="form-group row">
                             <label class="col-sm-3 col-form-label">Comunidad</label>
                             <div class="col-sm-9">
-                                <select class="form-control" name="IdCommunity"
+                                <select required class="form-control" name="IdCommunity"
                                         data-toggle="tooltip" title="Nombre de la comunidad" id="IdCommunity">
                                     @foreach (var item in Model.communityList)
                                     {
@@ -135,7 +135,7 @@
                         <div class="form-group row">
                             <label for="apartment-input" class="col-sm-3 col-form-label">Propiedad</label>
                             <div class="col-sm-9">
-                                <input class="form-control" type="text" value="" name="apartment" required
+                                <input maxlength="30" class="form-control soloTexto" type="text" value="" name="apartment" required
                                        data-toggle="tooltip" title="Propiedad del titular"
                                        placeholder="Propiedad" id="apartment-input">
                                 <small class="form-text text-muted">Propiedad del titular</small>
@@ -208,7 +208,7 @@
                             <div class="form-group row">
                                 <label for="example-name2-input" class="col-sm-3 col-form-label">Nombre</label>
                                 <div class="col-sm-9">
-                                    <input class="form-control" type="text" value="" name="tenant_first_name1"
+                                    <input maxlength="30" class="form-control soloTexto" type="text" value="" name="tenant_first_name1"
                                            data-toggle="tooltip" title="Nombre del arrendatario"
                                            placeholder="Nombre" id="example-name2-input">
                                     <small class="form-text text-muted">Nombre del arrendatario</small>
@@ -217,7 +217,7 @@
                             <div class="form-group row">
                                 <label for="example-lastname2-input" class="col-sm-3 col-form-label">Apellido paterno</label>
                                 <div class="col-sm-9">
-                                    <input class="form-control" type="text" value="" name="tenant_last_name1"
+                                    <input maxlength="20" class="form-control soloTexto" type="text" value="" name="tenant_last_name1"
                                            data-toggle="tooltip" title="Apellido paterno del arrendatario"
                                            placeholder="Apellido paterno" id="example-lastname2-input">
                                     <small class="form-text text-muted">Apellido paterno del arrendatario</small>
@@ -226,7 +226,7 @@
                             <div class="form-group row">
                                 <label for="example-lastname2m-input" class="col-sm-3 col-form-label">Apellido materno</label>
                                 <div class="col-sm-9">
-                                    <input class="form-control" type="text" value="" name="tenant_mother_last_name1" placeholder="Apellido materno"
+                                    <input maxlength="20" class="form-control soloTexto" type="text" value="" name="tenant_mother_last_name1" placeholder="Apellido materno"
                                            data-toggle="tooltip" title="Apellido materno del arrendatario"
                                            id="example-lastname2m-input">
                                     <small class="form-text text-muted">Apellido materno del arrendatario</small>
@@ -236,7 +236,7 @@
                             <div class="form-group row">
                                 <label for="example-address1-input" class="col-sm-3 col-form-label">Dirección postal</label>
                                 <div class="col-sm-9">
-                                    <input class="form-control" type="text" value="" name="leased_postal_address"
+                                    <input maxlength="15" class="form-control" type="text" value="" name="leased_postal_address"
                                            data-toggle="tooltip" title="Dirección postal del arrendatario"
                                            placeholder="Dirección postal" id="example-address1-input">
                                     <small class="form-text text-muted">Dirección postal del arrendatario</small>
@@ -249,7 +249,7 @@
                             <div class="form-group row">
                                 <label for="example-address2-input" class="col-sm-3 col-form-label">Dirección residencial</label>
                                 <div class="col-sm-9">
-                                    <input class="form-control" type="text" value="" placeholder="Dirección residencial"
+                                    <input maxlength="156" class="form-control" type="text" value="" placeholder="Dirección residencial"
                                            data-toggle="tooltip" title="Dirección residencial del arrendatario" name="leased_residential_address"
                                            id="example-address2-input">
                                     <small class="form-text text-muted">Dirección residencial del arrendatario</small>

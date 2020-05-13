@@ -83,9 +83,9 @@
                             <div class="form-group row">
                                 <label for="example-email-input" class="col-sm-3 col-form-label">Compañía suplidor</label>
                                 <div class="col-sm-9">
-                                    <input class="form-control" type="text" value="@Model.editSupplier.company"
+                                    <input maxlength="30" class="form-control soloTexto" type="text" value="@Model.editSupplier.company"
                                            data-toggle="tooltip" title="Nombre de la compañía del suplidor"
-                                           placeholder="Compañía suplidor" id="example-email-input" name="company"/>
+                                           placeholder="Compañía suplidor" id="example-email-input" name="company" required/>
                                     <small class="form-text text-muted">Nombre de la compañía del suplidor</small>
                                 </div>
                             </div>
@@ -93,9 +93,9 @@
                             <div class="form-group row">
                                 <label for="example-name1-input" class="col-sm-3 col-form-label">Nombre de contacto</label>
                                 <div class="col-sm-9">
-                                    <input class="form-control" type="text" value="@Model.editSupplier.contact_name"
+                                    <input maxlength="20" class="form-control soloTexto" type="text" value="@Model.editSupplier.contact_name"
                                            data-toggle="tooltip" title="Nombre de contacto del suplidor"
-                                           placeholder="Nombre de contacto" id="example-name1-input" name="contact_name">
+                                           placeholder="Nombre de contacto" id="example-name1-input" name="contact_name" required>
                                     <small class="form-text text-muted">Nombre de contacto del suplidor</small>
                                 </div>
                             </div>
@@ -103,9 +103,9 @@
                             <div class="form-group row">
                                 <label for="example-lastname1-input" class="col-sm-3 col-form-label">Tipo de servicio</label>
                                 <div class="col-sm-9">
-                                    <input class="form-control" type="text" value="@Model.editSupplier.type_service" 
+                                    <input maxlength="20" class="form-control soloTexto" type="text" value="@Model.editSupplier.type_service" 
                                            data-toggle="tooltip" title="Servicio que ofrece"
-                                           placeholder="Tipo de servicio" id="example-lastname1-input" name="type_service" />
+                                           placeholder="Tipo de servicio" id="example-lastname1-input" name="type_service" required/>
                                     <small class="form-text text-muted">Servicio que ofrece</small>
                                 </div>
                             </div>
@@ -136,9 +136,9 @@
                             <div class="form-group row">
                                 <label for="example-lastname1-input" class="col-sm-3 col-form-label">Dirección</label>
                                 <div class="col-sm-9">
-                                    <input class="form-control" type="text" value="@Model.editSupplier.address" name="address"
+                                    <input maxlength="90" class="form-control" type="text" value="@Model.editSupplier.address" name="address"
                                            data-toggle="tooltip" title="Dirección del suplidor"
-                                           placeholder="Dirección" id="example-lastname1-input" />
+                                           placeholder="Dirección" id="example-lastname1-input" required/>
                                     <small class="form-text text-muted">Dirección del suplidor</small>
                                 </div>
                             </div>
@@ -146,9 +146,9 @@
                             <div class="form-group row">
                                 <label for="example-tel1-input" class="col-sm-3 col-form-label">Teléfono</label>
                                 <div class="col-sm-9">
-                                    <input class="form-control" type="tel" value="@Model.editSupplier.phone" name="phone"
+                                    <input maxlength="15" class="form-control soloNumero" type="tel" value="@Model.editSupplier.phone" name="phone"
                                            data-toggle="tooltip" title="Teléfono del suplidor"
-                                           placeholder="# Teléfono" id="example-tel1-input" />
+                                           placeholder="# Teléfono" id="example-tel1-input" required />
                                     <small class="form-text text-muted">Teléfono del suplidor</small>
                                 </div>
                             </div>
@@ -156,9 +156,9 @@
                             <div class="form-group row">
                                 <label for="example-email-input" class="col-sm-3 col-form-label">Correo electrónico</label>
                                 <div class="col-sm-9">
-                                    <input class="form-control" type="email" value="@Model.editSupplier.email" name="email"
+                                    <input maxlength="40" class="form-control" type="email" value="@Model.editSupplier.email" name="email"
                                            data-toggle="tooltip" title="Correo electrónico del suplidor"
-                                           placeholder="Correo electrónico" id="example-email-input">
+                                           placeholder="Correo electrónico" id="example-email-input" required>
                                     <small class="form-text text-muted">Correo electrónico del suplidor</small>
                                 </div>
                             </div>
@@ -166,7 +166,7 @@
                             <div class="form-group row">
                                 <label for="example-date-input" class="col-sm-3 col-form-label">Suplidor desde</label>
                                 <div class="col-sm-9">
-                                    <input class="form-control" type="date" data-toggle="tooltip" title="Mes / día / año | Fecha de registro en el directorio"
+                                    <input required class="form-control" type="date" data-toggle="tooltip" title="Mes / día / año | Fecha de registro en el directorio"
                                            value="@Convert.ToDateTime(Model.editSupplier.supplier_from).ToString("yyyy-MM-dd")"
                                            id="example-date-input" name="supplier_from" />
                                     <small class="form-text text-muted">Mes / día / año | Fecha de registro en el directorio</small>
@@ -176,7 +176,7 @@
                             <div class="form-group row">
                                 <label for="example-email-input" class="col-sm-3 col-form-label">Página web</label>
                                 <div class="col-sm-9">
-                                    <input class="form-control" type="text" value="@Model.editSupplier.web_page" name="web_page"
+                                    <input maxlength="50" required class="form-control" type="text" value="@Model.editSupplier.web_page" name="web_page"
                                            data-toggle="tooltip" title="Por ejemplo: wwww.suplidores.com"
                                            placeholder="Url de página web" id="example-email-input">
                                     <small class="form-text text-muted">Por ejemplo: wwww.suplidores.com</small>

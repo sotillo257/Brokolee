@@ -89,7 +89,7 @@
                             <div class="form-group row">
                                 <label for="example-email-input" class="col-sm-3 col-form-label">Nombre</label>
                                 <div class="col-sm-9">
-                                    <input class="form-control" type="text" value="" name="first_name1" required
+                                    <input maxlength="30" class="form-control soloTexto" type="text" value="" name="first_name1" required
                                            data-toggle="tooltip" title="Nombre del administrador"
                                            placeholder="Nombre" id="example-email-input">
                                     <small class="form-text text-muted">Nombre del administrador</small>
@@ -99,7 +99,7 @@
                             <div class="form-group row">
                                 <label for="example-email-input" class="col-sm-3 col-form-label">Apellido paterno</label>
                                 <div class="col-sm-9">
-                                    <input class="form-control" type="text" value="" name="last_name1" required
+                                    <input maxlength="15" class="form-control soloTexto" type="text" value="" name="last_name1" required
                                            data-toggle="tooltip" title="Apellido paterno del administrador"
                                            placeholder="Apellido paterno" id="example-email-input">
                                     <small class="form-text text-muted">Apellido paterno del administrador</small>
@@ -109,7 +109,7 @@
                             <div class="form-group row">
                                 <label for="example-email-input" class="col-sm-3 col-form-label">Apellido materno</label>
                                 <div class="col-sm-9">
-                                    <input class="form-control" type="text" value="" name="mother_last_name1"
+                                    <input maxlength="15" required class="form-control soloTexto" type="text" value="" name="mother_last_name1"
                                            data-toggle="tooltip" title="Apellido materno del administrador"
                                            placeholder="Apellido materno" id="example-email-input">
                                     <small class="form-text text-muted">Apellido materno del administrador</small>
@@ -119,7 +119,7 @@
                             <div class="form-group row">
                                 <label for="example-lastname1-input" class="col-sm-3 col-form-label">Email</label>
                                 <div class="col-sm-9">
-                                    <input class="form-control" type="email" value="" name="email"
+                                    <input maxlength="40" required class="form-control" type="email" value="" name="email"
                                            data-toggle="tooltip" title="Email del administrador"
                                            placeholder="Email" id="example-email-input">
                                     <small class="form-text text-muted">Email del administrador</small>
@@ -129,9 +129,9 @@
                             <div class="form-group row">
                                 <label for="example-password-input" class="col-sm-3 col-form-label">Contraseña</label>
                                 <div class="col-sm-9">
-                                    <input class="form-control" type="password" value="" name="password"
+                                    <input maxlength="16" class="form-control" type="password" value="" name="password"
                                            data-toggle="tooltip" title="Contraseña utilizada para ingresar al sistema"
-                                           placeholder="Contraseña" id="example-password-input">
+                                           placeholder="Contraseña" id="example-password-input" required>
                                     <small class="form-text text-muted">Contraseña utilizada para ingresar al sistema</small>
                                 </div>
                             </div>
@@ -168,7 +168,7 @@
 
 </div> <!-- Page content Wrapper -->
 
-    <script type="text/javascript">
+    <script type="text/javascript">       
 
         (function () {
 

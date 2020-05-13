@@ -78,7 +78,7 @@
                                     {
                                         <tr>
                                             <td>@item.first_name</td>
-                                            <td class="text-center">@item.payment</td>
+                                            <td class="text-center">@item.payment.ToString().Replace(',', '.')</td>
                                             <td>@item.description.</td>
                                             <td class="text-center"><a href="http://@item.suscribe_link" target="_blank">http://@item.suscribe_link</a></td>
                                             <td class="text-center">

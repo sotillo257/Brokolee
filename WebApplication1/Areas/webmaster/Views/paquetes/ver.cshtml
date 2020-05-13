@@ -47,7 +47,7 @@
                                         <span class="input-group-text"><i class="fas fa-dollar-sign"></i></span>
                                     </div>
                                     <input type="text" placeholder="0.00" class="form-control" 
-                                           value="@Model.viewPackage.payment" readonly
+                                           value="@Model.editPackage.payment.ToString().Replace(',', '.')" readonly
                                             data-toggle="tooltip" title="Tarifa del Paquete"/>
                                 </div>
                                 <small class="form-text text-muted">Tarifa recibida por el paquete adquirido</small>

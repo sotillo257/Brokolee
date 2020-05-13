@@ -97,7 +97,7 @@
                             <div class="form-group row">
                                 <label for="example-email-input" class="col-sm-3 col-form-label">Nombre</label>
                                 <div class="col-sm-9">
-                                    <input class="form-control" type="text" value="@Model.editAdmin.first_name1"
+                                    <input maxlength="30" class="form-control soloTexto" type="text" value="@Model.editAdmin.first_name1"
                                            placeholder="Nombre" id="example-email-input" name="first_name1" required
                                            data-toggle="tooltip" />
                                     @*<small class="form-text text-muted">Nombre del Administrador</small>*@
@@ -107,7 +107,7 @@
                             <div class="form-group row">
                                 <label for="example-email-input" class="col-sm-3 col-form-label">Apellido paterno</label>
                                 <div class="col-sm-9">
-                                    <input class="form-control" type="text" value="@Model.editAdmin.last_name1"
+                                    <input maxlength="15" class="form-control soloTexto" type="text" value="@Model.editAdmin.last_name1"
                                            placeholder="Apellido paterno" id="example-email-input" name="last_name1" required
                                            data-toggle="tooltip"  />
                                    @* <small class="form-text text-muted">Apellido Paterno del Administrador</small>*@
@@ -117,9 +117,9 @@
                             <div class="form-group row">
                                 <label for="example-email-input" class="col-sm-3 col-form-label">Apellido materno</label>
                                 <div class="col-sm-9">
-                                    <input class="form-control" type="text" value="@Model.editAdmin.mother_last_name1"
+                                    <input maxlength="15" class="form-control soloTexto" type="text" value="@Model.editAdmin.mother_last_name1"
                                            placeholder="Apellido materno" id="example-email-input" name="mother_last_name1"
-                                           data-toggle="tooltip"  />
+                                           data-toggle="tooltip" required />
                                   @*  <small class="form-text text-muted">Apellido Materno del Administrador</small>*@
                                 </div>
                             </div>
@@ -127,9 +127,9 @@
                             <div class="form-group row">
                                 <label for="example-lastname1-input" class="col-sm-3 col-form-label">Email</label>
                                 <div class="col-sm-9">
-                                    <input class="form-control" type="email" value="@Model.editAdmin.email"
+                                    <input maxlength="40" class="form-control" type="email" value="@Model.editAdmin.email"
                                            placeholder="Email" id="example-email-input" name="email"
-                                           data-toggle="tooltip" />
+                                           data-toggle="tooltip" required />
                                    @* <small class="form-text text-muted">Email del administrador</small>*@
                                 </div>
                             </div>
@@ -137,7 +137,7 @@
                             <div class="form-group row">
                                 <label for="example-password-input" class="col-sm-3 col-form-label">Contraseña</label>
                                 <div class="col-sm-9">
-                                    <input class="form-control" type="password" value="@Model.editPassword" required
+                                    <input maxlength="16" class="form-control" type="password" value="@Model.editPassword" required
                                            placeholder="Contraseña" id="example-password-input" name="password"
                                            data-toggle="tooltip" />
                                    @* <small class="form-text text-muted">Contraseña utilizada para ingresar al sistema</small>*@

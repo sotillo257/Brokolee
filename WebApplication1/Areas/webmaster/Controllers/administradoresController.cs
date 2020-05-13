@@ -282,6 +282,15 @@ namespace WebApplication1.Areas.webmaster.Controllers
                         }
                     }
                 }
+                else
+                {
+                    List<communuser> comxuserAnterior = entities.communusers.Where(x => x.user_id == editAdmin.id).ToList();
+                    foreach (var item in comxuserAnterior)
+                    {
+                        entities.communusers.Remove(item);
+                        entities.SaveChanges();
+                    }
+                }
                        
                 return Redirect(Url.Action("listado", "administradores", new { area = "webmaster" }));
             } catch(Exception ex)
