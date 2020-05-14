@@ -15,7 +15,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
         EFPublicRepository ep = new EFPublicRepository();
         List<community> communityList = new List<community>();
         // GET: coadmin/cuotas
-        public ActionResult listado()
+        public ActionResult listado(string Error)
         {
             if (Session["USER_ID"] != null)
             {
@@ -38,21 +38,11 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     communityList = ep.GetCommunityList(userId);
                     viewModel.communityList = communityList;
 
-                    Dictionary<long, string> bankDict = new Dictionary<long, string>();
-
                     long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
                     List<fee> feeList = new List<fee>();
                     if (Session["CURRENT_COMU"] != null)
                     {
-                        feeList = entities.fees.Where(m => m.user_id == userId && m.community_id == communityAct).ToList();
-                        foreach (var item in feeList)
-                        {
-                            long bankID = item.bank_id;
-                            bank bankItem = entities.banks.Find(bankID);
-
-                            bankDict.Add(bankID, bankItem.bank_name);
-
-                        }
+                        feeList = entities.fees.Where(m => m.community_id == communityAct).ToList();                        
                     }
                     else
                     {
@@ -67,8 +57,8 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     viewModel.curUser = curUser;
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = pubMessageList;
-                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);                   
-                    viewModel.bankDict = bankDict;
+                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                    ViewBag.msgError = Error;
                     return View(viewModel);
                 }
                 catch(Exception ex)
@@ -86,59 +76,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
         {
             if (Session["USER_ID"] != null)
             {
-                try
-                {
-                    long userId = 0;
-                    if (Convert.ToInt32(Session["USER_ROLE"]) == 2)
-                    {
-                        userId = (long)Session["USER_ID"];
-                    }
-                    else if (Convert.ToInt32(Session["USER_ROLE"]) > 2
-                    && Session["ACC_USER_ID"] != null)
-                    {
-                        userId = (long)Session["ACC_USER_ID"];
-                    }
-                    user curUser = entities.users.Find(userId);
-                    List<bank> bankList = entities.banks.Where(m => m.user_id == userId).ToList();
-                    List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
-                    agregarCuotasViewModel viewModel = new agregarCuotasViewModel();
-
-                    communityList = ep.GetCommunityList(userId);
-                    viewModel.communityList = communityList;
-
-                    viewModel.side_menu = "cuotas";
-                    viewModel.side_sub_menu = "cuotas_agregar";
-                    viewModel.document_category_list = entities.document_type.ToList();
-                    viewModel.curUser = curUser;
-                    viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
-                    viewModel.pubMessageList = pubMessageList;
-                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);                   
-                    viewModel.bankList = bankList;
-
-                    viewModel.feeName = "";
-                    viewModel.cost = 15;
-                    viewModel.taxCharge = 1;
-                    viewModel.penalty = 1;
-                    viewModel.merchantAccount = "";
-                    viewModel.bankId = -1;
-                    return View(viewModel);
-                }
-                catch(Exception ex)
-                {
-                    return Redirect(Url.Action("Index", "Error"));
-                }               
-            }
-            else
-            {
-                return Redirect(ep.GetLogoutUrl());
-            }
-                
-        }
-        public ActionResult editar(long? editID)
-        {
-            if (Session["USER_ID"] != null)
-            {
-                if (editID != null)
+                if(Session["CURRENT_COMU"] != null) 
                 {
                     try
                     {
@@ -152,9 +90,8 @@ namespace WebApplication1.Areas.coadmin.Controllers
                         {
                             userId = (long)Session["ACC_USER_ID"];
                         }
-                        fee feeItem = entities.fees.Where(m => m.id == editID).FirstOrDefault();
                         user curUser = entities.users.Find(userId);
-                        List<bank> bankList = entities.banks.Where(m => m.user_id == userId).ToList();
+                        List<bank> bankList = entities.banks.ToList();
                         List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                         agregarCuotasViewModel viewModel = new agregarCuotasViewModel();
 
@@ -162,74 +99,284 @@ namespace WebApplication1.Areas.coadmin.Controllers
                         viewModel.communityList = communityList;
 
                         viewModel.side_menu = "cuotas";
-                        viewModel.side_sub_menu = "cuotas_editar";
+                        viewModel.side_sub_menu = "cuotas_agregar";
                         viewModel.document_category_list = entities.document_type.ToList();
                         viewModel.curUser = curUser;
                         viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                         viewModel.pubMessageList = pubMessageList;
                         viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                        viewModel.feedId = Convert.ToInt64(editID);
                         viewModel.bankList = bankList;
-                        viewModel.feeName = feeItem.name;
-                        viewModel.cost = feeItem.cost;
-                        viewModel.taxCharge = feeItem.tax_charge;
-                        viewModel.penalty = feeItem.penalty;
-                        viewModel.merchantAccount = feeItem.merchant_account;
-                        viewModel.bankId = feeItem.bank_id;
+
+                        viewModel.feeName = "";
+                        viewModel.cost = 15;
+                        viewModel.taxCharge = 1;
+                        viewModel.penalty = 1;
+                        viewModel.merchantAccount = "";
+                        viewModel.bankId = -1;
                         return View(viewModel);
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
                         return Redirect(Url.Action("Index", "Error"));
-                    }                    
+                    }
                 }
                 else
                 {
-                    return Redirect(Url.Action("NotFound", "Error"));
-                }                
+                    return Redirect(Url.Action("listado", "cuotas", new { area = "coadmin", Error = "No puede agregar cuotas. Usted no administra ninguna comunidad. Comuníquese con el Webmaster..." }));
+                }                             
+            }
+            else
+            {
+                return Redirect(ep.GetLogoutUrl());
+            }
+                
+        }
+        public ActionResult editar(long? editID)
+        {
+            if (Session["USER_ID"] != null)
+            {
+                if (Session["CURRENT_COMU"] != null)
+                {
+                    if (editID != null)
+                    {
+                        try
+                        {
+                            long userId = 0;
+                            if (Convert.ToInt32(Session["USER_ROLE"]) == 2)
+                            {
+                                userId = (long)Session["USER_ID"];
+                            }
+                            else if (Convert.ToInt32(Session["USER_ROLE"]) > 2
+                            && Session["ACC_USER_ID"] != null)
+                            {
+                                userId = (long)Session["ACC_USER_ID"];
+                            }
+                            fee feeItem = entities.fees.Where(m => m.id == editID).FirstOrDefault();
+                            if (feeItem != null)
+                            {
+                                user curUser = entities.users.Find(userId);
+                                List<bank> bankList = entities.banks.Where(m => m.user_id == userId).ToList();
+                                List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
+                                agregarCuotasViewModel viewModel = new agregarCuotasViewModel();
+
+                                communityList = ep.GetCommunityList(userId);
+                                viewModel.communityList = communityList;
+
+                                viewModel.side_menu = "cuotas";
+                                viewModel.side_sub_menu = "cuotas_editar";
+                                viewModel.document_category_list = entities.document_type.ToList();
+                                viewModel.curUser = curUser;
+                                viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
+                                viewModel.pubMessageList = pubMessageList;
+                                viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                                viewModel.feedId = Convert.ToInt64(editID);
+                                viewModel.bankList = bankList;
+                                viewModel.feeName = feeItem.name;
+                                viewModel.cost = feeItem.cost;
+                                viewModel.taxCharge = feeItem.tax_charge;
+                                viewModel.penalty = feeItem.penalty;
+                                viewModel.merchantAccount = feeItem.merchant_account;
+                                viewModel.bankId = feeItem.bank_id;
+                                return View(viewModel);
+                            }
+                            else
+                            {
+                                return Redirect(Url.Action("listado", "cuotas", new { area = "coadmin", Error = "No existe ese elemento" }));
+                            }
+
+                        }
+                        catch (Exception ex)
+                        {
+                            return Redirect(Url.Action("Index", "Error"));
+                        }
+                    }
+                    else
+                    {
+                        return Redirect(Url.Action("NotFound", "Error"));
+                    }
+                }
+                else
+                {
+                    return Redirect(Url.Action("listado", "cuotas", new { area = "coadmin", Error = "No puede editar cuotas. Usted no administra ninguna comunidad. Comuníquese con el Webmaster..." }));
+                }
+                               
             } else
             {
                 return Redirect(ep.GetLogoutUrl());
             }
         }
 
-        public ActionResult agregarcuenta()
+        public ActionResult agregarCuenta(long? nC)
+        {
+            if (Session["USER_ID"] != null)
+            {
+                if (Session["CURRENT_COMU"] != null)
+                {
+                    try
+                    {
+                        long userId = 0;
+                        if (Convert.ToInt32(Session["USER_ROLE"]) == 2)
+                        {
+                            userId = (long)Session["USER_ID"];
+                        }
+                        else if (Convert.ToInt32(Session["USER_ROLE"]) > 2
+                        && Session["ACC_USER_ID"] != null)
+                        {
+                            userId = (long)Session["ACC_USER_ID"];
+                        }
+
+                        user curUser = entities.users.Find(userId);
+                        List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
+                        cuentaCuotasViewModel viewModel = new cuentaCuotasViewModel();
+
+                        communityList = ep.GetCommunityList(userId);
+                        viewModel.communityList = communityList;
+
+                        viewModel.side_menu = "cuotas";
+                        viewModel.side_sub_menu = "cuotas_cuenta";
+                        viewModel.document_category_list = entities.document_type.ToList();
+                        viewModel.curUser = curUser;
+                        viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
+                        viewModel.pubMessageList = pubMessageList;
+                        viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                        ViewBag.newCuota = nC;
+                        return View(viewModel);
+                    }
+                    catch (Exception ex)
+                    {
+                        return Redirect(Url.Action("Index", "Error"));
+                    }
+                }
+                else
+                {
+                    return Redirect(Url.Action("listadoCuentas", "cuotas", new { area = "coadmin", Error = "No puede agregar cuentas. Usted no administra ninguna comunidad. Comuníquese con el Webmaster..." }));
+                }
+                
+            }
+            else
+            {
+                return Redirect(ep.GetLogoutUrl());
+            }
+        }
+
+        public ActionResult listadoCuentas(string Error)
         {
             if (Session["USER_ID"] != null)
             {
                 try
                 {
                     long userId = 0;
-                    if (Convert.ToInt32(Session["USER_ROLE"]) == 2)
+                    if (Convert.ToInt32(Session["USER_ROLE"]) >= 1)
                     {
                         userId = (long)Session["USER_ID"];
                     }
-                    else if (Convert.ToInt32(Session["USER_ROLE"]) > 2
+                    else if (Convert.ToInt32(Session["USER_ROLE"]) > 1
                     && Session["ACC_USER_ID"] != null)
                     {
                         userId = (long)Session["ACC_USER_ID"];
                     }
 
                     user curUser = entities.users.Find(userId);
-                    List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
-                    cuentaCuotasViewModel viewModel = new cuentaCuotasViewModel();
+                    BancosViewModel viewModel = new BancosViewModel();
 
                     communityList = ep.GetCommunityList(userId);
                     viewModel.communityList = communityList;
+                    long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
 
+                    List<bank> bankList = new List<bank>();
+
+                    if (Session["CURRENT_COMU"] != null)
+                    {
+                        bankList = entities.banks.ToList();
+                    }
+                    else
+                    {
+                        bankList.Clear();
+                    }
+
+                    List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
+                    viewModel.banks = bankList;
                     viewModel.side_menu = "cuotas";
-                    viewModel.side_sub_menu = "cuotas_cuenta";
+                    viewModel.side_sub_menu = "bancos_listado";
                     viewModel.document_category_list = entities.document_type.ToList();
                     viewModel.curUser = curUser;
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = pubMessageList;
                     viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                    ViewBag.msgError = Error;
                     return View(viewModel);
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     return Redirect(Url.Action("Index", "Error"));
                 }
+            }
+            else
+            {
+                return Redirect(ep.GetLogoutUrl());
+            }
+        }
+
+        public ActionResult editarCuenta(long? editID)
+        {
+            if (Session["USER_ID"] != null)
+            {
+                if (Session["CURRENT_COMU"] != null)
+                {
+                    if (editID != null)
+                    {
+                        try
+                        {
+                            long userId = 0;
+                            if (Convert.ToInt32(Session["USER_ROLE"]) == 2)
+                            {
+                                userId = (long)Session["USER_ID"];
+                            }
+                            else if (Convert.ToInt32(Session["USER_ROLE"]) > 2
+                            && Session["ACC_USER_ID"] != null)
+                            {
+                                userId = (long)Session["ACC_USER_ID"];
+                            }
+                            bank banItem = entities.banks.Where(m => m.id == editID).FirstOrDefault();
+                            if (banItem != null)
+                            {
+                                user curUser = entities.users.Find(userId);
+                                List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
+                                BancosViewModel viewModel = new BancosViewModel();
+
+                                communityList = ep.GetCommunityList(userId);
+                                viewModel.communityList = communityList;
+
+                                viewModel.side_menu = "cuotas";
+                                viewModel.side_sub_menu = "cuenta_editar";
+                                viewModel.document_category_list = entities.document_type.ToList();
+                                viewModel.curUser = curUser;
+                                viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
+                                viewModel.pubMessageList = pubMessageList;
+                                viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                                viewModel.bankItem = banItem;
+                                return View(viewModel);
+                            }
+                            else
+                            {
+                                return Redirect(Url.Action("listadoCuentas", "cuotas", new { area = "coadmin", Error = "No existe ese elemento" }));
+                            }
+
+                        }
+                        catch (Exception ex)
+                        {
+                            return Redirect(Url.Action("Index", "Error"));
+                        }
+                    }
+                    else
+                    {
+                        return Redirect(Url.Action("NotFound", "Error"));
+                    }
+                }
+                else
+                {
+                    return Redirect(Url.Action("listadoCuentas", "cuotas", new { area = "coadmin", Error = "No puede editar cuentas. Usted no administra ninguna comunidad. Comuníquese con el Webmaster..." }));
+                }                
             }
             else
             {
@@ -320,8 +467,8 @@ namespace WebApplication1.Areas.coadmin.Controllers
         }
 
         [HttpPost]
-        public ActionResult editfee(long feedId, string fee_name, decimal cost, decimal taxCharge,
-            decimal penalty, long bank_id, string merchant_account)
+        public ActionResult editfee(long feedId, string fee_name, string cost, string taxCharge,
+            string penalty, long bank_id, string merchant_account)
         {
             long userId = (long)Session["USER_ID"];
             fee feeItem = entities.fees.Find(feedId);
@@ -329,11 +476,11 @@ namespace WebApplication1.Areas.coadmin.Controllers
             if (feeItem != null)
             {
                 feeItem.name = fee_name;
-                feeItem.cost = cost;
+                feeItem.cost = Convert.ToDecimal(cost.Replace('.', ','));
                 feeItem.bank_id = bank_id;
                 feeItem.merchant_account = merchant_account;
-                feeItem.tax_charge = taxCharge;
-                feeItem.penalty = penalty;
+                feeItem.tax_charge = Convert.ToDecimal(taxCharge.Replace('.', ','));
+                feeItem.penalty = Convert.ToDecimal(penalty.Replace('.', ','));
                 entities.SaveChanges();
                 return Redirect(Url.Action("listado", "cuotas", new { area = "coadmin" }));
             }
@@ -344,17 +491,17 @@ namespace WebApplication1.Areas.coadmin.Controllers
         }
 
         [HttpPost]
-        public ActionResult addfee(string fee_name, decimal cost, decimal taxCharge, 
-            decimal penalty, long bank_id, string merchant_account)
+        public ActionResult addfee(string fee_name, string cost, string taxCharge,
+            string penalty, long bank_id, string merchant_account)
         {
             long userId = (long)Session["USER_ID"];
             fee feeItem = new fee();
             feeItem.name = fee_name;
-            feeItem.cost = cost;
+            feeItem.cost = Convert.ToDecimal(cost.Replace('.', ','));
             feeItem.bank_id = bank_id;
             feeItem.merchant_account = merchant_account;
-            feeItem.tax_charge = taxCharge;
-            feeItem.penalty = penalty;
+            feeItem.tax_charge = Convert.ToDecimal(taxCharge.Replace('.', ','));
+            feeItem.penalty = Convert.ToDecimal(penalty.Replace('.', ','));
             feeItem.created_at = DateTime.Now;
             feeItem.user_id = userId;
             feeItem.community_id = Convert.ToInt64(Session["CURRENT_COMU"]);
@@ -367,7 +514,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
 
         [HttpPost]
         public ActionResult addbank(string account_name, string account_number, 
-            string bank_name, string route_number)
+            string bank_name, string route_number, long? nC)
         {
             long userId = (long)Session["USER_ID"];
             bank bankItem = new bank();
@@ -381,7 +528,38 @@ namespace WebApplication1.Areas.coadmin.Controllers
             entities.banks.Add(bankItem);
 
             entities.SaveChanges();
-            return Redirect(Url.Action("agregar", "cuotas", new { area = "coadmin" }));
+            if (nC == 1)
+            {
+                return Redirect(Url.Action("agregar", "cuotas", new { area = "coadmin" }));
+            }
+            else
+            {
+                return Redirect(Url.Action("listadoCuentas", "cuotas", new { area = "coadmin" }));
+            }
+           
+        }
+
+        [HttpPost]
+        public ActionResult editBank(long account_id, string account_name, string account_number,
+            string bank_name, string route_number)
+        {
+            long userId = (long)Session["USER_ID"];
+            bank bankItem = entities.banks.Find(account_id);
+
+            if (bankItem != null)
+            {
+                bankItem.account_name = account_name;
+                bankItem.account_number = account_number;
+                bankItem.bank_name = bank_name;
+                bankItem.route_number = route_number;
+                bankItem.updated_at = DateTime.Now;
+                entities.SaveChanges();
+                return Redirect(Url.Action("listadoCuentas", "cuotas", new { area = "coadmin" }));
+            }
+            else
+            {
+                return Redirect(ep.GetLogoutUrl());
+            }
         }
 
         public JsonResult DeleteFee(long feeId)
@@ -393,6 +571,30 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 entities.SaveChanges();
                 return Json(new { result = "succes" });
             } catch(Exception ex)
+            {
+                return Json(new { result = "error", exception = ex.Message });
+            }
+        }
+
+        public JsonResult DeleteBank(long bankId)
+        {           
+            try
+            {
+                List<fee> feeList = entities.fees.Where(x=> x.bank_id == bankId).ToList();
+                if (feeList.Count == 0)
+                {
+                    bank bankItem = entities.banks.Find(bankId);
+                    entities.banks.Remove(bankItem);
+                    entities.SaveChanges();
+                    return Json(new { result = "succes" });
+                }
+                else
+                {
+                    return Json(new { result = "NotAlowed"});
+                }
+                
+            }
+            catch (Exception ex)
             {
                 return Json(new { result = "error", exception = ex.Message });
             }

@@ -460,6 +460,7 @@
     <Compile Include="Areas\coadmin\ViewModels\emailViewModel.cs" />
     <Compile Include="Areas\coadmin\ViewModels\eventosViewModel.cs" />
     <Compile Include="Areas\coadmin\ViewModels\facilidadesViewModel.cs" />
+    <Compile Include="Areas\coadmin\ViewModels\BancosViewModel.cs" />
     <Compile Include="Areas\coadmin\ViewModels\listadoCuotasViewModel.cs" />
     <Compile Include="Areas\coadmin\ViewModels\listadoPlantillasViewModel.cs" />
     <Compile Include="Areas\coadmin\ViewModels\listadoTitularesViewModel.cs" />
@@ -1485,7 +1486,7 @@
     <Content Include="Areas\coadmin\Views\Shared\Email_Login.cshtml" />
     <Content Include="Areas\coadmin\Views\documentos\ver.cshtml" />
     <Content Include="Areas\coadmin\Views\cuotas\agregar.cshtml" />
-    <Content Include="Areas\coadmin\Views\cuotas\agregarcuenta.cshtml" />
+    <Content Include="Areas\coadmin\Views\cuotas\agregarCuenta.cshtml" />
     <Content Include="Areas\coadmin\Views\cuotas\pagos.cshtml" />
     <Content Include="Areas\webmaster\Views\pagos\recibidos.cshtml" />
     <Content Include="Areas\coadmin\Views\cuotas\listado.cshtml" />
@@ -1525,6 +1526,8 @@
     <Content Include="Areas\webmaster\Views\categorias\agregar.cshtml" />
     <Content Include="Areas\webmaster\Views\categorias\editar.cshtml" />
     <Content Include="Areas\webmaster\Views\categorias\listado.cshtml" />
+    <Content Include="Areas\coadmin\Views\cuotas\listadoCuentas.cshtml" />
+    <Content Include="Areas\coadmin\Views\cuotas\editarCuenta.cshtml" />
     <None Include="Properties\PublishProfiles\Default Settings.pubxml" />
     <None Include="Properties\PublishProfiles\Default Settings1.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />

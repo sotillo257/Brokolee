@@ -188,7 +188,7 @@
                             <div class="form-group row">
                                 <label for="example-date-input" class="col-sm-3 col-form-label">Desde</label>
                                 <div class="col-sm-9">
-                                    <input class="hiddenRequired" name="since"
+                                    <input autocomplete="off" class="hiddenRequired" name="since"
                                            id="fecha2">
                                     <small class="form-text text-muted">Mes / día / año</small>
                                 </div>
@@ -196,7 +196,7 @@
                             <div class="form-group row">
                                 <label for="example-date-input" class="col-sm-3 col-form-label">Hasta</label>
                                 <div class="col-sm-9">
-                                    <input class="hiddenRequired" name="until"
+                                    <input autocomplete="off" class="hiddenRequired" name="until"
                                            id="fecha3">
                                     <small class="form-text text-muted">Mes / día / año</small>
                                 </div>
@@ -344,7 +344,7 @@
     $('#fecha1').datepicker({
         dateFormat: 'mm/dd/yy',
         changeMonth: true,
-        changeYear: true
+        changeYear: true,        
 
     });
 
@@ -398,7 +398,7 @@
     $('#fecha3').datepicker({
     dateFormat: 'mm/dd/yy',
         changeMonth: true,
-        changeYear: true
+        changeYear: true,       
 
     });
 

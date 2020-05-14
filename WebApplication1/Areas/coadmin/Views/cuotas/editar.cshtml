@@ -52,7 +52,7 @@
                             <div class="form-group row">
                                 <label for="example-email-input" class="col-sm-3 col-form-label">Nombre de la cuota</label>
                                 <div class="col-sm-9">
-                                    <input class="form-control" type="text" value="@Model.feeName" name="fee_name" required
+                                    <input maxlength="30" class="form-control soloTexto" type="text" value="@Model.feeName" name="fee_name" required
                                            placeholder="Cuota..." id="example-email-input"
                                            data-toggle="tooltip" title="Nombre de la cuota">
                                     <small class="form-text text-muted">Nombre de la cuota</small>
@@ -62,7 +62,7 @@
                             <div class="form-group row">
                                 <label for="example-name1-input" class="col-sm-3 col-form-label">Costo</label>
                                 <div class="col-sm-9">
-                                    <input class="form-control" type="text" value="@Model.cost" name="cost" required
+                                    <input class="form-control" maxlength="20" type="text" onkeypress="return filterFloat(event,this);" value="@Model.cost.ToString().Replace(',', '.')" name="cost" required
                                            placeholder="0.00" id="example-name1-input" 
                                            data-toggle="tooltip" title="Costo"/>
                                     <small class="form-text text-muted">Costo</small>
@@ -72,7 +72,7 @@
                             <div class="form-group row">
                                 <label for="example-name1-input" class="col-sm-3 col-form-label">Cargo de impuestos</label>
                                 <div class="col-sm-9">
-                                    <input class="form-control" type="text" value="@Model.taxCharge" name="taxCharge" required
+                                    <input class="form-control" maxlength="20" type="text" onkeypress="return filterFloat(event,this);" value="@Model.taxCharge.ToString().Replace(',', '.')" name="taxCharge" required
                                            placeholder="0.00" id="example-name1-input"
                                            data-toggle="tooltip" title="Cargo de impuestos"
                                            />
@@ -83,7 +83,7 @@
                             <div class="form-group row">
                                 <label for="example-name1-input" class="col-sm-3 col-form-label">Pena</label>
                                 <div class="col-sm-9">
-                                    <input class="form-control" type="text" value="@Model.penalty" name="penalty" required
+                                    <input class="form-control" maxlength="20" type="text" onkeypress="return filterFloat(event,this);" value="@Model.penalty.ToString().Replace(',', '.')" name="penalty" required
                                            placeholder="0.00" id="example-name1-input" data-toggle="tooltip"
                                            title="Pena"
                                            />
@@ -94,20 +94,19 @@
                             <div class="form-group row">
                                 <label class="col-sm-3 col-form-label">Cuenta de banco</label>
                                 <div class="col-sm-6">
-                                    <select class="form-control" name="bank_id"
-                                            data-toggle="tooltip" title="Cuenta de banco"
-                                            required>
+                                    <select required name="bank_id" class="selectpicker form-control" data-selected-text-format="count > 2" data-container="body" data-live-search="true" data-hide-disabled="true" data-actions-box="true" data-virtual-scroll="true">
                                         <option value="">Elije una cuenta</option>
                                         @foreach (var item in Model.bankList)
                                         {
-                                            if (item.id == Model.bankId)
+                                            if (Model.bankId == item.id)
                                             {
-                                                <option value="@item.id" selected>@item.account_number</option>
+                                                <option selected value="@item.id">@item.account_name ( @item.bank_name )</option>
                                             }
                                             else
                                             {
-                                                <option value="@item.id">@item.account_number</option>
+                                                <option value="@item.id">@item.account_name ( @item.bank_name )</option>
                                             }
+
                                         }
                                     </select>
                                     <small class="form-text text-muted">Cuenta de banco</small>
@@ -122,7 +121,7 @@
                             <div class="form-group row">
                                 <label for="example-lastname1-input" class="col-sm-3 col-form-label">Cuenta comercial</label>
                                 <div class="col-sm-9">
-                                    <input class="form-control" type="text" value="@Model.merchantAccount" name="merchant_account" required
+                                    <input class="form-control soloNumero" maxlength="20" type="text" value="@Model.merchantAccount" name="merchant_account" required
                                            placeholder="XXX-XXXXXXXX-X-XX" id="example-lastname1-input"
                                            data-toggle="tooltip" title="Cuenta comercial"
                                            />

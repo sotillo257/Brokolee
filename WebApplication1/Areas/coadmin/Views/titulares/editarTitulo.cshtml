@@ -130,7 +130,7 @@
                             <div class="form-group row">
                                 <label for="apartment-input" class="col-sm-3 col-form-label">Propiedad</label>
                                 <div class="col-sm-9">
-                                    <input class="form-control" type="text" value="@Model.titulo.apartment"
+                                    <input maxlength="30" class="form-control soloTexto" type="text" value="@Model.titulo.apartment"
                                            name="apartment" required
                                            data-toggle="tooltip"
                                            placeholder="Propiedad" id="apartment-input">
@@ -219,14 +219,14 @@
 
                                         {
 
-                                            <input required
+                                            <input autocomplete="off" class="hiddenRequired"
                                                    value="@Convert.ToDateTime(Model.titulo.since).ToString("MM/dd/yyyy")"
                                                    id="fecha22" name="since">
                                         }
                                         else
                                         {
 
-                                            <input id="fecha22" name="since">
+                                            <input autocomplete="off" class="hiddenRequired" id="fecha22" name="since">
 
                                         }
                                         @*  <small class="form-text text-muted">dia / Mes / año</small>*@
@@ -237,13 +237,13 @@
                                     <div class="col-sm-9">
                                         @if (Model.titulo.until != null)
                                         {
-                                            <input required
+                                            <input autocomplete="off" class="hiddenRequired"
                                                    value="@Convert.ToDateTime(Model.titulo.until).ToString("MM/dd/yyyy")"
                                                    id="fecha33" name="until">
                                         }
                                         else
                                         {
-                                            <input id="fecha33" name="until">
+                                            <input autocomplete="off" class="hiddenRequired" id="fecha33" name="until">
                                         }
                                         @*<small class="form-text text-muted">dia / Mes / año</small>*@
                                     </div>
@@ -255,7 +255,7 @@
                                 <div class="form-group row">
                                     <label for="example-name2-input" class="col-sm-3 col-form-label">Nombre</label>
                                     <div class="col-sm-9">
-                                        <input class="form-control"
+                                        <input maxlength="30" class="form-control soloTexto hiddenRequired" 
                                                type="text" data-toggle="tooltip"
                                                value="@Model.titulo.tenant_first_name1"
                                                placeholder="Nombre"
@@ -267,7 +267,7 @@
                                 <div class="form-group row">
                                     <label for="example-lastname2-input-tenant-last-name" class="col-sm-3 col-form-label">Apellido paterno</label>
                                     <div class="col-sm-9">
-                                        <input class="form-control"
+                                        <input maxlength="20" class="form-control soloTexto hiddenRequired" 
                                                type="text" data-toggle="tooltip"
                                                value="@Model.titulo.tenant_last_name1"
                                                name="tenant_last_name1"
@@ -279,7 +279,7 @@
                                 <div class="form-group row">
                                     <label for="example-lastname2m-input-tenant-mother-last-name" class="col-sm-3 col-form-label">Apellido materno</label>
                                     <div class="col-sm-9">
-                                        <input class="form-control"
+                                        <input maxlength="20" class="form-control soloTexto hiddenRequired"
                                                type="text" data-toggle="tooltip"
                                                value="@Model.titulo.tenant_mother_last_name1"
                                                name="tenant_mother_last_name1"
@@ -292,7 +292,7 @@
                                 <div class="form-group row">
                                     <label for="example-address1-input-leased-postal-address" class="col-sm-3 col-form-label">Dirección postal</label>
                                     <div class="col-sm-9">
-                                        <input class="form-control"
+                                        <input maxlength="15" class="form-control hiddenRequired"
                                                type="text" data-toggle="tooltip"
                                                value="@Model.titulo.leased_postal_address"
                                                name="leased_postal_address"
@@ -305,7 +305,7 @@
                                 <div class="form-group row">
                                     <label for="example-address2-input-leased-residential-address" class="col-sm-3 col-form-label">Dirección residencial</label>
                                     <div class="col-sm-9">
-                                        <input class="form-control"
+                                        <input maxlength="90" class="form-control hiddenRequired"
                                                type="text"
                                                value="@Model.titulo.leased_residential_address"
                                                data-toggle="tooltip"

@@ -64,7 +64,7 @@
                             <div class="form-group row">
                                 <label for="example-email-input" class="col-sm-3 col-form-label">Nombre</label>
                                 <div class="col-sm-9">
-                                    <input class="form-control" type="text"
+                                    <input maxlength="30"  class="form-control soloTexto" type="text"
                                            data-toggle="tooltip" title="Nombre del contrato"
                                            value="@Model.editContract.first_name"
                                            name="first_name" required
@@ -76,7 +76,7 @@
                             <div class="form-group row">
                                 <label for="example-date-input" class="col-sm-3 col-form-label">Fecha del contrato</label>
                                 <div class="col-sm-9">
-                                    <input class="form-control" type="date" required
+                                    <input class="form-control" type="date" required autocomplete="off" 
                                            value="@Convert.ToDateTime(Model.editContract.date_contract).ToString("yyyy-MM-dd")"
                                            name="date_contract" data-toggle="tooltip" title="Mes / día / año | Fecha del día que se subió el contrato"
                                            id="example-date-input">
@@ -87,7 +87,7 @@
                             <div class="form-group row">
                                 <label for="example-date-input" class="col-sm-3 col-form-label">Fecha de notificación</label>
                                 <div class="col-sm-9">
-                                    <input class="form-control" type="date" name="date_notification"
+                                    <input class="form-control" type="date" name="date_notification" autocomplete="off" required
                                            data-toggle="tooltip" title="Mes / día / año | Fecha que se recibirá recordatorio de vencimiento del contrato"
                                            value="@Convert.ToDateTime(Model.editContract.date_notification).ToString("yyyy-MM-dd")"
                                            id="example-date-input-ven">
@@ -110,7 +110,7 @@
                             <div class="form-group row">
                                 <label for="example-lastname1-input" class="col-sm-3 col-form-label">Descripción</label>
                                 <div class="col-sm-9">
-                                    <textarea class="form-control" rows="3" name="description"
+                                    <textarea required class="form-control" rows="3" name="description"
                                               data-toggle="tooltip" title="Descripción del contrato"
                                               placeholder="Descripción">@Model.editContract.description</textarea>
                                     <small class="form-text text-muted">Descripción del contrato</small>

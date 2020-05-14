@@ -68,7 +68,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-dollar-sign"></i></span>
                                     </div>
-                                    <input type="number" step="any" maxlength="10" class="form-control" name="payment"
+                                    <input maxlength="20" type="text" onkeypress="return filterFloat(event,this);" class="form-control" name="payment"
                                            data-toggle="tooltip" title="Pago recibido por el paquete adquirido" required />
                                 </div>
                                 <small class="form-text text-muted">Pago recibido por el paquete adquirido</small>
