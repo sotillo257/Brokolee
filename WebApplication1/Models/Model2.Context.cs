@@ -27,7 +27,6 @@ namespace WebApplication1.Models
     
         public virtual DbSet<bank> banks { get; set; }
         public virtual DbSet<blogcomment> blogcomments { get; set; }
-        public virtual DbSet<book> books { get; set; }
         public virtual DbSet<carpentry> carpentries { get; set; }
         public virtual DbSet<category> categories { get; set; }
         public virtual DbSet<chatmessage> chatmessages { get; set; }
@@ -64,5 +63,6 @@ namespace WebApplication1.Models
         public virtual DbSet<blog> blogs { get; set; }
         public virtual DbSet<task> tasks { get; set; }
         public virtual DbSet<fee> fees { get; set; }
+        public virtual DbSet<book> books { get; set; }
     }
 }

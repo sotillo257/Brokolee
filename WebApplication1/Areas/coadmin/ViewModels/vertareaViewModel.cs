@@ -20,6 +20,6 @@ namespace WebApplication1.Areas.coadmin.ViewModels
         public int messageCount { get; set; }
         public List<task> pubTaskList { get; set; }
         public List<ShowMessage> pubMessageList { get; set; }
-        public List<TaskVerItem> taskcommentList { get; set; }
+        public List<taskcomment> taskcommentList { get; set; }
     }
 }

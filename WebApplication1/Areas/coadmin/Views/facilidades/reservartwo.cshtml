@@ -53,7 +53,7 @@
                             <div class="form-group row">
                                 <label for="example-email-input" class="col-sm-3 col-form-label">Nombre</label>
                                 <div class="col-sm-9">
-                                    <input class="form-control" type="text" value="" name="first_name"
+                                    <input maxlength="30" class="form-control soloTexto" type="text" value="" name="first_name"
                                            placeholder="Nombre" id="example-email-input" required>
                                     <small class="form-text text-muted">Nombre del titular</small>
                                 </div>
@@ -62,7 +62,7 @@
                             <div class="form-group row">
                                 <label for="example-lastname1-input" class="col-sm-3 col-form-label">Descripción</label>
                                 <div class="col-sm-9">
-                                    <textarea class="form-control" rows="3" name="description" placeholder="Descripción"></textarea>
+                                    <textarea class="form-control" rows="3" name="description" placeholder="Descripción" required></textarea>
                                     <small class="form-text text-muted">Descripción de la actividad</small>
                                 </div>
                             </div>
@@ -70,7 +70,7 @@
                             <div class="form-group row">
                                 <label for="example-time-input" class="col-sm-3 col-form-label">Hora de inicio</label>
                                 <div class="col-sm-9">
-                                    <input class="form-control" type="time" name="start_time" value="" id="example-time-input" required />
+                                    <input autocomplete="off" class="form-control" type="time" name="start_time" value="" id="example-time-input" required />
                                     <small class="form-text text-muted">Hora de inicio de la actividad</small>
                                 </div>
                             </div>
@@ -78,7 +78,7 @@
                             <div class="form-group row">
                                 <label for="example-time-input" class="col-sm-3 col-form-label">Hora de fin</label>
                                 <div class="col-sm-9">
-                                    <input class="form-control" type="time" value="" name="end_time" id="example-time-input" required />
+                                    <input autocomplete="off" class="form-control" type="time" value="" name="end_time" id="example-time-input" required />
                                     <small class="form-text text-muted">Hora de fin de la actividad</small>
                                 </div>
                             </div>
@@ -86,7 +86,7 @@
                             <div class="form-group row">
                                 <label for="example-date-input" class="col-sm-3 col-form-label">Fecha solicitada</label>
                                 <div class="col-sm-9">
-                                    <input class="form-control" type="date" name="requested_date" value="" id="example-date-input" required />
+                                    <input autocomplete="off" class="form-control" type="date" name="requested_date" value="" id="example-date-input" required />
                                     <small class="form-text text-muted">Mes / día / año | Fecha de la actividad</small>
                                 </div>
                             </div>
@@ -98,7 +98,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-dollar-sign"></i></span>
                                         </div>
-                                        <input type="text" class="form-control" name="cost_per_reserve" required />
+                                        <input maxlength="20" type="text" onkeypress="return filterFloat(event,this);" class="form-control" name="cost_per_reserve" required />
                                     </div>
                                     <small class="form-text text-muted">Costo total de la reserva</small>
                                 </div>

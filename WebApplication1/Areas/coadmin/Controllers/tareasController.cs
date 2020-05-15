@@ -16,7 +16,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
         List<community> communityList = new List<community>();
 
         // GET: coadmin/tareas
-        public ActionResult listado(string searchStr = "")
+        public ActionResult listado(string Error, string searchStr = "")
         {
             if (Session["USER_ID"] != null)
             {
@@ -69,6 +69,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);                    
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.titularList = titularList;
+                    ViewBag.msgError = Error;
                     return View(viewModel);
                 }
                 catch(Exception ex)
@@ -208,13 +209,13 @@ namespace WebApplication1.Areas.coadmin.Controllers
                         }
                         else
                         {
-                            return Redirect(Url.Action("listado", "contacto", new { area = "coadmin", Error = "No existe ese elemento" }));
+                            return Redirect(Url.Action("listado", "tareas", new { area = "coadmin", Error = "No existe ese elemento" }));
                         }
                        
                     }
                     else
                     {
-                        return Redirect(Url.Action("listado", "contacto", new { area = "coadmin" }));
+                        return Redirect(Url.Action("listado", "tareas", new { area = "coadmin" }));
                     }
                 }
                 else
@@ -331,52 +332,9 @@ namespace WebApplication1.Areas.coadmin.Controllers
                         if (viewTask != null)
                         {                            
                             List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
-                            List<TaskVerItem> taskcommentList = new List<TaskVerItem>();
-                            List<taskcomment> commentList = entities.taskcomments
-                                .Where(m => m.task_id == taskID).ToList();
-                            foreach (var item in commentList)
-                            {
-                                TaskVerItem taskVerItem = new TaskVerItem();
-                                taskVerItem.comment_datetime = item.created_at;
-                                taskVerItem.task_comment = item.comment;
-                                long taskUserId = item.user_id;
-                                user taskUser = entities.users.Find(taskUserId);
-                                taskVerItem.comment_username = taskUser.first_name1 + " " + taskUser.last_name1;
-                                taskcommentList.Add(taskVerItem);
-                            }
-                            taskuser taskuser = entities.taskusers.Where(m => m.user_id == userId).FirstOrDefault();
-                            string taskList = taskuser.task_list;
-                            if (taskList != null)
-                            {
-                                string[] strList = taskList.Split(',');
-                                var list = new List<string>(strList);
-                                list.Remove(taskID.ToString());
-                                string tempListStr = "";
-
-                                foreach (var item in list)
-                                {
-                                    if (item == list.Last())
-                                    {
-                                        tempListStr += item;
-                                    }
-                                    else
-                                    {
-                                        tempListStr += item + ",";
-                                    }
-                                }
-                                if (tempListStr == "")
-                                {
-                                    taskuser.task_list = null;
-                                }
-                                else
-                                {
-                                    taskuser.task_list = tempListStr;
-                                }
-                                entities.SaveChanges();
-                            }
+                            List<taskcomment> commentList = entities.taskcomments.Where(m => m.task_id == taskID).ToList();                            
 
                             vertareaViewModel viewModel = new vertareaViewModel();
-
                             communityList = ep.GetCommunityList(userId);
                             viewModel.communityList = communityList;
 
@@ -384,7 +342,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                             viewModel.side_sub_menu = "task_process_ver";
                             viewModel.document_category_list = entities.document_type.ToList();
                             viewModel.viewTask = viewTask;
-                            viewModel.taskcommentList = taskcommentList;
+                            viewModel.taskcommentList = commentList;
                             viewModel.curUser = curUser;
                             viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                             viewModel.pubMessageList = pubMessageList;
@@ -434,6 +392,33 @@ namespace WebApplication1.Areas.coadmin.Controllers
             } catch(Exception ex)
             {
                 return Json(new { result = "error", exception = ex.HResult });
+            }
+        }
+
+        [HttpPost]
+        public ActionResult newComment(string comment, long taskId)
+        {           
+            try
+            {
+                long userId = (long)Session["USER_ID"];
+                taskcomment newTaskc = new taskcomment();
+                newTaskc.comment = comment;
+                newTaskc.task_id = taskId;
+                newTaskc.user_id = userId;
+                newTaskc.created_at = DateTime.Now;
+                entities.taskcomments.Add(newTaskc);
+                entities.SaveChanges();
+                return Redirect(Url.Action("vertarea", "tareas", new { area = "coadmin", taskID = taskId }));
+            }
+             catch (Exception ex)
+            {
+                return Redirect(Url.Action("vertarea", "tareas",
+                    new
+                    {
+                        area = "coadmin",
+                        taskID = taskId,
+                        exception = ex.Message
+                    }));
             }
         }
     }

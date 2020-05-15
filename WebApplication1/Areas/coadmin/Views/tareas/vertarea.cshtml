@@ -99,7 +99,7 @@
                                         <a data-toggle="collapse" data-parent="#accordion"
                                            href="#collapseOne" aria-expanded="false"
                                            aria-controls="collapseOne" class="text-dark">
-                                            Agregar comentario para la tarea
+                                            Agregar nuevo comentario
                                         </a>
                                     </h5>
                                 </div>
@@ -109,18 +109,28 @@
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="col-lg-12">
-                                                <form>
-                                                    <div class="form-group">
-                                                        <input type="text" class="form-control" placeholder="Título">
+
+                                                 @using (Html.BeginForm("newComment", "tareas", FormMethod.Post,
+                      new
+                      {
+                          id = "newcommentF",
+                          @class = "",
+                          area = "coadmin",
+                          enctype = "multipart/form-data"
+                      }))
+                                                 {
+                                                 <div class="form-group">
+                                                        <input required name="comment" type="text" maxlength="50" class="form-control" placeholder="Comentario">
                                                     </div>
-                                                </form>
-                                                <div id="summernote" class="mb-2"></div>
+                                                    <div id="summernote" class="mb-2"></div>
                                                 <div class="form-group mb-0">
+                                                    <input hidden name="taskId" value="@Model.viewTask.id"/>
                                                     <div class="my-3">
-                                                        <a href=""><button class="btn btn-primary"> <span>Guardar</span></button></a>
-                                                        <a href=""><button type="button" class="btn btn-danger waves-effect waves-light">Cancelar</button></a>
+                                                        <a href=""><button type="submit" class="btn btn-primary"> <span>Agregar comentario</span></button></a>
                                                     </div>
                                                 </div>
+                                                 
+                                                 }
                                             </div>
                                         </div>
                                     </div>
@@ -128,44 +138,60 @@
                             </div>
                         </div>
                         <div class="main-timeline mt-3">
-                            @for (int i = 0; i < Model.taskcommentList.Count; i++)
+                            @foreach (var item in Model.taskcommentList)
                             {
-                                if (i % 2 == 0)
-                                {
-                                    <div class="timeline">
-                                        <span class="timeline-icon"></span>
-                                        <span class="year">@Convert.ToDateTime(Model.taskcommentList[i].comment_datetime).ToString("dd MMM yyyy")</span>
-                                        <div class="timeline-content">
-                                            <h5 class="title">@Model.taskcommentList[i].comment_username</h5>
-                                            <span class="post text-right"><i class="mdi mdi-clock"></i> @Convert.ToDateTime(Model.taskcommentList[i].comment_datetime).ToString("hh:mm tt")</span>
-                                            <p class="description">
-                                                @Model.taskcommentList[i].task_comment.
-                                            </p>
-                                        </div>
+                                <div class="timeline">
+                                    <span class="timeline-icon"></span>
+                                    <span class="year">@Convert.ToDateTime(item.created_at).ToString("dd MMM yyyy")</span>
+                                    <div class="timeline-content">
+                                        <h5 class="title">@item.user.first_name1 @item.user.last_name1</h5>
+                                        <span class="post text-right"><i class="mdi mdi-clock"></i>@Convert.ToDateTime(item.created_at).ToString("hh:mm tt")</span>
+                                        <p class="description">
+                                            @item.comment
+                                        </p>
                                     </div>
-                                }
-                                else
-                                {
-                                    <div class="timeline">
-                                        <span class="timeline-icon"></span>
-                                        <span class="year">@Convert.ToDateTime(Model.taskcommentList[i].comment_datetime).ToString("dd MMM yyyy")</span>
-                                        <div class="timeline-content">
-                                            <h5 class="title">@Model.taskcommentList[i].comment_username</h5>
-                                            <span class="post text-right"><i class="mdi mdi-clock"></i> @Convert.ToDateTime(Model.taskcommentList[i].comment_datetime).ToString("hh:mm tt")</span>
-                                            <p class="description">
-                                                @Model.taskcommentList[i].task_comment.
-                                            </p>
-                                            <div class="timeline-body">
-                                                <div class="m-t-20">
-                                                    <a href="#">
-                                                        <img alt="" src="../assets/images/small/img-1.jpg">
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                }
+                                </div>
                             }
+
+
+                            @*@for (int i = 0; i < Model.taskcommentList.Count; i++)
+        {
+            if (i % 2 == 0)
+            {
+                <div class="timeline">
+                    <span class="timeline-icon"></span>
+                    <span class="year">@Convert.ToDateTime(Model.taskcommentList[i].comment_datetime).ToString("dd MMM yyyy")</span>
+                    <div class="timeline-content">
+                        <h5 class="title">@Model.taskcommentList[i].comment_username</h5>
+                        <span class="post text-right"><i class="mdi mdi-clock"></i> @Convert.ToDateTime(Model.taskcommentList[i].comment_datetime).ToString("hh:mm tt")</span>
+                        <p class="description">
+                            @Model.taskcommentList[i].task_comment.
+                        </p>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="timeline">
+                    <span class="timeline-icon"></span>
+                    <span class="year">@Convert.ToDateTime(Model.taskcommentList[i].comment_datetime).ToString("dd MMM yyyy")</span>
+                    <div class="timeline-content">
+                        <h5 class="title">@Model.taskcommentList[i].comment_username</h5>
+                        <span class="post text-right"><i class="mdi mdi-clock"></i> @Convert.ToDateTime(Model.taskcommentList[i].comment_datetime).ToString("hh:mm tt")</span>
+                        <p class="description">
+                            @Model.taskcommentList[i].task_comment.
+                        </p>
+                        <div class="timeline-body">
+                            <div class="m-t-20">
+                                <a href="#">
+                                    <img alt="" src="../assets/images/small/img-1.jpg">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }*@
                         </div>
                     </div>
                 </div>

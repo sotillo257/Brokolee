@@ -15,7 +15,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
         pjrdev_condominiosEntities entities = new pjrdev_condominiosEntities();
         EFPublicRepository ep = new EFPublicRepository();
         // GET: webmaster/suplidores
-        public ActionResult listado(string searchStr = "", int searchCategoryId = 0)
+        public ActionResult listado(string Error, string searchStr = "", int searchCategoryId = 0)
         {
             if (Session["USER_ID"] != null)
             {
@@ -74,6 +74,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                 viewModel.pubMessageList = pubMessageList;
                 viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                ViewBag.msgError = Error;
                 return View(viewModel);
             } else
             {
@@ -87,25 +88,41 @@ namespace WebApplication1.Areas.webmaster.Controllers
             {
                 if (editID != null)
                 {
-                    long userId = (long)Session["USER_ID"];
-                    user curUser = entities.users.Find(userId);
-                    List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
-                    supplier editSupplier = entities.suppliers.Find(editID);
-                    editarSuplidoresViewModel viewModel = new editarSuplidoresViewModel();
-                    viewModel.side_menu = "suplidores";
-                    viewModel.side_sub_menu = "supplier_directory";
-                    viewModel.editSupplier = editSupplier;
-                    viewModel.document_category_list = entities.document_type.ToList();
-                    viewModel.categoryList = entities.categories.ToList();
-                    viewModel.curUser = curUser;
-                    viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
-                    viewModel.pubMessageList = pubMessageList;
-                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                    return View(viewModel);
+                    List<category> listC = entities.categories.ToList();
+                    if (listC.Count > 0)
+                    {
+                        supplier editSupplier = entities.suppliers.Find(editID);
+                        if (editSupplier != null)
+                        {
+                            long userId = (long)Session["USER_ID"];
+                            user curUser = entities.users.Find(userId);
+                            List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
+                            editarSuplidoresViewModel viewModel = new editarSuplidoresViewModel();
+                            viewModel.side_menu = "suplidores";
+                            viewModel.side_sub_menu = "supplier_directory";
+                            viewModel.editSupplier = editSupplier;
+                            viewModel.document_category_list = entities.document_type.ToList();
+                            viewModel.categoryList = entities.categories.ToList();
+                            viewModel.curUser = curUser;
+                            viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
+                            viewModel.pubMessageList = pubMessageList;
+                            viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                            return View(viewModel);
+                        }
+                        else
+                        {
+                            return Redirect(Url.Action("listado", "suplidores", new { area = "webmaster", Error = "No existe ese elemento" }));
+                        }
+                    }
+                    else
+                    {
+                        return Redirect(Url.Action("listado", "suplidores", new { area = "webmaster", Error = "Se necesita crear una categoria para editar suplidores" }));
+                    }                    
+                    
                 }
                 else
                 {
-                    return Redirect(Url.Action("NotFound", "Error"));
+                    return Redirect(Url.Action("listado", "suplidores", new { area = "webmaster" }));
                 }                
             } else
             {
@@ -119,28 +136,36 @@ namespace WebApplication1.Areas.webmaster.Controllers
             {
                 if (viewID != null)
                 {
-                    long userId = (long)Session["USER_ID"];
-                    user curUser = entities.users.Find(userId);
-                    List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
-                    var query = (from r in entities.comments where r.supplier_id == viewID select r);
                     supplier supplier = entities.suppliers.Find(viewID);
-                    category category = entities.categories.Find(supplier.category_id);
-                    verSuplidoresViewModel viewModel = new verSuplidoresViewModel();
-                    viewModel.side_menu = "suplidores";
-                    viewModel.side_sub_menu = "supplier_directory";
-                    viewModel.commentList = query.ToList();
-                    viewModel.viewSupplier = supplier;
-                    viewModel.document_category_list = entities.document_type.ToList();
-                    viewModel.supplierCategory = category;
-                    viewModel.curUser = curUser;
-                    viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
-                    viewModel.pubMessageList = pubMessageList;
-                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                    return View(viewModel);
+                    if (supplier != null)
+                    {
+                        long userId = (long)Session["USER_ID"];
+                        user curUser = entities.users.Find(userId);
+                        List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
+                        var query = (from r in entities.comments where r.supplier_id == viewID select r);                       
+                        category category = entities.categories.Find(supplier.category_id);
+                        verSuplidoresViewModel viewModel = new verSuplidoresViewModel();
+                        viewModel.side_menu = "suplidores";
+                        viewModel.side_sub_menu = "supplier_directory";
+                        viewModel.commentList = query.ToList();
+                        viewModel.viewSupplier = supplier;
+                        viewModel.document_category_list = entities.document_type.ToList();
+                        viewModel.supplierCategory = category;
+                        viewModel.curUser = curUser;
+                        viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
+                        viewModel.pubMessageList = pubMessageList;
+                        viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                        return View(viewModel);
+                    }
+                    else
+                    {
+                        return Redirect(Url.Action("listado", "suplidores", new { area = "webmaster", Error = "No existe ese elemento" }));
+                    }
+                   
                 }
                 else
                 {
-                    return Redirect(Url.Action("NotFound", "Error"));
+                    return Redirect(Url.Action("listado", "suplidores", new { area = "webmaster" }));
                 }                
             } else
             {
@@ -152,19 +177,28 @@ namespace WebApplication1.Areas.webmaster.Controllers
         {
             if (Session["USER_ID"] != null)
             {
-                long userId = (long)Session["USER_ID"];
-                user curUser = entities.users.Find(userId);
-                List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
-                agregarSuplidoresViewModel viewModel = new agregarSuplidoresViewModel();
-                viewModel.side_menu = "suplidores";
-                viewModel.side_sub_menu = "supplier_directory";
-                viewModel.document_category_list = entities.document_type.ToList();
-                viewModel.categoryList = entities.categories.ToList();
-                viewModel.curUser = curUser;
-                viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
-                viewModel.pubMessageList = pubMessageList;
-                viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                return View(viewModel);
+                List<category> listC = entities.categories.ToList();
+                if (listC.Count > 0)
+                {
+                    long userId = (long)Session["USER_ID"];
+                    user curUser = entities.users.Find(userId);
+                    List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
+                    agregarSuplidoresViewModel viewModel = new agregarSuplidoresViewModel();
+                    viewModel.side_menu = "suplidores";
+                    viewModel.side_sub_menu = "supplier_directory";
+                    viewModel.document_category_list = entities.document_type.ToList();
+                    viewModel.categoryList = entities.categories.ToList();
+                    viewModel.curUser = curUser;
+                    viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
+                    viewModel.pubMessageList = pubMessageList;
+                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                    return View(viewModel);
+                }
+                else
+                {
+                    return Redirect(Url.Action("listado", "suplidores", new { area = "webmaster", Error = "Se necesita crear una categoria para registrar suplidores" }));
+                }
+                
             }
             else
             {

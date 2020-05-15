@@ -62,6 +62,7 @@
           <Property Name="requested_date" Type="datetime" />
           <Property Name="cost_per_reservation" Type="decimal" Precision="18" Scale="2" />
           <Property Name="created_at" Type="datetime" />
+          <Property Name="community_id" Type="bigint" />
         </EntityType>
         <EntityType Name="carpentry">
           <Key>
@@ -1164,19 +1165,6 @@
           <Property Name="blog_id" Type="Int64" Nullable="false" />
           <NavigationProperty Name="blog" Relationship="pjrdev_condominiosModel.FK_blogcomment_blogcomment" FromRole="blogcomment" ToRole="blog" />
         </EntityType>
-        <EntityType Name="book">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="first_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="start_time" Type="Time" Precision="7" />
-          <Property Name="end_time" Type="Time" Precision="7" />
-          <Property Name="requested_date" Type="DateTime" Precision="3" />
-          <Property Name="cost_per_reservation" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="created_at" Type="DateTime" Precision="3" />
-        </EntityType>
         <EntityType Name="carpentry">
           <Key>
             <PropertyRef Name="id" />
@@ -1784,7 +1772,6 @@
         <EntityContainer Name="pjrdev_condominiosEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="banks" EntityType="Self.bank" />
           <EntitySet Name="blogcomments" EntityType="Self.blogcomment" />
-          <EntitySet Name="books" EntityType="Self.book" />
           <EntitySet Name="carpentries" EntityType="Self.carpentry" />
           <EntitySet Name="categories" EntityType="Self.category" />
           <EntitySet Name="chatmessages" EntityType="Self.chatmessage" />
@@ -1949,6 +1936,7 @@
             <End Role="user" EntitySet="users" />
             <End Role="fee" EntitySet="fees" />
           </AssociationSet>
+          <EntitySet Name="books" EntityType="pjrdev_condominiosModel.book" />
           </EntityContainer>
         <EntityType Name="Vehiculo">
           <Key>
@@ -2331,6 +2319,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="book">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="first_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="start_time" Type="Time" Precision="7" />
+          <Property Name="end_time" Type="Time" Precision="7" />
+          <Property Name="requested_date" Type="DateTime" Precision="3" />
+          <Property Name="cost_per_reservation" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="created_at" Type="DateTime" Precision="3" />
+          <Property Name="community_id" Type="Int64" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2359,20 +2361,6 @@
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="postdate" ColumnName="postdate" />
                 <ScalarProperty Name="blog_id" ColumnName="blog_id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="books">
-            <EntityTypeMapping TypeName="pjrdev_condominiosModel.book">
-              <MappingFragment StoreEntitySet="book">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="first_name" ColumnName="first_name" />
-                <ScalarProperty Name="description" ColumnName="description" />
-                <ScalarProperty Name="start_time" ColumnName="start_time" />
-                <ScalarProperty Name="end_time" ColumnName="end_time" />
-                <ScalarProperty Name="requested_date" ColumnName="requested_date" />
-                <ScalarProperty Name="cost_per_reservation" ColumnName="cost_per_reservation" />
-                <ScalarProperty Name="created_at" ColumnName="created_at" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2947,6 +2935,21 @@
                 <ScalarProperty Name="bank_id" ColumnName="bank_id" />
                 <ScalarProperty Name="cost" ColumnName="cost" />
                 <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="books">
+            <EntityTypeMapping TypeName="pjrdev_condominiosModel.book">
+              <MappingFragment StoreEntitySet="book">
+                <ScalarProperty Name="community_id" ColumnName="community_id" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="cost_per_reservation" ColumnName="cost_per_reservation" />
+                <ScalarProperty Name="requested_date" ColumnName="requested_date" />
+                <ScalarProperty Name="end_time" ColumnName="end_time" />
+                <ScalarProperty Name="start_time" ColumnName="start_time" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="first_name" ColumnName="first_name" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

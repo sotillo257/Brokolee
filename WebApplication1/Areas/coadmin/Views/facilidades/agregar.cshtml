@@ -35,12 +35,25 @@
         <!-- end back button -->
 
         <div class="row">
-
+        
+            @if (ViewBag.msgError != null)
+            {
+                <div class="col-12">
+                    <div class="alert alert-danger" role="alert">
+                        <strong>Error: </strong> @ViewBag.msgError
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                </div>
+            }
             <div class="col-12">
                 <div class="card">
                     @using (Html.BeginForm("newfac", "facilidades",
                         FormMethod.Post,
-                       new { id = "newfacForm",
+                       new
+                       {
+                           id = "newfacForm",
                            @class = "",
                            area = "coadmin",
                            enctype = "multipart/form-data"
@@ -53,7 +66,7 @@
                             <div class="form-group row">
                                 <label for="example-email-input" class="col-sm-3 col-form-label">Nombre</label>
                                 <div class="col-sm-9">
-                                    <input class="form-control" type="text" value="" name="first_name" required
+                                    <input maxlength="30" class="form-control soloTexto" type="text" value="" name="first_name" required
                                            data-toggle="tooltip" title="Nombre de la facilidad"
                                            placeholder="Nombre" id="example-email-input">
                                     <small class="form-text text-muted">Nombre de la facilidad</small>
@@ -65,7 +78,7 @@
                                 <div class="col-sm-9">
                                     <textarea class="form-control" rows="3" name="description"
                                               data-toggle="tooltip" title="Descripción de la facilidad"
-                                              placeholder="Descripción"></textarea>
+                                              placeholder="Descripción" required></textarea>
                                     <small class="form-text text-muted">Descripción de la facilidad</small>
                                 </div>
                             </div>
@@ -73,7 +86,7 @@
                             <div class="form-group row">
                                 <label for="example-time-input" class="col-sm-3 col-form-label">Hora de inicio</label>
                                 <div class="col-sm-9">
-                                    <input class="form-control" type="time" name="start_time" required
+                                    <input autocomplete="off" class="form-control" type="time" name="start_time" required
                                            data-toggle="tooltip" title="Hora de inicio de disponibilidad"
                                            value="" id="example-time-input">
                                     <small class="form-text text-muted">Hora de inicio de disponibilidad</small>
@@ -83,7 +96,7 @@
                             <div class="form-group row">
                                 <label for="example-time-input" class="col-sm-3 col-form-label">Hora de fin</label>
                                 <div class="col-sm-9">
-                                    <input class="form-control" type="time" name="end_time" required
+                                    <input autocomplete="off" class="form-control" type="time" name="end_time" required
                                            data-toggle="tooltip" title="Hora de fin de disponibilidad"
                                            value="" id="example-time-input">
                                     <small class="form-text text-muted">Hora de fin de disponibilidad</small>
@@ -93,7 +106,7 @@
                             <div class="form-group row">
                                 <label class="col-sm-3 col-form-label">Duración de reservaciones</label>
                                 <div class="col-sm-9">
-                                    <select class="form-control" name="duration" 
+                                    <select required class="form-control" name="duration"
                                             data-toggle="tooltip" title="Duración de reservaciones en horas">
                                         @foreach (var i in Model.timeList)
                                         {
@@ -111,7 +124,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-dollar-sign"></i></span>
                                         </div>
-                                        <input type="text" class="form-control" name="cost_reservation" required
+                                        <input maxlength="20" type="text" onkeypress="return filterFloat(event,this);" class="form-control" name="cost_reservation" required
                                                data-toggle="tooltip" title="Pago por la reserva de la facilidad" />
                                     </div>
                                     <small class="form-text text-muted">Pago por la reserva de la facilidad</small>
@@ -124,9 +137,9 @@
                                 <div class="col-sm-9">
                                     <div class="input-group mt-2">
                                         <div class="custom-file">
-                                            <input type="file" class="custom-file-input" id="inputGroupFile04" 
+                                            <input type="file" class="custom-file-input" id="inputGroupFile04"
                                                    name="upload_regulation" accept=".pdf" />
-                                            <label class="custom-file-label" for="inputGroupFile04">Seleccionar archivo</label>
+                                            <label id="input-arch" class="custom-file-label" for="inputGroupFile04">Seleccionar archivo</label>
                                         </div>
                                     </div>
                                 </div>
@@ -150,3 +163,18 @@
     </div><!-- container -->
 
 </div> <!-- Page content Wrapper -->
+
+<script type="text/javascript">
+
+    (function () {
+
+        $('#inputGroupFile04').change(function () {
+
+            // $('#garras').prev().text($(this)[0].files[0].name);
+            //nombre del archivo cargado=$(this)[0].files[0].name
+            $('#input-arch').html($(this)[0].files[0].name);
+        });
+
+
+    })();
+</script>

@@ -7,7 +7,6 @@
       <Diagram DiagramId="0529729252834e46bf2772763b8b1817" Name="Diagram1" ZoomLevel="94">
         <EntityTypeShape EntityType="pjrdev_condominiosModel.bank" Width="1.5" PointX="3" PointY="7.375" IsExpanded="true" />
         <EntityTypeShape EntityType="pjrdev_condominiosModel.blogcomment" Width="1.5" PointX="5.25" PointY="11.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="pjrdev_condominiosModel.book" Width="1.5" PointX="7.75" PointY="11.75" IsExpanded="true" />
         <EntityTypeShape EntityType="pjrdev_condominiosModel.carpentry" Width="1.5" PointX="8" PointY="29.75" IsExpanded="true" />
         <EntityTypeShape EntityType="pjrdev_condominiosModel.category" Width="1.5" PointX="5.75" PointY="2.5" IsExpanded="true" />
         <EntityTypeShape EntityType="pjrdev_condominiosModel.chatmessage" Width="1.5" PointX="3" PointY="14.375" IsExpanded="true" />
@@ -76,6 +75,7 @@
         <EntityTypeShape EntityType="pjrdev_condominiosModel.fee" Width="1.5" PointX="5.25" PointY="16.625" />
         <AssociationConnector Association="pjrdev_condominiosModel.FK_fee_bank" />
         <AssociationConnector Association="pjrdev_condominiosModel.FK_fee_user" />
+        <EntityTypeShape EntityType="pjrdev_condominiosModel.book" Width="1.5" PointX="7.375" PointY="11.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

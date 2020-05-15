@@ -22,5 +22,6 @@ namespace WebApplication1.Models
         public Nullable<System.DateTime> requested_date { get; set; }
         public Nullable<decimal> cost_per_reservation { get; set; }
         public Nullable<System.DateTime> created_at { get; set; }
+        public Nullable<long> community_id { get; set; }
     }
 }

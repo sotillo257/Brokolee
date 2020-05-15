@@ -66,7 +66,7 @@
                                 <div class="form-group row">
                                     <label for="example-email-input" class="col-sm-3 col-form-label">Nombre</label>
                                     <div class="col-sm-9">
-                                        <input class="form-control" type="text" value="@Model.editFac.first_name" required
+                                        <input maxlength="30" class="form-control soloTexto" type="text" value="@Model.editFac.first_name" required
                                                data-toggle="tooltip" title="Nombre de la facilidad"
                                                placeholder="Nombre" id="example-email-input" name="first_name">
                                         <small class="form-text text-muted">Nombre de la facilidad</small>
@@ -76,7 +76,7 @@
                                 <div class="form-group row">
                                     <label for="example-lastname1-input" class="col-sm-3 col-form-label">Descripción</label>
                                     <div class="col-sm-9">
-                                        <textarea class="form-control" rows="3" name="description"
+                                        <textarea required class="form-control" rows="3" name="description"
                                                   data-toggle="tooltip" title="Descripción de la facilidad"
                                                   placeholder="Descripción">@Model.editFac.description</textarea>
                                         <small class="form-text text-muted">Descripción de la facilidad</small>
@@ -106,7 +106,7 @@
                                 <div class="form-group row">
                                     <label class="col-sm-3 col-form-label">Duración de reservaciones</label>
                                     <div class="col-sm-9">
-                                        <select class="form-control" name="duration"
+                                        <select required class="form-control" name="duration"
                                                 data-toggle="tooltip" title="Duración de reservaciones en horas">
                                             @foreach (var i in Model.timeList)
                                             {
@@ -132,9 +132,9 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text"><i class="fas fa-dollar-sign"></i></span>
                                             </div>
-                                            <input type="text" class="form-control" name="cost_reservation"
+                                            <input maxlength="20" type="text" onkeypress="return filterFloat(event,this);" class="form-control" name="cost_reservation"
                                                    data-toggle="tooltip" title="Costo por reservación"
-                                                   value="@Model.editFac.cost_reservation" required />
+                                                   value="@Model.editFac.cost_reservation.ToString().Replace(',', '.')" required />
                                         </div>
                                         <small class="form-text text-muted">Pago por la reserva de la facilidad</small>
                                     </div>
@@ -170,7 +170,7 @@
                                                 </a>
                                             }
 
-                                            <small class="form-text text-muted">Descargar en PDF el reglamento de la facilidad</small>
+                                            <small class="form-text text-muted">Descargar el reglamento de la facilidad</small>
                                         </div>
                                     </div>
                                 </div>
