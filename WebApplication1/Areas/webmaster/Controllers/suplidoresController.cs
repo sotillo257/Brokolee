@@ -63,7 +63,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 }
                 listadoSuplidoresViewModel viewModel = new listadoSuplidoresViewModel();
                 viewModel.side_menu = "suplidores";
-                viewModel.side_sub_menu = "suplidores_listado";
+                viewModel.side_sub_menu = "supplier_directory";
                 viewModel.supplierList = supplierList;
                 viewModel.categoryDict = categoryDict;
                 viewModel.categoryList = entities.categories.ToList();
@@ -93,7 +93,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                     supplier editSupplier = entities.suppliers.Find(editID);
                     editarSuplidoresViewModel viewModel = new editarSuplidoresViewModel();
                     viewModel.side_menu = "suplidores";
-                    viewModel.side_sub_menu = "suplidores_editar";
+                    viewModel.side_sub_menu = "supplier_directory";
                     viewModel.editSupplier = editSupplier;
                     viewModel.document_category_list = entities.document_type.ToList();
                     viewModel.categoryList = entities.categories.ToList();
@@ -127,7 +127,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                     category category = entities.categories.Find(supplier.category_id);
                     verSuplidoresViewModel viewModel = new verSuplidoresViewModel();
                     viewModel.side_menu = "suplidores";
-                    viewModel.side_sub_menu = "suplidores_ver";
+                    viewModel.side_sub_menu = "supplier_directory";
                     viewModel.commentList = query.ToList();
                     viewModel.viewSupplier = supplier;
                     viewModel.document_category_list = entities.document_type.ToList();
@@ -157,7 +157,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                 agregarSuplidoresViewModel viewModel = new agregarSuplidoresViewModel();
                 viewModel.side_menu = "suplidores";
-                viewModel.side_sub_menu = "suplidores_agregar";
+                viewModel.side_sub_menu = "supplier_directory";
                 viewModel.document_category_list = entities.document_type.ToList();
                 viewModel.categoryList = entities.categories.ToList();
                 viewModel.curUser = curUser;
@@ -306,5 +306,189 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 searchCategoryId = searchCategoryId
             }));
         }
+
+
+
+
+        //Categorias
+
+        public ActionResult listadoCategorias(string Error, string searchStr = "")
+        {
+            if (Session["USER_ID"] != null)
+            {
+                long userId = (long)Session["USER_ID"];
+                user curUser = entities.users.Find(userId);
+                List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
+                List<category> catList = new List<category>();
+
+                long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
+
+                if (searchStr == "")
+                {
+                    var query = (from r in entities.categories select r);
+                    catList = query.ToList();
+                }
+                else
+                {
+                    var query1 = (from r in entities.categories
+                                  where
+                                  r.name.Contains(searchStr) == true
+                                  select r);
+                    catList = query1.ToList();
+                }
+
+                categoriesTareasViewModel viewModel = new categoriesTareasViewModel();
+                viewModel.side_menu = "suplidores";
+                viewModel.side_sub_menu = "category_directory";
+                viewModel.document_category_list = entities.document_type.ToList();
+                viewModel.categoryList = catList;
+                viewModel.searchStr = searchStr;
+                viewModel.curUser = curUser;
+                viewModel.pubMessageList = pubMessageList;
+                viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
+                ViewBag.msgError = Error;
+                return View(viewModel);
+            }
+            else
+            {
+                return Redirect(ep.GetLogoutUrl());
+            }
+        }
+
+        public ActionResult agregarCategoria()
+        {
+            if (Session["USER_ID"] != null)
+            {
+                long userId = (long)Session["USER_ID"];
+                user curUser = entities.users.Find(userId);
+                List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
+                categoriesTareasViewModel viewModel = new categoriesTareasViewModel();
+                viewModel.side_menu = "suplidores";
+                viewModel.side_sub_menu = "category_directory";
+                viewModel.document_category_list = entities.document_type.ToList();
+                viewModel.curUser = curUser;
+                viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
+                viewModel.pubMessageList = pubMessageList;
+                viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                return View(viewModel);
+            }
+            else
+            {
+                return Redirect(ep.GetLogoutUrl());
+            }
+        }
+
+        public ActionResult editarCategoria(long? editID)
+        {
+            if (Session["USER_ID"] != null)
+            {
+                if (editID != null)
+                {
+                    long userId = (long)Session["USER_ID"];
+                    user curUser = entities.users.Find(userId);
+                    List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
+                    category editCat = entities.categories.Find(editID);
+                    categoriesTareasViewModel viewModel = new categoriesTareasViewModel();
+                    viewModel.side_menu = "suplidores";
+                    viewModel.side_sub_menu = "category_directory";
+                    viewModel.document_category_list = entities.document_type.ToList();
+                    viewModel.categ = editCat;
+                    viewModel.curUser = curUser;
+                    viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
+                    viewModel.pubMessageList = pubMessageList;
+                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                    return View(viewModel);
+                }
+                else
+                {
+                    return Redirect(Url.Action("NotFound", "Error"));
+                }
+            }
+            else
+            {
+                return Redirect(ep.GetLogoutUrl());
+            }
+        }
+
+        [HttpPost]
+        public ActionResult editCatg(long editID, string name)
+        {
+            try
+            {
+                category editCat = entities.categories.Find(editID);
+                editCat.name = name;
+                entities.SaveChanges();
+                return Redirect(Url.Action("listadoCategorias", "suplidores", new { area = "webmaster" }));
+            }
+            catch (Exception ex)
+            {
+                return Redirect(Url.Action("editarCategoria", "suplidores",
+                    new
+                    {
+                        area = "webmaster",
+                        editID = editID,
+                        exception = ex.Message
+                    }));
+            }
+        }
+
+        [HttpPost]
+        public ActionResult newCatg(string name)
+        {
+            try
+            {
+                category newCat = new category();
+                newCat.name = name;
+                entities.categories.Add(newCat);
+                entities.SaveChanges();
+                return Redirect(Url.Action("listadoCategorias", "suplidores", new { area = "webmaster" }));
+            }
+            catch (Exception ex)
+            {
+                return Redirect(Url.Action("agregarCategoria", "suplidores",
+                    new
+                    {
+                        area = "webmaster",
+                        exception = ex.Message
+                    }));
+            }
+        }
+
+        [HttpPost]
+        public ActionResult SeacrhResult(string searchStr)
+        {
+            return Redirect(Url.Action("listadoCategorias", "suplidores",
+                new
+                {
+                    area = "webmaster",
+                    searchStr = searchStr
+                }));
+        }
+
+        public JsonResult DeleteCatg(long delID)
+        {
+            try
+            {
+                List<supplier> supplidr = entities.suppliers.Where(x=> x.category_id == delID).ToList();
+                if (supplidr.Count == 0)
+                {
+                    category catItem = entities.categories.Find(delID);
+                    entities.categories.Remove(catItem);
+                    entities.SaveChanges();
+                    return Json(new { result = "success" });
+                }
+                else
+                {
+                    return Json(new { result = "NotAlowed" });
+                }               
+               
+            }
+            catch (Exception ex)
+            {
+                return Json(new { result = "error", exception = ex.HResult });
+            }
+        }
+
     }
 }

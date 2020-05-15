@@ -41,43 +41,43 @@
                             <div class="form-group row">
                                 <label for="example-email-input" class="col-sm-3 col-form-label">Nombre</label>
                                 <div class="col-sm-9">
-                                    <input class="form-control" type="text" 
+                                    <input maxlength="30" class="form-control" type="text" 
                                            value="@Model.editTask.task_name" placeholder="Nombre"
                                            data-toggle="tooltip" title="Nombre de la tarea"
                                            id="example-email-input" name="task_name" required>
-                                    <small class="form-text text-muted">Nombre de la tarea</small>
+                                    @*<small class="form-text text-muted">Nombre de la tarea</small>*@
                                 </div>
                             </div>
                             <div class="form-divider"></div>
                             <div class="form-group row">
                                 <label for="example-lastname1-input" class="col-sm-3 col-form-label">Descripción</label>
                                 <div class="col-sm-9">
-                                    <textarea class="form-control" rows="3"  name="description"
+                                    <textarea required class="form-control" rows="3"  name="description"
                                               data-toggle="tooltip" title="Nombre de la tarea"
                                               placeholder="Descripción">@Model.editTask.description</textarea>
-                                    <small class="form-text text-muted">Descripción de la tarea</small>
+                                    @*<small class="form-text text-muted">Descripción de la tarea</small>*@
                                 </div>
                             </div>
                             <div class="form-divider"></div>
                             <div class="form-group row">
                                 <label for="example-lastname1-input" class="col-sm-3 col-form-label">Responsable</label>
                                 <div class="col-sm-9">
-                                    <input class="form-control" type="text" name="responsable" required
+                                    <input maxlength="30" class="form-control" type="text" name="responsable" required
                                            data-toggle="tooltip" title="Nombre de la persona responsable"
                                            value="@Model.editTask.responsable" placeholder="Responsable" 
                                            id="example-lastname1-input">
-                                    <small class="form-text text-muted">Nombre de la persona responsable</small>
+                                    @*<small class="form-text text-muted">Nombre de la persona responsable</small>*@
                                 </div>
                             </div>
                             <div class="form-divider"></div>
                             <div class="form-group row">
                                 <label for="example-date-input" class="col-sm-3 col-form-label">Fecha</label>
                                 <div class="col-sm-9">
-                                    <input class="form-control" type="date" required
+                                    <input autocomplete="off" class="form-control" type="date" required
                                            data-toggle="tooltip" title="Mes / día / año | Fecha de registro de la tarea"
                                            value="@Convert.ToDateTime(Model.editTask.task_date).ToString("yyyy-MM-dd")" 
                                            id="example-date-input" name="task_date" />
-                                    <small class="form-text text-muted">Mes / día / año | Fecha de registro de la tarea</small>
+                                    @*<small class="form-text text-muted">Mes / día / año | Fecha de registro de la tarea</small>*@
                                 </div>
                             </div>
                             <div class="form-divider"></div>
@@ -85,21 +85,21 @@
                             <div class="form-group row">
                                 <label for="example-date-input1" class="col-sm-3 col-form-label">Fecha</label>
                                 <div class="col-sm-9">
-                                    <input class="form-control" type="date" 
+                                    <input autocomplete="off" class="form-control" type="date" 
                                            data-toggle="tooltip" title="Mes / día / año | Fecha estimada para terminar la tarea"
                                            value="@Convert.ToDateTime(Model.editTask.estimated_date).ToString("yyyy-MM-dd")"
                                            id="example-date-input1" name="estimated_date" required>
-                                    <small class="form-text text-muted">Mes / día / año | Fecha estimada para terminar la tarea</small>
+                                    @*<small class="form-text text-muted">Mes / día / año | Fecha estimada para terminar la tarea</small>*@
                                 </div>
                             </div>
                             <div class="form-divider"></div>
                             <div class="form-group row">
                                 <label for="example-lastname1-input" class="col-sm-3 col-form-label">Comentarios</label>
                                 <div class="col-sm-9">
-                                    <textarea class="form-control" rows="3" name="comments"
+                                    <textarea required class="form-control" rows="3" name="comments"
                                               data-toggle="tooltip" title="Comentarios del administrador"
                                               placeholder="Comentarios">@Model.editTask.comments</textarea>
-                                    <small class="form-text text-muted">Comentarios del administrador</small>
+                                    @*<small class="form-text text-muted">Comentarios del administrador</small>*@
                                 </div>
                             </div>
                             <div class="form-divider"></div>

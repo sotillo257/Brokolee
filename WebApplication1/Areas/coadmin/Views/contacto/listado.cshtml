@@ -71,15 +71,8 @@
                                     <h5 class="d-inline-block">Listado</h5>
                                 </div>
                                 <div class="col-md-6 mb-1">
-                                    @if (Model.contactList.Count > 0)
-                                    {
-                                        <button type="button" disabled class="btn btn-primary waves-effect waves-light float-xl-right float-lg-right float-md-left mb-1">Agregar nuevo</button>
-                                    }
-                                    else
-                                    {
-                                        <a href="@Url.Action("informacion", "contacto", new { area = "coadmin" })"><button type="button" class="btn btn-primary waves-effect waves-light float-xl-right float-lg-right float-md-left mb-1">Agregar nuevo</button></a>
-                                    }
-
+                                   
+                                        <a href="@Url.Action("agregar", "contacto", new { area = "coadmin" })"><button type="button" class="btn btn-primary waves-effect waves-light float-xl-right float-lg-right float-md-left mb-1">Agregar nuevo</button></a>                                   
                                 </div>
                             </div>
                             <div class="table-responsive">

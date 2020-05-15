@@ -39,13 +39,13 @@ namespace WebApplication1.Areas.coadmin.Controllers
 
                     if (searchStr == "")
                     {
-                        var query1 = (from r in entities.contracts select r);
+                        var query1 = (from r in entities.contracts where r.status == 1 select r);
                         contractList = query1.ToList();                      
                     }
                     else
                     {
                         var query2 = (from r in entities.contracts
-                                      where r.first_name.Contains(searchStr) == true
+                                      where r.status == 1 && r.first_name.Contains(searchStr) == true
                                       select r);
                         contractList = query2.ToList();                     
                     }
@@ -75,7 +75,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
             }  
         }
 
-        public ActionResult agregar()
+        public ActionResult agregar(string Error)
         {
             if (Session["USER_ID"] != null)
             {
@@ -106,6 +106,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = pubMessageList;
                     viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                    ViewBag.msgError = Error;
                     return View(viewModel);
                 }
                 catch(Exception ex)
@@ -261,7 +262,15 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 }
                 editContract.status = status;
                 entities.SaveChanges();
-                return Redirect(Url.Action("listado", "contratos", new { area = "coadmin" }));
+                if (status == 1)
+                {
+                    return Redirect(Url.Action("listado", "contratos", new { area = "coadmin" }));
+                }
+                else
+                {
+                    return Redirect(Url.Action("archivados", "contratos", new { area = "coadmin" }));
+                }
+               
             }catch(Exception ex)
             {
                 return Redirect(Url.Action("editar", "contratos", 
@@ -292,33 +301,41 @@ namespace WebApplication1.Areas.coadmin.Controllers
         {
             try
             {
-                contract newContract = new contract();
-                newContract.first_name = first_name;
-                newContract.date_contract = DateTime.ParseExact(date_contract, "yyyy-MM-dd",
-                    System.Globalization.CultureInfo.CurrentCulture);
-                newContract.date_notification = DateTime.ParseExact(date_notification, "yyyy-MM-dd",
-                    System.Globalization.CultureInfo.CurrentCulture);
-                newContract.description = description;
-                if (upload_contract != null && upload_contract.ContentLength > 0)
+                if (upload_contract != null)
                 {
-                    var fileName = Path.GetFileName(upload_contract.FileName);
-                    if (!Directory.Exists(Path.Combine(Server.MapPath("~/"), "Upload")))
+                    contract newContract = new contract();
+                    newContract.first_name = first_name;
+                    newContract.date_contract = DateTime.ParseExact(date_contract, "yyyy-MM-dd",
+                        System.Globalization.CultureInfo.CurrentCulture);
+                    newContract.date_notification = DateTime.ParseExact(date_notification, "yyyy-MM-dd",
+                        System.Globalization.CultureInfo.CurrentCulture);
+                    newContract.description = description;
+                    if (upload_contract != null && upload_contract.ContentLength > 0)
                     {
-                        Directory.CreateDirectory(Path.Combine(Server.MapPath("~/"), "Upload"));
-                    }
+                        var fileName = Path.GetFileName(upload_contract.FileName);
+                        if (!Directory.Exists(Path.Combine(Server.MapPath("~/"), "Upload")))
+                        {
+                            Directory.CreateDirectory(Path.Combine(Server.MapPath("~/"), "Upload"));
+                        }
 
-                    if (!Directory.Exists(Path.Combine(Server.MapPath("~/Upload/"), "Upload_Contract")))
-                    {
-                        Directory.CreateDirectory(Path.Combine(Server.MapPath("~/Upload/"), "Upload_Contract"));
+                        if (!Directory.Exists(Path.Combine(Server.MapPath("~/Upload/"), "Upload_Contract")))
+                        {
+                            Directory.CreateDirectory(Path.Combine(Server.MapPath("~/Upload/"), "Upload_Contract"));
+                        }
+                        var path = Path.Combine(Server.MapPath("~/Upload/Upload_Contract"), fileName);
+                        upload_contract.SaveAs(path);
+                        newContract.upload_contract = fileName;
                     }
-                    var path = Path.Combine(Server.MapPath("~/Upload/Upload_Contract"), fileName);
-                    upload_contract.SaveAs(path);
-                    newContract.upload_contract = fileName;
+                    newContract.status = 1;
+                    entities.contracts.Add(newContract);
+                    entities.SaveChanges();
+                    return Redirect(Url.Action("listado", "contratos", new { area = "coadmin" }));
                 }
-                newContract.status = 1;
-                entities.contracts.Add(newContract);
-                entities.SaveChanges();
-                return Redirect(Url.Action("listado", "contratos", new { area = "coadmin" }));
+                else
+                {
+                    return Redirect(Url.Action("agregar", "contratos", new { area = "coadmin", Error = "Debe cargar el contrato" }));
+                }
+               
             }catch(Exception ex)
             {
                 return Redirect(Url.Action("agregar", "contratos", 

@@ -218,31 +218,54 @@
                             </li>
                         }
 
-                        @if (Model.side_sub_menu == "category_directory")
-                        {
-                            <li class="active">
-                                <a href="@Url.Action("listado", "categorias", new { area = "webmaster" })" class="waves-effect waves-light active"><i class="mdi mdi-format-list-bulleted"></i><span> Categorias</span></a>
-                            </li>
-                        }
-                        else
-                        {
-                            <li>
-                                <a href="@Url.Action("listado", "categorias", new { area = "webmaster" })" class="waves-effect waves-light"><i class="mdi mdi-format-list-bulleted"></i><span> Categorias</span></a>
-                            </li>
-                        }
+                        <li class="has_sub">
+                            @if (Model.side_menu == "suplidores")
+                            {
+                                <a href="javascript:void(0);" class="waves-effect waves-light active">
+                                    <i class="mdi mdi-account-key"></i>
+                                    <span> Directorio de suplidores </span>
+                                    <span class="float-right">
+                                        <i class="mdi mdi-chevron-right"></i>
+                                    </span>
+                                </a>
+                                <ul class="list-unstyled">
+                                    @if (Model.side_sub_menu == "supplier_directory")
+                                    {
+                                        <li class="active">
+                                            <a href="@Url.Action("listado", "suplidores", new { area = "webmaster" })" class="waves-effect waves-light active"><span> Listado de suplidores </span></a>
+                                        </li>
+                                    }
+                                    else
+                                    {
+                                        <li>
+                                            <a href="@Url.Action("listado", "suplidores", new { area = "webmaster" })" class="waves-effect waves-light"><span> Listado de suplidores </span></a>
+                                        </li>
+                                    }
 
-                        @if (Model.side_sub_menu == "supplier_directory")
-                        {
-                            <li class="active">
-                                <a href="@Url.Action("listado", "suplidores", new { area = "webmaster" })" class="waves-effect waves-light active"><i class="mdi mdi-account-key"></i><span> Directorio de suplidores </span></a>
-                            </li>
-                        }
-                        else
-                        {
-                            <li>
-                                <a href="@Url.Action("listado", "suplidores", new { area = "webmaster" })" class="waves-effect waves-light"><i class="mdi mdi-account-key"></i><span> Directorio de suplidores </span></a>
-                            </li>
-                        }
+                                    @if (Model.side_sub_menu == "category_directory")
+                                    {
+                                        <li class="active">
+                                            <a href="@Url.Action("listadoCategorias", "suplidores", new { area = "webmaster" })" class="waves-effect waves-light active"><span> Categorias</span></a>
+                                        </li>
+                                    }
+                                    else
+                                    {
+                                <li>
+                                    <a href="@Url.Action("listadoCategorias", "suplidores", new { area = "webmaster" })" class="waves-effect waves-light"><span> Categorias</span></a>
+                                </li>
+                                    }                                    
+                                </ul>
+                            }
+                            else
+                            {
+                        <a href="javascript:void(0);" class="waves-effect waves-light"> <i class="mdi mdi-account-key"></i> <span> Directorio de suplidores </span> <span class="float-right"><i class="mdi mdi-chevron-right"></i></span></a>
+                                <ul class="list-unstyled">
+                                    <li><a href="@Url.Action("listado", "suplidores", new { area = "webmaster" })">Listado de suplidores</a></li>
+                                    <li><a href="@Url.Action("listadoCategorias", "suplidores", new { area = "webmaster" })">Categorias</a></li>
+                                </ul>
+                            }
+                        </li>                       
+                       
 
                         @if (Model.side_sub_menu == "comunidades_listado")
                         {
@@ -1744,8 +1767,11 @@
             var id = $(self).data('id');
             var formData = new FormData();
             formData.append("delID", id);
-            var url = "@Url.Action("DeleteCatg", "categorias", new { area = "webmaster" })";
-            var respuesta = confirm("¿Estas seguro que deseas eliminar la categoria? \n Ésta opción eliminará los suplidores asociados a esta categoría");
+            var url = "@Url.Action("DeleteCatg", "suplidores", new { area = "webmaster" })";
+
+            var errUrl = "@Url.Action("listadoCategorias", "suplidores", new { area = "webmaster", Error = "No se puede eliminar esta categoría porque posee suplidores asociados"  })";
+
+            var respuesta = confirm("¿Estás seguro que deseas eliminar la categoría?");
             if (respuesta == true) {
                 $.ajax({
                 url: url,
@@ -1755,6 +1781,8 @@
                     $("#ck-body-loading-overlay").hide();
                     if (result.result === "error") {
                         console.log('couln\'t get roles');
+                    } else if (result.result === "NotAlowed") {
+                        window.location = errUrl;
                     } else {
                         location.reload();
                     }

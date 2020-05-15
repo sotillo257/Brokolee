@@ -58,7 +58,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     viewModel.communityList = communityList;
 
                     viewModel.side_menu = "contacto";
-                    viewModel.side_sub_menu = "contacto_informacion";
+                    viewModel.side_sub_menu = "contacto";
                     viewModel.contactList = contactList;
                     viewModel.document_category_list = entities.document_type.ToList();
                     viewModel.curUser = curUser;
@@ -80,65 +80,69 @@ namespace WebApplication1.Areas.coadmin.Controllers
             }
         }
 
-        public ActionResult informacion()
+        public ActionResult agregar()
         {
             if (Session["USER_ID"] != null)
             {
-                try
+                if (Session["CURRENT_COMU"] != null)
                 {
-                    long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
-                    List<contactinfo> contactinfoList = entities.contactinfoes.Where(m => m.community_id == communityAct).ToList();
-                    if (contactinfoList == null || contactinfoList.Count == 0)
+                    try
                     {
-                        long userId = 0;
-                        if (Convert.ToInt32(Session["USER_ROLE"]) == 2)
+                        long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
+                        List<contactinfo> contactinfoList = entities.contactinfoes.Where(m => m.community_id == communityAct).ToList();
+                        if (contactinfoList == null || contactinfoList.Count == 0)
                         {
-                            userId = (long)Session["USER_ID"];
-                        }
-                        else if (Convert.ToInt32(Session["USER_ROLE"]) > 2
-                        && Session["ACC_USER_ID"] != null)
-                        {
-                            userId = (long)Session["ACC_USER_ID"];
-                        }
+                            long userId = 0;
+                            if (Convert.ToInt32(Session["USER_ROLE"]) == 2)
+                            {
+                                userId = (long)Session["USER_ID"];
+                            }
+                            else if (Convert.ToInt32(Session["USER_ROLE"]) > 2
+                            && Session["ACC_USER_ID"] != null)
+                            {
+                                userId = (long)Session["ACC_USER_ID"];
+                            }
 
+                            user curUser = entities.users.Find(userId);
+                            List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
+                            List<document_type> document_category_list = entities.document_type.ToList();
+                            contactoViewModel viewModel = new contactoViewModel();
 
+                            communityList = ep.GetCommunityList(userId);
+                            viewModel.communityList = communityList;
 
-
-                        user curUser = entities.users.Find(userId);
-                        List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);                        
-                        List<document_type> document_category_list = entities.document_type.ToList();
-                        contactoViewModel viewModel = new contactoViewModel();
-
-                        communityList = ep.GetCommunityList(userId);
-                        viewModel.communityList = communityList;
-
-                        viewModel.side_menu = "contacto";
-                        viewModel.side_sub_menu = "contacto_informacion";
-                        viewModel.document_category_list = document_category_list;
-                        if (contactinfoList.Count > 0)
-                        {
-                            viewModel.editContactInfo = contactinfoList.First();
+                            viewModel.side_menu = "contacto";
+                            viewModel.side_sub_menu = "contacto_informacion";
+                            viewModel.document_category_list = document_category_list;
+                            if (contactinfoList.Count > 0)
+                            {
+                                viewModel.editContactInfo = contactinfoList.First();
+                            }
+                            else
+                            {
+                                viewModel.editContactInfo = null;
+                            }
+                            viewModel.curUser = curUser;
+                            viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
+                            viewModel.pubMessageList = pubMessageList;
+                            viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                            return View(viewModel);
                         }
                         else
                         {
-                            viewModel.editContactInfo = null;
+                            return Redirect(Url.Action("listado", "contacto", new { Error = "Solo puede existir una lista de contactos por comunidad" }));
                         }
-                        viewModel.curUser = curUser;
-                        viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
-                        viewModel.pubMessageList = pubMessageList;
-                        viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                        return View(viewModel);
-                    }
-                    else
-                    {
-                        return Redirect(Url.Action("listado", "contacto", new { Error = "Solo puede existir una lista de contactos por comunidad" }));
-                    }
 
+                    }
+                    catch (Exception ex)
+                    {
+                        return Redirect(Url.Action("Index", "Error"));
+                    }
                 }
-                catch (Exception ex)
+                else
                 {
-                    return Redirect(Url.Action("Index", "Error"));
-                }
+                    return Redirect(Url.Action("listado", "contacto", new { area = "coadmin", Error = "No puede agregar contactos. Usted no administra ninguna comunidad. Comuníquese con el Webmaster..." }));
+                }                
             }
             else
             {
@@ -152,33 +156,48 @@ namespace WebApplication1.Areas.coadmin.Controllers
 
             if (Session["USER_ID"] != null)
             {
-                if (id != null)
+                if (Session["CURRENT_COMU"] != null)
                 {
-                    long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
-                    long userId = (long)Session["USER_ID"];
-                    contactinfo infoContact = entities.contactinfoes.Find(id);
-                    List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
-                    user curUser = entities.users.Find(userId);
-                    contactoViewModel viewModel = new contactoViewModel();
-                    
-                    communityList = ep.GetCommunityList(userId);
-                    viewModel.communityList = communityList;
+                    if (id != null)
+                    {
+                        long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
+                        long userId = (long)Session["USER_ID"];
+                        contactinfo infoContact = entities.contactinfoes.Where(x => x.id == id && x.community_id == communityAct).FirstOrDefault();
+                        if (infoContact != null)
+                        {
+                            List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
+                            user curUser = entities.users.Find(userId);
+                            contactoViewModel viewModel = new contactoViewModel();
 
-                    viewModel.side_menu = "contacto";
-                    viewModel.side_sub_menu = "manage_edit_headlines";
-                    viewModel.document_category_list = entities.document_type.ToList();
-                    viewModel.curUser = curUser;
-                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);                   
-                    viewModel.editContactInfo = infoContact;
-                    viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
-                    viewModel.pubMessageList = pubMessageList;                    
-                    ViewBag.msgError = Error;
-                    return View(viewModel);
+                            communityList = ep.GetCommunityList(userId);
+                            viewModel.communityList = communityList;
+
+                            viewModel.side_menu = "contacto";
+                            viewModel.side_sub_menu = "manage_edit_headlines";
+                            viewModel.document_category_list = entities.document_type.ToList();
+                            viewModel.curUser = curUser;
+                            viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                            viewModel.editContactInfo = infoContact;
+                            viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
+                            viewModel.pubMessageList = pubMessageList;
+                            ViewBag.msgError = Error;
+                            return View(viewModel);
+                        }
+                        else
+                        {
+                            return Redirect(Url.Action("listado", "contacto", new { area = "coadmin", Error = "No existe ese elemento" }));
+                        }
+
+                    }
+                    else
+                    {
+                        return Redirect(Url.Action("NotFound", "Error"));
+                    }
                 }
                 else
                 {
-                    return Redirect(Url.Action("NotFound", "Error"));
-                }
+                    return Redirect(Url.Action("listado", "contacto", new { area = "coadmin", Error = "No puede editar contactos. Usted no administra ninguna comunidad. Comuníquese con el Webmaster..." }));
+                }                
             }
             else
             {
@@ -191,34 +210,48 @@ namespace WebApplication1.Areas.coadmin.Controllers
 
             if (Session["USER_ID"] != null)
             {
-                if (id != null)
+                if (Session["CURRENT_COMU"] != null)
                 {
-                    long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
-                    long userId = (long)Session["USER_ID"];
-                    contactinfo infoContact = entities.contactinfoes.Find(id);
-                    List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
-                    user curUser = entities.users.Find(userId);
-                    contactoViewModel viewModel = new contactoViewModel();
+                    if (id != null)
+                    {
+                        long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
+                        long userId = (long)Session["USER_ID"];
+                        contactinfo infoContact = entities.contactinfoes.Where(x => x.id == id && x.community_id == communityAct).FirstOrDefault();
+                        if (infoContact != null)
+                        {
+                            List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
+                            user curUser = entities.users.Find(userId);
+                            contactoViewModel viewModel = new contactoViewModel();
 
-                    List<community> communityList = new List<community>();
-                    communityList = ep.GetCommunityList(userId);
-                    viewModel.communityList = communityList;
+                            List<community> communityList = new List<community>();
+                            communityList = ep.GetCommunityList(userId);
+                            viewModel.communityList = communityList;
 
-                    viewModel.side_menu = "contacto";
-                    viewModel.side_sub_menu = "manage_edit_headlines";
-                    viewModel.document_category_list = entities.document_type.ToList();
-                    viewModel.curUser = curUser;
-                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                    viewModel.editContactInfo = infoContact;
-                    viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
-                    viewModel.pubMessageList = pubMessageList;
-                    ViewBag.msgError = Error;
-                    return View(viewModel);
+                            viewModel.side_menu = "contacto";
+                            viewModel.side_sub_menu = "manage_edit_headlines";
+                            viewModel.document_category_list = entities.document_type.ToList();
+                            viewModel.curUser = curUser;
+                            viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                            viewModel.editContactInfo = infoContact;
+                            viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
+                            viewModel.pubMessageList = pubMessageList;
+                            ViewBag.msgError = Error;
+                            return View(viewModel);
+                        }
+                        else
+                        {
+                            return Redirect(Url.Action("listado", "contacto", new { area = "coadmin", Error = "No existe ese elemento" }));
+                        }
+                    }
+                    else
+                    {
+                        return Redirect(Url.Action("listado", "contacto", new { area = "coadmin"}));
+                    }
                 }
                 else
                 {
-                    return Redirect(Url.Action("NotFound", "Error"));
-                }
+                    return Redirect(Url.Action("listado", "contacto", new { area = "coadmin", Error = "No permitido. Usted no administra ninguna comunidad. Comuníquese con el Webmaster..." }));
+                }                
             }
             else
             {
@@ -262,7 +295,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
             }
             catch (Exception ex)
             {
-                return Redirect(Url.Action("informacion", "contacto",
+                return Redirect(Url.Action("editar", "contacto",
                     new
                     {
                         area = "coadmin",
@@ -338,61 +371,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
             {
                 return Redirect(Url.Action("listado", "contacto", new { Error = "Solo puede existir una lista de contactos por comunidad"}));
             }
-            
-            //try
-            //{
-            //if (contactID != 0)
-            //    {
-            //        contactinfo contactinfo = entities.contactinfoes.Find(contactID);
-            //        contactinfo.company_admin = company_admin;
-            //        contactinfo.coordinator = coordinator;
-            //        contactinfo.president = president;
-            //        contactinfo.vice_president = vice_president;
-            //        contactinfo.treasurer = treasurer;
-            //        contactinfo.secretary = secretary;
-            //        contactinfo.vocal1 = vocal1;
-            //        contactinfo.vocal2 = vocal2;
-            //        contactinfo.vocal3 = vocal3;
-            //        contactinfo.phy_address = phy_address;
-            //        contactinfo.postal_address = postal_address;
-            //        contactinfo.phone_number1 = phone_number1;
-            //        contactinfo.phone_number2 = phone_number2;
-            //        contactinfo.email = email;
-            //        contactinfo.user_id = user_id;
-            //        entities.SaveChanges();
-
-            //    }
-            //    else
-            //    {
-            //        contactinfo contactinfo = new contactinfo();
-            //        contactinfo.company_admin = company_admin;
-            //        contactinfo.coordinator = coordinator;
-            //        contactinfo.president = president;
-            //        contactinfo.vice_president = vice_president;
-            //        contactinfo.treasurer = treasurer;
-            //        contactinfo.secretary = secretary;
-            //        contactinfo.vocal1 = vocal1;
-            //        contactinfo.vocal2 = vocal2;
-            //        contactinfo.vocal3 = vocal3;
-            //        contactinfo.phy_address = phy_address;
-            //        contactinfo.postal_address = postal_address;
-            //        contactinfo.phone_number1 = phone_number1;
-            //        contactinfo.phone_number2 = phone_number2;
-            //        contactinfo.email = email;
-            //        contactinfo.user_id = user_id;
-            //        entities.contactinfoes.Add(contactinfo);
-            //        entities.SaveChanges();
-            //    }                          
-            //catch (Exception ex)
-            //{
-            //        return Redirect(Url.Action("informacion", "contacto",
-            //            new
-            //            {
-            //                area = "coadmin",
-            //                exception = ex.Message
-            //            }));
-            //    }
-            //}
+                     
         }
     }
 }

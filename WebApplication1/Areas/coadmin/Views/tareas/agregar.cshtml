@@ -53,7 +53,7 @@
                             <div class="form-group row">
                                 <label for="example-email-input" class="col-sm-3 col-form-label">Nombre</label>
                                 <div class="col-sm-9">
-                                    <input class="form-control" type="text" value="" name="task_name" required
+                                    <input maxlength="30" class="form-control" type="text" value="" name="task_name" required
                                            data-toggle="tooltip" title="Nombre del la tarea"
                                            placeholder="Nombre" id="example-email-input">
                                     <small class="form-text text-muted">Nombre de la tarea</small>
@@ -63,7 +63,7 @@
                             <div class="form-group row">
                                 <label for="example-lastname1-input" class="col-sm-3 col-form-label">Descripción</label>
                                 <div class="col-sm-9">
-                                    <textarea class="form-control" rows="3" name="description" 
+                                    <textarea required class="form-control" rows="3" name="description" 
                                               data-toggle="tooltip" title="Descripción de la tarea"
                                               placeholder="Descripción"></textarea>
                                     <small class="form-text text-muted">Descripción de la tarea</small>
@@ -73,7 +73,7 @@
                             <div class="form-group row">
                                 <label for="example-lastname1-input" class="col-sm-3 col-form-label">Responsable</label>
                                 <div class="col-sm-9">
-                                    <input class="form-control" type="text" value="" required
+                                    <input maxlength="30" class="form-control" type="text" value="" required
                                            data-toggle="tooltip" title="Nombre de la persona responsable"
                                            name="responsable" placeholder="Responsable" id="example-lastname1-input">
                                     <small class="form-text text-muted">Nombre de la persona responsable</small>
@@ -83,7 +83,7 @@
                             <div class="form-group row">
                                 <label for="example-date-input" class="col-sm-3 col-form-label">Fecha</label>
                                 <div class="col-sm-9">
-                                    <input class="form-control" type="date" required
+                                    <input autocomplete="of" class="form-control" type="date" required
                                            data-toggle="tooltip" title="Mes / día / año | Fecha de registro de la tarea"
                                            value="" name="task_date" id="example-date-input">
                                     <small class="form-text text-muted">Mes / día / año | Fecha de registro de la tarea</small>
@@ -93,7 +93,7 @@
                             <div class="form-group row">
                                 <label for="example-time-input" class="col-sm-3 col-form-label">Hora</label>
                                 <div class="col-sm-9">
-                                    <input class="form-control" type="time" required
+                                    <input autocomplete="off" class="form-control" type="time" required
                                            data-toggle="tooltip" title="Hora de registro de la tarea"
                                            value="" name="task_time" id="example-time-input">
                                     <small class="form-text text-muted">Hora de registro de la tarea</small>
@@ -104,7 +104,7 @@
                             <div class="form-group row">
                                 <label for="example-date-input" class="col-sm-3 col-form-label">Fecha</label>
                                 <div class="col-sm-9">
-                                    <input class="form-control" type="date" required
+                                    <input autocomplete="off" class="form-control" type="date" required
                                            data-toggle="tooltip" title="Mes / día / año | Fecha de registro de la tarea"
                                            name="estimated_date" value="" id="example-date-input-PA">
                                     <small class="form-text text-muted">Mes / día / año | Fecha de registro de la tarea</small>
@@ -113,7 +113,7 @@
                             <div class="form-group row">
                                 <label for="example-time-input" class="col-sm-3 col-form-label">Hora</label>
                                 <div class="col-sm-9">
-                                    <input class="form-control" type="time" required 
+                                    <input autocomplete="off" class="form-control" type="time" required 
                                            data-toggle="tooltip" title="Hora de registro de la tarea"
                                            name="estimated_time" value="" id="example-time-input">
                                     <small class="form-text text-muted">Hora de registro de la tarea</small>
@@ -123,7 +123,7 @@
                             <div class="form-group row">
                                 <label for="example-lastname1-input" class="col-sm-3 col-form-label">Comentarios</label>
                                 <div class="col-sm-9">
-                                    <textarea class="form-control" rows="3" name="comments"
+                                    <textarea required class="form-control" rows="3" name="comments"
                                               data-toggle="tooltip" title="Comentarios del administrador"
                                               placeholder="Comentarios"></textarea>
                                     <small class="form-text text-muted">Comentarios del administrador</small>
