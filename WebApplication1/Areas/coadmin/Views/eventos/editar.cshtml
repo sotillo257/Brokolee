@@ -54,10 +54,10 @@
                             <div class="form-group row">
                                 <label for="example-email-input" class="col-sm-3 col-form-label">Nombre</label>
                                 <div class="col-sm-9">
-                                    <input class="form-control" type="text" value="@Model.editEvent.name" name="name"
+                                    <input maxlength="20" class="form-control" type="text" value="@Model.editEvent.name" name="name"
                                            data-toggle="tooltip" title="Nombre del evento"
                                            placeholder="Aniversario del Condominio" id="example-email-input" required />
-                                    <small class="form-text text-muted">Nombre del evento</small>
+                                    @*<small class="form-text text-muted">Nombre del evento</small>*@
                                 </div>
                             </div>
                             <div class="form-divider"></div>
@@ -67,7 +67,7 @@
                                     <input class="form-control" type="date" data-toggle="tooltip" title="Mes / día / año | Fecha del evento"
                                            value="@Convert.ToDateTime(Model.editEvent.event_date).ToString("yyyy-MM-dd")"
                                            id="example-date-input" name="event_date" required>
-                                    <small class="form-text text-muted">Mes / día / año | Fecha del evento</small>
+                                    @*<small class="form-text text-muted">Mes / día / año | Fecha del evento</small>*@
                                 </div>
                             </div>
                             <div class="form-divider"></div>
@@ -78,7 +78,7 @@
                                            value="@Convert.ToDateTime(Model.editEvent.event_date).ToString("HH:mm")"
                                            data-toggle="tooltip" title="Hora del evento"
                                            id="example-time-input" required />
-                                    <small class="form-text text-muted">Hora del evento</small>
+                                    @*<small class="form-text text-muted">Hora del evento</small>*@
                                 </div>
                             </div>
                             <div class="form-divider"></div>
@@ -89,7 +89,7 @@
                                            placeholder="Salón de Eventos" name="place"
                                            data-toggle="tooltip" title="Lugar del evento"
                                            id="example-lastname1-input" required>
-                                    <small class="form-text text-muted">Lugar del evento</small>
+                                    @*<small class="form-text text-muted">Lugar del evento</small>*@
                                 </div>
                             </div>
                             <div class="form-divider"></div>
@@ -130,20 +130,20 @@
                             <div class="form-group row">
                                 <label for="example-lastname1-input" class="col-sm-3 col-form-label">Descripción</label>
                                 <div class="col-sm-9">
-                                    <textarea class="form-control" rows="3" name="description" 
+                                    <textarea maxlength="40" required class="form-control" rows="3" name="description" 
                                               data-toggle="tooltip" title="Descripción del evento"
                                               placeholder="">@Model.editEvent.description</textarea>
-                                    <small class="form-text text-muted">Descripción del evento</small>
+                                    @*<small class="form-text text-muted">Descripción del evento</small>*@
                                 </div>
                             </div>
                             <div class="form-divider"></div>
                             <div class="form-group row">
                                 <label for="example-lastname1-input" class="col-sm-3 col-form-label">Nota</label>
                                 <div class="col-sm-9">
-                                    <textarea class="form-control" rows="3" name="note" 
+                                    <textarea maxlength="40" required class="form-control" rows="3" name="note" 
                                               data-toggle="tooltip" title="Nota escrita por el administrador"
                                               placeholder="">@Model.editEvent.note</textarea>
-                                    <small class="form-text text-muted">Nota escrita por el administrador</small>
+                                    @*<small class="form-text text-muted">Nota escrita por el administrador</small>*@
                                 </div>
                             </div>
                             <a href=""><button type="submit" class="btn btn-primary waves-effect waves-light">Guardar</button></a>

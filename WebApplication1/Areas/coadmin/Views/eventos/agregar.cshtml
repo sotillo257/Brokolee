@@ -51,7 +51,7 @@
                         <div class="form-group row">
                             <label for="example-email-input" class="col-sm-3 col-form-label">Nombre</label>
                             <div class="col-sm-9">
-                                <input class="form-control" type="text" value="" placeholder="Nombre"
+                                <input maxlength="20" class="form-control" type="text" value="" placeholder="Nombre"
                                        data-toggle="tooltip" title="Nombre del evento"
                                        id="example-email-input" name="name" required>
                                 <small class="form-text text-muted">Nombre del evento</small>
@@ -81,7 +81,7 @@
                         <div class="form-group row">
                             <label for="example-lastname1-input" class="col-sm-3 col-form-label">Lugar</label>
                             <div class="col-sm-9">
-                                <input class="form-control" type="text" value="" name="place"
+                                <input maxlength="30" class="form-control" type="text" value="" name="place"
                                        data-toggle="tooltip" title="Lugar del evento"
                                        placeholder="Lugar" id="example-lastname1-input" required />
                                 <small class="form-text text-muted">Lugar del evento</small>
@@ -111,7 +111,7 @@
                         <div class="form-group row">
                             <label for="example-lastname1-input" class="col-sm-3 col-form-label">Descripción</label>
                             <div class="col-sm-9">
-                                <textarea class="form-control" rows="3" name="description"
+                                <textarea maxlength="40" required class="form-control" rows="3" name="description"
                                           placeholder="Descripción" data-toggle="tooltip" title="Descripción del evento"></textarea>
                                 <small class="form-text text-muted">Descripción del evento</small>
                             </div>
@@ -120,7 +120,7 @@
                         <div class="form-group row">
                             <label for="example-lastname1-input" class="col-sm-3 col-form-label">Nota</label>
                             <div class="col-sm-9">
-                                <textarea class="form-control" rows="3" name="note"
+                                <textarea maxlength="40" required class="form-control" rows="3" name="note"
                                           data-toggle="tooltip" title="Nota escrita por el administrador"
                                           placeholder="Nota"></textarea>
                                 <small class="form-text text-muted">Nota escrita por el administrador</small>

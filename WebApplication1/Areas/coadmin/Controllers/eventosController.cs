@@ -17,22 +17,13 @@ namespace WebApplication1.Areas.coadmin.Controllers
         List<community> communityList = new List<community>();
 
         // GET: coadmin/eventos
-        public ActionResult registrados(string searchStr = "")
+        public ActionResult registrados(string Error, string searchStr = "")
         {
             if (Session["USER_ID"] != null)
             {
                 try
                 {
-                    long userId = 0;
-                    if (Convert.ToInt32(Session["USER_ROLE"]) == 2)
-                    {
-                        userId = (long)Session["USER_ID"];
-                    }
-                    else if (Convert.ToInt32(Session["USER_ROLE"]) > 2
-                    && Session["ACC_USER_ID"] != null)
-                    {
-                        userId = (long)Session["ACC_USER_ID"];
-                    }
+                    long userId = (long)Session["USER_ID"];                   
                     user curUser = entities.users.Find(userId);
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                     List<@event> eventList = new List<@event>();
@@ -74,7 +65,8 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     viewModel.searchStr = searchStr;
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = pubMessageList;
-                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);                    
+                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                    ViewBag.msgError = Error;
                     return View(viewModel);
                 }
                 catch(Exception ex)
@@ -88,22 +80,13 @@ namespace WebApplication1.Areas.coadmin.Controllers
 
         }
 
-        public ActionResult otros(string searchStr = "")
+        public ActionResult otros(string Error, string searchStr = "")
         {
             if (Session["USER_ID"] != null)
             {
                 try
                 {
-                    long userId = 0;
-                    if (Convert.ToInt32(Session["USER_ROLE"]) == 2)
-                    {
-                        userId = (long)Session["USER_ID"];
-                    }
-                    else if (Convert.ToInt32(Session["USER_ROLE"]) > 2
-                    && Session["ACC_USER_ID"] != null)
-                    {
-                        userId = (long)Session["ACC_USER_ID"];
-                    }
+                    long userId = (long)Session["USER_ID"];                   
                     user curUser = entities.users.Find(userId);
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                     List<document_type> document_category_list = entities.document_type.ToList();
@@ -119,12 +102,13 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.searchStr = searchStr;
                     viewModel.pubMessageList = pubMessageList;
-                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);                   
+                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                    ViewBag.msgError = Error;
                     return View(viewModel);
                 }
                 catch(Exception ex)
                 {
-                    return Redirect(Url.Action("Index", "Error"));
+                    return Redirect(Url.Action("otros", "eventos", new { area = "coadmin", Error = "Problema interno " + ex.Message }));
                 }                
             } else
             {
@@ -141,16 +125,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 {
                     try
                     {
-                        long userId = 0;
-                        if (Convert.ToInt32(Session["USER_ROLE"]) == 2)
-                        {
-                            userId = (long)Session["USER_ID"];
-                        }
-                        else if (Convert.ToInt32(Session["USER_ROLE"]) > 2
-                        && Session["ACC_USER_ID"] != null)
-                        {
-                            userId = (long)Session["ACC_USER_ID"];
-                        }
+                        long userId = (long)Session["USER_ID"];                        
 
                         user curUser = entities.users.Find(userId);
                         List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
@@ -171,12 +146,12 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     }
                     catch (Exception ex)
                     {
-                        return Redirect(Url.Action("Index", "Error"));
+                        return Redirect(Url.Action("otros", "eventos", new { area = "coadmin", Error = "Problema interno " + ex.Message }));                       
                     }
                 }
                 else
                 {
-                    return Redirect(Url.Action("otros", "eventos", new { area = "coadmin" }));
+                    return Redirect(Url.Action("otros", "eventos", new { area = "coadmin", Error = "No puede agregar eventos. Usted no administra ninguna comunidad. Comuníquese con el Webmaster..." }));                    
                 }
                 
             }
@@ -192,16 +167,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
             {
                 try
                 {
-                    long userId = 0;
-                    if (Convert.ToInt32(Session["USER_ROLE"]) == 2)
-                    {
-                        userId = (long)Session["USER_ID"];
-                    }
-                    else if (Convert.ToInt32(Session["USER_ROLE"]) > 2
-                    && Session["ACC_USER_ID"] != null)
-                    {
-                        userId = (long)Session["ACC_USER_ID"];
-                    }
+                    long userId = (long)Session["USER_ID"];                   
                     user curUser = entities.users.Find(userId);
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                     List<@event> eventList = new List<@event>();
@@ -241,7 +207,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 }
                 catch(Exception ex)
                 {
-                    return Redirect(Url.Action("Index", "Error"));
+                    return Redirect(Url.Action("otros", "eventos", new { area = "coadmin", Error = "Problema interno " + ex.Message }));
                 }               
             } else
             {
@@ -254,49 +220,56 @@ namespace WebApplication1.Areas.coadmin.Controllers
         {
             if (Session["USER_ID"] != null)
             {
-                if (editID != null)
+                if (Session["CURRENT_COMU"] != null)
                 {
-                    try
+                    if (editID != null)
                     {
-                        long userId = 0;
-                        if (Convert.ToInt32(Session["USER_ROLE"]) == 2)
+                        long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
+                        @event editEvent = entities.events.Where(x=> x.id == editID && x.community_id == communityAct).FirstOrDefault();
+                        if (editEvent != null)
                         {
-                            userId = (long)Session["USER_ID"];
+                            try
+                            {
+                                long userId = (long)Session["USER_ID"];
+
+                                user curUser = entities.users.Find(userId);
+                                List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
+                                editEventViewModel viewModel = new editEventViewModel();
+
+                                communityList = ep.GetCommunityList(userId);
+                                viewModel.communityList = communityList;
+
+                                viewModel.side_menu = "event_calendar";
+                                viewModel.side_sub_menu = "event_calendar_editar";
+                                viewModel.editEvent = editEvent;
+                                viewModel.curUser = curUser;
+                                viewModel.document_category_list = entities.document_type.ToList();
+                                viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
+                                viewModel.pubMessageList = pubMessageList;
+                                viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                                return View(viewModel);
+                            }
+                            catch (Exception ex)
+                            {
+                                return Redirect(Url.Action("registrados", "eventos", new { area = "coadmin", Error = "Problema interno " + ex.Message }));
+                            }
                         }
-                        else if (Convert.ToInt32(Session["USER_ROLE"]) > 2
-                        && Session["ACC_USER_ID"] != null)
+                        else
                         {
-                            userId = (long)Session["ACC_USER_ID"];
-                        }                       
+                            return Redirect(Url.Action("registrados", "eventos", new { area = "coadmin", Error = "No existe ese elemento" }));
+                        }                        
 
-                        user curUser = entities.users.Find(userId);
-                        List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
-                        editEventViewModel viewModel = new editEventViewModel();
-
-                        communityList = ep.GetCommunityList(userId);
-                        viewModel.communityList = communityList;
-
-                        @event editEvent = entities.events.Find(editID);
-                        viewModel.side_menu = "event_calendar";
-                        viewModel.side_sub_menu = "event_calendar_editar";
-                        viewModel.editEvent = editEvent;
-                        viewModel.curUser = curUser;
-                        viewModel.document_category_list = entities.document_type.ToList();
-                        viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
-                        viewModel.pubMessageList = pubMessageList;
-                        viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                        return View(viewModel);
                     }
-                    catch(Exception ex)
+                    else
                     {
-                        return Redirect(Url.Action("Index", "Error"));
+                        return Redirect(Url.Action("registrados", "eventos", new { area = "coadmin" }));
                     }
-                                       
                 }
                 else
                 {
-                    return Redirect(Url.Action("NotFound", "Error"));
-                }                
+                    return Redirect(Url.Action("registrados", "eventos", new { area = "coadmin", Error = "No puede editar eventos. Usted no administra ninguna comunidad. Comuníquese con el Webmaster..." }));
+                }
+                             
             } else
             {
                 return Redirect(ep.GetLogoutUrl());
@@ -307,53 +280,61 @@ namespace WebApplication1.Areas.coadmin.Controllers
         {
             if (Session["USER_ID"] != null)
             {
-                if(id != null)
+                if (Session["CURRENT_COMU"] != null)
                 {
-                    try
+                    if (id != null)
                     {
-                        long userId = 0;
-                        if (Convert.ToInt32(Session["USER_ROLE"]) == 2)
+                        long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
+                        @event event_item = entities.events.Where(x => x.id == id && x.community_id == communityAct).FirstOrDefault();
+                        if (event_item != null)
                         {
-                            userId = (long)Session["USER_ID"];
+                            try
+                            {
+                                long userId = (long)Session["USER_ID"];
+                                user curUser = entities.users.Find(userId);
+                                List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
+
+                                registradoViewModel viewmodel = new registradoViewModel();
+
+                                communityList = ep.GetCommunityList(userId);
+                                viewmodel.communityList = communityList;
+
+                                viewmodel.side_menu = "registrado";
+                                viewmodel.event_name = event_item.name;
+                                viewmodel.event_date = Convert.ToDateTime(event_item.event_date).ToString("dd/MM/yyyy");
+                                viewmodel.event_time = Convert.ToDateTime(event_item.event_date).ToString("hh:mm tt");
+                                viewmodel.place = event_item.place;
+                                viewmodel.description = event_item.description;
+                                viewmodel.note = event_item.note;
+                                viewmodel.document_category_list = entities.document_type.ToList();
+                                viewmodel.curUser = curUser;
+                                viewmodel.eventID = Convert.ToInt64(id);
+                                viewmodel.searchStr = searchStr;
+                                viewmodel.pubTaskList = ep.GetNotifiTaskList(userId);
+                                viewmodel.pubMessageList = pubMessageList;
+                                viewmodel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                                return View(viewmodel);
+                            }
+                            catch (Exception ex)
+                            {
+                                return Redirect(Url.Action("registrados", "eventos", new { area = "coadmin", Error = "Problema interno " + ex.Message }));
+                            }
                         }
-                        else if (Convert.ToInt32(Session["USER_ROLE"]) > 2
-                        && Session["ACC_USER_ID"] != null)
+                        else
                         {
-                            userId = (long)Session["ACC_USER_ID"];
+                            return Redirect(Url.Action("registrados", "eventos", new { area = "coadmin", Error = "No existe ese elemento" }));
                         }
-                        user curUser = entities.users.Find(userId);
-                        List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
-                        @event event_item = entities.events.Find(id);
-                        registradoViewModel viewmodel = new registradoViewModel();
-
-                        communityList = ep.GetCommunityList(userId);
-                        viewmodel.communityList = communityList;
-
-                        viewmodel.side_menu = "registrado";
-                        viewmodel.event_name = event_item.name;
-                        viewmodel.event_date = Convert.ToDateTime(event_item.event_date).ToString("dd/MM/yyyy");
-                        viewmodel.event_time = Convert.ToDateTime(event_item.event_date).ToString("hh:mm tt");
-                        viewmodel.place = event_item.place;
-                        viewmodel.description = event_item.description;
-                        viewmodel.note = event_item.note;
-                        viewmodel.document_category_list = entities.document_type.ToList();
-                        viewmodel.curUser = curUser;
-                        viewmodel.eventID = Convert.ToInt64(id);
-                        viewmodel.searchStr = searchStr;
-                        viewmodel.pubTaskList = ep.GetNotifiTaskList(userId);
-                        viewmodel.pubMessageList = pubMessageList;
-                        viewmodel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                        return View(viewmodel);
+                       
                     }
-                    catch(Exception ex)
+                    else
                     {
-                        return Redirect(Url.Action("Index", "Error"));
-                    }                   
+                        return Redirect(Url.Action("registrados", "eventos", new { area = "coadmin" }));
+                    }
                 }
                 else
                 {
-                    return Redirect(Url.Action("NotFound", "Error"));
-                }                
+                    return Redirect(Url.Action("registrados", "eventos", new { area = "coadmin", Error = "No permitido. Usted no administra ninguna comunidad. Comuníquese con el Webmaster..." }));
+                }                               
             } else
             {
                 return Redirect(ep.GetLogoutUrl());

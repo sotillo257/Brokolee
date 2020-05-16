@@ -59,15 +59,8 @@
                             <div class="col-md-6">
                                 <h5 class="d-inline-block">Últimas entradas</h5>
                             </div>
-                            <div class="col-md-6 mb-1">
-                                @if (Session["CURRENT_COMU"] != null)
-                                {
-                                    <a href="@Url.Action("agregarblog", "comunicaciones", new { area = "coadmin" })"><button type="button" class="btn btn-primary waves-effect waves-light float-xl-right float-lg-right float-md-left">Nueva entrada</button></a>
-                                }
-                                else
-                                {
-                                    <a><button disabled type="button" class="btn btn-primary waves-effect waves-light float-xl-right float-lg-right float-md-left">Nueva entrada</button></a>
-                                }
+                            <div class="col-md-6 mb-1">                              
+                                    <a href="@Url.Action("agregarblog", "comunicaciones", new { area = "coadmin" })"><button type="button" class="btn btn-primary waves-effect waves-light float-xl-right float-lg-right float-md-left">Nueva entrada</button></a>                               
                             </div>
                         </div>
                         <div class="table-responsive">

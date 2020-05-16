@@ -233,7 +233,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                                 viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
                                 return View(viewModel);
                             }
-                            else()
+                            else
                             {
                                 return Redirect(Url.Action("blog", "comunicaciones", new { area = "coadmin", Error = "No existe ese elemento" }));
                             }                                                      
