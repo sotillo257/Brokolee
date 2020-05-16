@@ -90,7 +90,7 @@
                         </div>
 
                         <div class="table-responsive">
-                            <table id="dataTable-directorio-suplidores" class="table table-striped table-bordered normal" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                            <table id="eventsR" class="table table-striped table-bordered normal" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                 <thead>
                                     <tr>
                                         <th class="f-b">Nombre del evento</th>
@@ -107,7 +107,7 @@
                                     {
                                         <tr>
                                             <td>@item.name</td>
-                                            <td>@Convert.ToDateTime(item.event_date).ToString("MM/dd/yyyy")</td>
+                                            <td> <span style="display:none!important">@Convert.ToDateTime(item.event_date).ToString("yyyy/MM/dd hh:mm tt")</span> @Convert.ToDateTime(item.event_date).ToString("MM/dd/yyyy")</td>
                                             <td>@Convert.ToDateTime(item.event_date).ToString("hh:mm tt")</td>
                                             <td>@item.place</td>
                                             <td>@item.description.</td>

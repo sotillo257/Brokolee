@@ -101,7 +101,7 @@
                                     @foreach (var item in Model.efacList)
                                     {
                                         <tr>
-                                            <td><span style="display:none!important">@Convert.ToDateTime(item.created_at).ToString("yyyy/MM/dd HH:mm")</span>@Convert.ToDateTime(item.created_at).ToString("MM/dd/yyyy")</td>
+                                            <td><span style="display:none!important">@Convert.ToDateTime(item.created_at).ToString("yyyy/MM/dd hh:mm tt")</span>@Convert.ToDateTime(item.created_at).ToString("MM/dd/yyyy")</td>
                                             <td>@item.first_name</td>
                                             <td>@item.description.</td>
                                             <td class="text-center">@DateTime.Today.Add(item.start_time).ToString("hh:mm tt")</td>

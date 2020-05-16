@@ -171,7 +171,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 }
                 entities.efacs.Add(newFac);
                 entities.SaveChanges();
-                return Redirect(Url.Action("disponibles", "facilidades", new { area = "coadmin" }));
+                return Redirect(Url.Action("solicitudes", "facilidades", new { area = "coadmin" }));
             }
             catch (Exception ex)
             {

@@ -439,13 +439,13 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     {
                         if (searchStr == "")
                         {
-                            var query = (from r in entities.events where r.community_id == communityAct select r);
+                            var query = (from r in entities.events where r.is_active == true && r.community_id == communityAct select r);
                             eventList = query.ToList();
                         }
                         else
                         {
                             var query = (from r in entities.events
-                                         where r.name.Contains(searchStr) == true && r.community_id == communityAct
+                                         where r.name.Contains(searchStr) == true && r.is_active == true && r.community_id == communityAct
                                          select r);
                             eventList = query.ToList();
                         }
