@@ -118,7 +118,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 }
                 else
                 {
-                    return Redirect(Url.Action("disponibles", "facilidades", new { area = "coadmin", Error = "No permitido. Usted no administra ninguna comunidad. Comuníquese con el Webmaster..." }));                  
+                    return Redirect(Url.Action("disponibles", "facilidades", new { area = "coadmin", Error = "No puede agregar facilidades. Usted no administra ninguna comunidad. Comuníquese con el Webmaster..." }));                  
                 }
                                
             } else
@@ -208,7 +208,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 }
                 else
                 {
-                    return Redirect(Url.Action("disponibles", "facilidades", new { area = "coadmin", Error = "No permitido. Usted no administra ninguna comunidad. Comuníquese con el Webmaster..." }));
+                    return Redirect(Url.Action("disponibles", "facilidades", new { area = "coadmin", Error = "No puede reservar facilidades. Usted no administra ninguna comunidad. Comuníquese con el Webmaster..." }));
                 }
                 
             } else
@@ -268,7 +268,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 }
                 else
                 {
-                    return Redirect(Url.Action("disponibles", "facilidades", new { area = "coadmin", Error = "No permitido. Usted no administra ninguna comunidad. Comuníquese con el Webmaster..." }));
+                    return Redirect(Url.Action("disponibles", "facilidades", new { area = "coadmin", Error = "No puede editar facilidades. Usted no administra ninguna comunidad. Comuníquese con el Webmaster..." }));
                 }
                                   
             } else
@@ -345,7 +345,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 }
                 else
                 {
-                    return Redirect(Url.Action("disponibles", "facilidades", new { area = "coadmin", Error = "No permitido. Usted no administra ninguna comunidad. Comuníquese con el Webmaster..." }));
+                    return Redirect(Url.Action("disponibles", "facilidades", new { area = "coadmin", Error = "No puede reservar facilidades. Usted no administra ninguna comunidad. Comuníquese con el Webmaster..." }));
                 }
                
             } else
@@ -515,6 +515,9 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 }else if(delf.status == 3)
                 {
                     delf.status = 1;
+                }else if(delf.status == 1)
+                {
+                    delf.status = 3;
                 }
                 
                 entities.SaveChanges();

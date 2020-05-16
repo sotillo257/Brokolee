@@ -18,7 +18,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
         List<community> communityList = new List<community>();
 
         // GET: coadmin/comunicaciones
-        public ActionResult blog()
+        public ActionResult blog(string Error)
         {
             if (Session["USER_ID"] != null)
             {
@@ -52,6 +52,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                 viewModel.pubMessageList = pubMessageList;
                 viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                ViewBag.msgError = Error;
                 return View(viewModel);
             }
             else
@@ -87,7 +88,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 }
                 else
                 {
-                    return Redirect(Url.Action("blog", "comunicaciones", new { area = "coadmin"}));
+                    return Redirect(Url.Action("blog", "comunicaciones", new { area = "coadmin", Error = "No puede agregar blogs. Usted no administra ninguna comunidad. Comuníquese con el Webmaster..." }));                 
                 }
             }
             else
@@ -101,30 +102,48 @@ namespace WebApplication1.Areas.coadmin.Controllers
         {
             if (Session["USER_ID"] != null)
             {
-                if (blogID != null)
+                if (Session["CURRENT_COMU"] != null)
                 {
-                    long userId = (long)Session["USER_ID"];
-                    user curUser = entities.users.Find(userId);
-                    List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
-                    agregarComentarioViewModel viewModel = new agregarComentarioViewModel();
+                    if (blogID != null)
+                    {
+                        long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
+                        blog blogC = entities.blogs.Where(x => x.id == blogID && x.community_id == communityAct).FirstOrDefault();
+                        if (blogC != null) 
+                        {
+                            long userId = (long)Session["USER_ID"];
+                            user curUser = entities.users.Find(userId);
+                            List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
+                            agregarComentarioViewModel viewModel = new agregarComentarioViewModel();
 
-                    communityList = ep.GetCommunityList(userId);
-                    viewModel.communityList = communityList;
+                            communityList = ep.GetCommunityList(userId);
+                            viewModel.communityList = communityList;
 
-                    viewModel.side_menu = "agregarcomentario";
-                    viewModel.side_sub_menu = "agregarcomentario";
-                    viewModel.document_category_list = entities.document_type.ToList();
-                    viewModel.curUser = curUser;
-                    viewModel.blogID = Convert.ToInt64(blogID);
-                    viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
-                    viewModel.pubMessageList = pubMessageList;
-                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                    return View(viewModel);
+                            viewModel.side_menu = "agregarcomentario";
+                            viewModel.side_sub_menu = "agregarcomentario";
+                            viewModel.document_category_list = entities.document_type.ToList();
+                            viewModel.curUser = curUser;
+                            viewModel.blogID = Convert.ToInt64(blogID);
+                            viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
+                            viewModel.pubMessageList = pubMessageList;
+                            viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                            return View(viewModel);
+                        }
+                        else
+                        {
+                            return Redirect(Url.Action("blog", "comunicaciones", new { area = "coadmin", Error = "No existe ese elemento" }));
+                        }
+                        
+                    }
+                    else
+                    {
+                        return Redirect(Url.Action("blog", "comunicaciones", new { area = "coadmin"}));
+                    }
                 }
                 else
                 {
-                    return Redirect(Url.Action("NotFound", "Error"));
+                    return Redirect(Url.Action("blog", "comunicaciones", new { area = "coadmin", Error = "No puede agregar comentarios. Usted no administra ninguna comunidad. Comuníquese con el Webmaster..." }));
                 }
+                
             }
             else
             {
@@ -132,6 +151,9 @@ namespace WebApplication1.Areas.coadmin.Controllers
             }
         }
 
+
+
+    
         public ActionResult privados()
         {
             if (Session["USER_ID"] != null)
@@ -184,35 +206,52 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 {
                     if (blogID != null)
                     {
-                        long userId = (long)Session["USER_ID"];
-                        List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
-                        user curUser = entities.users.Find(userId);
+                        long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
                         blog blog = entities.blogs.Find(blogID);
-                        editarblogViewModel viewModel = new editarblogViewModel();
+                        if (blog != null)
+                        {
+                            if (blog.community_id == communityAct || blog.user.role == 3)
+                            {
+                                long userId = (long)Session["USER_ID"];
 
-                        communityList = ep.GetCommunityList(userId);
-                        viewModel.communityList = communityList;
+                                List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
+                                user curUser = entities.users.Find(userId);
+                                editarblogViewModel viewModel = new editarblogViewModel();
 
-                        viewModel.side_menu = "comunicaciones";
-                        viewModel.side_sub_menu = "comunicaciones";
-                        viewModel.document_category_list = entities.document_type.ToList();
-                        viewModel.curUser = curUser;
-                        viewModel.editBlog = blog;
-                        viewModel.blogID = Convert.ToInt64(blogID);
-                        viewModel.blogcommentList = entities.blogcomments.Where(m => m.blog_id == blogID).ToList();
-                        viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
-                        viewModel.pubMessageList = pubMessageList;
-                        viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                        return View(viewModel);
+                                communityList = ep.GetCommunityList(userId);
+                                viewModel.communityList = communityList;
+
+                                viewModel.side_menu = "comunicaciones";
+                                viewModel.side_sub_menu = "comunicaciones";
+                                viewModel.document_category_list = entities.document_type.ToList();
+                                viewModel.curUser = curUser;
+                                viewModel.editBlog = blog;
+                                viewModel.blogID = Convert.ToInt64(blogID);
+                                viewModel.blogcommentList = entities.blogcomments.Where(m => m.blog_id == blogID).ToList();
+                                viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
+                                viewModel.pubMessageList = pubMessageList;
+                                viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                                return View(viewModel);
+                            }
+                            else()
+                            {
+                                return Redirect(Url.Action("blog", "comunicaciones", new { area = "coadmin", Error = "No existe ese elemento" }));
+                            }                                                      
+                        }
+                        else
+                        {
+                            return Redirect(Url.Action("blog", "comunicaciones", new { area = "coadmin", Error = "No existe ese elemento" }));
+                        }
+                        
                     }
                     else
                     {
-                        return Redirect(Url.Action("NotFound", "Error"));
+                        return Redirect(Url.Action("blog", "comunicaciones", new { area = "coadmin" }));
                     }
                 }
                 else
                 {
-                    return Redirect(Url.Action("blog", "comunicaciones", new { area = "coadmin" }));
+                    return Redirect(Url.Action("blog", "comunicaciones", new { area = "coadmin", Error = "No puede editar blogs. Usted no administra ninguna comunidad. Comuníquese con el Webmaster..." }));
                 }               
             }
             else
@@ -225,34 +264,52 @@ namespace WebApplication1.Areas.coadmin.Controllers
         {
             if (Session["USER_ID"] != null)
             {
-                if (blogID != null)
+                if (Session["CURRENT_COMU"] != null)
                 {
-                    long userId = (long)Session["USER_ID"];
-                    List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
-                    user curUser = entities.users.Find(userId);
-                    blog blog = entities.blogs.Find(blogID);
-                    verblogViewModel viewModel = new verblogViewModel();
+                    if (blogID != null)
+                    {
+                        long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
+                        blog blog = entities.blogs.Where(x=> x.id == blogID && x.community_id == communityAct).FirstOrDefault();
+                        if (blog != null)
+                        {
+                            long userId = (long)Session["USER_ID"];
+                            List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
+                            user curUser = entities.users.Find(userId);
 
-                    communityList = ep.GetCommunityList(userId);
-                    viewModel.communityList = communityList;
+                            verblogViewModel viewModel = new verblogViewModel();
 
-                    viewModel.side_menu = "comunicaciones";
-                    viewModel.side_sub_menu = "comunicaciones";
-                    viewModel.document_category_list = entities.document_type.ToList();
-                    viewModel.curUser = curUser;
-                    viewModel.viewBlog = blog;
-                    viewModel.Content = blogID.ToString();
-                    viewModel.blogID = Convert.ToInt64(blogID);
-                    viewModel.blogcommentList = entities.blogcomments.Where(m => m.blog_id == blogID).ToList();
-                    viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
-                    viewModel.pubMessageList = pubMessageList;
-                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                    return View(viewModel);
+                            communityList = ep.GetCommunityList(userId);
+                            viewModel.communityList = communityList;
+
+                            viewModel.side_menu = "comunicaciones";
+                            viewModel.side_sub_menu = "comunicaciones";
+                            viewModel.document_category_list = entities.document_type.ToList();
+                            viewModel.curUser = curUser;
+                            viewModel.viewBlog = blog;
+                            viewModel.Content = blogID.ToString();
+                            viewModel.blogID = Convert.ToInt64(blogID);
+                            viewModel.blogcommentList = entities.blogcomments.Where(m => m.blog_id == blogID).ToList();
+                            viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
+                            viewModel.pubMessageList = pubMessageList;
+                            viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                            return View(viewModel);
+                        }
+                        else
+                        {
+                            return Redirect(Url.Action("blog", "comunicaciones", new { area = "coadmin", Error = "No existe ese elemento" }));
+                        }
+                        
+                    }
+                    else
+                    {
+                        return Redirect(Url.Action("blog", "comunicaciones", new { area = "coadmin" }));
+                    }
                 }
                 else
                 {
-                    return Redirect(Url.Action("NotFound", "Error"));
+                    return Redirect(Url.Action("blog", "comunicaciones", new { area = "coadmin", Error = "No permitido. Usted no administra ninguna comunidad. Comuníquese con el Webmaster..." }));
                 }
+                
             }
             else
             {
@@ -287,7 +344,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
 
         [HttpPost]
         [ValidateInput(false)]
-        public ActionResult editblog(long editID, string title, string author, string content)
+        public ActionResult editblog(long editID, string title, string content)
         {
             try
             {
@@ -296,8 +353,6 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 blog.title = title;
                 blog.content = content;
                 blog.blogdate = DateTime.Now;
-                blog.author = author;
-                // entities.blogs.Add(blog);
                 entities.SaveChanges();
                 return Redirect(Url.Action("verblog", "comunicaciones", new { area = "coadmin", blogID = editID }));
             }
@@ -353,16 +408,18 @@ namespace WebApplication1.Areas.coadmin.Controllers
 
         [HttpPost]
         [ValidateInput(false)]
-        public ActionResult newblog(string title, string author, string content)
+        public ActionResult newblog(string title, string content)
         {
             try
             {
-                long userId = (long)Session["USER_ID"];
+                long userId = (long)Session["USER_ID"];               
+                user curUser = entities.users.Find(userId);
+
                 blog blog = new blog();
                 blog.title = title;
                 blog.content = content;
                 blog.blogdate = DateTime.Now;
-                blog.author = author;
+                blog.author = curUser.first_name1 + " " + curUser.last_name1;
                 blog.user_id = userId;
                 blog.community_id = Convert.ToInt64(Session["CURRENT_COMU"]); 
                 entities.blogs.Add(blog);
