@@ -22,5 +22,6 @@ namespace WebApplication1.Areas.coadmin.ViewModels
         public int typeID { get; set; }
         public List<task> pubTaskList { get; set; }
         public List<ShowMessage> pubMessageList { get; set; }
+        public int documentType { get; set; }
     }
 }

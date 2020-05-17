@@ -1,7 +1,7 @@
 ﻿
 @{
     ViewBag.Title = "legales";
-    Page.Title = "Documentos legales de la comunidad - Brokolee Software";
+    Page.Title = "Documentos - Brokolee Software";
 }
 
 <div class="page-content-wrapper">
@@ -13,7 +13,21 @@
                 <div class="page-title-box">
                     <div class="float-left">
                         <div class="breadcrumb float-md-right">
-                            <h4 class="page-title">Documentos legales de la comunidad</h4>
+                            @if (Model.typeID == 0)
+                            {
+                                <h4 class="page-title">Documentos</h4>
+                            }
+                            else
+                            {
+                                foreach (var item in Model.document_category_list)
+                                {
+                                    if (Model.typeID == item.id)
+                                    {
+                                        <h4 class="page-title">@item.type_name</h4>                                     
+                                    }                                   
+                                }
+                            }
+
                         </div>
                     </div>
                     <div class="float-right">
@@ -40,12 +54,38 @@
                             }))
                             {
                                 @Html.AntiForgeryToken()
-                                <input type="hidden" name="id" value="@Model.typeID"/>
+                            <div class="input-group col-md-6 mb-2">
+                                <input type="hidden" name="id" value="@Model.typeID" />
                                 <input type="text" id="example-input1-group2" name="searchStr" value="@Model.searchStr"
                                        class="form-control" placeholder="Buscar documento por nombre...">
                                 <span class="input-group-append">
                                     <button type="submit" class="btn btn-effect-ripple btn-primary"><i class="fas fa-search"></i> Buscar </button>
                                 </span>
+                            </div>
+                               
+                                
+                                <div class="input-group col-md-6">
+                                    <label class="col-sm-6 col-md-4 col-form-label">Buscar por categoría</label>
+                                    <div class="col-sm-6 col-md-8">
+                                        <select class="form-control" id="id-search-category"
+                                                name="idDocumentT"
+                                                onchange="onSearchDocumentType()">
+                                            <option value="0">Elije una categoría</option>
+                                            @foreach (var item in Model.document_category_list)
+                                            {
+                                                if (Model.typeID == item.id)
+                                                {
+                                                    <option value="@item.id" selected>@item.type_name</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@item.id">@item.type_name</option>
+                                                }
+
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
                             }
 
                         </div>
@@ -62,12 +102,27 @@
         <!-- end back button -->
 
         <div class="row">
+            @if (ViewBag.msgError != null)
+            {
+                <div class="col-12">
+                    <div class="alert alert-danger" role="alert">
+                        <strong>Error: </strong> @ViewBag.msgError
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+            }
             <div class="col-12">
                 <div class="card m-b-30">
                     <div class="card-body">
                         <div class="row form-material">
                             <div class="col-md-6">
                                 <h5 class="d-inline-block">Listado de documentos</h5>
+                            </div>
+                            <div class="col-md-6 mb-1">
+                                <a href="@Url.Action("agregar", "documentos", new { area = "coadmin" })"><button type="button" class="btn btn-primary waves-effect waves-light float-xl-right float-lg-right float-md-left">Agregar nuevo</button></a>
+
                             </div>
                         </div>
                         <div class="table-responsive">
@@ -85,17 +140,17 @@
                                 <tbody>
                                     @foreach (var item in Model.document_list)
                                     {
-                                    <tr>
-                                        <td>@item.first_name</td>
-                                        <td>@item.uploaded_by</td>
-                                        @if (item.uploaded_date != null)
-                                        {
-                                            <td class="text-center">@Convert.ToDateTime(item.uploaded_date).ToString("MM/dd/yyyy")</td>
-                                        }
-                                        else
-                                        {
-                                            <td class="text-center"></td>
-                                        }
+                                        <tr>
+                                            <td>@item.first_name</td>
+                                            <td>@item.uploaded_by</td>
+                                            @if (item.uploaded_date != null)
+                                            {
+                                                <td class="text-center">@Convert.ToDateTime(item.uploaded_date).ToString("MM/dd/yyyy")</td>
+                                            }
+                                            else
+                                            {
+                                                <td class="text-center"></td>
+                                            }
 
                                         <td class="text-center">
                                             @if (item.upload_document != null)
@@ -109,33 +164,35 @@
                                             }
                                             else
                                             {
-                                                <a href="">
-                                                    <button type="button" class="btn btn-info waves-effect waves-light btn-sm"
+                                               
+                                                    <button disabled type="button" class="btn btn-info waves-effect waves-light btn-sm"
                                                             data-toggle="tooltip" data-placement="top" title="Descargar">
                                                         <i class="mdi mdi-cloud-download"></i>
-                                                    </button>
-                                                </a>
+                                                    </button>                                               
                                             }
 
-                                                <a href="~/Upload/Upload_Document/@item.upload_document">
-                                                    <button type="button" class="btn btn-success waves-effect waves-light btn-sm"
-                                                            data-toggle="tooltip" data-placement="top" title="Ver_G">
-                                                        <i class="mdi mdi-eye"></i>
-                                                    </button>
-                                                </a>
-                                            </td>
-                                        <td class="text-center">
-                                            @if (item.share == 1)
-                                            {
-                                                <button type="button" class="btn btn-info waves-effect waves-light btn-sm mr-1 mb-1">General</button>
-                                            }
-                                            else
-                                            {
-                                                <button type="button" class="btn btn-warning waves-effect waves-light btn-sm mb-1">Administradores</button>
-                                            }
+                                            <a href="@Url.Action("ver", "documentos", new { area = "coadmin", viewID = item.id })">
+                                                <button type="button"
+                                                        class="btn btn-success waves-effect waves-light btn-sm"
+                                                        data-toggle="tooltip"
+                                                        data-placement="top"
+                                                        title="Ver">
+                                                    <i class="mdi mdi-eye"></i>
+                                                </button>
+                                            </a>                                         
                                         </td>
-                                        <td class="text-center"><a href="@Url.Action("editar", "documentos", new { area = "coadmin", editID = item.id })"><button type="button" class="btn btn-primary waves-effect waves-light btn-sm mr-1 mb-1" data-toggle="tooltip" data-placement="top" title="Editar"><i class="mdi mdi-lead-pencil"></i></button></a><a href="#"><button type="button" onclick="onDeleteDocument(this)" data-id="@item.id" class="btn btn-danger waves-effect waves-light btn-sm mb-1" data-toggle="tooltip" data-placement="top" title="Eliminar"><i class="mdi mdi-delete"></i></button></a></td>
-                                    </tr>
+                                            <td class="text-center">
+                                                @if (item.share == 1)
+                                                {
+                                                    <button type="button" class="btn btn-info waves-effect waves-light btn-sm mr-1 mb-1">General</button>
+                                                }
+                                                else
+                                                {
+                                                    <button type="button" class="btn btn-warning waves-effect waves-light btn-sm mb-1">Administradores</button>
+                                                }
+                                            </td>
+                                            <td class="text-center"><a href="@Url.Action("editar", "documentos", new { area = "coadmin", editID = item.id })"><button type="button" class="btn btn-primary waves-effect waves-light btn-sm mr-1 mb-1" data-toggle="tooltip" data-placement="top" title="Editar"><i class="mdi mdi-lead-pencil"></i></button></a><a href="#"><button type="button" onclick="onDeleteDocument(this)" data-id="@item.id" class="btn btn-danger waves-effect waves-light btn-sm mb-1" data-toggle="tooltip" data-placement="top" title="Eliminar"><i class="mdi mdi-delete"></i></button></a></td>
+                                        </tr>
                                     }
                                 </tbody>
                             </table>

@@ -36,6 +36,17 @@
         <!-- end back button -->
 
         <div class="row">
+            @if (ViewBag.msgError != null)
+            {
+                <div class="col-12">
+                    <div class="alert alert-danger" role="alert">
+                        <strong>Error: </strong> @ViewBag.msgError
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+            }
             <div class="col-12">
                 <div class="card">
                     @using (Html.BeginForm("editdocument", "documentos",
@@ -55,7 +66,7 @@
                             <div class="form-group row">
                                 <label for="example-email-input" class="col-sm-3 col-form-label">Nombre</label>
                                 <div class="col-sm-9">
-                                    <input class="form-control" type="text" value="@Model.editDocument.first_name"
+                                    <input maxlength="30" class="form-control" type="text" value="@Model.editDocument.first_name"
                                            name="first_name" required data-toggle="tooltip" title="Nombre descriptivo del documento"
                                            placeholder="Documento 1" id="example-email-input">
                                     <small class="form-text text-muted">Nombre descriptivo del documento</small>
@@ -90,38 +101,36 @@
                                     <div class="input-group mt-2">
                                         <div class="custom-file">
                                             <input type="file" class="custom-file-input" id="inputGroupFile04" name="upload_document">
-                                            <label class="custom-file-label" for="inputGroupFile04">Seleccionar archivo</label>
+                                            <label id="archeditar2" class="custom-file-label" for="inputGroupFile04">Seleccionar archivo</label>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-divider"></div>
-                            <div class="form-group row">
-                                <label for="example-lastname1-input" class="col-sm-3 col-form-label">Link</label>
-                                <div class="col-sm-9">
-                                    <input class="form-control" type="text" value="@Model.editDocument.link" required
-                                           data-toggle="tooltip" title="Coloque aquí el link para acceder a documentos o videos localizados en otras plataformas"
-                                           placeholder="https://youtube.com" id="example-lastname1-input">
-                                    <small class="form-text text-muted">Coloque aquí el link para acceder a documentos o videos localizados en otras plataformas</small>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="example-name2-input" class="col-sm-3 col-form-label">Descargar archivo</label>
-                                <div class="col-sm-9">
-                                    <div class="input-group mt-2">
-                                        <div class="custom-file">
-                                            <button type="button" class="btn btn-info waves-effect waves-light">
-                                                <i class="mdi mdi-cloud-download  m-r-5"></i> Descargar archivo
-                                            </button>
+                            @if (Model.editDocument.upload_document != null)
+                            {
+                                <div class="form-group row">
+                                    <label for="example-name2-input" class="col-sm-3 col-form-label">Descargar archivo</label>
+                                    <div class="col-sm-9">
+                                        <div class="input-group mt-2">
+                                            <div class="custom-file">
+
+                                                <a href="~/Upload/Upload_Writing/@Model.editDocument.upload_document" download="">
+                                                    <button type="button" class="btn btn-info waves-effect waves-light">
+                                                        <i class="mdi mdi-cloud-download  m-r-5"></i> Descargar archivo
+                                                    </button>
+                                                </a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="form-divider"></div>
+                                <div class="form-divider"></div>
+                            }
+
                             <div class="form-group row">
                                 <label for="example-lastname1-input" class="col-sm-3 col-form-label">Subido por</label>
                                 <div class="col-sm-9">
-                                    <input class="form-control" type="text" value="@Model.editDocument.uploaded_by" name="uploaded_by"
+                                    <input maxlength="40" required class="form-control" type="email" value="@Model.editDocument.uploaded_by" name="uploaded_by"
                                            data-toggle="tooltip" title="Nombre de quien sube el documento"
                                            placeholder="Daniel González" id="example-lastname1-input">
                                     <small class="form-text text-muted">Nombre de quien sube el documento</small>
@@ -131,7 +140,7 @@
                             <div class="form-group row">
                                 <label for="example-date-input" class="col-sm-3 col-form-label">Fecha</label>
                                 <div class="col-sm-9">
-                                    <input class="form-control" type="date" value="@Convert.ToDateTime(Model.editDocument.uploaded_date).ToString("yyyy-MM-dd")"
+                                    <input class="form-control" autocomplete="off" type="date" value="@Convert.ToDateTime(Model.editDocument.uploaded_date).ToString("yyyy-MM-dd")"
                                            data-toggle="tooltip" title="Mes / día / año | Fecha que se sube el documento"
                                            id="example-date-input" name="uploaded_date" required />
                                     <small class="form-text text-muted">Mes / día / año | Fecha que se sube el documento</small>
@@ -195,3 +204,17 @@
     </div><!-- container -->
 
 </div> <!-- Page content Wrapper -->
+
+<script type="text/javascript">
+
+    (function () {
+
+        $('#inputGroupFile04').change(function () {
+
+
+            $('#archeditar2').html($(this)[0].files[0].name);
+        });
+
+
+    })();
+</script>

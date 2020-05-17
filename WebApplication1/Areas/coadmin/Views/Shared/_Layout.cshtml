@@ -561,29 +561,29 @@
                                                 {
                                                     <a href="javascript:void(0);" class="waves-effect active"><i class="mdi mdi-file-document"></i><span> Documentos </span> <span class="float-right"><i class="mdi mdi-chevron-right"></i></span></a>
                                                     <ul class="list-unstyled">
-                                                        @if (Model.side_sub_menu == "documentos_agregar")
+                                                        @if (Model.side_sub_menu == "documentos_listado")
                                                         {
                                                             <li class="active">
-                                                                    <a href="@Url.Action("agregar", "documentos", new { area = "coadmin" })" class="active">Agregar documento</a>
+                                                                    <a href="@Url.Action("listado", "documentos", new { area = "coadmin" })" class="active">Listado de documentos</a>
                                                             </li>                                                           
                                                         }
                                                         else
                                                         {                                                           
                                                                 <li>
-                                                                    <a href="@Url.Action("agregar", "documentos", new { area = "coadmin" })">Agregar documento</a>
+                                                                    <a href="@Url.Action("listado", "documentos", new { area = "coadmin" })">Listado de documentos</a>
                                                                 </li>                                                           
                                                         }
 
                                                         @if (Model.side_sub_menu == "documentos_categoria")
                                                         {
                                                             <li class="active">
-                                                                <a href="@Url.Action("categoria", "documentos", new { area = "coadmin" })" class="active">Crear categoría</a>
+                                                                <a href="@Url.Action("categoria", "documentos", new { area = "coadmin" })" class="active">Categorías</a>
                                                             </li>
                                                         }
                                                         else
                                                         {
                                                             <li>
-                                                                <a href="@Url.Action("categoria", "documentos", new { area = "coadmin" })">Crear categoría</a>
+                                                                <a href="@Url.Action("categoria", "documentos", new { area = "coadmin" })">Categorías</a>
                                                             </li>
                                                         }
                                                         @foreach (var item in Model.document_category_list)
@@ -591,13 +591,13 @@
                                                             if (Model.side_sub_menu == "documentos_" + item.type_name)
                                                             {
                                                                 <li class="active">
-                                                                    <a href="@Url.Action("listado", "documentos", new { area = "coadmin", id = item.id })" class="active">@item.type_name</a>
+                                                                    <a href="@Url.Action("listado", "documentos", new { area = "coadmin", idCategory = item.id })" class="active">@item.type_name</a>
                                                                 </li>
                                                             }
                                                             else
                                                             {
                                                                 <li>
-                                                                    <a href="@Url.Action("listado", "documentos", new { area = "coadmin", id = item.id })">@item.type_name</a>
+                                                                    <a href="@Url.Action("listado", "documentos", new { area = "coadmin", idCategory = item.id })">@item.type_name</a>
                                                                 </li>
                                                             }
                                                         }
@@ -607,8 +607,8 @@
                                                 {
                                                     <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-file-document"></i><span> Documentos </span> <span class="float-right"><i class="mdi mdi-chevron-right"></i></span></a>
                                                     <ul class="list-unstyled">                                                       
-                                                        <li><a href="@Url.Action("agregar", "documentos", new { area = "coadmin" })">Agregar documento</a></li>                                                                                                              
-                                                        <li><a href="@Url.Action("categoria", "documentos", new { area = "coadmin" })">Crear categoría</a></li>
+                                                        <li><a href="@Url.Action("listado", "documentos", new { area = "coadmin" })">Listado de documentos</a></li>                                                                                                              
+                                                        <li><a href="@Url.Action("categoria", "documentos", new { area = "coadmin" })">Categorías</a></li>
                                                         @foreach (var item in Model.document_category_list)
                                                         {
                                                             <li><a href="@Url.Action("listado", "documentos", new { area = "coadmin", id = item.id })">@item.type_name</a></li>
@@ -2289,6 +2289,10 @@
 
         function onSearchSupplierCategory() {
             $("#searchSupplierForm").submit();
+        }
+
+        function onSearchDocumentType() {
+            $("#searchForm").submit();
         }
 
         function onImportCSV() {

@@ -71,7 +71,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 }
                 catch(Exception ex)
                 {
-                    return Redirect(Url.Action("Index", "Error"));
+                   return Redirect(Url.Action("registrados", "eventos", new { area = "coadmin", Error = "Problema interno " + ex.Message }));
                 }
             } else
             {

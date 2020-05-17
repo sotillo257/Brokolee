@@ -70,53 +70,27 @@
                                 </select>
                                 <small class="form-text text-muted">Categoría del documento</small>
                             </div>
-                        </div>
-                        <div class="form-divider"></div>
-                        <div class="form-group row">
-                            <label for="example-name2-input" class="col-sm-3 col-form-label">Subir documento</label>
-                            <div class="col-sm-9">
-                                <div class="input-group mt-2">
-                                    <div class="custom-file">
-                                        <input type="file" class="custom-file-input" readonly
-                                               id="inputGroupFile04" name="upload_document">
-                                        <label class="custom-file-label" for="inputGroupFile04">Seleccionar archivo</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-divider"></div>
-                        <div class="form-group row">
-                            <label for="example-lastname1-input" class="col-sm-3 col-form-label">Link</label>
-                            <div class="col-sm-9">
-                                <input class="form-control" type="text" value="@Model.viewDocument.link" readonly
-                                       name="link" data-toggle="tooltip" title="Coloque aquí el link para acceder a documentos o videos localizados en otras plataformas" required
-                                       placeholder="https://youtube.com" id="example-lastname1-input">
-                                <small class="form-text text-muted">Coloque aquí el link para acceder a documentos o videos localizados en otras plataformas</small>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="example-name2-input" class="col-sm-3 col-form-label">Descargar archivo</label>
-                            <div class="col-sm-9">
-                                <div class="input-group mt-2">
-                                    <div class="custom-file">
-                                        @if (Model.viewDocument.upload_document != null)
-                                        {
+                        </div>                                              
+                       
+                        @if (Model.viewDocument.upload_document != null)
+                        {
+                            <div class="form-divider"></div>
+                            <div class="form-group row">
+                                <label for="example-name2-input" class="col-sm-3 col-form-label">Descargar archivo</label>
+                                <div class="col-sm-9">
+                                    <div class="input-group mt-2">
+                                        <div class="custom-file">
+
                                             <a href="~/Upload/Upload_Document/@Model.viewDocument.upload_document" download="">
                                                 <button type="button" class="btn btn-info waves-effect waves-light">
                                                     <i class="mdi mdi-cloud-download  m-r-5"></i> Descargar archivo
                                                 </button>
                                             </a>
-                                        }
-                                        else
-                                        {
-                                            <button type="button" class="btn btn-info waves-effect waves-light">
-                                                <i class="mdi mdi-cloud-download  m-r-5"></i> Descargar archivo
-                                            </button>
-                                        }
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        }
                         <div class="form-divider"></div>
                         <div class="form-group row">
                             <label for="example-lastname1-input" class="col-sm-3 col-form-label">Subido por</label>

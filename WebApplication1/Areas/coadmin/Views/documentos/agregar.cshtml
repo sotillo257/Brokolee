@@ -35,6 +35,17 @@
         <!-- end back button -->
 
         <div class="row">
+            @if (ViewBag.msgError != null)
+            {
+                <div class="col-12">
+                    <div class="alert alert-danger" role="alert">
+                        <strong>Error: </strong> @ViewBag.msgError
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+            }
             <div class="col-12">
                 <div class="card">
                     @using (Html.BeginForm("newdocument", "documentos",
@@ -54,7 +65,7 @@
                             <div class="form-group row">
                                 <label for="example-email-input" class="col-sm-3 col-form-label">Nombre</label>
                                 <div class="col-sm-9">
-                                    <input class="form-control" type="text" value="" name="first_name"
+                                    <input maxlength="30" class="form-control" type="text" value="" name="first_name"
                                            data-toggle="tooltip" title="Nombre descriptivo del documento"
                                            placeholder="Nombre" id="example-email-input" required>
                                     <small class="form-text text-muted">Nombre descriptivo del documento</small>
@@ -82,26 +93,16 @@
                                     <div class="input-group mt-2">
                                         <div class="custom-file">
                                             <input type="file" class="custom-file-input" id="inputGroupFile04" name="upload_document">
-                                            <label class="custom-file-label" for="inputGroupFile04">Seleccionar archivo</label>
+                                            <label id="archeditar2" class="custom-file-label" for="inputGroupFile04">Seleccionar archivo</label>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-divider"></div>
-                            <div class="form-group row">
-                                <label for="example-lastname1-input" class="col-sm-3 col-form-label">Link</label>
-                                <div class="col-sm-9">
-                                    <input class="form-control" type="text" value="" placeholder="Link"
-                                           name="link" required data-toggle="tooltip" title="Coloque aquí el link para acceder a documentos o videos localizados en otras plataformas"
-                                           id="example-lastname1-input">
-                                    <small class="form-text text-muted">Coloque aquí el link para acceder a documentos o videos localizados en otras plataformas</small>
-                                </div>
-                            </div>
-                            <div class="form-divider"></div>
+                            <div class="form-divider"></div>                           
                             <div class="form-group row">
                                 <label for="example-lastname1-input" class="col-sm-3 col-form-label">Subido por</label>
                                 <div class="col-sm-9">
-                                    <input class="form-control" type="text" value="" placeholder="Subido por" name="uploaded_by"
+                                    <input  maxlength="40" class="form-control" type="email" value="" placeholder="Subido por" name="uploaded_by"
                                            id="example-lastname1-input" required data-toggle="tooltip" title="Correo electrónico de quien sube el documento" />
                                     <small class="form-text text-muted">Correo electrónico de quien sube el documento</small>
                                 </div>
@@ -110,7 +111,7 @@
                             <div class="form-group row">
                                 <label for="example-date-input" class="col-sm-3 col-form-label">Fecha</label>
                                 <div class="col-sm-9">
-                                    <input class="form-control" type="date" value="" id="example-date-input"
+                                    <input class="form-control" autocomplete="off" type="date" value="" id="example-date-input"
                                            data-toggle="tooltip" title="Mes / día / año | Fecha que se sube el documento"
                                            name="uploaded_date" required />
                                     <small class="form-text text-muted">Mes / día / año | Fecha que se sube el documento</small>
@@ -179,3 +180,17 @@
     </div><!-- container -->
 
 </div> <!-- Page content Wrapper -->
+
+<script type="text/javascript">
+
+    (function () {
+
+        $('#inputGroupFile04').change(function () {
+
+
+            $('#archeditar2').html($(this)[0].files[0].name);
+        });
+
+
+    })();
+</script>

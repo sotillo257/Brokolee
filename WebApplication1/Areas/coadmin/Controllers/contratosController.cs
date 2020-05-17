@@ -16,23 +16,13 @@ namespace WebApplication1.Areas.coadmin.Controllers
         EFPublicRepository ep = new EFPublicRepository();
         List<community> communityList = new List<community>();
         // GET: coadmin/contratos
-        public ActionResult listado(string searchStr = "")
+        public ActionResult listado(string Error, string searchStr = "")
         {
             if (Session["USER_ID"] != null)
             {
                 try
                 {
-                    long userId = 0;
-                    if (Convert.ToInt32(Session["USER_ROLE"]) == 2)
-                    {
-                        userId = (long)Session["USER_ID"];
-                    }
-                    else if (Convert.ToInt32(Session["USER_ROLE"]) > 2
-                    && Session["ACC_USER_ID"] != null)
-                    {
-                        userId = (long)Session["ACC_USER_ID"];
-                    }
-
+                    long userId = (long)Session["USER_ID"];                    
                     user curUser = entities.users.Find(userId);
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                     List<contract> contractList = new List<contract>();                   
@@ -63,11 +53,12 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = pubMessageList;
                     viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                    ViewBag.msgError = Error;
                     return View(viewModel);
                 }
                 catch(Exception ex)
-                {
-                    return Redirect(Url.Action("Index", "Error"));
+                {                    
+                    return Redirect(Url.Action("listado", "contratos", new { area = "coadmin", Error = "Problema interno " + ex.Message }));
                 }                
             } else
             {
@@ -81,16 +72,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
             {
                 try
                 {
-                    long userId = 0;
-                    if (Convert.ToInt32(Session["USER_ROLE"]) == 2)
-                    {
-                        userId = (long)Session["USER_ID"];
-                    }
-                    else if (Convert.ToInt32(Session["USER_ROLE"]) > 2
-                    && Session["ACC_USER_ID"] != null)
-                    {
-                        userId = (long)Session["ACC_USER_ID"];
-                    }
+                    long userId = (long)Session["USER_ID"];                   
 
                     user curUser = entities.users.Find(userId);
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
@@ -111,7 +93,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 }
                 catch(Exception ex)
                 {
-                    return Redirect(Url.Action("Index", "Error"));
+                    return Redirect(Url.Action("listado", "contratos", new { area = "coadmin", Error = "Problema interno " + ex.Message }));
                 }               
             } else
             {
@@ -126,16 +108,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
             {
                 try
                 {
-                    long userId = 0;
-                    if (Convert.ToInt32(Session["USER_ROLE"]) == 2)
-                    {
-                        userId = (long)Session["USER_ID"];
-                    }
-                    else if (Convert.ToInt32(Session["USER_ROLE"]) > 2
-                    && Session["ACC_USER_ID"] != null)
-                    {
-                        userId = (long)Session["ACC_USER_ID"];
-                    }
+                    long userId = (long)Session["USER_ID"];                   
                     user curUser = entities.users.Find(userId);
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                     List<contract> contractList = new List<contract>();
@@ -168,8 +141,8 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     return View(viewModel);
                 }
                 catch(Exception ex)
-                {
-                    return Redirect(Url.Action("Index", "Error"));
+                {                    
+                    return Redirect(Url.Action("listado", "contratos", new { area = "coadmin", Error = "Problema interno (Archivados) " + ex.Message }));
                 }               
             } else
             {
@@ -178,50 +151,49 @@ namespace WebApplication1.Areas.coadmin.Controllers
                
         }
 
-        public ActionResult editar(long? contractID)
+        public ActionResult editar(string Error, long? contractID)
         {
             if (Session["USER_ID"] != null)
             {
                 if (contractID != null)
                 {
-                    try
+                    contract editContract = entities.contracts.Find(contractID);
+                    if (editContract != null)
                     {
-                        long userId = 0;
-                        if (Convert.ToInt32(Session["USER_ROLE"]) == 2)
+                        try
                         {
-                            userId = (long)Session["USER_ID"];
+                            long userId = (long)Session["USER_ID"];
+                            user curUser = entities.users.Find(userId);
+                            List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);                            
+                            editarContractViewModel viewModel = new editarContractViewModel();
+
+                            communityList = ep.GetCommunityList(userId);
+                            viewModel.communityList = communityList;
+
+                            viewModel.side_menu = "contratos";
+                            viewModel.side_sub_menu = "contratos_editar";
+                            viewModel.document_category_list = entities.document_type.ToList();
+                            viewModel.editContract = editContract;
+                            viewModel.curUser = curUser;
+                            viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
+                            viewModel.pubMessageList = pubMessageList;
+                            viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                            ViewBag.msgError = Error;
+                            return View(viewModel);
                         }
-                        else if (Convert.ToInt32(Session["USER_ROLE"]) > 2
-                        && Session["ACC_USER_ID"] != null)
+                        catch (Exception ex)
                         {
-                            userId = (long)Session["ACC_USER_ID"];
+                            return Redirect(Url.Action("listado", "contratos", new { area = "coadmin", Error = "Problema interno " + ex.Message }));
                         }
-                        user curUser = entities.users.Find(userId);
-                        List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
-                        contract editContract = entities.contracts.Find(contractID);
-                        editarContractViewModel viewModel = new editarContractViewModel();
-
-                        communityList = ep.GetCommunityList(userId);
-                        viewModel.communityList = communityList;
-
-                        viewModel.side_menu = "contratos";
-                        viewModel.side_sub_menu = "contratos_editar";
-                        viewModel.document_category_list = entities.document_type.ToList();
-                        viewModel.editContract = editContract;
-                        viewModel.curUser = curUser;
-                        viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
-                        viewModel.pubMessageList = pubMessageList;
-                        viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                        return View(viewModel);
                     }
-                    catch(Exception ex)
+                    else
                     {
-                        return Redirect(Url.Action("Index", "Error"));
-                    }                                    
+                        return Redirect(Url.Action("listado", "contratos", new { area = "coadmin", Error = "No existe ese elemento" }));
+                    }                                                      
                 }
                 else
                 {
-                    return Redirect(Url.Action("NotFound", "Error"));
+                    return Redirect(Url.Action("listado", "contratos", new { area = "coadmin" }));
                 }               
             } else
             {
@@ -272,12 +244,8 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 }
                
             }catch(Exception ex)
-            {
-                return Redirect(Url.Action("editar", "contratos", 
-                    new { area = "coadmin",
-                        id = contractID,
-                        exception = ex.Message
-                    }));
+            {                
+                return Redirect(Url.Action("editar", "contratos", new { area = "coadmin", id = contractID, Error = "Problema interno " + ex.Message }));
             }
         }
 
@@ -338,11 +306,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                
             }catch(Exception ex)
             {
-                return Redirect(Url.Action("agregar", "contratos", 
-                    new {
-                        area = "coadmin",
-                        exception = ex.Message
-                    }));
+                return Redirect(Url.Action("agregar", "contratos", new { area = "coadmin", Error = "Problema interno " + ex.Message }));
             }
         }
 

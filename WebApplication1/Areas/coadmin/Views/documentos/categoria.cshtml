@@ -1,7 +1,7 @@
 ﻿
 @{
     ViewBag.Title = "categoria";
-    Page.Title = "Crear categoría - Brokolee Software";
+    Page.Title = "Categorías - Brokolee Software";
 }
 
 <div class="page-content-wrapper">
@@ -13,13 +13,13 @@
                 <div class="page-title-box">
                     <div class="float-left">
                         <div class="breadcrumb float-md-right">
-                            <h4 class="page-title">Crear categoría</h4>
+                            <h4 class="page-title">Categorías</h4>
                         </div>
                     </div>
                     <div class="float-right">
                         <ul class="breadcrumb float-md-right">
                             <li class="breadcrumb-item"><a href="@Url.Action("panel", "control", new { area = "coadmin" })" class="text-success"><i class="mdi mdi-home-modern"></i> Panel de control</a></li>
-                            <li class="breadcrumb-item active">Crear categoría</li>
+                            <li class="breadcrumb-item active">Categorías</li>
                         </ul>
                     </div>
                 </div>
@@ -47,7 +47,7 @@
                         <div class="form-group row">
                             <label for="example-email-input" class="col-sm-3 col-form-label">Nombre</label>
                             <div class="col-sm-9">
-                                <input class="form-control" type="text" value="" name="type_name" required
+                                <input  maxlength="30" class="form-control soloTexto" type="text" value="" name="type_name" required
                                        data-toggle="tooltip" title="Nombre de la categoría"
                                        placeholder="Nombre" id="example-email-input">
                                 <small class="form-text text-muted">Nombre de la categoría</small>
@@ -109,7 +109,10 @@
                                     {
                                     <tr>
                                         <td>@item.DocumentTypeName</td>
-                                        <td class="text-center"><button type="button" class="btn btn-info waves-effect waves-light btn-sm">@item.Documents</button></td>
+                                        <td class="text-center">
+                                        <a href="@Url.Action("listado", "documentos", new { area = "coadmin", idCategory = item.ID })">
+                                            <button type="button" class="btn btn-info waves-effect waves-light btn-sm">@item.Documents</button>
+                                             </a></td>
                                         <td class="text-center">
                                             @if (item.Share == 1)
                                             {
