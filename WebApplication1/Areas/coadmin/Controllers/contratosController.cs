@@ -320,6 +320,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                         newContract.upload_contract = fileName;
                     }
                     newContract.status = 1;
+                    newContract.community_id == Convert.ToInt64(Session["CURRENT_COMU"];
                     entities.contracts.Add(newContract);
                     entities.SaveChanges();
                     return Redirect(Url.Action("listado", "contratos", new { area = "coadmin" }));
