@@ -23,5 +23,6 @@ namespace WebApplication1.Models
         public Nullable<int> status { get; set; }
         public Nullable<System.DateTime> created_at { get; set; }
         public Nullable<System.DateTime> updated_at { get; set; }
+        public Nullable<long> community_id { get; set; }
     }
 }

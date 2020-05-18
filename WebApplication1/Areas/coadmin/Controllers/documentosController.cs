@@ -95,7 +95,9 @@ namespace WebApplication1.Areas.coadmin.Controllers
         public ActionResult editarcategoria(int? typeID)
         {
             if (Session["USER_ID"] != null)
-            {                
+            {
+                if (Session["CURRENT_COMU"] != null)
+                {
                     if (typeID != null)
                     {
                         document_type documentCategory = entities.document_type.Find(typeID);
@@ -104,8 +106,8 @@ namespace WebApplication1.Areas.coadmin.Controllers
                             try
                             {
                                 long userId = (long)Session["USER_ID"];
-                            long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
-                            user curUser = entities.users.Find(userId);
+                                long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
+                                user curUser = entities.users.Find(userId);
                                 List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
 
                                 List<document_type> document_category_list = new List<document_type>();
@@ -146,12 +148,17 @@ namespace WebApplication1.Areas.coadmin.Controllers
                         else
                         {
                             return Redirect(Url.Action("listado", "documentos", new { area = "coadmin", Error = "No existe ese elemento" }));
-                        }                        
+                        }
                     }
                     else
                     {
                         return Redirect(Url.Action("listado", "documentos", new { area = "coadmin" }));
-                    }                                          
+                    }
+                }
+                else
+                {
+                    return Redirect(Url.Action("listado", "documentos", new { area = "coadmin", Error = "No puede editar categorias. Usted no administra ninguna comunidad. Comuníquese con el Webmaster..." }));
+                }                                                           
             } else
             {
                 return Redirect(ep.GetLogoutUrl());
@@ -162,46 +169,53 @@ namespace WebApplication1.Areas.coadmin.Controllers
         {
             if (Session["USER_ID"] != null)
             {
-                try
+                if (Session["CURRENT_COMU"] != null)
                 {
-                    long userId = (long)Session["USER_ID"];
-                    long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
-                    user curUser = entities.users.Find(userId);
-                    List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
-
-                    List<document_type> document_category_list = entities.document_type.ToList();
-                    List<DocumentTypeItemViewModel> documentTypeItemList = new List<DocumentTypeItemViewModel>();
-                    foreach (var item in document_category_list)
+                    try
                     {
-                        int ID = item.id;
-                        DocumentTypeItemViewModel itemViewModel = new DocumentTypeItemViewModel();
-                        itemViewModel.ID = ID;
-                        itemViewModel.DocumentTypeName = item.type_name;
-                        itemViewModel.Documents = entities.documents.Where(m => m.type_id == ID && m.community_id == communityAct).ToList().Count; ;
-                        itemViewModel.Share = (int)item.share;
-                        documentTypeItemList.Add(itemViewModel);
+                        long userId = (long)Session["USER_ID"];
+                        long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
+                        user curUser = entities.users.Find(userId);
+                        List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
+
+                        List<document_type> document_category_list = entities.document_type.ToList();
+                        List<DocumentTypeItemViewModel> documentTypeItemList = new List<DocumentTypeItemViewModel>();
+                        foreach (var item in document_category_list)
+                        {
+                            int ID = item.id;
+                            DocumentTypeItemViewModel itemViewModel = new DocumentTypeItemViewModel();
+                            itemViewModel.ID = ID;
+                            itemViewModel.DocumentTypeName = item.type_name;
+                            itemViewModel.Documents = entities.documents.Where(m => m.type_id == ID && m.community_id == communityAct).ToList().Count; ;
+                            itemViewModel.Share = (int)item.share;
+                            documentTypeItemList.Add(itemViewModel);
+                        }
+                        categoriaViewModel viewModel = new categoriaViewModel();
+
+                        communityList = ep.GetCommunityList(userId);
+                        viewModel.communityList = communityList;
+
+                        viewModel.side_menu = "documentos";
+                        viewModel.side_sub_menu = "documentos_categoria";
+                        viewModel.document_category_list = document_category_list;
+                        viewModel.categoryList = entities.categories.ToList();
+                        viewModel.curUser = curUser;
+                        viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
+                        viewModel.pubMessageList = pubMessageList;
+                        viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                        viewModel.documentTypeItemList = documentTypeItemList;
+                        ViewBag.msgError = Error;
+                        return View(viewModel);
                     }
-                    categoriaViewModel viewModel = new categoriaViewModel();
-
-                    communityList = ep.GetCommunityList(userId);
-                    viewModel.communityList = communityList;
-
-                    viewModel.side_menu = "documentos";
-                    viewModel.side_sub_menu = "documentos_categoria";
-                    viewModel.document_category_list = document_category_list;
-                    viewModel.categoryList = entities.categories.ToList();
-                    viewModel.curUser = curUser;
-                    viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
-                    viewModel.pubMessageList = pubMessageList;
-                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                    viewModel.documentTypeItemList = documentTypeItemList;
-                    ViewBag.msgError = Error;
-                    return View(viewModel);                    
-                } 
-                catch(Exception ex)
+                    catch (Exception ex)
+                    {
+                        return Redirect(Url.Action("categoria", "documentos", new { area = "coadmin", Error = "Problema interno " + ex.Message }));
+                    }
+                }
+                else
                 {
-                    return Redirect(Url.Action("categoria", "documentos", new { area = "coadmin", Error = "Problema interno " + ex.Message }));
-                }               
+                    return Redirect(Url.Action("listado", "documentos", new { area = "coadmin", Error = "No permitido. Usted no administra ninguna comunidad. Comuníquese con el Webmaster..." }));
+                }                              
             }
             else
             {
@@ -210,7 +224,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 
         }
 
-        public ActionResult agregar()
+        public ActionResult agregar(string Error)
         {
             if (Session["USER_ID"] != null)
             {
@@ -233,7 +247,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                         viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                         viewModel.pubMessageList = pubMessageList;
                         viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-
+                        ViewBag.msgError = Error;
                         return View(viewModel);
 
                     }

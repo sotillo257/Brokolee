@@ -128,11 +128,12 @@
                                             <td class="text-center">
                                                 @if (item.status == 1)
                                                 {
-                                                    <button type="button" class="btn btn-primary waves-effect waves-light btn-sm">Vigente</button>
+                                                    <button onclick="onArchivarC(this)" data-id="@item.id" type="button" class="btn btn-primary waves-effect waves-light btn-sm mb-1">Vigente</button>
+
                                                 }
                                                 else
                                                 {
-                                                    <button type="button" class="btn btn-dark waves-effect waves-light btn-sm">Archivado</button>
+                                                    <button onclick="onArchivarC(this)" data-id="@item.id" type="button" class="btn btn-warning waves-effect waves-light btn-sm">Archivado</button>
                                                 }
                                             </td>
                                             <td class="text-center">

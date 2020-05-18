@@ -168,6 +168,7 @@
           <Property Name="status" Type="int" />
           <Property Name="created_at" Type="datetime" />
           <Property Name="updated_at" Type="datetime" />
+          <Property Name="community_id" Type="bigint" />
         </EntityType>
         <EntityType Name="creditcard">
           <Key>
@@ -1242,20 +1243,6 @@
           <NavigationProperty Name="community" Relationship="Self.FK_communuser_community" FromRole="communuser" ToRole="community" />
           <NavigationProperty Name="user" Relationship="Self.FK_communuser_user" FromRole="communuser" ToRole="user" />
         </EntityType>
-        <EntityType Name="contract">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="first_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="date_contract" Type="DateTime" Precision="3" />
-          <Property Name="date_notification" Type="DateTime" Precision="3" />
-          <Property Name="upload_contract" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="status" Type="Int32" />
-          <Property Name="created_at" Type="DateTime" Precision="3" />
-          <Property Name="updated_at" Type="DateTime" Precision="3" />
-        </EntityType>
         <EntityType Name="creditcard">
           <Key>
             <PropertyRef Name="id" />
@@ -1778,7 +1765,6 @@
           <EntitySet Name="comments" EntityType="Self.comment" />
           <EntitySet Name="communities" EntityType="Self.community" />
           <EntitySet Name="communusers" EntityType="Self.communuser" />
-          <EntitySet Name="contracts" EntityType="Self.contract" />
           <EntitySet Name="creditcards" EntityType="Self.creditcard" />
           <EntitySet Name="document_type" EntityType="Self.document_type" />
           <EntitySet Name="emailthemes" EntityType="Self.emailtheme" />
@@ -1937,6 +1923,7 @@
             <End Role="fee" EntitySet="fees" />
           </AssociationSet>
           <EntitySet Name="books" EntityType="pjrdev_condominiosModel.book" />
+          <EntitySet Name="contracts" EntityType="pjrdev_condominiosModel.contract" />
           </EntityContainer>
         <EntityType Name="Vehiculo">
           <Key>
@@ -2333,6 +2320,21 @@
           <Property Name="created_at" Type="DateTime" Precision="3" />
           <Property Name="community_id" Type="Int64" />
         </EntityType>
+        <EntityType Name="contract">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="first_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="date_contract" Type="DateTime" Precision="3" />
+          <Property Name="date_notification" Type="DateTime" Precision="3" />
+          <Property Name="upload_contract" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="status" Type="Int32" />
+          <Property Name="created_at" Type="DateTime" Precision="3" />
+          <Property Name="updated_at" Type="DateTime" Precision="3" />
+          <Property Name="community_id" Type="Int64" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2434,21 +2436,6 @@
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="user_id" ColumnName="user_id" />
                 <ScalarProperty Name="commun_id" ColumnName="commun_id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="contracts">
-            <EntityTypeMapping TypeName="pjrdev_condominiosModel.contract">
-              <MappingFragment StoreEntitySet="contract">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="first_name" ColumnName="first_name" />
-                <ScalarProperty Name="date_contract" ColumnName="date_contract" />
-                <ScalarProperty Name="date_notification" ColumnName="date_notification" />
-                <ScalarProperty Name="upload_contract" ColumnName="upload_contract" />
-                <ScalarProperty Name="description" ColumnName="description" />
-                <ScalarProperty Name="status" ColumnName="status" />
-                <ScalarProperty Name="created_at" ColumnName="created_at" />
-                <ScalarProperty Name="updated_at" ColumnName="updated_at" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2949,6 +2936,22 @@
                 <ScalarProperty Name="end_time" ColumnName="end_time" />
                 <ScalarProperty Name="start_time" ColumnName="start_time" />
                 <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="first_name" ColumnName="first_name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="contracts">
+            <EntityTypeMapping TypeName="pjrdev_condominiosModel.contract">
+              <MappingFragment StoreEntitySet="contract">
+                <ScalarProperty Name="community_id" ColumnName="community_id" />
+                <ScalarProperty Name="updated_at" ColumnName="updated_at" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="upload_contract" ColumnName="upload_contract" />
+                <ScalarProperty Name="date_notification" ColumnName="date_notification" />
+                <ScalarProperty Name="date_contract" ColumnName="date_contract" />
                 <ScalarProperty Name="first_name" ColumnName="first_name" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
