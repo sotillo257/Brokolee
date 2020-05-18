@@ -50,7 +50,7 @@
         <!-- back button -->
         <div class="row pb-4">
             <div class="col-md-6">
-                <a href="javascript:history.back()"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+                <a href="@Url.Action("listadoVehiculos", "titulares", new { area = "coadmin", Id = Model.vehiculo.IdTitulo})"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
             </div>
         </div>
         <!-- end back button -->
@@ -156,7 +156,7 @@
         <!-- back button -->
         <div class="row pb-4">
             <div class="col-md-6">
-                <a href="javascript:history.back()"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+                <a href="@Url.Action("listadoVehiculos", "titulares", new { area = "coadmin", Id = Model.vehiculo.IdTitulo})"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
             </div>
         </div>
         <!-- end back button -->

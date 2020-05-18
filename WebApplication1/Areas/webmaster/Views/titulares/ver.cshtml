@@ -29,7 +29,7 @@
         <!-- back button -->
         <div class="row pb-4">
             <div class="col-md-6">
-                <a href="javascript:history.back()"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+                <a href="@Url.Action("listado", "titulares", new { area = "webmaster" })"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
             </div>
         </div>
         <!-- end back button -->
@@ -71,7 +71,7 @@
                                 <input class="form-control" type="email" name="email" required value="@Model.editUser.email" readonly
                                        data-toggle="tooltip" 
                                        placeholder="Correo electrónico" id="example-email-input">
-                                <small class="form-text text-muted">Correo electrónico del titular</small>
+                                @*<small class="form-text text-muted">Correo electrónico del titular</small>*@
                             </div>
                         </div>
                         <div class="form-divider"></div>
@@ -81,7 +81,7 @@
                                 <input class="form-control" type="password" value="@Model.editUser.password"
                                        placeholder="Contraseña" id="example-password-input" readonly
                                        data-toggle="tooltip" />
-                                <small class="form-text text-muted">Contraseña utilizada para ingresar al sistema</small>
+                                @*<small class="form-text text-muted">Contraseña utilizada para ingresar al sistema</small>*@
                             </div>
                         </div>
                         <div class="form-divider"></div>
@@ -90,7 +90,7 @@
                             <div class="col-sm-9">
                                 <input class="form-control" type="text" value="@Model.editUser.first_name1" readonly
                                        placeholder="Nombre" id="example-name2-input" data-toggle="tooltip" />
-                                <small class="form-text text-muted">Nombre del titular</small>
+                                @*<small class="form-text text-muted">Nombre del titular</small>*@
                             </div>
                         </div>
                         <div class="form-group row">
@@ -99,7 +99,7 @@
                                 <input class="form-control" type="text" value="@Model.editUser.last_name1" readonly
                                        placeholder="Apellido paterno" id="example-lastname2-input"
                                        data-toggle="tooltip" />
-                                <small class="form-text text-muted">Apellido paterno del titular</small>
+                                @*<small class="form-text text-muted">Apellido paterno del titular</small>*@
                             </div>
                         </div>
                         <div class="form-group row">
@@ -108,7 +108,7 @@
                                 <input class="form-control" type="text" value="@Model.editUser.mother_last_name1" readonly
                                        placeholder="Apellido materno" id="example-lastname2m-input"
                                        data-toggle="tooltip" />
-                                <small class="form-text text-muted">Apellido materno del titular</small>
+                                @*<small class="form-text text-muted">Apellido materno del titular</small>*@
                             </div>
                         </div>
                         <div class="form-divider"></div>
@@ -118,7 +118,7 @@
                                 <input class="form-control" type="tel" value="@Model.editUser.phone_number1"
                                        placeholder="# Teléfono" id="example-tel1-input" readonly
                                        data-toggle="tooltip"  />
-                                <small class="form-text text-muted">Número de teléfono del titular</small>
+                                @*<small class="form-text text-muted">Número de teléfono del titular</small>*@
                             </div>
                         </div>
                         <div class="form-divider"></div>
@@ -128,7 +128,7 @@
                                 <input class="form-control" type="text" value="@Model.editUser.postal_address"
                                        placeholder="Dirección postal" id="example-address1-input" readonly
                                        data-toggle="tooltip"  />
-                                <small class="form-text text-muted">Dirección postal del titular</small>
+                                @*<small class="form-text text-muted">Dirección postal del titular</small>*@
                             </div>
                         </div>
                         <div class="form-divider"></div>
@@ -138,7 +138,7 @@
                                 <input class="form-control" type="text" value="@Model.editUser.residential_address"
                                        placeholder="Dirección Residencial" id="example-address2-input" readonly
                                        data-toggle="tooltip"  />
-                                <small class="form-text text-muted">Dirección residencial del titular</small>
+                                @*<small class="form-text text-muted">Dirección residencial del titular</small>*@
                             </div>
                         </div>
 
@@ -150,7 +150,7 @@
         <!-- back button -->
         <div class="row pb-4">
             <div class="col-md-6">
-                <a href="javascript:history.back()"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+                <a href="@Url.Action("listado", "titulares", new { area = "webmaster" })"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
             </div>
         </div>
         <!-- end back button -->

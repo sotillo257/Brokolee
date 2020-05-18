@@ -62,7 +62,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                     viewModel.uso = null;
                 }
                 viewModel.side_menu = "uso";
-                viewModel.side_sub_menu = "uso_privacidad";
+                viewModel.side_sub_menu = "terminos_privacidad";
                 viewModel.document_category_list = entities.document_type.ToList();
                 viewModel.curUser = curUser;
                 viewModel.pubTaskList = ep.GetNotifiTaskList(userId);

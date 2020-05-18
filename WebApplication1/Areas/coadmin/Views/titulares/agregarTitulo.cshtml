@@ -57,7 +57,7 @@
                     </div>
                     <div class="float-right">
                         <ul class="breadcrumb float-md-right">
-                            <li class="breadcrumb-item"><a href="@Url.Action("panel", "control", new { area = "coadmin" })" class="text-success"><i class="mdi mdi-home-modern"></i> Panel de control</a></li>
+                            <li class="breadcrumb-item"><a href="@Url.Action("panel", "control", new { area = "coadmin"})" class="text-success"><i class="mdi mdi-home-modern"></i> Panel de control</a></li>
                             <li class="breadcrumb-item active">Agregar título</li>
                         </ul>
                     </div>
@@ -68,7 +68,7 @@
         <!-- back button -->
         <div class="row pb-4">
             <div class="col-md-6">
-                <a href="javascript:history.back()"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+                <a href="@Url.Action("listadoTitulos", "titulares", new { area = "coadmin", id = Model.IdUserTitular  })"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
             </div>
         </div>
         <!-- end back button -->
@@ -118,8 +118,18 @@
                                 <label class="col-sm-3 col-form-label">Comunidad</label>
                                 <div class="col-sm-9">
                                     <select required class="form-control" name="IdCommunity"
-                                            data-toggle="tooltip" title="Nombre de la comunidad" id="IdCommunity">
-                                        <option selected value="@Model.communityS.id">@Model.communityS.first_name</option>
+                                            data-toggle="tooltip" title="Nombre de la comunidad" id="IdCommunity">                                      
+                                        @foreach (var item in Model.communityList)
+                                        {
+                                            if (Convert.ToInt64(Session["CURRENT_COMU"]) == item.id)
+                                            {
+                                                <option selected value="@item.id">@item.first_name (Comunidad actualmente seleccionada)</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@item.id">@item.first_name</option>
+                                            }
+                                        }
                                     </select>
                                     <small class="form-text text-muted">Comunidad</small>
                                 </div>
@@ -141,7 +151,7 @@
                             <div class="form-group row">
                                 <label for="apartment-input" class="col-sm-3 col-form-label">Propiedad</label>
                                 <div class="col-sm-9">
-                                    <input maxlength="30" class="form-control solotTexto" type="text" value="" name="apartment" required
+                                    <input maxlength="30" class="form-control" type="text" value="" name="apartment" required
                                            data-toggle="tooltip" title="Propiedad del titular"
                                            placeholder="Propiedad" id="apartment-input">
                                     <small class="form-text text-muted">Propiedad del titular</small>
@@ -278,7 +288,7 @@
                             </div>
                             <!-- End View -->
                             <button type="submit" class="btn btn-primary waves-effect waves-light">Guardar</button>
-                            <a href="javascript:history.back()"><button type="button" class="btn btn-danger waves-effect waves-light">Cancelar</button></a>
+                            <a href="@Url.Action("listadoTitulos", "titulares", new { area = "coadmin", id = Model.IdUserTitular  })"><button type="button" class="btn btn-danger waves-effect waves-light">Cancelar</button></a>
                         </div>
                     }
                 </div>
@@ -288,7 +298,7 @@
         <!-- back button -->
         <div class="row pb-4">
             <div class="col-md-6">
-                <a href="javascript:history.back()"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+                <a href="@Url.Action("listadoTitulos", "titulares", new { area = "coadmin", id = Model.IdUserTitular  })"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
             </div>
         </div>
         <!-- end back button -->

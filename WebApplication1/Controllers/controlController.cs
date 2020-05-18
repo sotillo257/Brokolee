@@ -24,16 +24,7 @@ namespace WebApplication1.Controllers
             {
                 try
                 {
-                    long userId = 0;
-                    if (Convert.ToInt32(Session["USER_ROLE"]) == 1)
-                    {
-                        userId = (long)Session["USER_ID"];
-                    }
-                    else if (Convert.ToInt32(Session["USER_ROLE"]) > 1
-                    && Session["ACC_USER_ID"] != null)
-                    {
-                        userId = (long)Session["ACC_USER_ID"];
-                    }
+                    long userId = (long)Session["USER_ID"];                    
                     user curUser = entities.users.Find(userId);
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                     communityControlViewModel viewModel = new communityControlViewModel();

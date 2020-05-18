@@ -69,7 +69,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 }
                 catch(Exception ex)
                 {
-                    return Redirect(Url.Action("Index", "Error"));
+                    return Redirect(Url.Action("disponibles", "facilidades", new { area = "coadmin", Error = "Problema interno " + ex.Message }));
                 }               
             } else
             {
@@ -113,7 +113,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     }
                     catch (Exception ex)
                     {
-                        return Redirect(Url.Action("Index", "Error"));
+                        return Redirect(Url.Action("disponibles", "facilidades", new { area = "coadmin", Error = "Problema interno " + ex.Message }));
                     }
                 }
                 else

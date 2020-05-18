@@ -416,11 +416,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                     <li>
                                         @if (Model.side_sub_menu == "facilidades_reservas")
                                         {
-                                            <a href="@Url.Action("reservas", "facilidades")" class="active">Status de Reservas</a>
+                                            <a href="@Url.Action("reservas", "facilidades")" class="active">Estado de reservas</a>
                                         }
                                         else
                                         {
-                                            <a href="@Url.Action("reservas", "facilidades")">Status de Reservas</a>
+                                            <a href="@Url.Action("reservas", "facilidades")">Estado de Reservas</a>
                                         }
                                     </li>
                                 </ul>
@@ -430,7 +430,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 <a href="javascript:void(0);" class="waves-effect waves-light"><i class="mdi mdi-apps"></i><span> Facilidades </span> <span class="float-right"><i class="mdi mdi-chevron-right"></i></span></a>
                                 <ul class="list-unstyled">
                                     <li><a href="@Url.Action("disponibles", "facilidades")">Facilidades disponibles</a></li>
-                                    <li><a href="@Url.Action("reservas", "facilidades")">Status de Reservas</a></li>
+                                    <li><a href="@Url.Action("reservas", "facilidades")">Estado de Reservas</a></li>
                                 </ul>
                             }
                         </li>

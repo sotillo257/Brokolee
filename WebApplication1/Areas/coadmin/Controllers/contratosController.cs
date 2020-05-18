@@ -101,7 +101,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 }
                 else
                 {
-                    return Redirect(Url.Action("listado", "contratos", new { area = "coadmin", Error = "No puede editar contratos. Usted no administra ninguna comunidad. Comuníquese con el Webmaster..." }));
+                    return Redirect(Url.Action("listado", "contratos", new { area = "coadmin", Error = "No puede agregar contratos. Usted no administra ninguna comunidad. Comuníquese con el Webmaster..." }));
                 }                             
             } else
             {
@@ -113,9 +113,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
         public ActionResult archivados(string searchStr = "")
         {
             if (Session["USER_ID"] != null)
-            {
-                if (Session["CURRENT_COMU"] != null)
-                {
+            {                
                     try
                     {
                         long userId = (long)Session["USER_ID"];
@@ -154,12 +152,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     catch (Exception ex)
                     {
                         return Redirect(Url.Action("listado", "contratos", new { area = "coadmin", Error = "Problema interno (Archivados) " + ex.Message }));
-                    }
-                }
-                else
-                {
-                    return Redirect(Url.Action("listado", "contratos", new { area = "coadmin", Error = "No puede editar contratos. Usted no administra ninguna comunidad. Comuníquese con el Webmaster..." }));
-                }                              
+                    }                                            
             } else
             {
                 return Redirect(ep.GetLogoutUrl());
@@ -320,7 +313,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                         newContract.upload_contract = fileName;
                     }
                     newContract.status = 1;
-                    newContract.community_id == Convert.ToInt64(Session["CURRENT_COMU"];
+                    newContract.community_id = Convert.ToInt64(Session["CURRENT_COMU"]);
                     entities.contracts.Add(newContract);
                     entities.SaveChanges();
                     return Redirect(Url.Action("listado", "contratos", new { area = "coadmin" }));
@@ -353,7 +346,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
             try
             {
 
-                efac delf = entities.efacs.Find(id);
+                contract delf = entities.contracts.Find(id);
                 if (delf.status == 1)
                 {
                     delf.status = 2;

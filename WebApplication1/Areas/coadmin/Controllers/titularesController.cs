@@ -31,30 +31,57 @@ namespace WebApplication1.Areas.coadmin.Controllers
         {
             if (Session["USER_ID"] != null && Id != null)
             {
-                long userId = (long)Session["USER_ID"];
-                user curUser = entities.users.Find(userId);
-                Dictionary<long, string> communityDict = new Dictionary<long, string>();
-                List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
-                List<Vehiculo> vehiculosLists = new List<Vehiculo>();
-                vehiculosLists = entities.Vehiculos.Where(x => x.is_del != true && x.IdTitulo == Id).ToList();
-                Titulo titulo = entities.Titulos.Find(Id);
-                listadoVehiculosViewModel viewModel = new listadoVehiculosViewModel();
-
-                List<community> communityList = new List<community>();
-                communityList = ep.GetCommunityList(userId);
-                viewModel.communityList = communityList;
-
-                viewModel.titulo = titulo;
-                viewModel.side_menu = "titulares";
-                viewModel.side_sub_menu = "titulares_listado";
-                viewModel.document_category_list = entities.document_type.ToList();
-                viewModel.vehiculosList = vehiculosLists;
-                viewModel.curUser = curUser;
-                viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);               
-                viewModel.CantidadDeVehiculos = vehiculosLists.Count();
-                viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
-                viewModel.pubMessageList = pubMessageList;
-                return View(viewModel);
+                if (Session["CURRENT_COMU"] != null)
+                {
+                    if (Id != null)
+                    {
+                        long userId = (long)Session["USER_ID"];
+                        List<community> communityList = new List<community>();
+                        communityList = ep.GetCommunityList(userId);                        
+                        Titulo tituls = entities.Titulos.Find(Id);
+                        if (tituls != null)
+                        {
+                            if (communityList.Any(x => x.id == tituls.IdCommunity))
+                            {
+                                long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
+                                user curUser = entities.users.Find(userId);
+                                Dictionary<long, string> communityDict = new Dictionary<long, string>();
+                                List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
+                                List<Vehiculo> vehiculosLists = new List<Vehiculo>();
+                                vehiculosLists = entities.Vehiculos.Where(x => x.is_del != true && x.IdTitulo == Id).ToList();
+                                Titulo titulo = entities.Titulos.Find(Id);
+                                listadoVehiculosViewModel viewModel = new listadoVehiculosViewModel();
+                                viewModel.communityList = communityList;
+                                viewModel.titulo = titulo;
+                                viewModel.side_menu = "titulares";
+                                viewModel.side_sub_menu = "titulares_listado";
+                                viewModel.document_category_list = entities.document_type.ToList();
+                                viewModel.vehiculosList = vehiculosLists;
+                                viewModel.curUser = curUser;
+                                viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                                viewModel.CantidadDeVehiculos = vehiculosLists.Count();
+                                viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
+                                viewModel.pubMessageList = pubMessageList;
+                                return View(viewModel);
+                            }
+                            else
+                            {
+                                return Redirect(Url.Action("listado", "titulares", new { area = "coadmin", Error = "No permitido. Usted no administra la comunidad del elemento al que quiere acceder." }));
+                            }                            
+                        }
+                        {
+                            return Redirect(Url.Action("listado", "titulares", new { area = "coadmin", Error = "No existe el titulo" }));
+                        }                                                
+                    }
+                    else
+                    {
+                        return Redirect(Url.Action("listado", "titulares", new { area = "coadmin" }));
+                    }                    
+                }
+                else
+                {
+                    return Redirect(Url.Action("listado", "titulares", new { area = "coadmin", Error = "No permitido. Usted no administra ninguna comunidad. Comuníquese con el Webmaster..." }));
+                }                
             }
             else
             {
@@ -66,27 +93,54 @@ namespace WebApplication1.Areas.coadmin.Controllers
 
             if (Session["USER_ID"] != null)
             {
-                long userId = (long)Session["USER_ID"];
-                user curUser = entities.users.Find(userId);
-                List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
-                Titulo titulo = entities.Titulos.Find(Id);
-                listadoVehiculosViewModel viewModel = new listadoVehiculosViewModel();
-
-                List<community> communityList = new List<community>();
-                communityList = ep.GetCommunityList(userId);
-                viewModel.communityList = communityList;
-
-                viewModel.titulo = titulo;
-                viewModel.side_menu = "titulares";
-                viewModel.side_sub_menu = "titulares_agregar";
-                viewModel.document_category_list = entities.document_type.ToList();
-                viewModel.curUser = curUser;
-                viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
-                viewModel.pubMessageList = pubMessageList;
-                viewModel.communityList = entities.communities.ToList();
-                ViewBag.msgError = Error;
-                return View(viewModel);
+                if (Session["CURRENT_COMU"] != null)
+                {
+                    if (Id != null)
+                    {                       
+                        long userId = (long)Session["USER_ID"];
+                        List<community> communityList = new List<community>();
+                        communityList = ep.GetCommunityList(userId);
+                        Titulo tituls = entities.Titulos.Find(Id);
+                        if (tituls != null)
+                        {
+                            if (communityList.Any(x => x.id == tituls.IdCommunity))
+                            {
+                                long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
+                                user curUser = entities.users.Find(userId);
+                                List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
+                                listadoVehiculosViewModel viewModel = new listadoVehiculosViewModel();
+                                viewModel.communityList = communityList;
+                                viewModel.titulo = tituls;
+                                viewModel.side_menu = "titulares";
+                                viewModel.side_sub_menu = "titulares_agregar";
+                                viewModel.document_category_list = entities.document_type.ToList();
+                                viewModel.curUser = curUser;
+                                viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                                viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
+                                viewModel.pubMessageList = pubMessageList;
+                                viewModel.communityList = entities.communities.ToList();
+                                ViewBag.msgError = Error;
+                                return View(viewModel);
+                            }
+                            else
+                            {
+                                return Redirect(Url.Action("listado", "titulares", new { area = "coadmin", Error = "No permitido. Usted no administra la comunidad del elemento al que quiere acceder." }));
+                            }                            
+                        }
+                        else
+                        {
+                            return Redirect(Url.Action("listado", "titulares", new { area = "coadmin", Error = "No existe el titulo" }));
+                        }
+                    }
+                    else
+                    {
+                        return Redirect(Url.Action("listado", "titulares", new { area = "coadmin" }));
+                    }
+                }
+                else
+                {
+                    return Redirect(Url.Action("listado", "titulares", new { area = "coadmin", Error = "No permitido. Usted no administra ninguna comunidad. Comuníquese con el Webmaster..." }));
+                }                
             }
             else
             {
@@ -98,33 +152,54 @@ namespace WebApplication1.Areas.coadmin.Controllers
 
             if (Session["USER_ID"] != null)
             {
-                if (id != null)
+                if (Session["CURRENT_COMU"] != null)
                 {
-                    long userId = (long)Session["USER_ID"];
-                    user curUser = entities.users.Find(userId);
-                    List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
-                    Vehiculo vehiculo = entities.Vehiculos.Find(id);
-                    editarVehiculoViewModel viewModel = new editarVehiculoViewModel();
-
-                    List<community> communityList = new List<community>();
-                    communityList = ep.GetCommunityList(userId);
-                    viewModel.communityList = communityList;
-
-                    viewModel.side_menu = "titulares";
-                    viewModel.side_sub_menu = "manage_edit_headlines";
-                    viewModel.document_category_list = entities.document_type.ToList();
-                    viewModel.vehiculo = vehiculo;
-                    viewModel.curUser = curUser;
-                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);                    
-                    viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
-                    viewModel.pubMessageList = pubMessageList;
-                    ViewBag.msgError = Error;
-                    return View(viewModel);
+                    if (id != null)
+                    {                        
+                        long userId = (long)Session["USER_ID"];
+                        List<community> communityList = new List<community>();
+                        communityList = ep.GetCommunityList(userId);
+                        Vehiculo vehiculo = entities.Vehiculos.Find(id);
+                        if (vehiculo != null)
+                        {
+                            if (communityList.Any(x => x.id == vehiculo.Titulo.IdCommunity))
+                            {
+                                long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
+                                user curUser = entities.users.Find(userId);
+                                List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
+                                editarVehiculoViewModel viewModel = new editarVehiculoViewModel();
+                                viewModel.communityList = communityList;
+                                viewModel.side_menu = "titulares";
+                                viewModel.side_sub_menu = "manage_edit_headlines";
+                                viewModel.document_category_list = entities.document_type.ToList();
+                                viewModel.vehiculo = vehiculo;
+                                viewModel.curUser = curUser;
+                                viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                                viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
+                                viewModel.pubMessageList = pubMessageList;
+                                ViewBag.msgError = Error;
+                                return View(viewModel);
+                            }
+                            else
+                            {
+                                return Redirect(Url.Action("listado", "titulares", new { area = "coadmin", Error = "No permitido. Usted no administra la comunidad del elemento al que quiere acceder." }));
+                            }                            
+                        }
+                        else
+                        {
+                            return Redirect(Url.Action("listado", "titulares", new { area = "coadmin", Error = "No existe ese elemento" }));
+                        }                        
+                    }
+                    else
+                    {
+                        return Redirect(Url.Action("listado", "titulares", new { area = "coadmin" }));
+                    }
                 }
                 else
                 {
-                    return Redirect(Url.Action("NotFound", "Error"));
+                    return Redirect(Url.Action("listado", "titulares", new { area = "coadmin", Error = "No permitido. Usted no administra ninguna comunidad. Comuníquese con el Webmaster..." }));
                 }
+                   
             }
             else
             {
@@ -136,32 +211,52 @@ namespace WebApplication1.Areas.coadmin.Controllers
 
             if (Session["USER_ID"] != null)
             {
-                if (id != null)
+                if (Session["CURRENT_COMU"] != null)
                 {
-                    long userId = (long)Session["USER_ID"];
-                    user curUser = entities.users.Find(userId);
-                    List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
-                    Vehiculo vehiculo = entities.Vehiculos.Find(id);
-                    editarVehiculoViewModel viewModel = new editarVehiculoViewModel();
-
-                    List<community> communityList = new List<community>();
-                    communityList = ep.GetCommunityList(userId);
-                    viewModel.communityList = communityList;
-
-                    viewModel.side_menu = "titulares";
-                    viewModel.side_sub_menu = "manage_edit_headlines";
-                    viewModel.document_category_list = entities.document_type.ToList();
-                    viewModel.vehiculo = vehiculo;
-                    viewModel.curUser = curUser;
-                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);                   
-                    viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
-                    viewModel.pubMessageList = pubMessageList;
-                    return View(viewModel);
+                    if (id != null)
+                    {                        
+                        long userId = (long)Session["USER_ID"];
+                        List<community> communityList = new List<community>();
+                        communityList = ep.GetCommunityList(userId);
+                        Vehiculo vehiculo = entities.Vehiculos.Find(id);
+                        if (vehiculo != null)
+                        {
+                            if (communityList.Any(x => x.id == vehiculo.Titulo.IdCommunity))
+                            {
+                                long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
+                                user curUser = entities.users.Find(userId);
+                                List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
+                                editarVehiculoViewModel viewModel = new editarVehiculoViewModel();
+                                viewModel.communityList = communityList;
+                                viewModel.side_menu = "titulares";
+                                viewModel.side_sub_menu = "manage_edit_headlines";
+                                viewModel.document_category_list = entities.document_type.ToList();
+                                viewModel.vehiculo = vehiculo;
+                                viewModel.curUser = curUser;
+                                viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                                viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
+                                viewModel.pubMessageList = pubMessageList;
+                                return View(viewModel);
+                            }
+                            else
+                            {
+                                return Redirect(Url.Action("listado", "titulares", new { area = "coadmin", Error = "No permitido. Usted no administra la comunidad del elemento al que quiere acceder." }));
+                            }                            
+                        }
+                        else
+                        {
+                            return Redirect(Url.Action("listado", "titulares", new { area = "coadmin", Error = "No existe ese elemento" }));
+                        }                        
+                    }
+                    else
+                    {
+                        return Redirect(Url.Action("listado", "titulares", new { area = "coadmin" }));
+                    }
                 }
                 else
                 {
-                    return Redirect(Url.Action("NotFound", "Error"));
-                }
+                    return Redirect(Url.Action("listado", "titulares", new { area = "coadmin", Error = "No permitido. Usted no administra ninguna comunidad. Comuníquese con el Webmaster..." }));
+                }                   
             }
             else
             {
@@ -186,7 +281,6 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     return Redirect(Url.Action("agregarVehiculo", "titulares", new { area = "coadmin", Id = IdTitulo, Error = "Intentando guardar Vehiculo " + ex.Message }));
                 }
 
-
             }
             else
             {
@@ -210,8 +304,6 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 {
                     return Redirect(Url.Action("editarVehiculo", "titulares", new { area = "coadmin", Id = IdVehiculo, Error = "Intentando guardar Vehiculo " + ex.Message }));
                 }
-
-
             }
             else
             {
@@ -248,10 +340,6 @@ namespace WebApplication1.Areas.coadmin.Controllers
             newVehiculo.Year = (year == null) ? 0 : int.Parse(year);
             newVehiculo.ClapBoard = clapboard;
 
-
-
-
-
             return newVehiculo;
         }
 
@@ -260,34 +348,51 @@ namespace WebApplication1.Areas.coadmin.Controllers
         #region TITULO
         public ActionResult listadoTitulos(long? Id)
         {
-            if (Session["USER_ID"] != null && Id != null)
+            if (Session["USER_ID"] != null)
             {
-                long userId = (long)Session["USER_ID"];
-                user curUser = entities.users.Find(userId);
-                Dictionary<long, string> communityDict = new Dictionary<long, string>();
-                List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
-                List<Titulo> titulosList = new List<Titulo>();
-
-                long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
-
-                titulosList = entities.Titulos.Where(x => x.is_del != true && x.IdUser == Id && x.IdCommunity == communityAct).ToList();
-
-                listadoTitulosViewModel viewModel = new listadoTitulosViewModel();
-
-                List<community> communityList = new List<community>();
-                communityList = ep.GetCommunityList(userId);
-                viewModel.communityList = communityList;               
-
-                viewModel.side_menu = "titulares";
-                viewModel.side_sub_menu = "titulares_listado";
-                viewModel.document_category_list = entities.document_type.ToList();
-                viewModel.titulosList = titulosList;
-                viewModel.IdUserTitular = (int)Id;
-                viewModel.curUser = curUser;
-                viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);                
-                viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
-                viewModel.pubMessageList = pubMessageList;
-                return View(viewModel);
+                if (Session["CURRENT_COMU"] != null)
+                {
+                    if (Id != null)
+                    {                       
+                        user userT = entities.users.Find(Id);                    
+                        if (userT != null)
+                        {                            
+                            long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
+                            long userId = (long)Session["USER_ID"];
+                            List<community> communityList = new List<community>();
+                            communityList = ep.GetCommunityList(userId);
+                            user curUser = entities.users.Find(userId);
+                            Dictionary<long, string> communityDict = new Dictionary<long, string>();
+                                List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
+                                List<Titulo> titulosList = new List<Titulo>();
+                                titulosList = entities.Titulos.Where(x => x.is_del != true && x.IdUser == Id && x.IdCommunity == communityAct).ToList();
+                                listadoTitulosViewModel viewModel = new listadoTitulosViewModel();
+                                viewModel.communityList = communityList;
+                                viewModel.side_menu = "titulares";
+                                viewModel.side_sub_menu = "titulares_listado";
+                                viewModel.document_category_list = entities.document_type.ToList();
+                                viewModel.titulosList = titulosList;
+                                viewModel.IdUserTitular = (int)Id;
+                                viewModel.curUser = curUser;
+                                viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                                viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
+                                viewModel.pubMessageList = pubMessageList;
+                                return View(viewModel);                                                       
+                        }
+                        else
+                        {
+                            return Redirect(Url.Action("listado", "titulares", new { area = "coadmin", Error = "No existe el titular" }));
+                        }
+                    }
+                    else
+                    {
+                        return Redirect(Url.Action("listado", "titulares", new { area = "coadmin" }));
+                    }
+                }
+                else
+                {
+                    return Redirect(Url.Action("listado", "titulares", new { area = "coadmin", Error = "No permitido. Usted no administra ninguna comunidad. Comuníquese con el Webmaster..." }));
+                }                
             }
             else
             {
@@ -298,30 +403,50 @@ namespace WebApplication1.Areas.coadmin.Controllers
         public ActionResult agregarTitulo(long? Id, string Error)
         {
 
-            if (Session["USER_ID"] != null && Id != null)
+            if (Session["USER_ID"] != null)
             {
-                long userId = (long)Session["USER_ID"];
-                user curUser = entities.users.Find(userId);
-                List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
-                listadoTitulosViewModel viewModel = new listadoTitulosViewModel();
-
-                long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
-                List<community> communityList = new List<community>();
-                communityList = ep.GetCommunityList(userId);
-                viewModel.communityList = communityList;
-
-                viewModel.communityS = entities.communities.Find(communityAct);
-
-                viewModel.side_menu = "titulares";
-                viewModel.side_sub_menu = "titulares_agregar";
-                viewModel.document_category_list = entities.document_type.ToList();
-                viewModel.curUser = curUser;
-                viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                viewModel.IdUserTitular = (int)Id;
-                viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
-                viewModel.pubMessageList = pubMessageList;               
-                ViewBag.msgError = Error;
-                return View(viewModel);
+                if (Session["CURRENT_COMU"] != null)
+                {
+                    if (Id != null)
+                    {                        
+                        user userT = entities.users.Find(Id);                        
+                        if (userT != null)
+                        {
+                            long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
+                            long userId = (long)Session["USER_ID"];
+                            user curUser = entities.users.Find(userId);
+                            List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
+                            listadoTitulosViewModel viewModel = new listadoTitulosViewModel();
+                            
+                            List<community> communityList = new List<community>();
+                            communityList = ep.GetCommunityList(userId);
+                            viewModel.communityList = communityList;
+                            viewModel.communityS = entities.communities.Find(communityAct);
+                            viewModel.side_menu = "titulares";
+                            viewModel.side_sub_menu = "titulares_agregar";
+                            viewModel.document_category_list = entities.document_type.ToList();
+                            viewModel.curUser = curUser;
+                            viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                            viewModel.IdUserTitular = (int)Id;
+                            viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
+                            viewModel.pubMessageList = pubMessageList;
+                            ViewBag.msgError = Error;
+                            return View(viewModel);
+                        }
+                        else
+                        {
+                            return Redirect(Url.Action("listado", "titulares", new { area = "coadmin", Error = "No existe el titular" }));
+                        }
+                    }
+                    else
+                    {
+                        return Redirect(Url.Action("listado", "titulares", new { area = "coadmin" }));
+                    }
+                }
+                else
+                {
+                    return Redirect(Url.Action("listado", "titulares", new { area = "coadmin", Error = "No permitido. Usted no administra ninguna comunidad. Comuníquese con el Webmaster..." }));
+                }               
             }
             else
             {
@@ -334,36 +459,54 @@ namespace WebApplication1.Areas.coadmin.Controllers
 
             if (Session["USER_ID"] != null)
             {
-                if (id != null)
+                if (Session["CURRENT_COMU"] != null)
                 {
-                    long userId = (long)Session["USER_ID"];
-                    Titulo titulo = entities.Titulos.Find(id);
-                    List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
-                    user curUser = entities.users.Find(userId);
-                    editarTituloViewModel viewModel = new editarTituloViewModel();
-
-                    long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
-                    List<community> communityList = new List<community>();
-                    communityList = ep.GetCommunityList(userId);
-                    viewModel.communityList = communityList;
-
-                    viewModel.communityS = entities.communities.Find(communityAct);
-
-                    viewModel.side_menu = "titulares";
-                    viewModel.side_sub_menu = "manage_edit_headlines";
-                    viewModel.document_category_list = entities.document_type.ToList();
-                    viewModel.curUser = curUser;
-                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                    viewModel.titulo = titulo;
-                    viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
-                    viewModel.pubMessageList = pubMessageList;                    
-                    ViewBag.msgError = Error;
-                    return View(viewModel);
+                    if (id != null)
+                    {                       
+                        Titulo titulo = entities.Titulos.Find(id);
+                        if (titulo != null)
+                        {
+                            long userId = (long)Session["USER_ID"];
+                            List<community> communityList = new List<community>();
+                            communityList = ep.GetCommunityList(userId);
+                            if (communityList.Any(x => x.id == titulo.IdCommunity))
+                            {
+                                long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
+                                List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
+                                user curUser = entities.users.Find(userId);
+                                editarTituloViewModel viewModel = new editarTituloViewModel();
+                                viewModel.communityList = communityList;
+                                viewModel.communityS = entities.communities.Find(communityAct);
+                                viewModel.side_menu = "titulares";
+                                viewModel.side_sub_menu = "manage_edit_headlines";
+                                viewModel.document_category_list = entities.document_type.ToList();
+                                viewModel.curUser = curUser;
+                                viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                                viewModel.titulo = titulo;
+                                viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
+                                viewModel.pubMessageList = pubMessageList;
+                                ViewBag.msgError = Error;
+                                return View(viewModel);
+                            }
+                            else
+                            {
+                                return Redirect(Url.Action("listado", "titulares", new { area = "coadmin", Error = "No permitido. Usted no administra la comunidad del elemento al que quiere acceder." }));
+                            }
+                        }
+                        else
+                        {
+                            return Redirect(Url.Action("listado", "titulares", new { area = "coadmin", Error = "No existe ese elemento" }));
+                        }                       
+                    }
+                    else
+                    {
+                        return Redirect(Url.Action("listado", "titulares", new { area = "coadmin" }));
+                    }
                 }
                 else
                 {
-                    return Redirect(Url.Action("NotFound", "Error"));
-                }
+                    return Redirect(Url.Action("listado", "titulares", new { area = "coadmin", Error = "No permitido. Usted no administra ninguna comunidad. Comuníquese con el Webmaster..." }));
+                }                
             }
             else
             {
@@ -376,33 +519,51 @@ namespace WebApplication1.Areas.coadmin.Controllers
 
             if (Session["USER_ID"] != null)
             {
-                if (id != null)
+                if (Session["CURRENT_COMU"] != null)
                 {
-                    long userId = (long)Session["USER_ID"];
-                    Titulo titulo = entities.Titulos.Find(id);
-                    List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
-                    user curUser = entities.users.Find(userId);
-                    editarTituloViewModel viewModel = new editarTituloViewModel();
-
-                    long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
-                    List<community> communityList = new List<community>();
-                    communityList = ep.GetCommunityList(userId);
-                    viewModel.communityList = communityList;                    
-
-                    viewModel.side_menu = "titulares";
-                    viewModel.side_sub_menu = "manage_edit_headlines";
-                    viewModel.document_category_list = entities.document_type.ToList();
-                    viewModel.curUser = curUser;
-                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);                   
-                    viewModel.titulo = titulo;
-                    viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
-                    viewModel.pubMessageList = pubMessageList;                    
-                    return View(viewModel);
+                    if (id != null)
+                    {
+                        Titulo titulo = entities.Titulos.Find(id);
+                        if (titulo != null)
+                        {
+                            long userId = (long)Session["USER_ID"];
+                            List<community> communityList = new List<community>();
+                            communityList = ep.GetCommunityList(userId);
+                            if (communityList.Any(x => x.id == titulo.IdCommunity))
+                            {                               
+                                List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
+                                user curUser = entities.users.Find(userId);
+                                editarTituloViewModel viewModel = new editarTituloViewModel();                                                             
+                                viewModel.communityList = communityList;
+                                viewModel.side_menu = "titulares";
+                                viewModel.side_sub_menu = "manage_edit_headlines";
+                                viewModel.document_category_list = entities.document_type.ToList();
+                                viewModel.curUser = curUser;
+                                viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                                viewModel.titulo = titulo;
+                                viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
+                                viewModel.pubMessageList = pubMessageList;
+                                return View(viewModel);
+                            }
+                            else
+                            {
+                                return Redirect(Url.Action("listado", "titulares", new { area = "coadmin", Error = "No permitido. Usted no administra la comunidad del elemento al que quiere acceder." }));
+                            }                           
+                        }
+                        else
+                        {
+                            return Redirect(Url.Action("listado", "titulares", new { area = "coadmin", Error = "No existe ese elemento" }));
+                        }                       
+                    }
+                    else
+                    {
+                        return Redirect(Url.Action("listado", "titulares", new { area = "coadmin" }));
+                    }
                 }
                 else
                 {
-                    return Redirect(Url.Action("NotFound", "Error"));
-                }
+                    return Redirect(Url.Action("listado", "titulares", new { area = "coadmin", Error = "No permitido. Usted no administra ninguna comunidad. Comuníquese con el Webmaster..." }));
+                }                
             }
             else
             {
@@ -521,7 +682,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
 
         #region TITULAR
 
-        public ActionResult listado(string searchStr = "")
+        public ActionResult listado(string Error, string searchStr = "")
         {
             if (Session["USER_ID"] != null)
             {
@@ -530,41 +691,30 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 Dictionary<long, string> communityDict = new Dictionary<long, string>();
                 List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                 List<user> titularList = new List<user>();
-
                 long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
-                if (Session["CURRENT_COMU"] != null)
+                if (searchStr == "")
                 {
-                    if (searchStr == "")
-                    {
-                        var query1 = (from r in entities.users
-                                      where
-                     r.role == 1 && r.is_del != true && ((r.create_userid == userId && r.Titulos.Count == 0) || r.Titulos.Any(x => x.IdCommunity == communityAct))
-                                      select r);
-                        titularList = query1.ToList();
+                    var query1 = (from r in entities.users
+                                  where
+                 r.role == 1 && r.is_del != true && ((r.create_userid == userId && r.Titulos.Count == 0) || r.Titulos.Any(x => x.IdCommunity == communityAct))
+                                  select r);
+                    titularList = query1.ToList();
 
-                    }
-                    else
-                    {
-                        var query = (from r in entities.users
-                                     where r.role == 1 &&
-                                     (r.first_name1.Contains(searchStr) == true
-                                     || r.last_name1.Contains(searchStr) == true)
-                                     && r.is_del != true && ((r.create_userid == userId && r.Titulos.Count == 0) || r.Titulos.Any(x => x.IdCommunity == communityAct))
-                                     select r);
-                        titularList = query.ToList();
-                    }
                 }
                 else
                 {
-                    titularList.Clear();
-                }               
-
+                    var query = (from r in entities.users
+                                 where r.role == 1 &&
+                                 (r.first_name1.Contains(searchStr) == true
+                                 || r.last_name1.Contains(searchStr) == true)
+                                 && r.is_del != true && ((r.create_userid == userId && r.Titulos.Count == 0) || r.Titulos.Any(x => x.IdCommunity == communityAct))
+                                 select r);
+                    titularList = query.ToList();
+                }
                 listadoTitularesViewModel viewModel = new listadoTitularesViewModel();
-
                 List<community> communityList = new List<community>();
                 communityList = ep.GetCommunityList(userId);
                 viewModel.communityList = communityList;                
-
                 viewModel.side_menu = "titulares";
                 viewModel.side_sub_menu = "titulares_listado";
                 viewModel.document_category_list = entities.document_type.ToList();
@@ -575,6 +725,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                 viewModel.pubMessageList = pubMessageList;
                 viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                ViewBag.msgError = Error;
                 return View(viewModel);
             }
             else
@@ -610,7 +761,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 }
                 else
                 {
-                    return Redirect(Url.Action("listado", "titulares", new { area = "coadmin"}));
+                    return Redirect(Url.Action("listado", "titulares", new { area = "coadmin", Error = "No permitido. Usted no administra ninguna comunidad. Comuníquese con el Webmaster..." }));
                 }
                 
             }
@@ -624,35 +775,71 @@ namespace WebApplication1.Areas.coadmin.Controllers
         {
             if (Session["USER_ID"] != null)
             {
-                if (id != null)
+                if (Session["CURRENT_COMU"] != null)
                 {
-                    long userId = (long)Session["USER_ID"];
-                    user curUser = entities.users.Find(userId);
-                    List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
-                    user editUser = entities.users.Find(id);
-                    verTitularesViewModel viewModel = new verTitularesViewModel();
+                    if (id != null)
+                    {
+                        user editUser = entities.users.Find(id);
+                        if (editUser != null)
+                        {
+                            long userId = (long)Session["USER_ID"];
+                            List<community> communityList = new List<community>();
+                            communityList = ep.GetCommunityList(userId);
 
-                    long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
-                    List<community> communityList = new List<community>();
-                    communityList = ep.GetCommunityList(userId);
-                    viewModel.communityList = communityList;                    
+                            List<Titulo> titulosT = entities.Titulos.Where(b=> b.IdUser == id).ToList();
+                            int bandera = 0;
+                            if (titulosT.Count > 0) 
+                            {
+                                foreach (Titulo item in titulosT)
+                                {
+                                    bool containComm = communityList.Any(x => x.id == item.IdCommunity);
+                                    if (containComm == true)
+                                    {
+                                        bandera = 1;
+                                    }
 
-                    viewModel.side_menu = "titulares";
-                    viewModel.side_sub_menu = "manage_edit_headlines";
-                    viewModel.document_category_list = entities.document_type.ToList();
-                    viewModel.editUser = editUser;
-                    viewModel.view_resident_logo = "~/App_Data/User_Logo/" + editUser.user_img;
-                    viewModel.curUser = curUser;
-                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);                    
-                    viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
-                    viewModel.pubMessageList = pubMessageList;
-                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                    return View(viewModel);                  
+                                }
+                            }                            
+                           
+                            if (bandera == 1 || editUser.create_userid == userId)
+                            {
+                               
+                                user curUser = entities.users.Find(userId);
+                                List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
+                                verTitularesViewModel viewModel = new verTitularesViewModel();
+                                long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);                                
+                                viewModel.communityList = communityList;
+                                viewModel.side_menu = "titulares";
+                                viewModel.side_sub_menu = "manage_edit_headlines";
+                                viewModel.document_category_list = entities.document_type.ToList();
+                                viewModel.editUser = editUser;
+                                viewModel.view_resident_logo = "~/App_Data/User_Logo/" + editUser.user_img;
+                                viewModel.curUser = curUser;
+                                viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                                viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
+                                viewModel.pubMessageList = pubMessageList;
+                                viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                                return View(viewModel);
+                            }
+                            else
+                            {
+                                return Redirect(Url.Action("listado", "titulares", new { area = "coadmin", Error = "No permitido. Usted no administra la comunidad del elemento al que quiere acceder." }));
+                            }                            
+                        }
+                        else
+                        {
+                            return Redirect(Url.Action("listado", "titulares", new { area = "coadmin", Error = "No existe ese elemento" }));
+                        }                        
+                    }
+                    else
+                    {
+                        return Redirect(Url.Action("listado", "titulares", new { area = "coadmin" }));
+                    }
                 }
                 else
                 {
-                    return Redirect(Url.Action("NotFound", "Error"));
-                }
+                    return Redirect(Url.Action("listado", "titulares", new { area = "coadmin", Error = "No permitido. Usted no administra ninguna comunidad. Comuníquese con el Webmaster..." }));
+                }               
             }
             else
             {
@@ -668,37 +855,65 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 {
                     if (id != null)
                     {
-                        long userId = (long)Session["USER_ID"];
-                        user curUser = entities.users.Find(userId);
-                        List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                         user editUser = entities.users.Find(id);
-                        editarTitularesViewModel viewModel = new editarTitularesViewModel();
+                        if (editUser != null)
+                        {
 
-                        long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
-                        List<community> communityList = new List<community>();
-                        communityList = ep.GetCommunityList(userId);
-                        viewModel.communityList = communityList;
+                            long userId = (long)Session["USER_ID"];
+                            List<community> communityList = new List<community>();
+                            communityList = ep.GetCommunityList(userId);
 
-                        viewModel.side_menu = "titulares";
-                        viewModel.side_sub_menu = "manage_edit_headlines";
-                        viewModel.document_category_list = entities.document_type.ToList();
-                        viewModel.editUser = editUser;
-                        viewModel.curUser = curUser;
-                        viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                        viewModel.password = ep.Decrypt(editUser.password);
-                        viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
-                        viewModel.pubMessageList = pubMessageList;
-                        ViewBag.msgError = Error;
-                        return View(viewModel);
+                            List<Titulo> titulosT = entities.Titulos.Where(b => b.IdUser == id).ToList();
+                            int bandera = 0;
+                            if (titulosT.Count > 0)
+                            {
+                                foreach (Titulo item in titulosT)
+                                {
+                                    bool containComm = communityList.Any(x => x.id == item.IdCommunity);
+                                    if (containComm == true)
+                                    {
+                                        bandera = 1;
+                                    }
+                                }
+                            }
+
+                            if (bandera == 1 || editUser.create_userid == userId)
+                            {                            
+                                user curUser = entities.users.Find(userId);
+                                List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);                                
+                                editarTitularesViewModel viewModel = new editarTitularesViewModel();
+                                long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);                                                          
+                                viewModel.communityList = communityList;
+                                viewModel.side_menu = "titulares";
+                                viewModel.side_sub_menu = "manage_edit_headlines";
+                                viewModel.document_category_list = entities.document_type.ToList();
+                                viewModel.editUser = editUser;
+                                viewModel.curUser = curUser;
+                                viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                                viewModel.password = ep.Decrypt(editUser.password);
+                                viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
+                                viewModel.pubMessageList = pubMessageList;
+                                ViewBag.msgError = Error;
+                                return View(viewModel);
+                            }
+                            else
+                            {
+                                return Redirect(Url.Action("listado", "titulares", new { area = "coadmin", Error = "No permitido. Usted no administra la comunidad del elemento al que quiere acceder." }));
+                            }
+                        }
+                        else
+                        {
+                            return Redirect(Url.Action("listado", "titulares", new { area = "coadmin", Error = "No existe ese elemento" }));
+                        }                        
                     }
                     else
                     {
-                        return Redirect(Url.Action("NotFound", "Error"));
+                        return Redirect(Url.Action("listado", "titulares", new { area = "coadmin" }));
                     }
                 }
                 else
                 {
-                    return Redirect(Url.Action("listado", "titulares", new { area = "coadmin" }));
+                    return Redirect(Url.Action("listado", "titulares", new { area = "coadmin", Error = "No permitido. Usted no administra ninguna comunidad. Comuníquese con el Webmaster..." }));
                 }                   
             }
             else

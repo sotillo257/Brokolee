@@ -17,7 +17,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
         List<community> communityList = new List<community>();
 
         // GET: coadmin/suplidores
-        public ActionResult listado(string searchStr = "", int searchCategoryId = 0)
+        public ActionResult listado(string Error, string searchStr = "", int searchCategoryId = 0)
         {
             if (Session["USER_ID"] != null)
             {               
@@ -79,8 +79,9 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     viewModel.searchCategoryId = searchCategoryId;
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = pubMessageList;
-                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);                
-                    return View(viewModel);              
+                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                ViewBag.msgError = Error;
+                return View(viewModel);              
             } else
             {
                 return Redirect(ep.GetLogoutUrl());
@@ -437,6 +438,21 @@ namespace WebApplication1.Areas.coadmin.Controllers
             catch (Exception)
             {
                 return Json(new { result = "error" });
+            }
+        }
+
+        public JsonResult DeleteSupplierComment(long delID)
+        {
+            try
+            {
+                comment comments = entities.comments.Find(delID);
+                entities.comments.Remove(comments);             
+                entities.SaveChanges();
+                return Json(new { result = "success" });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { result = "error", exception = ex.HResult });
             }
         }
     }

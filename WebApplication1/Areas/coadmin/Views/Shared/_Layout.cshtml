@@ -1027,7 +1027,7 @@
 
         //Solo texto. Validacion para inputs
         $('.soloTexto').bind('keypress', function (event) {
-            var regex = new RegExp("^[a-zA-Z ]+$");
+            var regex = new RegExp("^[a-zA-ZáéíóúüñÁÉÍÓÚÑÜ ]+$");
             var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
             if (!regex.test(key)) {
                 event.preventDefault();
@@ -1988,7 +1988,38 @@
 
         //
 
+        function onDeleteSupplierComment(self) {
 
+            var id = $(self).data('id');
+            var formData = new FormData();
+            formData.append("delID", id);
+
+            var url = "@Url.Action("DeleteSupplierComment", "suplidores", new { area = "coadmin" })";
+
+             var respuesta = confirm("¿Estás seguro que deseas eliminar el comentario?");
+        if (respuesta == true) {
+
+            $.ajax({
+                url: url,
+                type: "post",
+                data: formData,
+                success: function (result) {
+                    $("#ck-body-loading-overlay").hide();
+                    if (result.result === "error") {
+                        console.log('couln\'t get roles');
+                    } else {
+                        location.reload();
+                    }
+                },
+                processData: false,
+                contentType: false
+            });
+             } else {
+
+            return false;
+
+        }
+        }
 
 
         function onDeleteSupplier(self) {
