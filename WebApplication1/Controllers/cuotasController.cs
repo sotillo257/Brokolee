@@ -44,7 +44,7 @@ namespace WebApplication1.Controllers
                     viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);                   
                     long adminId = (long)curUser.create_userid;
                     List<fee> feeList = new List<fee>();                    
-                    feeList = entities.fees.Where(m => m.community_id == communityAct || ( m.user_id == adminId && m.community_id == communityAct)).ToList();                          
+                    feeList = entities.fees.Where(m => ( m.user_id == adminId && m.community_id == communityAct) || m.community_id == communityAct).ToList();                          
                     viewModel.feeList = feeList;
                     ViewBag.msgError = Error;
                     return View(viewModel);
