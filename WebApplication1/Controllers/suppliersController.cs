@@ -24,25 +24,13 @@ namespace WebApplication1.Controllers
             {
                 try
                 {
-                    long userId = 0;
-                    if (Convert.ToInt32(Session["USER_ROLE"]) == 1)
-                    {
-                        userId = (long)Session["USER_ID"];
-                    }
-                    else if (Convert.ToInt32(Session["USER_ROLE"]) > 1
-                    && Session["ACC_USER_ID"] != null)
-                    {
-                        userId = (long)Session["ACC_USER_ID"];
-                    }
-
+                    long userId = (long)Session["USER_ID"];                    
                     user curUser = entities.users.Find(userId);
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                     List<supplier> supplierList = new List<supplier>();
                     Dictionary<long, string> categoryDict = new Dictionary<long, string>();
 
-                    long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
-                    if (Session["CURRENT_COMU"] != null)
-                    {
+                    long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);                   
                         if (searchStr == "" && searchCategoryId == 0)
                         {
                             var query = (from r in entities.suppliers select r);
@@ -71,12 +59,7 @@ namespace WebApplication1.Controllers
                                           select r);
                             supplierList = query3.ToList();
                         }
-                    }
-                    else
-                    {
-                        supplierList.Clear();
-                    }
-                    
+                   
 
                     foreach (var item in supplierList)
                     {
@@ -120,17 +103,7 @@ namespace WebApplication1.Controllers
                 {
                     try
                     {
-                        long userId = 0;
-                        if (Convert.ToInt32(Session["USER_ROLE"]) == 1)
-                        {
-                            userId = (long)Session["USER_ID"];
-                        }
-                        else if (Convert.ToInt32(Session["USER_ROLE"]) > 1
-                        && Session["ACC_USER_ID"] != null)
-                        {
-                            userId = (long)Session["ACC_USER_ID"];
-                        }
-
+                        long userId = (long)Session["USER_ID"];                       
                         List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                         user curUser = entities.users.Find(userId);
                         supplier supplier = entities.suppliers.Find(supplier_id);
