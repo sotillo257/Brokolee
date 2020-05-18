@@ -14,7 +14,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
         pjrdev_condominiosEntities entities = new pjrdev_condominiosEntities();
         EFPublicRepository ep = new EFPublicRepository();
         // GET: webmaster/paquetes
-        public ActionResult listado(string searchStr = "")
+        public ActionResult listado(string Error, string searchStr = "")
         {
             if (Session["USER_ID"] != null)
             {
@@ -43,6 +43,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 viewModel.searchStr = searchStr;
                 viewModel.pubMessageList = pubMessageList;
                 viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                ViewBag.msgError = Error;
                 return View(viewModel);
             } else
             {
@@ -135,19 +136,29 @@ namespace WebApplication1.Areas.webmaster.Controllers
             {
                 return Redirect(ep.GetLogoutUrl());
             }        
-        }
+        }       
 
         public JsonResult DeletePackage(long delID)
         {
             try
             {
-                package delPackage = entities.packages.Find(delID);
-                entities.packages.Remove(delPackage);
-                entities.SaveChanges();
-                return Json(new { result = "success" });
-            } catch(Exception ex)
+                List<community> supplidr = entities.communities.Where(x => x.package_id == delID).ToList();
+                if (supplidr.Count == 0)
+                {
+                    package pacItem = entities.packages.Find(delID);
+                    entities.packages.Remove(pacItem);
+                    entities.SaveChanges();
+                    return Json(new { result = "success" });
+                }
+                else
+                {
+                    return Json(new { result = "NotAlowed" });
+                }
+
+            }
+            catch (Exception ex)
             {
-                return Json(new { result = "error", exception = ex.Message });
+                return Json(new { result = "error", exception = ex.HResult });
             }
         }
 

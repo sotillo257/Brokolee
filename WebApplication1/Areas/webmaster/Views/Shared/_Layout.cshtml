@@ -1425,7 +1425,9 @@
 
             var url = "@Url.Action("DeletePackage", "paquetes", new { area = "webmaster" })";
 
-            var respuesta = confirm("estas seguro que deseas eliminar el paquete");
+            var errUrl = "@Url.Action("listado", "paquetes", new { area = "webmaster", Error = "No se puede eliminar este paquete porque posee comunidades asociadas"  })";
+
+            var respuesta = confirm("¿Estás seguro que deseas eliminarel paquete?");
         if (respuesta == true) {
 
             $.ajax({
@@ -1437,6 +1439,8 @@
                     $("#ck-body-loading-overlay").hide();
                     if (result.result === "error") {
                         console.log('couln\'t get roles');
+                    } else if (result.result === "NotAlowed") {
+                         window.location = errUrl;
                     } else {
                         location.reload();
                     }
