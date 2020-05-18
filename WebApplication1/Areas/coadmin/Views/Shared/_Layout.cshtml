@@ -1672,7 +1672,7 @@
             formData.append("bankId", id);
             var url = "@Url.Action("DeleteBank", "cuotas", new { area = "coadmin" })";
 
-            var errUrl = "@Url.Action("listadoCuentas", "cuotas", new { area = "coadmin", Error = "No se puede eliminar esta cuenta porque posee cuotas asociadas"  })";
+            
             $.ajax({
                 url: url,
                 type: "post",
@@ -2192,8 +2192,8 @@
             formData.append("delID", id);
 
             var url = "@Url.Action("DeleteDocumentType", "documentos", new { area = "coadmin" })";
-
-             var respuesta = confirm("estas seguro que deseas eliminar el documento");
+            var errUrl = "@Url.Action("categorias", "documentos", new { area = "coadmin", Error = "No se puede eliminar esta cuenta porque posee documentos asociados"  })";
+             var respuesta = confirm("¿Estás seguro que deseas eliminar esta categoíra?");
         if (respuesta == true) {
 
             $.ajax({
@@ -2204,6 +2204,8 @@
                     $("#ck-body-loading-overlay").hide();
                     if (result.result === "error") {
                         console.log('couln\'t get roles');
+                    } else if (result.result === "NotAlowed") {
+                        window.location = errUrl;
                     } else {
                         location.reload();
                     }

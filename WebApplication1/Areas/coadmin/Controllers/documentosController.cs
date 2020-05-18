@@ -573,11 +573,17 @@ namespace WebApplication1.Areas.coadmin.Controllers
             try
             {
                 List<document> documentList = entities.documents.Where(m => m.type_id == delID).ToList();
-                entities.documents.RemoveRange(documentList);
-                document_type document_Type = entities.document_type.Find(delID);
-                entities.document_type.Remove(document_Type);
-                entities.SaveChanges();
-                return Json(new { result = "success" });
+                if(documentList.Count == 0)
+                {                    
+                    document_type document_Type = entities.document_type.Find(delID);
+                    entities.document_type.Remove(document_Type);
+                    entities.SaveChanges();
+                    return Json(new { result = "success" });
+                }
+                else
+                {
+                    return Json(new { result = "NotAlowed" });
+                }                
             } catch(Exception ex)
             {
                 return Json(new { result = "error", exception = ex.HResult });

@@ -141,7 +141,7 @@ namespace WebApplication1.Controllers
             }
         }
 
-        public ActionResult agregar()
+        public ActionResult agregarCuenta()
         {
             if (Session["USER_ID"] != null)
             {
@@ -157,7 +157,7 @@ namespace WebApplication1.Controllers
                     viewModel.communityList = listComunities;
 
                     viewModel.side_menu = "cuotas";
-                    viewModel.side_sub_menu = "cuotas_agregar";
+                    viewModel.side_sub_menu = "bancos_listado";
                     viewModel.document_category_list = entities.document_type.ToList();
                     viewModel.curUser = curUser;
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
@@ -589,7 +589,7 @@ namespace WebApplication1.Controllers
                                 viewModel.communityList = listComunities;
 
                                 viewModel.side_menu = "cuotas";
-                                viewModel.side_sub_menu = "cuenta_editar";
+                                viewModel.side_sub_menu = "bancos_listado";
                                 viewModel.document_category_list = entities.document_type.ToList();
                                 viewModel.curUser = curUser;
                                 viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
@@ -698,11 +698,11 @@ namespace WebApplication1.Controllers
                 entities.banks.Add(bankItem);
 
                 entities.SaveChanges();
-                return Redirect(Url.Action("balance", "cuotas"));
+                return Redirect(Url.Action("listadoCuentas", "cuotas"));
             }
             catch(Exception ex)
             {
-                return Redirect(Url.Action("balance", "cuotas"));
+                return Redirect(Url.Action("listadoCuentas", "cuotas", new { area = "coadmin", Error = "Problema interno "+ ex }));
             }            
         }
 
