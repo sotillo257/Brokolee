@@ -18,23 +18,13 @@ namespace WebApplication1.Controllers
         List<community> listComunities = new List<community>();
 
         // GET: concepto
-        public ActionResult balance()
-        {
+        public ActionResult balance(string Error)
+        {           
             if (Session["USER_ID"] != null)
             {
                 try
                 {
-                    long userId = 0;
-                    if (Convert.ToInt32(Session["USER_ROLE"]) == 1)
-                    {
-                        userId = (long)Session["USER_ID"];
-                    }
-                    else if (Convert.ToInt32(Session["USER_ROLE"]) > 1
-                    && Session["ACC_USER_ID"] != null)
-                    {
-                        userId = (long)Session["ACC_USER_ID"];
-                    }
-
+                    long userId = (long)Session["USER_ID"];
                     long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
 
                     user curUser = entities.users.Find(userId);
@@ -53,26 +43,20 @@ namespace WebApplication1.Controllers
                     viewModel.pubMessageList = pubMessageList;
                     viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);                   
                     long adminId = (long)curUser.create_userid;
-                    List<fee> feeList = new List<fee>();
-                    if (Session["CURRENT_COMU"] != null)
-                    {
-                        feeList = entities.fees.Where(m => m.user_id == adminId && m.community_id == communityAct).ToList();
-                    }
-                    else
-                    {
-                        feeList.Clear();
-                    }                    
+                    List<fee> feeList = new List<fee>();                    
+                    feeList = entities.fees.Where(m => m.community_id == communityAct || ( m.user_id == adminId && m.community_id == communityAct)).ToList();                          
                     viewModel.feeList = feeList;
+                    ViewBag.msgError = Error;
                     return View(viewModel);
                 }
                 catch(Exception ex)
                 {
-                    return Redirect(Url.Action("Index", "Error"));
+                    return Redirect(Url.Action("balance", "cuotas", new { Error = "Problema interno "+ ex }));
                 }                            
             }
             else
             {
-                return Redirect(Url.Action("Index", "iniciar"));
+                return Redirect(ep.GetLogoutUrl());
             }
 
         }
@@ -83,16 +67,7 @@ namespace WebApplication1.Controllers
             {
                 try
                 {
-                    long userId = 0;
-                    if (Convert.ToInt32(Session["USER_ROLE"]) == 1)
-                    {
-                        userId = (long)Session["USER_ID"];
-                    }
-                    else if (Convert.ToInt32(Session["USER_ROLE"]) > 1
-                    && Session["ACC_USER_ID"] != null)
-                    {
-                        userId = (long)Session["ACC_USER_ID"];
-                    }
+                    long userId = (long)Session["USER_ID"];
                     decimal totalCredit = 0;
                     decimal totalDebit = 0;
                     decimal curBalance = 0;
@@ -172,17 +147,7 @@ namespace WebApplication1.Controllers
             {
                 try
                 {
-                    long userId = 0;
-                    if (Convert.ToInt32(Session["USER_ROLE"]) == 1)
-                    {
-                        userId = (long)Session["USER_ID"];
-                    }
-                    else if (Convert.ToInt32(Session["USER_ROLE"]) > 1
-                    && Session["ACC_USER_ID"] != null)
-                    {
-                        userId = (long)Session["ACC_USER_ID"];
-                    }
-
+                    long userId = (long)Session["USER_ID"];                   
                     user curUser = entities.users.Find(userId);
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                     conceptoViewModel viewModel = new conceptoViewModel();
@@ -556,6 +521,111 @@ namespace WebApplication1.Controllers
         }
 
 
+
+
+
+        public ActionResult listadoCuentas(string Error)
+        {
+            if (Session["USER_ID"] != null)
+            {
+                try
+                {
+                    long userId = (long)Session["USER_ID"];
+                    user curUser = entities.users.Find(userId);
+                    BancosViewModel viewModel = new BancosViewModel();
+
+                    titulosList = ep.GetTitulosByTitular(userId);
+                    listComunities = ep.GetCommunityListByTitular(titulosList);
+                    viewModel.communityList = listComunities;
+                    
+                    long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
+
+                    List<bank> bankList = new List<bank>();
+                    bankList = entities.banks.ToList();
+                   
+                    List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
+                    viewModel.banks = bankList;
+                    viewModel.side_menu = "cuotas";
+                    viewModel.side_sub_menu = "bancos_listado";
+                    viewModel.document_category_list = entities.document_type.ToList();
+                    viewModel.curUser = curUser;
+                    viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
+                    viewModel.pubMessageList = pubMessageList;
+                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                    ViewBag.msgError = Error;
+                    return View(viewModel);
+                }
+                catch (Exception ex)
+                {
+                    return Redirect(Url.Action("Index", "Error"));
+                }
+            }
+            else
+            {
+                return Redirect(ep.GetLogoutUrl());
+            }
+        }
+
+        public ActionResult editarCuenta(long? editID)
+        {
+            if (Session["USER_ID"] != null)
+            {
+                if (Session["CURRENT_COMU"] != null)
+                {
+                    if (editID != null)
+                    {
+                        try
+                        {
+                            long userId = (long)Session["USER_ID"];                           
+                            bank banItem = entities.banks.Where(m => m.id == editID).FirstOrDefault();
+                            if (banItem != null)
+                            {
+                                user curUser = entities.users.Find(userId);
+                                List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
+                                BancosViewModel viewModel = new BancosViewModel();
+
+                                titulosList = ep.GetTitulosByTitular(userId);
+                                listComunities = ep.GetCommunityListByTitular(titulosList);
+                                viewModel.communityList = listComunities;
+
+                                viewModel.side_menu = "cuotas";
+                                viewModel.side_sub_menu = "cuenta_editar";
+                                viewModel.document_category_list = entities.document_type.ToList();
+                                viewModel.curUser = curUser;
+                                viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
+                                viewModel.pubMessageList = pubMessageList;
+                                viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                                viewModel.bankItem = banItem;
+                                return View(viewModel);
+                            }
+                            else
+                            {
+                                return Redirect(Url.Action("listadoCuentas", "cuotas", new { area = "coadmin", Error = "No existe ese elemento" }));
+                            }
+
+                        }
+                        catch (Exception ex)
+                        {
+                            return Redirect(Url.Action("Index", "Error"));
+                        }
+                    }
+                    else
+                    {
+                        return Redirect(Url.Action("NotFound", "Error"));
+                    }
+                }
+                else
+                {
+                    return Redirect(Url.Action("listadoCuentas", "cuotas", new { area = "coadmin", Error = "No puede editar cuentas. Usted no administra ninguna comunidad. Comuníquese con el Webmaster..." }));
+                }
+            }
+            else
+            {
+                return Redirect(ep.GetLogoutUrl());
+            }
+        }
+
+
         [HttpPost]
         public ActionResult addcredit(string first_name, string surname, string card_number,
             int month, int year, string ccv, string address, string country, string state, string city,
@@ -617,28 +687,15 @@ namespace WebApplication1.Controllers
             try
             {
                 long userId = (long)Session["USER_ID"];
-                bank bankItem = entities.banks.Where(m => m.user_id == userId).FirstOrDefault();
-
-                if (bankItem == null)
-                {
-                    bankItem = new bank();
-                    bankItem.created_at = DateTime.Now;
-                    bankItem.route_number = route_number;
-                    bankItem.updated_at = DateTime.Now;
-                    bankItem.account_name = account_name;
-                    bankItem.account_number = account_number;
-                    bankItem.bank_name = bank_name;
-                    bankItem.user_id = userId;
-                    entities.banks.Add(bankItem);
-                }
-                else
-                {
-                    bankItem.route_number = route_number;
-                    bankItem.updated_at = DateTime.Now;
-                    bankItem.account_name = account_name;
-                    bankItem.account_number = account_number;
-                    bankItem.bank_name = bank_name;
-                }
+                bank bankItem = new bank();
+                bankItem.user_id = userId;
+                bankItem.account_name = account_name;
+                bankItem.account_number = account_number;
+                bankItem.bank_name = bank_name;
+                bankItem.route_number = route_number;
+                bankItem.created_at = DateTime.Now;
+                bankItem.updated_at = DateTime.Now;
+                entities.banks.Add(bankItem);
 
                 entities.SaveChanges();
                 return Redirect(Url.Action("balance", "cuotas"));
@@ -647,6 +704,53 @@ namespace WebApplication1.Controllers
             {
                 return Redirect(Url.Action("balance", "cuotas"));
             }            
+        }
+
+        [HttpPost]
+        public ActionResult editBank(long account_id, string account_name, string account_number,
+            string bank_name, string route_number)
+        {
+            long userId = (long)Session["USER_ID"];
+            bank bankItem = entities.banks.Find(account_id);
+
+            if (bankItem != null)
+            {
+                bankItem.account_name = account_name;
+                bankItem.account_number = account_number;
+                bankItem.bank_name = bank_name;
+                bankItem.route_number = route_number;
+                bankItem.updated_at = DateTime.Now;
+                entities.SaveChanges();
+                return Redirect(Url.Action("listadoCuentas", "cuotas", new { area = "coadmin" }));
+            }
+            else
+            {
+                return Redirect(ep.GetLogoutUrl());
+            }
+        }
+
+        public JsonResult DeleteBank(long bankId)
+        {
+            try
+            {
+                List<fee> feeList = entities.fees.Where(x => x.bank_id == bankId).ToList();
+                if (feeList.Count == 0)
+                {
+                    bank bankItem = entities.banks.Find(bankId);
+                    entities.banks.Remove(bankItem);
+                    entities.SaveChanges();
+                    return Json(new { result = "succes" });
+                }
+                else
+                {
+                    return Json(new { result = "NotAlowed" });
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return Json(new { result = "error", exception = ex.Message });
+            }
         }
 
         [HttpPost]

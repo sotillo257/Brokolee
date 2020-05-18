@@ -756,6 +756,7 @@
     <Compile Include="ViewModels\administradorViewModel.cs" />
     <Compile Include="ViewModels\agregarBlogViewModel.cs" />
     <Compile Include="ViewModels\agregarComentarioViewModel.cs" />
+    <Compile Include="ViewModels\BancosViewModel.cs" />
     <Compile Include="ViewModels\CalEventView.cs" />
     <Compile Include="ViewModels\ChatNotificationViewModel.cs" />
     <Compile Include="ViewModels\communityControlViewModel.cs" />
@@ -1644,7 +1645,7 @@
     <Content Include="Views\iniciar\emailing.cshtml" />
     <Content Include="Views\cuotas\balance.cshtml" />
     <Content Include="Views\cuotas\estado.cshtml" />
-    <Content Include="Views\cuotas\agregar.cshtml" />
+    <Content Include="Views\cuotas\agregarCuenta.cshtml" />
     <Content Include="Views\suscribe\Index.cshtml" />
     <Content Include="Views\suscribe\Register.cshtml" />
     <Content Include="Views\Shared\_Layout_Suscribe.cshtml" />
@@ -1659,6 +1660,8 @@
     <Content Include="Views\contacto\listado.cshtml" />
     <Content Include="Views\contacto\ver.cshtml" />
     <Content Include="Views\comunicaciones\editarblog.cshtml" />
+    <Content Include="Views\cuotas\editarCuenta.cshtml" />
+    <Content Include="Views\cuotas\listadoCuentas.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

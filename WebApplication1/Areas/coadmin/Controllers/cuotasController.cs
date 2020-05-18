@@ -21,17 +21,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
             {
                 try
                 {
-                    long userId = 0;
-                    if (Convert.ToInt32(Session["USER_ROLE"])>= 1)
-                    {
-                        userId = (long)Session["USER_ID"];
-                    }
-                    else if (Convert.ToInt32(Session["USER_ROLE"]) > 1
-                    && Session["ACC_USER_ID"] != null)
-                    {
-                        userId = (long)Session["ACC_USER_ID"];
-                    }
-
+                    long userId = (long)Session["USER_ID"];                    
                     user curUser = entities.users.Find(userId);
                     listadoCuotasViewModel viewModel = new listadoCuotasViewModel();
 
@@ -40,15 +30,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
 
                     long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
                     List<fee> feeList = new List<fee>();
-                    if (Session["CURRENT_COMU"] != null)
-                    {
-                        feeList = entities.fees.Where(m => m.community_id == communityAct).ToList();                        
-                    }
-                    else
-                    {
-                        feeList.Clear();
-                    }
-                                        
+                    feeList = entities.fees.Where(m => m.community_id == communityAct).ToList();                                                       
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                     viewModel.feeList = feeList;
                     viewModel.side_menu = "cuotas";
@@ -80,16 +62,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 {
                     try
                     {
-                        long userId = 0;
-                        if (Convert.ToInt32(Session["USER_ROLE"]) == 2)
-                        {
-                            userId = (long)Session["USER_ID"];
-                        }
-                        else if (Convert.ToInt32(Session["USER_ROLE"]) > 2
-                        && Session["ACC_USER_ID"] != null)
-                        {
-                            userId = (long)Session["ACC_USER_ID"];
-                        }
+                        long userId = (long)Session["USER_ID"];                        
                         user curUser = entities.users.Find(userId);
                         List<bank> bankList = entities.banks.ToList();
                         List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
@@ -141,16 +114,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     {
                         try
                         {
-                            long userId = 0;
-                            if (Convert.ToInt32(Session["USER_ROLE"]) == 2)
-                            {
-                                userId = (long)Session["USER_ID"];
-                            }
-                            else if (Convert.ToInt32(Session["USER_ROLE"]) > 2
-                            && Session["ACC_USER_ID"] != null)
-                            {
-                                userId = (long)Session["ACC_USER_ID"];
-                            }
+                            long userId = (long)Session["USER_ID"];                            
                             fee feeItem = entities.fees.Where(m => m.id == editID).FirstOrDefault();
                             if (feeItem != null)
                             {
@@ -214,17 +178,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 {
                     try
                     {
-                        long userId = 0;
-                        if (Convert.ToInt32(Session["USER_ROLE"]) == 2)
-                        {
-                            userId = (long)Session["USER_ID"];
-                        }
-                        else if (Convert.ToInt32(Session["USER_ROLE"]) > 2
-                        && Session["ACC_USER_ID"] != null)
-                        {
-                            userId = (long)Session["ACC_USER_ID"];
-                        }
-
+                        long userId = (long)Session["USER_ID"];                       
                         user curUser = entities.users.Find(userId);
                         List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                         cuentaCuotasViewModel viewModel = new cuentaCuotasViewModel();
@@ -265,17 +219,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
             {
                 try
                 {
-                    long userId = 0;
-                    if (Convert.ToInt32(Session["USER_ROLE"]) >= 1)
-                    {
-                        userId = (long)Session["USER_ID"];
-                    }
-                    else if (Convert.ToInt32(Session["USER_ROLE"]) > 1
-                    && Session["ACC_USER_ID"] != null)
-                    {
-                        userId = (long)Session["ACC_USER_ID"];
-                    }
-
+                    long userId = (long)Session["USER_ID"];                    
                     user curUser = entities.users.Find(userId);
                     BancosViewModel viewModel = new BancosViewModel();
 

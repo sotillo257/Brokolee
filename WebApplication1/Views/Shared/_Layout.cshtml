@@ -196,7 +196,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                         }
                                         else
                                         {
-                                            <a href="@Url.Action("balance", "cuotas")">Balance Pendiente</a>
+                                    <a href="@Url.Action("balance", "cuotas")">Balance pendiente</a>
                                         }
 
                                     </li>
@@ -204,21 +204,21 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                     <li>
                                         @if (Model.side_sub_menu == "cuotas_estado")
                                         {
-                                            <a href="@Url.Action("estado", "cuotas")" class="active">Estado de Cuenta</a>
+                                        <a href="@Url.Action("estado", "cuotas")" class="active">Estados de cuenta</a>
                                         }
                                         else
                                         {
-                                            <a href="@Url.Action("estado", "cuotas")">Estado de Cuenta</a>
+                                    <a href="@Url.Action("estado", "cuotas")">Estados de cuenta</a>
                                         }
                                     </li>
                                     <li>
-                                        @if (Model.side_sub_menu == "cuotas_agregar")
+                                        @if (Model.side_sub_menu == "bancos_listado")
                                         {
-                                            <a href="@Url.Action("agregar", "cuotas")" class="active">Agregar Cuenta de banco o CC</a>
+                                            <a href="@Url.Action("listadoCuentas", "cuotas")" class="active">Listado de cuentas de banco y CC</a>
                                         }
                                         else
                                         {
-                                            <a href="@Url.Action("agregar", "cuotas")">Agregar Cuenta de banco o CC</a>
+                                    <a href="@Url.Action("agrlistadoCuentasegar", "cuotas")">Listado de cuentas de banco y CC</a>
                                         }
                                     </li>
                                 </ul>
@@ -227,9 +227,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             {
                                 <a href="javascript:void(0);" class="waves-effect waves-light"><i class="mdi mdi-coin"></i><span> Cuotas y otros cargos </span><span class="float-right"><i class="mdi mdi-chevron-right"></i></span></a>
                                 <ul class="list-unstyled">
-                                    <li><a href="@Url.Action("balance", "cuotas")">Balance Pendiente</a></li>
-                                    <li><a href="@Url.Action("estado", "cuotas")">Estado de Cuenta</a></li>
-                                    <li><a href="@Url.Action("agregar", "cuotas")">Agregar Cuenta de banco o CC</a></li>
+                                    <li><a href="@Url.Action("balance", "cuotas")">Balance pendiente</a></li>
+                                    <li><a href="@Url.Action("estado", "cuotas")">Estados de cuenta</a></li>
+                                    <li><a href="@Url.Action("listadoCuentas", "cuotas")">Agregar Cuenta de banco o CC</a></li>
                                 </ul>
                             }
                         </li>
@@ -759,6 +759,89 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 "ordering": false
             });
         });
+
+        //Solo texto. Validacion para inputs
+        $('.soloTexto').bind('keypress', function (event) {
+            var regex = new RegExp("^[a-zA-ZáéíóúüñÁÉÍÓÚÑÜ ]+$");
+            var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+            if (!regex.test(key)) {
+                event.preventDefault();
+                return false;
+            }
+        });
+
+        //Solo numero. Validacion para inputs
+        $('.soloNumero').bind('keypress', function (event) {
+            var regex = new RegExp("^[0-9]+$");
+            var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+            if (!regex.test(key)) {
+                event.preventDefault();
+                return false;
+            }
+        });
+
+        //Validacion dsolo un punto decimal y dos decimales
+        function filterFloat(evt, input) {
+            // Backspace = 8, Enter = 13, ‘0′ = 48, ‘9′ = 57, ‘.’ = 46, ‘-’ = 43
+            var key = window.Event ? evt.which : evt.keyCode;
+            var chark = String.fromCharCode(key);
+            var tempValue = input.value + chark;
+            if (key >= 48 && key <= 57) {
+                if (filter(tempValue) === false) {
+                    return false;
+                } else {
+                    return true;
+                }
+            } else {
+                if (key == 8 || key == 13 || key == 0) {
+                    return true;
+                } else if (key == 46) {
+                    if (filter(tempValue) === false) {
+                        return false;
+                    } else {
+                        return true;
+                    }
+                } else {
+                    return false;
+                }
+            }
+        }
+        function filter(__val__) {
+            var preg = /^([0-9]+\.?[0-9]{0,2})$/;
+            if (preg.test(__val__) === true) {
+                return true;
+            } else {
+                return false;
+            }
+
+        }
+
+        function onDeleteBank(self) {
+            $("#ck-body-loading-overlay").show();
+            var id = $(self).data("id");
+            var formData = new FormData();
+            formData.append("bankId", id);
+            var url = "@Url.Action("DeleteBank", "cuotas")";
+
+            var errUrl = "@Url.Action("listadoCuentas", "cuotas", new { Error = "No se puede eliminar esta cuenta porque posee pagos pendientes"  })";
+            $.ajax({
+                url: url,
+                type: "post",
+                data: formData,
+                success: function (result) {
+                    $("#ck-body-loading-overlay").hide();
+                    if (result.result === "error") {
+                        console.log('couln\'t get roles');
+                    } else if (result.result === "NotAlowed") {
+                        window.location = errUrl;
+                    } else {
+                        location.reload();
+                    }
+                },
+                processData: false,
+                contentType: false
+            });
+        }
     </script>
 
     <script>
