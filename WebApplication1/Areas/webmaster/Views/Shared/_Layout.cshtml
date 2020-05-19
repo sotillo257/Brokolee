@@ -472,26 +472,26 @@
                                     @if (Model.side_sub_menu == "plantillas_listado")
                                     {
                                         <li class="active">
-                                            <a href="@Url.Action("listado", "plantillas", new { area = "webmaster" })" class="active">Listado de Plantillas</a>
+                                            <a href="@Url.Action("listado", "plantillas", new { area = "webmaster" })" class="active">Listado de plantillas</a>
                                         </li>
                                     }
                                     else
                                     {
                                         <li>
-                                            <a href="@Url.Action("listado", "plantillas", new { area = "webmaster" })">Listado de Plantillas</a>
+                                            <a href="@Url.Action("listado", "plantillas", new { area = "webmaster" })">Listado de plantillas</a>
                                         </li>
                                     }
 
                                     @if (Model.side_sub_menu == "plantillas_crear")
                                     {
                                         <li class="active">
-                                            <a href="@Url.Action("crear", "plantillas", new { area = "webmaster" })" class="active">Crear Plantilla</a>
+                                            <a href="@Url.Action("crear", "plantillas", new { area = "webmaster" })" class="active">Crear plantilla</a>
                                         </li>
                                     }
                                     else
                                     {
                                         <li>
-                                            <a href="@Url.Action("crear", "plantillas", new { area = "webmaster" })">Crear Plantilla</a>
+                                            <a href="@Url.Action("crear", "plantillas", new { area = "webmaster" })">Crear plantilla</a>
                                         </li>
                                     }
 
@@ -515,7 +515,7 @@
                                 <ul class="list-unstyled">
                                     <li><a href="@Url.Action("listado", "plantillas", new { area = "webmaster" })">Listado de Plantillas</a></li>
                                     <li><a href="@Url.Action("crear", "plantillas", new { area = "webmaster" })">Crear Plantilla</a></li>
-                                    <li><a href="@Url.Action("tema", "plantillas", new { area = "webmaster" })">Tema Plantilla</a></li>
+                                    @*<li><a href="@Url.Action("tema", "plantillas", new { area = "webmaster" })">Tema Plantilla</a></li>*@
                                 </ul>
                             }
                         </li>
@@ -923,6 +923,31 @@
                 return false;
             }
     
+        }
+
+        function onActivateSupplier(self) {
+            $("#ck-body-loading-overlay").show();
+            var id = $(self).data("id");
+            var formData = new FormData();
+            formData.append("id", id);
+
+            var url = "@Url.Action("onActivateSupp", "suplidores", new { area = "webmaster" })";
+
+            $.ajax({
+                url: url,
+                type: "post",
+                data: formData,
+                success: function (result) {
+                    $("#ck-body-loading-overlay").hide();
+                    if (result.result === "error") {
+                        console.log('couln\'t get roles');
+                    } else {
+                        location.reload();
+                    }
+                },
+                processData: false,
+                contentType: false
+            });
         }
 
         //Validar si el checkbox de Arrendamiento fue activado
@@ -1858,6 +1883,10 @@
 
         function onSearchSupplierCategory() {
             $("#searchSupplierForm").submit();
+        }
+
+        function onSearchTitularCommunity() {
+            $("#searchCommunityForm").submit();
         }
 
         $("#customCheck6").change(function () {

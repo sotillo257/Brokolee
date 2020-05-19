@@ -262,12 +262,9 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 if (communityID != null)
                 {
                     List<communuser> comxuserAnterior = entities.communusers.Where(x => x.user_id == editAdmin.id).ToList();
-                    foreach (var item in comxuserAnterior)
-                    {
-                        entities.communusers.Remove(item);
-                        entities.SaveChanges();
-                    }
-
+                    entities.communusers.RemoveRange(comxuserAnterior);
+                    entities.SaveChanges();
+                  
                     foreach (var item in communityID)
                     {
                         long itemID = Convert.ToInt64(item);

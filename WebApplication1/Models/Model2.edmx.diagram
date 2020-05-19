@@ -58,9 +58,6 @@
         <AssociationConnector Association="pjrdev_condominiosModel.FK_BlogUserLikes_user" />
         <EntityTypeShape EntityType="pjrdev_condominiosModel.contactinfo" Width="1.5" PointX="16.375" PointY="11.75" />
         <EntityTypeShape EntityType="pjrdev_condominiosModel.event" Width="1.5" PointX="13.375" PointY="16.75" />
-        <EntityTypeShape EntityType="pjrdev_condominiosModel.supplier" Width="1.5" PointX="8" PointY="1" />
-        <AssociationConnector Association="pjrdev_condominiosModel.FK_supplier_category" />
-        <AssociationConnector Association="pjrdev_condominiosModel.FK_comment_supplier" />
         <EntityTypeShape EntityType="pjrdev_condominiosModel.document" Width="1.5" PointX="10" PointY="6.875" />
         <AssociationConnector Association="pjrdev_condominiosModel.FK_document_type" />
         <EntityTypeShape EntityType="pjrdev_condominiosModel.efac" Width="1.5" PointX="17.375" PointY="0.75" />
@@ -76,6 +73,9 @@
         <AssociationConnector Association="pjrdev_condominiosModel.FK_fee_user" />
         <EntityTypeShape EntityType="pjrdev_condominiosModel.book" Width="1.5" PointX="7.375" PointY="11.75" />
         <EntityTypeShape EntityType="pjrdev_condominiosModel.contract" Width="1.5" PointX="9.375" PointY="11.75" />
+        <EntityTypeShape EntityType="pjrdev_condominiosModel.supplier" Width="1.5" PointX="8" PointY="0.875" />
+        <AssociationConnector Association="pjrdev_condominiosModel.FK_supplier_category" />
+        <AssociationConnector Association="pjrdev_condominiosModel.FK_comment_supplier" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

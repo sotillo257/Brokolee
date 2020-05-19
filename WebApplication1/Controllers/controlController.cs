@@ -84,7 +84,7 @@ namespace WebApplication1.Controllers
                         viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                         viewModel.pubMessageList = pubMessageList;
                         viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                        viewModel.titulosList = titulosList;
+                        viewModel.titulosList = titulosList;                    
                         return View(viewModel);
                     }
 
@@ -327,6 +327,41 @@ namespace WebApplication1.Controllers
                     result = "error",
                     exception = ex.Message
                 });
+            }
+        }
+
+        public ActionResult error(string Error)
+        {
+            communityControlViewModel viewModel = new communityControlViewModel();
+            if (Session["USER_ID"] != null)
+            {
+                if (Error != "")
+                {
+                    long userId = (long)Session["SUS_USER_ID"];
+                    user curUser = entities.users.Find(userId);
+                    List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
+                    List<document_type> document_category_list = entities.document_type.ToList();
+                    titulosList = ep.GetTitulosByTitular(userId);
+                    listComunities = ep.GetCommunityListByTitular(titulosList);
+                    viewModel.communityList = listComunities;
+                    viewModel.side_menu = "control_panel";
+                    viewModel.side_sub_menu = "";
+                    viewModel.document_category_list = document_category_list;
+                    viewModel.curUser = curUser;
+                    viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
+                    viewModel.pubMessageList = pubMessageList;
+                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                    ViewBag.msgError = Error;
+                    return View(viewModel);
+                }
+                else
+                {
+                    return Redirect(Url.Action("community", "control"));
+                }
+            }
+            else
+            {
+                return Redirect(ep.GetLogoutUrl());
             }
         }
     }

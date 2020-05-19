@@ -2192,8 +2192,8 @@
             formData.append("delID", id);
 
             var url = "@Url.Action("DeleteDocumentType", "documentos", new { area = "coadmin" })";
-            var errUrl = "@Url.Action("categorias", "documentos", new { area = "coadmin", Error = "No se puede eliminar esta cuenta porque posee documentos asociados"  })";
-             var respuesta = confirm("¿Estás seguro que deseas eliminar esta categoíra?");
+            var errUrl = "@Url.Action("categoria", "documentos", new { area = "coadmin", Error = "No se puede eliminar esta cuenta porque posee documentos asociados"  })";
+             var respuesta = confirm("¿Estás seguro que deseas eliminar esta categoría?");
         if (respuesta == true) {
 
             $.ajax({

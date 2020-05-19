@@ -19,6 +19,7 @@
                     <div class="float-right">
                         <ul class="breadcrumb float-md-right">
                             <li class="breadcrumb-item"><a href="@Url.Action("panel", "control", new { area = "webmaster" })" class="text-success"><i class="mdi mdi-home-modern"></i> Panel de control</a></li>
+                            <li class="breadcrumb-item"><a href="@Url.Action("listado", "suplidores", new { area = "webmaster" })" class="text-success">Listado de suplidores</a></li>
                             <li class="breadcrumb-item active">Editar suplidor</li>
                         </ul>
                     </div>
@@ -29,7 +30,7 @@
         <!-- back button -->
         <div class="row pb-4">
             <div class="col-md-6">
-                <a href="javascript:history.back()"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+                <a href="@Url.Action("listado", "suplidores", new { area = "webmaster" })"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
             </div>
         </div>
         <!-- end back button -->
@@ -69,7 +70,7 @@
                                     <div class="input-group mt-2">
                                         <div class="custom-file">
                                             <input type="file" class="custom-file-input" id="inputGroupFile04" name="supply_logo"
-                                                   data-toggle="tooltip" title="Subir logo en formato jpg o png"/>
+                                                   data-toggle="tooltip" title="Subir logo en formato jpg o png" />
                                             <label class="custom-file-label" for="inputGroupFile04">Seleccionar archivo</label>
                                         </div>
                                         <div class="col-sm-3">
@@ -85,8 +86,8 @@
                                 <div class="col-sm-9">
                                     <input maxlength="30" class="form-control soloTexto" type="text" value="@Model.editSupplier.company"
                                            data-toggle="tooltip" title="Nombre de la compañía del suplidor"
-                                           placeholder="Compañía suplidor" id="example-email-input" name="company" required/>
-                                    <small class="form-text text-muted">Nombre de la compañía del suplidor</small>
+                                           placeholder="Compañía suplidor" id="example-email-input" name="company" required />
+                                    @*<small class="form-text text-muted">Nombre de la compañía del suplidor</small>*@
                                 </div>
                             </div>
                             <div class="form-divider"></div>
@@ -96,17 +97,17 @@
                                     <input maxlength="20" class="form-control soloTexto" type="text" value="@Model.editSupplier.contact_name"
                                            data-toggle="tooltip" title="Nombre de contacto del suplidor"
                                            placeholder="Nombre de contacto" id="example-name1-input" name="contact_name" required>
-                                    <small class="form-text text-muted">Nombre de contacto del suplidor</small>
+                                    <@*small class="form-text text-muted">Nombre de contacto del suplidor</small>*@
                                 </div>
                             </div>
                             <div class="form-divider"></div>
                             <div class="form-group row">
                                 <label for="example-lastname1-input" class="col-sm-3 col-form-label">Tipo de servicio</label>
                                 <div class="col-sm-9">
-                                    <input maxlength="20" class="form-control soloTexto" type="text" value="@Model.editSupplier.type_service" 
+                                    <input maxlength="20" class="form-control soloTexto" type="text" value="@Model.editSupplier.type_service"
                                            data-toggle="tooltip" title="Servicio que ofrece"
-                                           placeholder="Tipo de servicio" id="example-lastname1-input" name="type_service" required/>
-                                    <small class="form-text text-muted">Servicio que ofrece</small>
+                                           placeholder="Tipo de servicio" id="example-lastname1-input" name="type_service" required />
+                                    @*<small class="form-text text-muted">Servicio que ofrece</small>*@
                                 </div>
                             </div>
                             <div class="form-divider"></div>
@@ -129,7 +130,7 @@
 
                                         }
                                     </select>
-                                    <small class="form-text text-muted">Categoría del suplidor</small>
+                                    @*<small class="form-text text-muted">Categoría del suplidor</small>*@
                                 </div>
                             </div>
                             <div class="form-divider"></div>
@@ -138,8 +139,8 @@
                                 <div class="col-sm-9">
                                     <input maxlength="40" class="form-control" type="text" value="@Model.editSupplier.address" name="address"
                                            data-toggle="tooltip" title="Dirección del suplidor"
-                                           placeholder="Dirección" id="example-lastname1-input" required/>
-                                    <small class="form-text text-muted">Dirección del suplidor</small>
+                                           placeholder="Dirección" id="example-lastname1-input" required />
+                                    @*<small class="form-text text-muted">Dirección del suplidor</small>*@
                                 </div>
                             </div>
                             <div class="form-divider"></div>
@@ -149,7 +150,7 @@
                                     <input maxlength="15" class="form-control soloNumero" type="tel" value="@Model.editSupplier.phone" name="phone"
                                            data-toggle="tooltip" title="Teléfono del suplidor"
                                            placeholder="# Teléfono" id="example-tel1-input" required />
-                                    <small class="form-text text-muted">Teléfono del suplidor</small>
+                                    @*<small class="form-text text-muted">Teléfono del suplidor</small>*@
                                 </div>
                             </div>
                             <div class="form-divider"></div>
@@ -159,7 +160,7 @@
                                     <input maxlength="40" class="form-control" type="email" value="@Model.editSupplier.email" name="email"
                                            data-toggle="tooltip" title="Correo electrónico del suplidor"
                                            placeholder="Correo electrónico" id="example-email-input" required>
-                                    <small class="form-text text-muted">Correo electrónico del suplidor</small>
+                                    @*<small class="form-text text-muted">Correo electrónico del suplidor</small>*@
                                 </div>
                             </div>
                             <div class="form-divider"></div>
@@ -169,7 +170,7 @@
                                     <input required class="form-control" type="date" data-toggle="tooltip" title="Mes / día / año | Fecha de registro en el directorio"
                                            value="@Convert.ToDateTime(Model.editSupplier.supplier_from).ToString("yyyy-MM-dd")"
                                            id="example-date-input" name="supplier_from" />
-                                    <small class="form-text text-muted">Mes / día / año | Fecha de registro en el directorio</small>
+                                    @*<small class="form-text text-muted">Mes / día / año | Fecha de registro en el directorio</small>*@
                                 </div>
                             </div>
                             <div class="form-divider"></div>
@@ -179,11 +180,60 @@
                                     <input maxlength="50" required class="form-control" type="text" value="@Model.editSupplier.web_page" name="web_page"
                                            data-toggle="tooltip" title="Por ejemplo: wwww.suplidores.com"
                                            placeholder="Url de página web" id="example-email-input">
-                                    <small class="form-text text-muted">Por ejemplo: wwww.suplidores.com</small>
+                                    @*<small class="form-text text-muted">Por ejemplo: wwww.suplidores.com</small>*@
+                                </div>
+                            </div>
+                            <div class="form-divider"></div>
+                            <div class="form-group row">
+                                <label for="example-address1-input" class="col-sm-3 col-form-label">Estado</label>
+                                <div class="col-sm-9">
+                                    <div class="form-check-inline my-2">
+                                        <div class="custom-control custom-checkbox">
+                                            @if (Model.editSupplier.status == 1)
+                                            {
+                                                <input type="checkbox" class="custom-control-input"
+                                                       checked=""
+                                                       id="customCheck6" data-parsley-multiple="groups"
+                                                       value="1" name="status"
+                                                       data-parsley-mincheck="2">
+                                            }
+                                            else
+                                            {
+                                                <input type="checkbox" class="custom-control-input"
+                                                       id="customCheck6" data-parsley-multiple="groups"
+                                                       value="1" name="status"
+                                                       data-parsley-mincheck="2">
+                                            }
+
+                                            <label class="custom-control-label" for="customCheck6">Activado</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-check-inline my-2">
+                                        <div class="custom-control custom-checkbox">
+                                            @if (Model.editSupplier.status == 2)
+                                            {
+                                                <input type="checkbox" class="custom-control-input"
+                                                       id="customCheck7"
+                                                       value="2" name="status" checked
+                                                       data-parsley-multiple="groups"
+                                                       data-parsley-mincheck="2">
+                                            }
+                                            else
+                                            {
+                                                <input type="checkbox" class="custom-control-input"
+                                                       id="customCheck7"
+                                                       value="2" name="status"
+                                                       data-parsley-multiple="groups"
+                                                       data-parsley-mincheck="2">
+                                            }
+
+                                        <label class="custom-control-label" for="customCheck7">Desactivado</label>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <a href=""><button type="submit" class="btn btn-primary waves-effect waves-light">Guardar</button></a>
-                            <a href=""><button type="button" class="btn btn-danger waves-effect waves-light">Cancelar</button></a>
+                            <a href="@Url.Action("listado", "suplidores", new { area = "webmaster" })"><button type="button" class="btn btn-danger waves-effect waves-light">Cancelar</button></a>
                         </div>
                     }
                 </div>
@@ -192,7 +242,7 @@
         <!-- back button -->
         <div class="row pb-4">
             <div class="col-md-6">
-                <a href="javascript:history.back()"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+                <a href="@Url.Action("listado", "suplidores", new { area = "webmaster" })"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
             </div>
         </div>
         <!-- end back button -->

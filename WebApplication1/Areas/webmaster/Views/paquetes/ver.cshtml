@@ -19,6 +19,7 @@
                     <div class="float-right">
                         <ul class="breadcrumb float-md-right">
                             <li class="breadcrumb-item"><a href="@Url.Action("panel", "control", new { area = "webmaster" })" class="text-success"><i class="mdi mdi-home-modern"></i> Panel de control</a></li>
+                            <li class="breadcrumb-item"><a href="@Url.Action("listado", "paquetes", new { area = "webmaster" })" class="text-success"> Listado de paquetes</a></li>
                             <li class="breadcrumb-item active">@Model.viewPackage.first_name</li>
                         </ul>
                     </div>
@@ -29,7 +30,7 @@
         <!-- back button -->
         <div class="row pb-4">
             <div class="col-md-6">
-                <a href="javascript:history.back()"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+                <a href="@Url.Action("listado", "paquetes", new { area = "webmaster" })"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
             </div>
         </div>
         <!-- end back button -->
@@ -46,55 +47,55 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-dollar-sign"></i></span>
                                     </div>
-                                    <input type="text" placeholder="0.00" class="form-control" 
+                                    <input type="text" placeholder="0.00" class="form-control"
                                            value="@Model.editPackage.payment.ToString().Replace(',', '.')" readonly
-                                            data-toggle="tooltip" title="Tarifa del Paquete"/>
+                                           data-toggle="tooltip" title="Tarifa del Paquete" />
                                 </div>
-                                <small class="form-text text-muted">Tarifa recibida por el paquete adquirido</small>
+                                @*<small class="form-text text-muted">Tarifa recibida por el paquete adquirido</small>*@
                             </div>
                         </div>
                         <div class="form-divider"></div>
                         <div class="form-group row">
                             <label for="example-lastname1-input" class="col-sm-3 col-form-label">Descripción</label>
                             <div class="col-sm-9">
-                                <textarea class="form-control" rows="3" readonly 
+                                <textarea class="form-control" rows="3" readonly
                                           data-toggle="tooltip" title="Descripción del paquete"
                                           placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.">@Model.viewPackage.description</textarea>
-                                <small class="form-text text-muted">Descripción del paquete</small>
+                                @*<small class="form-text text-muted">Descripción del paquete</small>*@
                             </div>
-                        </div>
-                        <div class="form-divider"></div>
-                        <div class="form-group row">
-                            <label for="example-name1-input" class="col-sm-3 col-form-label">Comunidad</label>
-                            <div class="col-sm-9">
-                                <input class="form-control" type="text" value="@Model.viewPackage.community"
-                                       placeholder="Comunidad 1" id="example-name1-input" readonly
-                                       data-toggle="tooltip" title="Nombre de la comunidad">
-                                <small class="form-text text-muted">Nombre de la comunidad</small>
-                            </div>
-                        </div>
-                        <div class="form-divider"></div>
-                        <div class="form-group row">
-                            <label for="example-name1-input" class="col-sm-3 col-form-label">Administrador</label>
-                            <div class="col-sm-9">
-                                <input class="form-control" type="text" 
-                                       data-toggle="tooltip" title="Email del administrador"
-                                       value="@Model.viewPackage.admin_email" readonly
-                                       placeholder="jdelpueblo@dominio.com" id="example-name1-input">
-                                <small class="form-text text-muted">Email del administrador</small>
-                            </div>
-                        </div>
-                        <div class="form-divider"></div>
-                        <div class="form-group row">
-                            <label for="example-name1-input" class="col-sm-3 col-form-label">Suscribir enlace</label>
-                            <div class="col-sm-9">
-                                <input class="form-control" type="text" name="suscribe_link" required
-                                       value="@Model.viewPackage.suscribe_link" readonly
-                                       placeholder="Suscribir enlace" id="example-name1-input"
-                                       data-toggle="tooltip" title="Enlace de Suscripción" />
-                                <small class="form-text text-muted">Suscribir enlace</small>
-                            </div>
-                        </div>
+                        </div>                       
+                        @* <div class="form-divider"></div>
+                            <div class="form-group row">
+            <label for="example-name1-input" class="col-sm-3 col-form-label">Comunidad</label>
+            <div class="col-sm-9">
+                <input class="form-control" type="text" value="@Model.viewPackage.community"
+                       placeholder="Comunidad 1" id="example-name1-input" readonly
+                       data-toggle="tooltip" title="Nombre de la comunidad">
+                <small class="form-text text-muted">Nombre de la comunidad</small>
+            </div>
+        </div>
+        <div class="form-divider"></div>
+        <div class="form-group row">
+            <label for="example-name1-input" class="col-sm-3 col-form-label">Administrador</label>
+            <div class="col-sm-9">
+                <input class="form-control" type="text"
+                       data-toggle="tooltip" title="Email del administrador"
+                       value="@Model.viewPackage.admin_email" readonly
+                       placeholder="jdelpueblo@dominio.com" id="example-name1-input">
+                <small class="form-text text-muted">Email del administrador</small>
+            </div>
+        </div>
+        <div class="form-divider"></div>
+        <div class="form-group row">
+            <label for="example-name1-input" class="col-sm-3 col-form-label">Suscribir enlace</label>
+            <div class="col-sm-9">
+                <input class="form-control" type="text" name="suscribe_link" required
+                       value="@Model.viewPackage.suscribe_link" readonly
+                       placeholder="Suscribir enlace" id="example-name1-input"
+                       data-toggle="tooltip" title="Enlace de Suscripción" />
+                <small class="form-text text-muted">Suscribir enlace</small>
+            </div>
+        </div>*@
                     </div>
                 </div>
             </div>
@@ -102,7 +103,7 @@
         <!-- back button -->
         <div class="row pb-4">
             <div class="col-md-6">
-                <a href="javascript:history.back()"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+                <a href="@Url.Action("listado", "paquetes", new { area = "webmaster" })"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
             </div>
         </div>
         <!-- end back button -->

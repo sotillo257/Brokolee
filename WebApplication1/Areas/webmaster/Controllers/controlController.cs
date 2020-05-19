@@ -13,6 +13,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
     {
         pjrdev_condominiosEntities entities = new pjrdev_condominiosEntities();
         EFPublicRepository ep = new EFPublicRepository();
+        List<community> communityList = new List<community>();
         // GET: webmaster/control
         public ActionResult panel()
         {
@@ -34,6 +35,40 @@ namespace WebApplication1.Areas.webmaster.Controllers
             {
                 return Redirect(ep.GetLogoutUrl());
             }     
+        }
+
+        public ActionResult error(string Error)
+        {
+            panelControlViewModel viewModel = new panelControlViewModel();
+            if (Session["USER_ID"] != null)
+            {
+                if (Error != "")
+                {
+                    long userId = (long)Session["SUS_USER_ID"];
+                    user curUser = entities.users.Find(userId);
+                    List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
+                    List<document_type> document_category_list = entities.document_type.ToList();
+                    communityList = ep.GetCommunityList(userId);
+                    viewModel.communityList = communityList;
+                    viewModel.side_menu = "control_panel";
+                    viewModel.side_sub_menu = "";
+                    viewModel.document_category_list = document_category_list;
+                    viewModel.curUser = curUser;
+                    viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
+                    viewModel.pubMessageList = pubMessageList;
+                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                    ViewBag.msgError = Error;
+                    return View(viewModel);
+                }
+                else
+                {
+                    return Redirect(Url.Action("panel", "control", new { area = "coadmin" }));
+                }
+            }
+            else
+            {
+                return Redirect(ep.GetLogoutUrl());
+            }
         }
     }
 }

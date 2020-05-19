@@ -211,7 +211,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
            string company, string contact_name,
            string type_service, int category, string address,
            string phone, string email,
-           string supplier_from, string web_page)
+           string supplier_from, string web_page, int status)
         {
             try
             {
@@ -240,6 +240,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 supplier.address = address;
                 supplier.phone = phone;
                 supplier.email = email;
+                supplier.status = status;
                 supplier.supplier_from = DateTime.ParseExact(supplier_from, "yyyy-MM-dd",
                     System.Globalization.CultureInfo.CurrentCulture);
                 supplier.web_page = web_page;
@@ -294,6 +295,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 supplier.address = address;
                 supplier.phone = phone;
                 supplier.web_page = web_page;
+                supplier.status = 1;
                 //supplier.community_id = Convert.ToInt64(Session["CURRENT_COMU"]);
                 supplier.supplier_from = DateTime.ParseExact(supplier_from, "yyyy-MM-dd",
                     System.Globalization.CultureInfo.CurrentCulture);
@@ -327,6 +329,29 @@ namespace WebApplication1.Areas.webmaster.Controllers
                     result = "error",
                     exception = ex.Message
                 });
+            }
+        }
+
+        public JsonResult onActivateSupp(long id)
+        {
+            try
+            {
+                supplier delf = entities.suppliers.Find(id);
+                if (delf.status == 1)
+                {
+                    delf.status = 2;
+                }
+                else
+                {
+                    delf.status = 1;
+                }
+
+                entities.SaveChanges();
+                return Json(new { result = "success" });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { result = "error", exception = ex.HResult });
             }
         }
 

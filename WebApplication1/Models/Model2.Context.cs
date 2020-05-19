@@ -56,7 +56,6 @@ namespace WebApplication1.Models
         public virtual DbSet<BlogUserLike> BlogUserLikes { get; set; }
         public virtual DbSet<contactinfo> contactinfoes { get; set; }
         public virtual DbSet<@event> events { get; set; }
-        public virtual DbSet<supplier> suppliers { get; set; }
         public virtual DbSet<document> documents { get; set; }
         public virtual DbSet<efac> efacs { get; set; }
         public virtual DbSet<blog> blogs { get; set; }
@@ -64,5 +63,6 @@ namespace WebApplication1.Models
         public virtual DbSet<fee> fees { get; set; }
         public virtual DbSet<book> books { get; set; }
         public virtual DbSet<contract> contracts { get; set; }
+        public virtual DbSet<supplier> suppliers { get; set; }
     }
 }

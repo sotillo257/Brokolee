@@ -21,6 +21,7 @@
                     <div class="float-right">
                         <ul class="breadcrumb float-md-right">
                             <li class="breadcrumb-item"><a href="@Url.Action("panel", "control", new { area = "webmaster" })" class="text-success"><i class="mdi mdi-home-modern"></i> Panel de control</a></li>
+                            <li class="breadcrumb-item"><a href="@Url.Action("listado", "comunidades", new { area = "webmaster" })" class="text-success">Listado de comunidades</a></li>
                             <li class="breadcrumb-item active">Ver comunidad</li>
                         </ul>
                     </div>
@@ -31,7 +32,7 @@
         <!-- back button -->
         <div class="row pb-4">
             <div class="col-md-6">
-                <a href="javascript:history.back()"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+                <a href="@Url.Action("listado", "comunidades", new { area = "webmaster" })"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
             </div>
         </div>
         <!-- end back button -->
@@ -87,7 +88,7 @@
                                 <input class="form-control" type="text" value="@Model.package_name"
                                        data-toggle="tooltip" title="Paquete adquirido" readonly
                                        placeholder="Paquete 1" id="example-name1-input">
-                                <small class="form-text text-muted">Paquete adquirido</small>
+                                @*<small class="form-text text-muted">Paquete adquirido</small>*@
                             </div>
                         </div>
                         <div class="form-divider"></div>
@@ -97,7 +98,7 @@
                                 <input class="form-control" value="@Model.viewCommunity.apart"
                                        data-toggle="tooltip" title="Dirección" readonly
                                        placeholder="Dirección" />
-                                <small class="form-text text-muted">Dirección</small>
+                                @*<small class="form-text text-muted">Dirección</small>*@
                             </div>
                         </div>
                         <div class="form-divider"></div>
@@ -107,25 +108,9 @@
                                 <textarea class="form-control" rows="3" readonly
                                           data-toggle="tooltip" title="Descripción de la comunidad"
                                           placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.">@Model.viewCommunity.description</textarea>
-                                <small class="form-text text-muted">Descripción de la comunidad</small>
+                                @*<small class="form-text text-muted">Descripción de la comunidad</small>*@
                             </div>
-                        </div>
-                        <div class="form-divider"></div>
-                        <div class="form-group row">
-                            <label class="col-sm-3 col-form-label">Titulares</label>
-                            <div class="col-sm-9">
-                                @foreach (var item in Model.titularList)
-                                {
-                                    <div class="input-group mt-2">
-                                        <input type="text" class="form-control" value="@item.first_name1 @item.last_name1"
-                                               placeholder="Daniel González" aria-label="" readonly />
-                                        <span class="input-group-append">
-                                            <button class="btn btn-primary" type="button" oncli><i class="mdi mdi-close"></i></button>
-                                        </span>
-                                    </div>
-                                }
-                            </div>
-                        </div>
+                        </div>                        
                     </div>
                 </div>
             </div>
@@ -133,7 +118,7 @@
         <!-- back button -->
         <div class="row pb-4">
             <div class="col-md-6">
-                <a href="javascript:history.back()"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+                <a href="@Url.Action("listado", "comunidades", new { area = "webmaster" })"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
             </div>
         </div>
         <!-- end back button -->

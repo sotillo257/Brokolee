@@ -285,8 +285,9 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 viewModel.IdUserTitular = (int)Id;
                 viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                 viewModel.pubMessageList = pubMessageList;
-                viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                viewModel.communityList = entities.communities.ToList();
+                viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);                              
+                List<community> community = entities.communities.ToList();               
+                viewModel.communityList = community;
                 ViewBag.msgError = Error;
                 return View(viewModel);
             }
@@ -476,55 +477,98 @@ namespace WebApplication1.Areas.webmaster.Controllers
 
         #region TITULAR
 
-        public ActionResult listado(string searchStr = "")
+        public ActionResult listado(string Error, string searchStr = "", int CommunityId = 0)
         {
             if (Session["USER_ID"] != null)
             {
-                long userId = (long)Session["USER_ID"];
-                user curUser = entities.users.Find(userId);
-                Dictionary<long, string> communityDict = new Dictionary<long, string>();
-                List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
-                List<user> titularList = new List<user>();
-                if (searchStr == "")
+                try
                 {
-                    var query1 = (from r in entities.users
-                                  where
-         r.role == 1 && r.is_del != true
-                                  select r);
-                    titularList = query1.ToList();
+                    long userId = (long)Session["USER_ID"];
+                    user curUser = entities.users.Find(userId);
+                    Dictionary<long, string> communityDict = new Dictionary<long, string>();
+                    List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
+                    List<user> titularList = new List<user>();
+                    List<community> communityList = entities.communities.ToList();
+
+                    long commId = Convert.ToInt64(CommunityId);                   
+                    if (Session["WM_selectedComm"] != null)
+                    {
+                        if(commId != 0)
+                        {
+                            Session["WM_selectedComm"] = commId;
+                        }
+                        else
+                        {
+                            commId = Convert.ToInt64(Session["WM_selectedComm"]);
+                        }                        
+                    }
+                    else
+                    {
+                        Session["WM_selectedComm"] = commId;
+                    }              
+                    
+                    if (searchStr == "" && commId == 0)
+                    {
+                        var query1 = (from r in entities.users
+                                      where
+                                    r.role == 1 && r.is_del != true
+                                      select r);
+                        titularList = query1.ToList();
+                    }
+                    else if (searchStr != "" && commId == 0)
+                    {
+                        var query = (from r in entities.users
+                                     where r.role == 1 &&
+                                     (r.first_name1.Contains(searchStr) == true
+                                     || r.last_name1.Contains(searchStr) == true)
+                                     && r.is_del != true
+                                     select r);
+                        titularList = query.ToList();
+                    }
+                    else if (searchStr == "" && commId != 0)
+                    {
+                        var query2 = (from r in entities.users
+                                      where r.role == 1 && r.is_del != true && r.Titulos.Any(x => x.IdCommunity == commId)
+                                      select r
+                                      );
+                        titularList = query2.ToList();
+                    }
+                    else
+                    {
+                        var query3 = (from r in entities.users
+                                      where r.role == 1 &&
+                                     (r.first_name1.Contains(searchStr) == true
+                                     || r.last_name1.Contains(searchStr) == true)
+                                     && r.is_del != true && r.Titulos.Any(x => x.IdCommunity == commId)
+                                      select r);
+                        titularList = query3.ToList();
+                    }
+
+                    foreach (var item in titularList)
+                    {
+                        string communityName = ep.GetCommunityCoInfo(item.id)[0];
+                        communityDict.Add(item.id, communityName);
+                    }                    
+
+                    listadoTitularesViewModel viewModel = new listadoTitularesViewModel();
+                    viewModel.communityList = communityList;
+                    viewModel.side_menu = "titulares";
+                    viewModel.side_sub_menu = "titulares_listado";
+                    viewModel.document_category_list = entities.document_type.ToList();
+                    viewModel.titularList = titularList;
+                    viewModel.searchStr = searchStr;
+                    viewModel.curUser = curUser;
+                    viewModel.communityDict = communityDict;
+                    viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
+                    viewModel.pubMessageList = pubMessageList;
+                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                    ViewBag.msgError = Error;
+                    return View(viewModel);
                 }
-                else
+                catch (Exception ex)
                 {
-                    var query = (from r in entities.users
-                                 where r.role == 1 &&
-                                 (r.first_name1.Contains(searchStr) == true
-                                 || r.last_name1.Contains(searchStr) == true)
-                                 && r.is_del != true
-                                 select r);
-                    titularList = query.ToList();
+                    return Redirect(Url.Action("error", "control", new { area = "webmaster", Error = "Error al obtener listado de titulares: " + ex }));
                 }
-
-                foreach (var item in titularList)
-                {
-                    string communityName = ep.GetCommunityCoInfo(item.id)[0];
-                    communityDict.Add(item.id, communityName);
-                }
-
-                List<community> communityList = entities.communities.ToList();    
-
-                listadoTitularesViewModel viewModel = new listadoTitularesViewModel();
-                viewModel.communityList = communityList;
-                viewModel.side_menu = "titulares";
-                viewModel.side_sub_menu = "titulares_listado";
-                viewModel.document_category_list = entities.document_type.ToList();
-                viewModel.titularList = titularList;
-                viewModel.searchStr = searchStr;
-                viewModel.curUser = curUser;
-                viewModel.communityDict = communityDict;
-                viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
-                viewModel.pubMessageList = pubMessageList;
-                viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                return View(viewModel);
             }
             else
             {
@@ -536,20 +580,43 @@ namespace WebApplication1.Areas.webmaster.Controllers
         {
             if (Session["USER_ID"] != null)
             {
-                long userId = (long)Session["USER_ID"];
-                user curUser = entities.users.Find(userId);
-                List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
-                agregarTitularesViewModel viewModel = new agregarTitularesViewModel();
-                viewModel.side_menu = "titulares";
-                viewModel.side_sub_menu = "titulares_agregar";
-                viewModel.document_category_list = entities.document_type.ToList();
-                viewModel.curUser = curUser;
-                viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
-                viewModel.pubMessageList = pubMessageList;
-                viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                viewModel.communityList = entities.communities.ToList();
-                ViewBag.msgError = Error;
-                return View(viewModel);
+                if (Session["WM_selectedComm"] != null)
+                {
+                    long selectedCommu = Convert.ToInt64(Session["WM_selectedComm"]);
+                    if (selectedCommu != 0)
+                    {
+                        List<communuser> comUer = entities.communusers.Where(x => x.commun_id == selectedCommu).ToList();
+                        if (comUer.Count > 0)
+                        {
+                            long userId = (long)Session["USER_ID"];
+                            user curUser = entities.users.Find(userId);
+                            List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
+                            agregarTitularesViewModel viewModel = new agregarTitularesViewModel();
+                            viewModel.side_menu = "titulares";
+                            viewModel.side_sub_menu = "titulares_agregar";
+                            viewModel.document_category_list = entities.document_type.ToList();
+                            viewModel.curUser = curUser;
+                            viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
+                            viewModel.pubMessageList = pubMessageList;
+                            viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                            viewModel.communityList = entities.communities.ToList();
+                            ViewBag.msgError = Error;
+                            return View(viewModel);
+                        }
+                        else
+                        {
+                            return Redirect(Url.Action("listado", "titulares", new { area = "webmaster", Error = "No se puede crear titulares en una comunidad sin administradores" }));
+                        }
+                    }
+                    else
+                    {
+                        return Redirect(Url.Action("listado", "titulares", new { area = "webmaster", Error = "Debe tener activa una comunidad para crear titulares" }));
+                    }
+                }
+                else
+                {
+                    return Redirect(Url.Action("listado", "titulares", new { area = "webmaster" }));
+                }                                              
             }
             else
             {
@@ -577,9 +644,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = pubMessageList;
                     viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                    return View(viewModel);
-                    Session["ACC_USER_ID"] = Convert.ToInt64(id);
-                    return View(viewModel);
+                    return View(viewModel);                   
                 }
                 else
                 {
@@ -1183,9 +1248,9 @@ namespace WebApplication1.Areas.webmaster.Controllers
 
 
         [HttpPost]
-        public ActionResult SeacrhResult(string searchStr)
+        public ActionResult SeacrhResult(string searchStr, int searchCommunityId)
         {
-            return Redirect(Url.Action("listado", "titulares", new { area = "webmaster", searchStr = searchStr }));
+            return Redirect(Url.Action("listado", "titulares", new { area = "webmaster", searchStr = searchStr, CommunityId = searchCommunityId }));
         }
     }
 }

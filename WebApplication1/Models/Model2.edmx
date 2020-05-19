@@ -390,6 +390,7 @@
           <Property Name="created_at" Type="datetime" />
           <Property Name="updated_at" Type="datetime" />
           <Property Name="community_id" Type="bigint" />
+          <Property Name="status" Type="int" />
         </EntityType>
         <EntityType Name="suscribe">
           <Key>
@@ -1876,15 +1877,6 @@
           </AssociationSet>
           <EntitySet Name="contactinfoes" EntityType="pjrdev_condominiosModel.contactinfo" />
           <EntitySet Name="events" EntityType="pjrdev_condominiosModel.event" />
-          <EntitySet Name="suppliers" EntityType="pjrdev_condominiosModel.supplier" />
-          <AssociationSet Name="FK_supplier_category" Association="pjrdev_condominiosModel.FK_supplier_category">
-            <End Role="category" EntitySet="categories" />
-            <End Role="supplier" EntitySet="suppliers" />
-          </AssociationSet>
-          <AssociationSet Name="FK_comment_supplier" Association="pjrdev_condominiosModel.FK_comment_supplier">
-            <End Role="supplier" EntitySet="suppliers" />
-            <End Role="comment" EntitySet="comments" />
-          </AssociationSet>
           <EntitySet Name="documents" EntityType="pjrdev_condominiosModel.document" />
           <AssociationSet Name="FK_document_type" Association="pjrdev_condominiosModel.FK_document_type">
             <End Role="document_type" EntitySet="document_type" />
@@ -1924,6 +1916,15 @@
           </AssociationSet>
           <EntitySet Name="books" EntityType="pjrdev_condominiosModel.book" />
           <EntitySet Name="contracts" EntityType="pjrdev_condominiosModel.contract" />
+          <EntitySet Name="suppliers" EntityType="pjrdev_condominiosModel.supplier" />
+          <AssociationSet Name="FK_supplier_category" Association="pjrdev_condominiosModel.FK_supplier_category">
+            <End Role="category" EntitySet="categories" />
+            <End Role="supplier" EntitySet="suppliers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_comment_supplier" Association="pjrdev_condominiosModel.FK_comment_supplier">
+            <End Role="supplier" EntitySet="suppliers" />
+            <End Role="comment" EntitySet="comments" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="Vehiculo">
           <Key>
@@ -2071,54 +2072,6 @@
           <Property Name="is_active" Type="Boolean" />
           <Property Name="community_id" Type="Int64" />
         </EntityType>
-        <EntityType Name="supplier">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="logo" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="municipality" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="category_id" Type="Int32" Nullable="false" />
-          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="assessment" Type="Int32" />
-          <Property Name="company" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="contact_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="type_service" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="address" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
-          <Property Name="phone" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="email" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="supplier_from" Type="DateTime" Precision="3" />
-          <Property Name="web_page" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="created_at" Type="DateTime" Precision="3" />
-          <Property Name="updated_at" Type="DateTime" Precision="3" />
-          <Property Name="community_id" Type="Int64" />
-          <NavigationProperty Name="category" Relationship="pjrdev_condominiosModel.FK_supplier_category" FromRole="supplier" ToRole="category" />
-          <NavigationProperty Name="comments" Relationship="pjrdev_condominiosModel.FK_comment_supplier" FromRole="supplier" ToRole="comment" />
-        </EntityType>
-        <Association Name="FK_supplier_category">
-          <End Type="pjrdev_condominiosModel.category" Role="category" Multiplicity="1" />
-          <End Type="pjrdev_condominiosModel.supplier" Role="supplier" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="category">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="supplier">
-              <PropertyRef Name="category_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_comment_supplier">
-          <End Type="pjrdev_condominiosModel.supplier" Role="supplier" Multiplicity="0..1" />
-          <End Type="pjrdev_condominiosModel.comment" Role="comment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="supplier">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="comment">
-              <PropertyRef Name="supplier_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="document">
           <Key>
             <PropertyRef Name="id" />
@@ -2335,6 +2288,55 @@
           <Property Name="updated_at" Type="DateTime" Precision="3" />
           <Property Name="community_id" Type="Int64" />
         </EntityType>
+        <EntityType Name="supplier">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="logo" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="municipality" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="category_id" Type="Int32" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="assessment" Type="Int32" />
+          <Property Name="company" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="contact_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="type_service" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="address" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="phone" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="supplier_from" Type="DateTime" Precision="3" />
+          <Property Name="web_page" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="created_at" Type="DateTime" Precision="3" />
+          <Property Name="updated_at" Type="DateTime" Precision="3" />
+          <Property Name="community_id" Type="Int64" />
+          <Property Name="status" Type="Int32" />
+          <NavigationProperty Name="category" Relationship="pjrdev_condominiosModel.FK_supplier_category" FromRole="supplier" ToRole="category" />
+          <NavigationProperty Name="comments" Relationship="pjrdev_condominiosModel.FK_comment_supplier" FromRole="supplier" ToRole="comment" />
+        </EntityType>
+        <Association Name="FK_supplier_category">
+          <End Type="pjrdev_condominiosModel.category" Role="category" Multiplicity="1" />
+          <End Type="pjrdev_condominiosModel.supplier" Role="supplier" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="category">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="supplier">
+              <PropertyRef Name="category_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_comment_supplier">
+          <End Type="pjrdev_condominiosModel.supplier" Role="supplier" Multiplicity="0..1" />
+          <End Type="pjrdev_condominiosModel.comment" Role="comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="supplier">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="comment">
+              <PropertyRef Name="supplier_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2815,29 +2817,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="suppliers">
-            <EntityTypeMapping TypeName="pjrdev_condominiosModel.supplier">
-              <MappingFragment StoreEntitySet="supplier">
-                <ScalarProperty Name="community_id" ColumnName="community_id" />
-                <ScalarProperty Name="updated_at" ColumnName="updated_at" />
-                <ScalarProperty Name="created_at" ColumnName="created_at" />
-                <ScalarProperty Name="web_page" ColumnName="web_page" />
-                <ScalarProperty Name="supplier_from" ColumnName="supplier_from" />
-                <ScalarProperty Name="email" ColumnName="email" />
-                <ScalarProperty Name="phone" ColumnName="phone" />
-                <ScalarProperty Name="address" ColumnName="address" />
-                <ScalarProperty Name="type_service" ColumnName="type_service" />
-                <ScalarProperty Name="contact_name" ColumnName="contact_name" />
-                <ScalarProperty Name="company" ColumnName="company" />
-                <ScalarProperty Name="assessment" ColumnName="assessment" />
-                <ScalarProperty Name="description" ColumnName="description" />
-                <ScalarProperty Name="category_id" ColumnName="category_id" />
-                <ScalarProperty Name="municipality" ColumnName="municipality" />
-                <ScalarProperty Name="logo" ColumnName="logo" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="documents">
             <EntityTypeMapping TypeName="pjrdev_condominiosModel.document">
               <MappingFragment StoreEntitySet="document">
@@ -2953,6 +2932,30 @@
                 <ScalarProperty Name="date_notification" ColumnName="date_notification" />
                 <ScalarProperty Name="date_contract" ColumnName="date_contract" />
                 <ScalarProperty Name="first_name" ColumnName="first_name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="suppliers">
+            <EntityTypeMapping TypeName="pjrdev_condominiosModel.supplier">
+              <MappingFragment StoreEntitySet="supplier">
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="community_id" ColumnName="community_id" />
+                <ScalarProperty Name="updated_at" ColumnName="updated_at" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="web_page" ColumnName="web_page" />
+                <ScalarProperty Name="supplier_from" ColumnName="supplier_from" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="type_service" ColumnName="type_service" />
+                <ScalarProperty Name="contact_name" ColumnName="contact_name" />
+                <ScalarProperty Name="company" ColumnName="company" />
+                <ScalarProperty Name="assessment" ColumnName="assessment" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="category_id" ColumnName="category_id" />
+                <ScalarProperty Name="municipality" ColumnName="municipality" />
+                <ScalarProperty Name="logo" ColumnName="logo" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

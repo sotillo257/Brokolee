@@ -29,7 +29,7 @@
         <!-- back button -->
         <div class="row pb-4">
             <div class="col-md-6">
-                <a href="javascript:history.back()"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+                <a href="@Url.Action("panel", "control", new { area = "webmaster" })"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
             </div>
         </div>
         <!-- end back button -->
@@ -62,7 +62,7 @@
                         }
                         else
                         {
-                            <p>No hay plantilla de Correo electrónico.</p>
+                            <p>No hay plantilla de correo electrónico.</p>
                         }
 
                         <!-- Tab panes -->
@@ -86,7 +86,7 @@
                                                 <div class="row">
                                                     <div class="col-lg-12">
                                                         <div class="form-group">
-                                                            <textarea name="content" rows="15" id="content-@Model.list[i].ID" class="tinymce">@Model.list[i].Content</textarea>
+                                                            <textarea required name="content" rows="4" id="content-@Model.list[i].ID" class="tinymce">@Model.list[i].Content</textarea>
                                                         </div>
                                                         <input name="editID" type="hidden" value="@Model.list[i].ID" />
                                                         <div id="summernote" class="mb-2">@Model.list[i].TypeName</div>
@@ -120,7 +120,7 @@
                                                 <div class="row">
                                                     <div class="col-lg-12">
                                                         <div class="form-group">
-                                                            <textarea name="content" rows="15" id="content-@Model.list[i].ID" class="tinymce">@Model.list[i].Content</textarea>
+                                                            <textarea required name="content" rows="4" id="content-@Model.list[i].ID" class="tinymce">@Model.list[i].Content</textarea>
                                                         </div>
                                                         <input name="editID" type="hidden" value="@Model.list[i].ID" />
                                                         <div id="summernote" class="mb-2">@Model.list[i].TypeName</div>
@@ -147,7 +147,7 @@
         <!-- back button -->
         <div class="row pb-4">
             <div class="col-md-6">
-                <a href="javascript:history.back()"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+                <a href="@Url.Action("panel", "control", new { area = "webmaster" })"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
             </div>
         </div>
         <!-- end back button -->

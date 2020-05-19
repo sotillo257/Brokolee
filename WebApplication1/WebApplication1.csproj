@@ -1528,6 +1528,8 @@
     <Content Include="Areas\webmaster\Views\suplidores\listadoCategorias.cshtml" />
     <Content Include="Areas\coadmin\Views\cuotas\listadoCuentas.cshtml" />
     <Content Include="Areas\coadmin\Views\cuotas\editarCuenta.cshtml" />
+    <Content Include="Areas\coadmin\Views\control\error.cshtml" />
+    <Content Include="Areas\webmaster\Views\control\error.cshtml" />
     <None Include="Properties\PublishProfiles\Default Settings.pubxml" />
     <None Include="Properties\PublishProfiles\Default Settings1.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
@@ -1662,6 +1664,7 @@
     <Content Include="Views\comunicaciones\editarblog.cshtml" />
     <Content Include="Views\cuotas\editarCuenta.cshtml" />
     <Content Include="Views\cuotas\listadoCuentas.cshtml" />
+    <Content Include="Views\control\error.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

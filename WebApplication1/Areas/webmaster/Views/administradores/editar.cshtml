@@ -36,6 +36,7 @@
                     <div class="float-right">
                         <ul class="breadcrumb float-md-right">
                             <li class="breadcrumb-item"><a href="@Url.Action("panel", "control", new { area = "webmaster" })" class="text-success"><i class="mdi mdi-home-modern"></i> Panel de control</a></li>
+                            <li class="breadcrumb-item"><a href="@Url.Action("listado", "administradores", new { area = "webmaster" })" class="text-success">Listado de administradores</a></li>
                             <li class="breadcrumb-item active">Editar administrador</li>
                         </ul>
                     </div>
@@ -46,7 +47,7 @@
         <!-- back button -->
         <div class="row pb-4">
             <div class="col-md-6">
-                <a href="javascript:history.back()"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+                <a href="@Url.Action("listado", "administradores", new { area = "webmaster" })"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
             </div>
         </div>
         <!-- end back button -->
@@ -111,7 +112,7 @@
                             <div class="form-group row">
                                 <label for="example-email-input" class="col-sm-3 col-form-label">Apellido paterno</label>
                                 <div class="col-sm-9">
-                                    <input maxlength="15" class="form-control soloTexto" type="text" value="@Model.editAdmin.last_name1"
+                                    <input maxlength="20" class="form-control soloTexto" type="text" value="@Model.editAdmin.last_name1"
                                            placeholder="Apellido paterno" id="example-email-input" name="last_name1" required
                                            data-toggle="tooltip" />
                                     @*<small class="form-text text-muted">Apellido Paterno del Administrador</small>*@
@@ -121,7 +122,7 @@
                             <div class="form-group row">
                                 <label for="example-email-input" class="col-sm-3 col-form-label">Apellido materno</label>
                                 <div class="col-sm-9">
-                                    <input maxlength="15" required class="form-control soloTexto" type="text" value="@Model.editAdmin.mother_last_name1"
+                                    <input maxlength="20" required class="form-control soloTexto" type="text" value="@Model.editAdmin.mother_last_name1"
                                            placeholder="Apellido materno" id="example-email-input" name="mother_last_name1"
                                            data-toggle="tooltip" />
                                     @* <small class="form-text text-muted">Apellido Materno del Administrador</small>*@
@@ -198,7 +199,7 @@
         </div>*@
                             <div class="form-divider"></div>
                             <a href=""><button type="submit" class="btn btn-primary waves-effect waves-light">Guardar</button></a>
-                            <a href="javascript:history.back()"><button type="button" class="btn btn-danger waves-effect waves-light">Cancelar</button></a>
+                            <a href="@Url.Action("listado", "administradores", new { area = "webmaster" })"><button type="button" class="btn btn-danger waves-effect waves-light">Cancelar</button></a>
                         </div>
                     }
                 </div>
@@ -207,7 +208,7 @@
         <!-- back button -->
         <div class="row pb-4">
             <div class="col-md-6">
-                <a href="javascript:history.back()"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+                <a href="@Url.Action("listado", "administradores", new { area = "webmaster" })"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
             </div>
         </div>
         <!-- end back button -->
