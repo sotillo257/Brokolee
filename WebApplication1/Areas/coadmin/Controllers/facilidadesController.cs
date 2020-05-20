@@ -69,7 +69,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 }
                 catch(Exception ex)
                 {
-                    return Redirect(Url.Action("disponibles", "facilidades", new { area = "coadmin", Error = "Problema interno " + ex.Message }));
+                    return Redirect(Url.Action("error", "control", new { area = "coadmin", Error = "Facilidades listado: " + ex.Message }));
                 }               
             } else
             {
@@ -90,10 +90,8 @@ namespace WebApplication1.Areas.coadmin.Controllers
                         user curUser = entities.users.Find(userId);
                         List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                         agregarFacViewModel viewModel = new agregarFacViewModel();
-
                         communityList = ep.GetCommunityList(userId);
                         viewModel.communityList = communityList;
-
                         viewModel.side_menu = "facilidades";
                         viewModel.side_sub_menu = "facilidades_agregar";
                         viewModel.document_category_list = entities.document_type.ToList();
@@ -101,7 +99,6 @@ namespace WebApplication1.Areas.coadmin.Controllers
                         for (int i = 1; i < 25; i++)
                         {
                             timeList.SetValue(i, i - 1);
-
                         }
                         viewModel.timeList = timeList;
                         viewModel.curUser = curUser;
@@ -113,7 +110,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     }
                     catch (Exception ex)
                     {
-                        return Redirect(Url.Action("disponibles", "facilidades", new { area = "coadmin", Error = "Problema interno " + ex.Message }));
+                        return Redirect(Url.Action("error", "control", new { area = "coadmin", Error = "Agregar facilidad " + ex.Message }));
                     }
                 }
                 else
@@ -189,22 +186,29 @@ namespace WebApplication1.Areas.coadmin.Controllers
             {
                 if (Session["CURRENT_COMU"] != null)
                 {
-                    long userId = (long)Session["USER_ID"];
-                    user curUser = entities.users.Find(userId);
-                    List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
-                    facilidadesViewModel viewModel = new facilidadesViewModel();
+                    try
+                    {
+                        long userId = (long)Session["USER_ID"];
+                        user curUser = entities.users.Find(userId);
+                        List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
+                        facilidadesViewModel viewModel = new facilidadesViewModel();
 
-                    communityList = ep.GetCommunityList(userId);
-                    viewModel.communityList = communityList;
+                        communityList = ep.GetCommunityList(userId);
+                        viewModel.communityList = communityList;
 
-                    viewModel.side_menu = "facilidades";
-                    viewModel.side_sub_menu = "facilidades_reservar";
-                    viewModel.document_category_list = entities.document_type.ToList();
-                    viewModel.curUser = curUser;
-                    viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
-                    viewModel.pubMessageList = pubMessageList;
-                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                    return View(viewModel);
+                        viewModel.side_menu = "facilidades";
+                        viewModel.side_sub_menu = "facilidades_reservar";
+                        viewModel.document_category_list = entities.document_type.ToList();
+                        viewModel.curUser = curUser;
+                        viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
+                        viewModel.pubMessageList = pubMessageList;
+                        viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                        return View(viewModel);
+                    }
+                    catch (Exception ex)
+                    {
+                        return Redirect(Url.Action("error", "control", new { area = "coadmin", Error = "Reservar facilidad: " + ex.Message }));
+                    }                    
                 }
                 else
                 {
@@ -230,30 +234,37 @@ namespace WebApplication1.Areas.coadmin.Controllers
                         efac editFac = entities.efacs.Where(x=> x.id == facID && x.community_id == communityAct).FirstOrDefault();
                         if (editFac != null)
                         {
-                            long userId = (long)Session["USER_ID"];
-                            user curUser = entities.users.Find(userId);
-                            List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);                            
-                            editarFacViewModel viewModel = new editarFacViewModel();
-
-                            communityList = ep.GetCommunityList(userId);
-                            viewModel.communityList = communityList;
-
-                            viewModel.side_menu = "facilidades";
-                            viewModel.side_sub_menu = "facilidades_editar";
-                            viewModel.document_category_list = entities.document_type.ToList();
-                            viewModel.editFac = editFac;
-                            int[] timeList = new int[24];
-                            for (int i = 1; i < 25; i++)
+                            try
                             {
-                                timeList.SetValue(i, i - 1);
+                                long userId = (long)Session["USER_ID"];
+                                user curUser = entities.users.Find(userId);
+                                List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
+                                editarFacViewModel viewModel = new editarFacViewModel();
 
+                                communityList = ep.GetCommunityList(userId);
+                                viewModel.communityList = communityList;
+
+                                viewModel.side_menu = "facilidades";
+                                viewModel.side_sub_menu = "facilidades_editar";
+                                viewModel.document_category_list = entities.document_type.ToList();
+                                viewModel.editFac = editFac;
+                                int[] timeList = new int[24];
+                                for (int i = 1; i < 25; i++)
+                                {
+                                    timeList.SetValue(i, i - 1);
+
+                                }
+                                viewModel.timeList = timeList;
+                                viewModel.curUser = curUser;
+                                viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
+                                viewModel.pubMessageList = pubMessageList;
+                                viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                                return View(viewModel);
                             }
-                            viewModel.timeList = timeList;
-                            viewModel.curUser = curUser;
-                            viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
-                            viewModel.pubMessageList = pubMessageList;
-                            viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                            return View(viewModel);
+                            catch (Exception ex)
+                            {
+                                return Redirect(Url.Action("error", "control", new { area = "coadmin", Error = "Editar facilidad: " + ex.Message }));
+                            }                            
                         }
                         else
                         {
@@ -359,12 +370,13 @@ namespace WebApplication1.Areas.coadmin.Controllers
         {
             if (Session["USER_ID"] != null)
             {
-                 long userId = (long)Session["USER_ID"];
-                user curUser = entities.users.Find(userId);
-                List<efac> efacList = new List<efac>();
+                try
+                {
+                    long userId = (long)Session["USER_ID"];
+                    user curUser = entities.users.Find(userId);
+                    List<efac> efacList = new List<efac>();
+                    long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
 
-                long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
-              
                     if (searchStr == "")
                     {
                         var query = (from r in entities.efacs where r.community_id == communityAct && r.status != 3 select r);
@@ -374,22 +386,26 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     {
                         var query1 = (from r in entities.efacs where r.first_name.Contains(searchStr) == true && r.community_id == communityAct && r.status != 3 select r);
                         efacList = query1.ToList();
-                    }                            
+                    }
+
+                    facilidadesViewModel viewModel = new facilidadesViewModel();
+                    communityList = ep.GetCommunityList(userId);
+                    viewModel.communityList = communityList;
+                    viewModel.side_menu = "facilidades";
+                    viewModel.side_sub_menu = "facilidades_solicitudes";
+                    viewModel.document_category_list = entities.document_type.ToList();
+                    viewModel.searchStr = searchStr;
+                    viewModel.efacList = efacList;
+                    viewModel.curUser = curUser;
+                    viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
+                    viewModel.pubMessageList = ep.GetChatMessages(userId);
+                    return View(viewModel);
+                }
+                catch (Exception ex)
+                {
+                    return Redirect(Url.Action("error", "control", new { area = "coadmin", Error = "Solicitudes facilidad: " + ex.Message }));
+                }
                
-                facilidadesViewModel viewModel = new facilidadesViewModel();
-
-                communityList = ep.GetCommunityList(userId);
-                viewModel.communityList = communityList;
-
-                viewModel.side_menu = "facilidades";
-                viewModel.side_sub_menu = "facilidades_solicitudes";
-                viewModel.document_category_list = entities.document_type.ToList();
-                viewModel.searchStr = searchStr;
-                viewModel.efacList = efacList;
-                viewModel.curUser = curUser;
-                viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
-                viewModel.pubMessageList = ep.GetChatMessages(userId);
-                return View(viewModel);
             } else
             {
                 return Redirect(ep.GetLogoutUrl());

@@ -60,7 +60,7 @@
                                         <th class="f-b">Descripción</th>
                                         <th class="f-b">Hora inicio</th>
                                         <th class="f-b">Hora fin</th>
-                                        <th class="f-b">Intervalo</th>
+                                        @*<th class="f-b">Intervalo</th>*@
                                         <th class="f-b">Reglamento</th>
                                         <th class="f-b">Reservar</th>
                                     </tr>
@@ -73,7 +73,7 @@
                                             <td>@item.description</td>
                                             <td class="text-center">@DateTime.Today.Add(item.start_time).ToString("hh:mm tt")</td>
                                             <td class="text-center">@DateTime.Today.Add(item.end_time).ToString("hh:mm tt")</td>
-                                            <td class="text-center">@item.interval horas</td>
+                                            @*<td class="text-center">@item.interval horas</td>*@
                                             <td class="text-center">
                                                 @if (item.upload_regulation != null)
                                                 {

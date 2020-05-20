@@ -25,17 +25,7 @@ namespace WebApplication1.Controllers
             {
                 try
                 {
-                    long userId = 0;
-                    if (Convert.ToInt32(Session["USER_ROLE"]) == 1)
-                    {
-                        userId = (long)Session["USER_ID"];
-                    }
-                    else if (Convert.ToInt32(Session["USER_ROLE"]) > 1
-                    && Session["ACC_USER_ID"] != null)
-                    {
-                        userId = (long)Session["ACC_USER_ID"];
-                    }
-
+                    long userId = (long)Session["USER_ID"];                   
                     user curUser = entities.users.Find(userId);
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
 
@@ -145,31 +135,29 @@ namespace WebApplication1.Controllers
             } 
         }
 
-        public ActionResult reservar()
+        public ActionResult reservar(long id)
         {
             if (Session["USER_ID"] != null)
             {
                 try
                 {
-                    long userId = 0;
-                    if (Convert.ToInt32(Session["USER_ROLE"]) == 1)
-                    {
-                        userId = (long)Session["USER_ID"];
-                    }
-                    else if (Convert.ToInt32(Session["USER_ROLE"]) > 1
-                    && Session["ACC_USER_ID"] != null)
-                    {
-                        userId = (long)Session["ACC_USER_ID"];
-                    }
-
+                    long userId = (long)Session["USER_ID"];
+                    efac facilidad = entities.efacs.Find(id);
                     user curUser = entities.users.Find(userId);
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                     facilidadesViewModel viewModel = new facilidadesViewModel();
 
+                    DateTime startT = Convert.ToDateTime(facilidad.start_time);
+                    DateTime endT = Convert.ToDateTime(facilidad.end_time);
+                    TimeSpan intervalo = startT - endT;
+                    int dias = intervalo.Hours;
+
+
                     titulosList = ep.GetTitulosByTitular(userId);
                     listComunities = ep.GetCommunityListByTitular(titulosList);
                     viewModel.communityList = listComunities;
- 
+
+                    viewModel.facilidadSe = facilidad;
                     viewModel.side_menu = "reservar";
                     viewModel.side_sub_menu = "facilidades_reservar";
                     viewModel.curUser = curUser;
@@ -238,33 +226,29 @@ namespace WebApplication1.Controllers
         }
 
         [HttpPost]
-        public ActionResult addbook(string first_name, string description,
-       string start_time, string end_time, string requested_date,
-       string cost_per_reserve)
+        public ActionResult reservarFacilidad(long idFacilidad, string dateFaci,
+       string fedis)
         {
             try
             {
+                efac facility = entities.efacs.Find(idFacilidad);
                 book newBook = new book();
-                newBook.first_name = first_name;
-                newBook.start_time = TimeSpan.ParseExact(start_time, "h\\:mm",
-                    System.Globalization.CultureInfo.CurrentCulture, TimeSpanStyles.None);
-                newBook.end_time = TimeSpan.ParseExact(end_time, "h\\:mm",
-                    System.Globalization.CultureInfo.CurrentCulture, TimeSpanStyles.None);
-                newBook.requested_date = DateTime.ParseExact(requested_date, "yyyy-MM-dd",
-                                                    System.Globalization.CultureInfo.InvariantCulture);
-                newBook.description = description;
-                newBook.cost_per_reservation = Convert.ToDecimal(cost_per_reserve);
-                newBook.created_at = DateTime.Now;                
+                newBook.first_name = facility.first_name;
+                //newBook.start_time = dateFaci; 
+                //newBook.end_time = dateFaci;
+                //newBook.status = 1;
+                newBook.requested_date = DateTime.ParseExact(dateFaci, "yyyy-MM-dd",System.Globalization.CultureInfo.InvariantCulture);
+                newBook.description = facility.description;
+                newBook.cost_per_reservation = facility.cost_reservation;
+                newBook.created_at = DateTime.Now;
+                newBook.community_id = facility.community_id;
                 entities.books.Add(newBook);
                 entities.SaveChanges();
-                return Redirect(Url.Action("reservar", "facilidades"));
+                return Redirect(Url.Action("reservas", "facilidades"));
             }
             catch (Exception ex)
             {
-                return Redirect(Url.Action("reservartwo", "facilidades",
-                    new {
-                        exception = ex.Message
-                    }));
+                return Redirect(Url.Action("reservar", "facilidades",new { Error = "Problema interno " + ex.Message }));
             }
         }
     }

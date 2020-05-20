@@ -55,7 +55,7 @@
                                             <select class="form-control" id="id-search-category"
                                                     name="searchCommunityId"
                                                     onchange="onSearchTitularCommunity()">    
-                                                <option value="0">Sin comunidad</option>
+                                                <option value="0">Seleccionar comunidad</option>
                                                 @foreach (var item in Model.communityList)
                                                 {
                                                     if (Convert.ToInt64(Session["WM_selectedComm"]) == item.id)

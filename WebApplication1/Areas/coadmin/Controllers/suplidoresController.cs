@@ -87,7 +87,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 }
                 catch (Exception ex)
                 {
-                    return Redirect(Url.Action("panel", "control", new { area = "coadmin", Error = "Error al obtener listado de suplidores: "+ ex }));
+                    return Redirect(Url.Action("error", "control", new { area = "coadmin", Error = "Suplidores listado: "+ ex.Message }));
                 }                                 
             } else
             {
@@ -134,7 +134,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                             }
                             catch (Exception ex)
                             {
-                                return Redirect(Url.Action("listado", "suplidores", new { area = "coadmin", Error = "Problema interno " + ex.Message }));
+                                return Redirect(Url.Action("error", "control", new { area = "coadmin", Error = "Ver suplidor: " + ex.Message }));
                             }
                         }
                         else

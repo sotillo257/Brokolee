@@ -16,6 +16,7 @@ namespace WebApplication1.ViewModels
         public long communityID1 { get; set; }
         public List<community> communityList { get; set; }
         public List<efac> facilitieList { get; set; }
+        public efac facilidadSe { get; set; }
         public List<document_type> document_category_list { get; set; }
         public user curUser { get; set; }
         public int messageCount { get; set; }

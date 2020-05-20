@@ -4,6 +4,16 @@
     Page.Title = "Reservar facilidad - Brokolee Software";
 }
 
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+<script src="~/Scripts/jquery-3.1.1.min.js"></script>
+
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+
 <div class="page-content-wrapper">
 
     <div class="container-fluid">
@@ -34,7 +44,7 @@
         </div>
         <!-- end back button -->
 
-        <div class="row">
+        @*<div class="row">
 
             <div class="col-12">
                 <div class="card">
@@ -191,6 +201,64 @@
                     </div>
                 </div>
             </div>
+        </div>*@
+
+        <div class="row">
+            @if (ViewBag.msgError != null)
+            {
+                <div class="col-12">
+                    <div class="alert alert-danger" role="alert">
+                        <strong>Error: </strong> @ViewBag.msgError
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+            }
+            <div class="col-12">
+                <div class="card">
+                    @using (Html.BeginForm("reservarFacilidad", "facilidades",
+                        FormMethod.Post,
+                        new
+                        {
+                            id = "reserForm",
+                            @class = "",
+                            enctype = "multipart/form-data"
+                        }))
+                    {
+                        @Html.AntiForgeryToken()
+                    <div class="card-body">
+                        <input type="hidden" value="" name="idFacilidad" />
+                        <h5 class="d-inline-block">NOMBRE FACILIDAD</h5>
+                        <div class="form-divider"></div>
+                        <div class="form-group row">
+                            <label for="example-date-input" class="col-sm-3 col-form-label">Fecha para reservar</label>
+                            <div class="col-sm-9">
+                                <input class="form-control" type="date" autocomplete="off"
+                                       data-toggle="tooltip" title="Elije la fecha para reservar"
+                                       name="dateFaci" required
+                                       value="" id="example-date-input">
+                                <small class="form-text text-muted">Elije la fecha para reservar FACILIDAD</small>
+                            </div>
+                        </div>
+                        <div class="form-divider"></div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Horarios disponibles</label>
+                            <div class="col-sm-9">
+                                <select required class="form-control" name="fedis"
+                                        data-toggle="tooltip" title="Nombre de la comunidad" id="disponibles">
+                                    <option value=""> (Comunidad actualmente seleccionada)</option>
+                                </select>
+                                <small class="form-text text-muted">Comunidad</small>
+                            </div>
+                        </div>
+                        <div class="form-divider"></div>
+                        <a href=""><button type="submit" class="btn btn-primary waves-effect waves-light">Reservar</button></a>
+                        <a href="@Url.Action("listado", "contratos")"><button type="button" class="btn btn-danger waves-effect waves-light">Cancelar</button></a>
+                    </div>
+                    }
+                </div>
+            </div>
         </div><!-- end row -->
         <!-- back button -->
         <div class="row pb-4">
@@ -203,3 +271,83 @@
     </div><!-- container -->
 
 </div> <!-- Page content Wrapper -->
+
+<script type="text/javascript">
+    $.datepicker.regional['es'] = {
+        closeText: 'Cerrar',
+        prevText: '< Ant',
+        nextText: 'Sig >',
+        currentText: 'Hoy',
+        monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+        dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá'],
+        weekHeader: 'Sm',
+        dateFormat: 'mm/dd/yy',
+        firstDay: 1,
+        isRTL: false,
+        showMonthAfterYear: false,
+        yearSuffix: ''
+    };
+    $.datepicker.setDefaults($.datepicker.regional['es']);
+
+    $('#fecha1').datepicker({
+        dateFormat: 'mm/dd/yy',
+        changeMonth: true,
+        changeYear: true
+
+    });
+
+</script>
+
+
+<script type="text/javascript">
+    $.datepicker.regional['es'] = {
+        closeText: 'Cerrar',
+        prevText: '< Ant',
+        nextText: 'Sig >',
+        currentText: 'Hoy',
+        monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+        dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá'],
+        weekHeader: 'Sm',
+        dateFormat: 'mm/dd/yy',
+        firstDay: 1,
+        isRTL: false,
+        showMonthAfterYear: false,
+        yearSuffix: ''
+    };
+    $.datepicker.setDefaults($.datepicker.regional['es']);
+
+    $('#fecha2').datepicker({
+        dateFormat: 'mm/dd/yy',
+        changeMonth: true,
+        changeYear: true
+
+    });
+
+</script>
+
+
+<script type="text/javascript">
+    $.datepicker.regional['es'] = {
+        closeText: 'Cerrar',
+        prevText: '< Ant',
+        nextText: 'Sig >',
+        currentText: 'Hoy',
+        monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+        dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá'],
+        weekHeader: 'Sm',
+        dateFormat: 'dd/mm/yy',
+        firstDay: 1,
+        isRTL: false,
+        showMonthAfterYear: false,
+        yearSuffix: ''
+    };
+    $.datepicker.setDefaults($.datepicker.regional['es']);
+
+    $('#fecha3').datepicker({
+        dateFormat: 'mm/dd/yy',
+        changeMonth: true,
+        changeYear: true
+
+    });
+
+</script>

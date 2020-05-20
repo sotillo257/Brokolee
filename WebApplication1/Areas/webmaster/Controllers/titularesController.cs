@@ -285,9 +285,20 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 viewModel.IdUserTitular = (int)Id;
                 viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                 viewModel.pubMessageList = pubMessageList;
-                viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);                              
-                List<community> community = entities.communities.ToList();               
-                viewModel.communityList = community;
+                viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);    
+                
+                List<community> community = entities.communities.ToList();
+                List<community> communityAllow = new List<community>();
+                foreach (var item in community)
+                {
+                    communuser commuxu = entities.communusers.Where(x => x.commun_id == item.id).FirstOrDefault();
+                    if (commuxu != null)
+                    {
+                        communityAllow.Add(item);
+                    }
+                }
+                
+                viewModel.communityList = communityAllow;
                 ViewBag.msgError = Error;
                 return View(viewModel);
             }
@@ -316,7 +327,17 @@ namespace WebApplication1.Areas.webmaster.Controllers
                     viewModel.titulo = titulo;                   
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = pubMessageList;
-                    viewModel.communityList = entities.communities.ToList();
+                    List<community> community = entities.communities.ToList();
+                    List<community> communityAllow = new List<community>();
+                    foreach (var item in community)
+                    {
+                        communuser commuxu = entities.communusers.Where(x => x.commun_id == item.id).FirstOrDefault();
+                        if (commuxu != null)
+                        {
+                            communityAllow.Add(item);
+                        }
+                    }
+                    viewModel.communityList = communityAllow;
                     viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
                     ViewBag.msgError = Error;
                     return View(viewModel);
