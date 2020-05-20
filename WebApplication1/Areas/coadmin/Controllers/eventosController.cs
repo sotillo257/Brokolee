@@ -117,7 +117,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
 
         }
 
-        public ActionResult agregar()
+        public ActionResult agregar(long? place)
         {
             if (Session["USER_ID"] != null)
             {
@@ -142,6 +142,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                         viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                         viewModel.pubMessageList = pubMessageList;
                         viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                        ViewBag.Place = place;
                         return View(viewModel);
                     }
                     catch (Exception ex)
@@ -216,7 +217,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
 
         }
 
-        public ActionResult editar(long? editID)
+        public ActionResult editar(long? editID, long? place)
         {
             if (Session["USER_ID"] != null)
             {
@@ -247,6 +248,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                                 viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                                 viewModel.pubMessageList = pubMessageList;
                                 viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                                ViewBag.Place = place;
                                 return View(viewModel);
                             }
                             catch (Exception ex)

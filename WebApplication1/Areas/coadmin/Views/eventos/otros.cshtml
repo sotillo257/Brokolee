@@ -1,7 +1,7 @@
 ﻿
 @{
     ViewBag.Title = "otros";
-    Page.Title = "Otros eventos - Brokolee Software";
+    Page.Title = "Eventos - Brokolee Software";
 }
 
 <div class="page-content-wrapper">
@@ -13,13 +13,13 @@
                 <div class="page-title-box">
                     <div class="float-left">
                         <div class="breadcrumb float-md-right">
-                            <h4 class="page-title">Otros eventos</h4>
+                            <h4 class="page-title">Calendario de eventos</h4>
                         </div>
                     </div>
                     <div class="float-right">
                         <ul class="breadcrumb float-md-right">
                             <li class="breadcrumb-item"><a href="@Url.Action("panel", "control", new { area = "coadmin" })" class="text-success"><i class="mdi mdi-home-modern"></i> Panel de control</a></li>
-                            <li class="breadcrumb-item active">Otros eventos</li>
+                            <li class="breadcrumb-item active">Calendario de eventos</li>
                         </ul>
                     </div>
                 </div>
@@ -57,7 +57,7 @@
         <!-- back button -->
         <div class="row pb-4">
             <div class="col-md-6">
-                <a href="javascript:history.back()"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+                <a href="@Url.Action("panel", "control", new { area = "coadmin" })"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
             </div>
         </div>
         <!-- end back button -->
@@ -81,7 +81,7 @@
                                 <h5 class="d-inline-block">Eventos registrados</h5>
                             </div>
                             <div class="col-md-6 mb-1">                              
-                                    <a href="@Url.Action("agregar", "eventos", new { area = "coadmin" })"><button type="button" class="btn btn-primary waves-effect waves-light float-xl-right float-lg-right float-md-left">Agregar evento</button></a>                             
+                                    <a href="@Url.Action("agregar", "eventos", new { area = "coadmin", place = 1 })"><button type="button" class="btn btn-primary waves-effect waves-light float-xl-right float-lg-right float-md-left">Agregar evento</button></a>                             
                                 
                             </div>
                         </div>
@@ -97,7 +97,7 @@
         <!-- back button -->
         <div class="row pb-4">
             <div class="col-md-6">
-                <a href="javascript:history.back()"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+                <a href="@Url.Action("panel", "control", new { area = "coadmin" })"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
             </div>
         </div>
         <!-- end back button -->

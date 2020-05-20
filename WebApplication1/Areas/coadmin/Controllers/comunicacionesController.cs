@@ -107,7 +107,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     if (blogID != null)
                     {
                         long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
-                        blog blogC = entities.blogs.Where(x => x.id == blogID && x.community_id == communityAct).FirstOrDefault();
+                        blog blogC = entities.blogs.Where(x => x.id == blogID && x.community_id == communityAct || x.id == blogID && x.user.role == 3).FirstOrDefault();
                         if (blogC != null) 
                         {
                             long userId = (long)Session["USER_ID"];
@@ -207,11 +207,9 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     if (blogID != null)
                     {
                         long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
-                        blog blog = entities.blogs.Find(blogID);
+                        blog blog = entities.blogs.Where(x => x.id == blogID && x.community_id == communityAct || x.id == blogID && x.user.role == 3).FirstOrDefault();
                         if (blog != null)
-                        {
-                            if (blog.community_id == communityAct || blog.user.role == 3)
-                            {
+                        {                          
                                 long userId = (long)Session["USER_ID"];
 
                                 List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
@@ -231,12 +229,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                                 viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                                 viewModel.pubMessageList = pubMessageList;
                                 viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                                return View(viewModel);
-                            }
-                            else
-                            {
-                                return Redirect(Url.Action("blog", "comunicaciones", new { area = "coadmin", Error = "No existe ese elemento" }));
-                            }                                                      
+                                return View(viewModel);                                                                              
                         }
                         else
                         {
@@ -269,7 +262,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     if (blogID != null)
                     {
                         long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
-                        blog blog = entities.blogs.Where(x=> x.id == blogID && x.community_id == communityAct).FirstOrDefault();
+                        blog blog = entities.blogs.Where(x=> x.id == blogID && x.community_id == communityAct || x.id == blogID && x.user.role == 3).FirstOrDefault();
                         if (blog != null)
                         {
                             long userId = (long)Session["USER_ID"];

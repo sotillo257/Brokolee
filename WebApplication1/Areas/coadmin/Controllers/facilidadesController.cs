@@ -364,24 +364,17 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 List<efac> efacList = new List<efac>();
 
                 long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
-
-                if (Session["CURRENT_COMU"] != null)
-                {
+              
                     if (searchStr == "")
                     {
-                        var query = (from r in entities.efacs where r.community_id == communityAct select r);
+                        var query = (from r in entities.efacs where r.community_id == communityAct && r.status != 3 select r);
                         efacList = query.ToList();
                     }
                     else
                     {
-                        var query1 = (from r in entities.efacs where r.first_name.Contains(searchStr) == true && r.community_id == communityAct select r);
+                        var query1 = (from r in entities.efacs where r.first_name.Contains(searchStr) == true && r.community_id == communityAct && r.status != 3 select r);
                         efacList = query1.ToList();
-                    }
-                }
-                else
-                {
-                    efacList.Clear();
-                }
+                    }                            
                
                 facilidadesViewModel viewModel = new facilidadesViewModel();
 

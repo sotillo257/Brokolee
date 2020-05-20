@@ -59,7 +59,7 @@
         <!-- back button -->
         <div class="row pb-4">
             <div class="col-md-6">
-                <a href="javascript:history.back()"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+                <a href="@Url.Action("panel", "control", new { area = "coadmin" })"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
             </div>
         </div>
         <!-- end back button -->
@@ -84,7 +84,7 @@
                                 <h5 class="d-inline-block">Listado de eventos</h5>
                             </div>
                             <div class="col-md-6 mb-1">
-                                <a href="@Url.Action("agregar", "eventos", new { area = "coadmin" })"><button type="button" class="btn btn-primary waves-effect waves-light float-xl-right float-lg-right float-md-left">Agregar evento</button></a>
+                                <a href="@Url.Action("agregar", "eventos", new { area = "coadmin", place = 2 })"><button type="button" class="btn btn-primary waves-effect waves-light float-xl-right float-lg-right float-md-left">Agregar evento</button></a>
 
                             </div>
                         </div>
@@ -138,7 +138,7 @@
         <!-- back button -->
         <div class="row pb-4">
             <div class="col-md-6">
-                <a href="javascript:history.back()"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+                <a href="@Url.Action("panel", "control", new { area = "coadmin" })"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
             </div>
         </div>
         <!-- end back button -->

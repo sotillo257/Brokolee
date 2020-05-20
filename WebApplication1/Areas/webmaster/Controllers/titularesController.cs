@@ -499,7 +499,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                         }
                         else
                         {
-                            commId = Convert.ToInt64(Session["WM_selectedComm"]);
+                            Session["WM_selectedComm"] = 0;
                         }                        
                     }
                     else

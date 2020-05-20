@@ -19,6 +19,7 @@
                     <div class="float-right">
                         <ul class="breadcrumb float-md-right">
                             <li class="breadcrumb-item"><a href="@Url.Action("panel", "control", new { area = "coadmin" })" class="text-success"><i class="mdi mdi-home-modern"></i> Panel de control</a></li>
+                            <li class="breadcrumb-item"><a href="@Url.Action("registrados", "eventos", new { area = "coadmin" })" class="text-success"><i class="mdi mdi-home-modern"></i> Ultimos eventos registrados</a></li>
                             <li class="breadcrumb-item active">Editar evento</li>
                         </ul>
                     </div>
@@ -29,7 +30,7 @@
         <!-- back button -->
         <div class="row pb-4">
             <div class="col-md-6">
-                <a href="javascript:history.back()"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+                <a href="@Url.Action("registrados", "eventos", new { area = "coadmin" })"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
             </div>
         </div>
         <!-- end back button -->
@@ -64,7 +65,7 @@
                             <div class="form-group row">
                                 <label for="example-date-input" class="col-sm-3 col-form-label">Fecha</label>
                                 <div class="col-sm-9">
-                                    <input class="form-control" type="date" data-toggle="tooltip" title="Mes / día / año | Fecha del evento"
+                                    <input autocomplete="off" class="form-control" type="date" data-toggle="tooltip" title="Mes / día / año | Fecha del evento"
                                            value="@Convert.ToDateTime(Model.editEvent.event_date).ToString("yyyy-MM-dd")"
                                            id="example-date-input" name="event_date" required>
                                     @*<small class="form-text text-muted">Mes / día / año | Fecha del evento</small>*@
@@ -74,7 +75,7 @@
                             <div class="form-group row">
                                 <label for="example-time-input" class="col-sm-3 col-form-label">Hora</label>
                                 <div class="col-sm-9">
-                                    <input class="form-control" type="time" name="event_time"
+                                    <input autocomplete="off" class="form-control" type="time" name="event_time"
                                            value="@Convert.ToDateTime(Model.editEvent.event_date).ToString("HH:mm")"
                                            data-toggle="tooltip" title="Hora del evento"
                                            id="example-time-input" required />
@@ -147,7 +148,7 @@
                                 </div>
                             </div>
                             <a href=""><button type="submit" class="btn btn-primary waves-effect waves-light">Guardar</button></a>
-                            <a href=""><button type="button" class="btn btn-danger waves-effect waves-light">Cancelar</button></a>
+                            <a href="@Url.Action("registrados", "eventos", new { area = "coadmin" })"><button type="button" class="btn btn-danger waves-effect waves-light">Cancelar</button></a>
                         </div>
                     }
                 </div>
@@ -156,7 +157,7 @@
         <!-- back button -->
         <div class="row pb-4">
             <div class="col-md-6">
-                <a href="javascript:history.back()"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+                <a href="@Url.Action("registrados", "eventos", new { area = "coadmin" })"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
             </div>
         </div>
         <!-- end back button -->

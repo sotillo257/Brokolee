@@ -18,7 +18,24 @@
                     </div>
                     <div class="float-right">
                         <ul class="breadcrumb float-md-right">
-                            <li class="breadcrumb-item"><a href="index.html" class="text-success"><i class="mdi mdi-home-modern"></i> Panel de control</a></li>
+                            <li class="breadcrumb-item"><a href="@Url.Action("panel", "control", new { area = "coadmin" })" class="text-success"><i class="mdi mdi-home-modern"></i> Panel de control</a></li>
+                            @if (ViewBag.newCuota != null)
+                            {
+                                if (ViewBag.newCuota == 1)
+                                {
+                                    <li class="breadcrumb-item"><a href="@Url.Action("listado", "cuotas", new { area = "coadmin" })" class="text-success">Listado de cuotas</a></li>
+                                    <li class="breadcrumb-item"><a href="@Url.Action("agregar", "cuotas", new { area = "coadmin" })" class="text-success">Agregar cuota</a></li>
+                                }
+                                else if (ViewBag.newCuota == 2)
+                                {
+                                    <li class="breadcrumb-item"><a href="@Url.Action("listado", "cuotas", new { area = "coadmin" })" class="text-success">Listado de cuotas</a></li>
+                                    <li class="breadcrumb-item"><a href="@Url.Action("editar", "cuotas", new { area = "coadmin", editID = ViewBag.isEdit  })" class="text-success">Editar cuota</a></li>
+                                }
+                                else
+                                {
+                                    <li class="breadcrumb-item"><a href="@Url.Action("listadoCuentas", "cuotas", new { area = "coadmin" })" class="text-success">Listado de cuentas de banco</a></li>
+                                }
+                            }
                             <li class="breadcrumb-item active">Agregar cuenta</li>
                         </ul>
                     </div>
@@ -29,7 +46,25 @@
         <!-- back button -->
         <div class="row pb-4">
             <div class="col-md-6">
-                <a href="javascript:history.back()"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+                @if (ViewBag.newCuota != null)
+                {
+                    if (ViewBag.newCuota == 1)
+                    {
+                        <a href="@Url.Action("agregar", "cuotas", new { area = "coadmin" })"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+                    }
+                    else if (ViewBag.newCuota == 2)
+                    {
+                        <a href="@Url.Action("editar", "cuotas", new { area = "coadmin", editID = ViewBag.isEdit })"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+                    }
+                    else
+                    {
+                        <a href="@Url.Action("listadoCuentas", "cuotas", new { area = "coadmin" })"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+                    }
+                }
+                else
+                {
+                    <a href="@Url.Action("panel", "control", new { area = "coadmin" })"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+                }
             </div>
         </div>
         <!-- end back button -->
@@ -46,49 +81,68 @@
                     }))
                     {
                         @Html.AntiForgeryToken()
-                        <div class="card-body">
-                            <h5 class="d-inline-block m-b-20">Información de la Cuenta de banco</h5>
-                            <div class="form-divider"></div>
-                            <div class="form-group row">
-                                <label for="example-email-input" class="col-sm-3 col-form-label">Nombre de la cuenta</label>
-                                <div class="col-sm-9">
-                                    <input maxlength="30" class="form-control" type="text" value="" name="account_name"
-                                           placeholder="Cuenta personal" id="example-email-input" required>
-                                    <small class="form-text text-muted">Nombre de la cuenta</small>
-                                </div>
+                    <div class="card-body">
+                        <h5 class="d-inline-block m-b-20">Información de la Cuenta de banco</h5>
+                        <div class="form-divider"></div>
+                        <div class="form-group row">
+                            <label for="example-email-input" class="col-sm-3 col-form-label">Nombre de la cuenta</label>
+                            <div class="col-sm-9">
+                                <input maxlength="30" class="form-control" type="text" value="" name="account_name"
+                                       placeholder="Cuenta personal" id="example-email-input" required>
+                                <small class="form-text text-muted">Nombre de la cuenta</small>
                             </div>
-                            <div class="form-divider"></div>
-                            <div class="form-group row">
-                                <label for="example-name1-input" class="col-sm-3 col-form-label">Número de cuenta</label>
-                                <div class="col-sm-9">
-                                    <input maxlength="20" class="form-control soloNumero" type="text" value="" name="account_number"
-                                           placeholder="XXX-XXXXXXXX-X-XX" id="example-name1-input" required>
-                                    <small class="form-text text-muted">Número de cuenta</small>
-                                </div>
-                            </div>
-                            <div class="form-divider"></div>
-                            <div class="form-group row">
-                                <label for="example-name1-input" class="col-sm-3 col-form-label">Nombre del banco</label>
-                                <div class="col-sm-9">
-                                    <input  maxlength="30" class="form-control soloTexto" type="text" value="" name="bank_name"
-                                           placeholder="Nombre del banco" id="example-name1-input" required>
-                                    <small class="form-text text-muted">Nombre del banco</small>
-                                </div>
-                            </div>
-                            <div class="form-divider"></div>
-                            <div class="form-group row">
-                                <label for="example-lastname1-input" class="col-sm-3 col-form-label">Número de ruta</label>
-                                <div class="col-sm-9">
-                                    <input maxlength="20" class="form-control soloNumero" type="text" value="" name="route_number"
-                                           placeholder="XXX-XXXXXXXX-X-XX" id="example-lastname1-input" required>
-                                    <small class="form-text text-muted">Número de ruta</small>
-                                </div>
-                            </div>
-                            <input hidden name="nC" value="@ViewBag.newCuota"/>
-                            <button type="submit" class="btn btn-primary waves-effect waves-light">Guardar</button>
-                            <a href="javascript:history.back()"><button type="button" class="btn btn-danger waves-effect waves-light">Cancelar</button>
-
                         </div>
+                        <div class="form-divider"></div>
+                        <div class="form-group row">
+                            <label for="example-name1-input" class="col-sm-3 col-form-label">Número de cuenta</label>
+                            <div class="col-sm-9">
+                                <input maxlength="20" class="form-control soloNumero" type="text" value="" name="account_number"
+                                       placeholder="XXX-XXXXXXXX-X-XX" id="example-name1-input" required>
+                                <small class="form-text text-muted">Número de cuenta</small>
+                            </div>
+                        </div>
+                        <div class="form-divider"></div>
+                        <div class="form-group row">
+                            <label for="example-name1-input" class="col-sm-3 col-form-label">Nombre del banco</label>
+                            <div class="col-sm-9">
+                                <input maxlength="30" class="form-control soloTexto" type="text" value="" name="bank_name"
+                                       placeholder="Nombre del banco" id="example-name1-input" required>
+                                <small class="form-text text-muted">Nombre del banco</small>
+                            </div>
+                        </div>
+                        <div class="form-divider"></div>
+                        <div class="form-group row">
+                            <label for="example-lastname1-input" class="col-sm-3 col-form-label">Número de ruta</label>
+                            <div class="col-sm-9">
+                                <input maxlength="20" class="form-control soloNumero" type="text" value="" name="route_number"
+                                       placeholder="XXX-XXXXXXXX-X-XX" id="example-lastname1-input" required>
+                                <small class="form-text text-muted">Número de ruta</small>
+                            </div>
+                        </div>
+                        <input hidden name="nC" value="@ViewBag.newCuota" />
+                        <input hidden name="editC" value="@ViewBag.isEdit" />
+                        <button type="submit" class="btn btn-primary waves-effect waves-light">Guardar</button>
+                        @if (ViewBag.newCuota != null)
+                        {
+                            if (ViewBag.newCuota == 1)
+                            {
+                                <a href="@Url.Action("agregar", "cuotas", new { area = "coadmin" })"><button type="button" class="btn btn-danger waves-effect waves-light">Cancelar</button></a>
+                            }
+                            else if (ViewBag.newCuota == 2)
+                            {
+                                <a href="@Url.Action("editar", "cuotas", new { area = "coadmin", editID = ViewBag.isEdit})"><button type="button" class="btn btn-danger waves-effect waves-light">Cancelar</button></a>
+                            }
+                            else
+                            {
+                                <a href="@Url.Action("listadoCuentas", "cuotas", new { area = "coadmin" })"><button type="button" class="btn btn-danger waves-effect waves-light">Cancelar</button></a>
+                            }
+                        }
+                        else
+                        {
+                            <a href="@Url.Action("panel", "control", new { area = "coadmin" })"><button type="button" class="btn btn-danger waves-effect waves-light">Cancelar</button></a>
+                        }
+
+                    </div>
                     }
                 </div>
             </div>
@@ -96,7 +150,25 @@
         <!-- back button -->
         <div class="row pb-4">
             <div class="col-md-6">
-                <a href="javascript:history.back()"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+                @if (ViewBag.newCuota != null)
+                {
+                    if (ViewBag.newCuota == 1)
+                    {
+                        <a href="@Url.Action("agregar", "cuotas", new { area = "coadmin" })"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+                    }
+                    else if (ViewBag.newCuota == 2)
+                    {
+                        <a href="@Url.Action("editar", "cuotas", new { area = "coadmin", editID = ViewBag.isEdit })"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+                    }
+                    else
+                    {
+                        <a href="@Url.Action("listadoCuentas", "cuotas", new { area = "coadmin" })"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+                    }
+                }
+                else
+                {
+                    <a href="@Url.Action("panel", "control", new { area = "coadmin" })"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+                }
             </div>
         </div>
         <!-- end back button -->

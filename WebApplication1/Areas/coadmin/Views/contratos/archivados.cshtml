@@ -44,7 +44,7 @@
         <!-- back button -->
         <div class="row pb-4">
             <div class="col-md-6">
-                <a href="javascript:history.back()"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+                <a href="@Url.Action("listado", "contratos", new { area = "coadmin" })"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
             </div>
         </div>
         <!-- end back button -->
@@ -57,9 +57,9 @@
                             <div class="col-md-6">
                                 <h5 class="d-inline-block">Listado</h5>
                             </div>
-                            <div class="col-md-6 mb-1">
+                            @*<div class="col-md-6 mb-1">
                                 <a href="@Url.Action("agregar", "contratos", new { area = "coadmin" })"><button type="button" class="btn btn-primary waves-effect waves-light float-xl-right float-lg-right float-md-left mb-1">Agregar nuevo</button></a>
-                            </div>
+                            </div>*@
                         </div>
                         <div class="table-responsive">
                             <table id="dataTable-tareas-completadas" class="table table-striped table-bordered normal" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
@@ -143,7 +143,7 @@
         <!-- back button -->
         <div class="row pb-4">
             <div class="col-md-6">
-                <a href="javascript:history.back()"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+                <a href="@Url.Action("listado", "contratos", new { area = "coadmin" })"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
             </div>
         </div>
         <!-- end back button -->

@@ -170,7 +170,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
             }
         }
 
-        public ActionResult agregarCuenta(long? nC)
+        public ActionResult agregarCuenta(long? nC, long? editC)
         {
             if (Session["USER_ID"] != null)
             {
@@ -194,6 +194,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                         viewModel.pubMessageList = pubMessageList;
                         viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
                         ViewBag.newCuota = nC;
+                        ViewBag.isEdit = editC;
                         return View(viewModel);
                     }
                     catch (Exception ex)
@@ -458,7 +459,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
 
         [HttpPost]
         public ActionResult addbank(string account_name, string account_number, 
-            string bank_name, string route_number, long? nC)
+            string bank_name, string route_number, long? nC, long? editC)
         {
             long userId = (long)Session["USER_ID"];
             bank bankItem = new bank();
@@ -475,6 +476,10 @@ namespace WebApplication1.Areas.coadmin.Controllers
             if (nC == 1)
             {
                 return Redirect(Url.Action("agregar", "cuotas", new { area = "coadmin" }));
+            }
+            else if(nC == 2)
+            {
+                return Redirect(Url.Action("editar", "cuotas", new { area = "coadmin", editID = editC }));
             }
             else
             {

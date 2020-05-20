@@ -28,6 +28,7 @@
                     <div class="float-right">
                         <ul class="breadcrumb float-md-right">
                             <li class="breadcrumb-item"><a href="@Url.Action("panel", "control", new { area = "coadmin"  })" class="text-success"><i class="mdi mdi-home-modern"></i> Panel de control</a></li>
+                            <li class="breadcrumb-item"><a href="@Url.Action("listado", "contratos", new { area = "coadmin" })" class="text-success"> Listado de contratos</a></li>
                             <li class="breadcrumb-item active">Editar contrato</li>
                         </ul>
                     </div>
@@ -38,7 +39,7 @@
         <!-- back button -->
         <div class="row pb-4">
             <div class="col-md-6">
-                <a href="javascript:history.back()"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+                <a href="@Url.Action("listado", "contratos", new { area = "coadmin" })"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
             </div>
         </div>
         <!-- end back button -->
@@ -59,7 +60,7 @@
                         @Html.AntiForgeryToken()
                         <input name="contractID" value="@Model.editContract.id" type="hidden" />
                         <div class="card-body">
-                            <h5 class="d-inline-block">Contrato de prestación de servicios 1</h5>
+                            <h5 class="d-inline-block">Información del contrato</h5>
                             <div class="form-divider"></div>
                             <div class="form-group row">
                                 <label for="example-email-input" class="col-sm-3 col-form-label">Nombre</label>
@@ -69,7 +70,7 @@
                                            value="@Model.editContract.first_name"
                                            name="first_name" required
                                            placeholder="Nombre" id="example-email-input">
-                                    <small class="form-text text-muted">Nombre del contrato</small>
+                                    @*<small class="form-text text-muted">Nombre del contrato</small>*@
                                 </div>
                             </div>
                             <div class="form-divider"></div>
@@ -80,7 +81,7 @@
                                            value="@Convert.ToDateTime(Model.editContract.date_contract).ToString("yyyy-MM-dd")"
                                            name="date_contract" data-toggle="tooltip" title="Mes / día / año | Fecha del día que se subió el contrato"
                                            id="example-date-input">
-                                    <small class="form-text text-muted">Mes / día / año | Fecha del día que se subió el contrato</small>
+                                    @*<small class="form-text text-muted">Mes / día / año | Fecha del día que se subió el contrato</small>*@
                                 </div>
                             </div>
                             <div class="form-divider"></div>
@@ -91,7 +92,7 @@
                                            data-toggle="tooltip" title="Mes / día / año | Fecha que se recibirá recordatorio de vencimiento del contrato"
                                            value="@Convert.ToDateTime(Model.editContract.date_notification).ToString("yyyy-MM-dd")"
                                            id="example-date-input-ven">
-                                    <small class="form-text text-muted">Mes / día / año | Fecha que se recibirá recordatorio de vencimiento del contrato</small>
+                                    @*<small class="form-text text-muted">Mes / día / año | Fecha que se recibirá recordatorio de vencimiento del contrato</small>*@
                                 </div>
                             </div>
                             <div class="form-divider"></div>
@@ -128,10 +129,10 @@
                             <div class="form-group row">
                                 <label for="example-lastname1-input" class="col-sm-3 col-form-label">Descripción</label>
                                 <div class="col-sm-9">
-                                    <textarea required class="form-control" rows="3" name="description"
+                                    <textarea maxlength="90" required class="form-control" rows="3" name="description"
                                               data-toggle="tooltip" title="Descripción del contrato"
                                               placeholder="Descripción">@Model.editContract.description</textarea>
-                                    <small class="form-text text-muted">Descripción del contrato</small>
+                                    @*<small class="form-text text-muted">Descripción del contrato</small>*@
                                 </div>
                             </div>
                             <div class="form-divider"></div>
@@ -194,7 +195,7 @@
         <!-- back button -->
         <div class="row pb-4">
             <div class="col-md-6">
-                <a href="javascript:history.back()"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+                <a href="@Url.Action("listado", "contratos", new { area = "coadmin" })"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
             </div>
         </div>
         <!-- end back button -->

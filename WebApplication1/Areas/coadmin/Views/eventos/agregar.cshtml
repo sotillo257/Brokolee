@@ -19,6 +19,17 @@
                     <div class="float-right">
                         <ul class="breadcrumb float-md-right">
                             <li class="breadcrumb-item"><a href="@Url.Action("panel", "control", new { area = "coadmin" })" class="text-success"><i class="mdi mdi-home-modern"></i> Panel de control</a></li>
+                            @if (ViewBag.Place != null)
+                            {
+                                if (ViewBag.Place == 1)
+                                {
+                                    <li class="breadcrumb-item"><a href="@Url.Action("otros", "eventos", new { area = "coadmin" })" class="text-success"><i class="mdi mdi-home-modern"></i> Calendario de eventos</a></li>
+                                }
+                                else
+                                {
+                                    <li class="breadcrumb-item"><a href="@Url.Action("registrados", "eventos", new { area = "coadmin" })" class="text-success"><i class="mdi mdi-home-modern"></i> Ultimos eventos registrados</a></li>
+                                }
+                            }
                             <li class="breadcrumb-item active">Agregar evento</li>
                         </ul>
                     </div>
@@ -29,7 +40,22 @@
         <!-- back button -->
         <div class="row pb-4">
             <div class="col-md-6">
-                <a href="javascript:history.back()"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+                @if (ViewBag.Place != null)
+                {
+                    if (ViewBag.Place == 1)
+                    {
+                        <a href="@Url.Action("otros", "eventos", new { area = "coadmin" })"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+                    }
+                    else
+                    {
+                        <a href="@Url.Action("registrados", "eventos", new { area = "coadmin" })"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+                    }
+                }
+                else
+                {
+                    <a href="@Url.Action("panel", "control", new { area = "coadmin" })"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+                }
+
             </div>
         </div>
         <!-- end back button -->
@@ -61,7 +87,7 @@
                         <div class="form-group row">
                             <label for="example-date-input" class="col-sm-3 col-form-label">Fecha</label>
                             <div class="col-sm-9">
-                                <input class="form-control" type="date" name="event_date"
+                                <input autocomplete="off" class="form-control" type="date" name="event_date"
                                        data-toggle="tooltip" title="Mes / día / año | Fecha del evento"
                                        value="" id="example-date-input" required>
                                 <small class="form-text text-muted">Mes / día / año | Fecha del evento</small>
@@ -71,7 +97,7 @@
                         <div class="form-group row">
                             <label for="example-time-input" class="col-sm-3 col-form-label">Hora</label>
                             <div class="col-sm-9">
-                                <input class="form-control" type="time" name="event_time"
+                                <input autocomplete="off" class="form-control" type="time" name="event_time"
                                        data-toggle="tooltip" title="Hora del evento"
                                        value="" id="example-time-input" required>
                                 <small class="form-text text-muted">Hora del evento</small>
@@ -93,14 +119,14 @@
                             <div class="col-sm-9">
                                 <div class="form-check-inline my-2">
                                     <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" name="share" value="1" id="customCheck6" 
+                                        <input type="checkbox" class="custom-control-input" name="share" value="1" id="customCheck6"
                                                checked data-parsley-multiple="groups" data-parsley-mincheck="2">
                                         <label class="custom-control-label" for="customCheck6">General</label>
                                     </div>
                                 </div>
                                 <div class="form-check-inline my-2">
                                     <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="customCheck7" name="share" 
+                                        <input type="checkbox" class="custom-control-input" id="customCheck7" name="share"
                                                value="2" data-parsley-multiple="groups" data-parsley-mincheck="2">
                                         <label class="custom-control-label" for="customCheck7">Administradores</label>
                                     </div>
@@ -127,7 +153,22 @@
                             </div>
                         </div>
                         <a href=""><button type="submit" class="btn btn-primary waves-effect waves-light">Guardar</button></a>
-                        <a href=""><button type="button" class="btn btn-danger waves-effect waves-light">Cancelar</button></a>
+                        @if (ViewBag.Place != null)
+                        {
+                            if (ViewBag.Place == 1)
+                            {
+                                <a href="@Url.Action("otros", "eventos", new { area = "coadmin" })"><button type="button" class="btn btn-danger waves-effect waves-light">Cancelar</button></a>
+                            }
+                            else
+                            {                                
+                                <a href="@Url.Action("registrados", "eventos", new { area = "coadmin" })"><button type="button" class="btn btn-danger waves-effect waves-light">Cancelar</button></a>
+                            }
+                        }
+                        else
+                        {
+                            <a href="@Url.Action("panel", "control", new { area = "coadmin" })"><button type="button" class="btn btn-danger waves-effect waves-light">Cancelar</button></a>
+                        }
+
                     </div>
                     }
                 </div>
@@ -136,7 +177,21 @@
         <!-- back button -->
         <div class="row pb-4">
             <div class="col-md-6">
-                <a href="javascript:history.back()"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+                @if (ViewBag.Place != null)
+                {
+                    if (ViewBag.Place == 1)
+                    {
+                        <a href="@Url.Action("otros", "eventos", new { area = "coadmin" })"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+                    }
+                    else
+                    {
+                        <a href="@Url.Action("registrados", "eventos", new { area = "coadmin" })"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+                    }
+                }
+                else
+                {
+                    <a href="@Url.Action("panel", "control", new { area = "coadmin" })"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+                }
             </div>
         </div>
         <!-- end back button -->
