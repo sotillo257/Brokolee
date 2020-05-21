@@ -32,6 +32,9 @@
                     <div class="float-right">
                         <ul class="breadcrumb float-md-right">
                             <li class="breadcrumb-item"><a href="@Url.Action("panel", "control", new { area = "coadmin" })" class="text-success"><i class="mdi mdi-home-modern"></i> Panel de control</a></li>
+                            <li class="breadcrumb-item"><a href="@Url.Action("listado", "titulares", new { area = "coadmin" })" class="text-success">Titulares</a></li>
+                            <li class="breadcrumb-item"><a href="@Url.Action("listadoTitulos", "titulares", new { area = "coadmin", id = Model.vehiculo.Titulo.IdUser })" class="text-success">Títulos</a></li>
+                            <li class="breadcrumb-item"><a href="@Url.Action("listadoVehiculos", "titulares", new { area = "coadmin", Id = Model.vehiculo.IdTitulo })" class="text-success">Vehículos</a></li>
                             <li class="breadcrumb-item active">Editar vehículo</li>
                         </ul>
                     </div>
@@ -67,6 +70,7 @@
                         {
                             id = "editresidentForm",
                             @class = "",
+                             area = "coadmin",
                             enctype = "multipart/form-data"
                         }))
                     {

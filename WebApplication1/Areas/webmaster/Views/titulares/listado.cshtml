@@ -19,7 +19,7 @@
                     <div class="float-right">
                         <ul class="breadcrumb float-md-right">
                             <li class="breadcrumb-item"><a href="@Url.Action("panel", "control", new { area = "webmaster" })" class="text-success"><i class="mdi mdi-home-modern"></i> Panel de control</a></li>
-                            <li class="breadcrumb-item active">Listado de titulares</li>
+                            <li class="breadcrumb-item active">Titulares</li>
                         </ul>
                     </div>
                 </div>
@@ -52,10 +52,12 @@
                                     <div class="input-group col-md-6">
                                         <label class="col-form-label">Filtrar por comunidad</label>
                                         <div class="col-sm-6 col-md-8">
-                                            <select class="form-control" id="id-search-category"
+                                            @if (ViewBag.selectForm == 1)
+                                            {
+                                            <select class="form-control is-invalid" id="id-search-category"
                                                     name="searchCommunityId"
-                                                    onchange="onSearchTitularCommunity()">    
-                                                <option value="0">Seleccionar comunidad</option>
+                                                    onchange="onSearchTitularCommunity()">
+                                                <option value="-1">Seleccionar comunidad</option>
                                                 @foreach (var item in Model.communityList)
                                                 {
                                                     if (Convert.ToInt64(Session["WM_selectedComm"]) == item.id)
@@ -68,6 +70,36 @@
                                                     }
                                                 }
                                             </select>
+                                            }
+                                            else
+                                            {
+                                        <select class="form-control" id="id-search-category"
+                                                name="searchCommunityId"
+                                                onchange="onSearchTitularCommunity()">
+                                            @if (Convert.ToInt64(Session["WM_selectedComm"]) == -1)
+                                            {
+                                                <option value="-1">Seleccionar comunidad</option>
+
+                                            }                                           
+                                            else
+                                            {
+                                                <option value="-1">Mostrar todos</option>
+                                            }
+                                            @foreach (var item in Model.communityList)
+                                            {
+                                                if (Convert.ToInt64(Session["WM_selectedComm"]) == item.id)
+                                                {
+                                                    <option selected value="@item.id">@item.first_name</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@item.id">@item.first_name</option>
+                                                }
+                                            }
+                                        </select>
+                                                
+                                            }
+
                                         </div>
                                     </div>
                                 }

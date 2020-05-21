@@ -498,7 +498,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
 
         #region TITULAR
 
-        public ActionResult listado(string Error, string searchStr = "", int CommunityId = 0)
+        public ActionResult listado(string Error, int? iN, string searchStr = "", int CommunityId = -1)
         {
             if (Session["USER_ID"] != null)
             {
@@ -514,13 +514,13 @@ namespace WebApplication1.Areas.webmaster.Controllers
                     long commId = Convert.ToInt64(CommunityId);                   
                     if (Session["WM_selectedComm"] != null)
                     {
-                        if(commId != 0)
+                        if(commId != -1)
                         {
                             Session["WM_selectedComm"] = commId;
                         }
                         else
                         {
-                            Session["WM_selectedComm"] = 0;
+                            Session["WM_selectedComm"] = -1;
                         }                        
                     }
                     else
@@ -528,7 +528,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                         Session["WM_selectedComm"] = commId;
                     }              
                     
-                    if (searchStr == "" && commId == 0)
+                    if (searchStr == "" && commId == -1)
                     {
                         var query1 = (from r in entities.users
                                       where
@@ -536,7 +536,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                                       select r);
                         titularList = query1.ToList();
                     }
-                    else if (searchStr != "" && commId == 0)
+                    else if (searchStr != "" && commId == -1)
                     {
                         var query = (from r in entities.users
                                      where r.role == 1 &&
@@ -546,7 +546,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                                      select r);
                         titularList = query.ToList();
                     }
-                    else if (searchStr == "" && commId != 0)
+                    else if (searchStr == "" && commId != -1)
                     {
                         var query2 = (from r in entities.users
                                       where r.role == 1 && r.is_del != true && r.Titulos.Any(x => x.IdCommunity == commId)
@@ -584,6 +584,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                     viewModel.pubMessageList = pubMessageList;
                     viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
                     ViewBag.msgError = Error;
+                    ViewBag.selectForm = iN;
                     return View(viewModel);
                 }
                 catch (Exception ex)
@@ -604,7 +605,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 if (Session["WM_selectedComm"] != null)
                 {
                     long selectedCommu = Convert.ToInt64(Session["WM_selectedComm"]);
-                    if (selectedCommu != 0)
+                    if (selectedCommu != -1)
                     {
                         List<communuser> comUer = entities.communusers.Where(x => x.commun_id == selectedCommu).ToList();
                         if (comUer.Count > 0)
@@ -631,7 +632,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                     }
                     else
                     {
-                        return Redirect(Url.Action("listado", "titulares", new { area = "webmaster", Error = "Debe tener activa una comunidad para crear titulares" }));
+                        return Redirect(Url.Action("listado", "titulares", new { area = "webmaster", Error = "Debe tener seleccionar una comunidad para crear titulares", iN = 1 }));
                     }
                 }
                 else

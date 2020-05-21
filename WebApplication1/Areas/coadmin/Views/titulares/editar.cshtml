@@ -54,6 +54,7 @@
                     <div class="float-right">
                         <ul class="breadcrumb float-md-right">
                             <li class="breadcrumb-item"><a href="@Url.Action("panel", "control", new { area = "coadmin" })" class="text-success"><i class="mdi mdi-home-modern"></i> Panel de control</a></li>
+                            <li class="breadcrumb-item"><a href="@Url.Action("listado", "titulares", new { area = "coadmin" })" class="text-success">Titulares</a></li>
                             <li class="breadcrumb-item active">Editar titular</li>
                         </ul>
                     </div>
@@ -89,6 +90,7 @@
                         {
                             id = "editresidentForm",
                             @class = "",
+                             area = "coadmin",
                             enctype = "multipart/form-data"
                         }))
                     {

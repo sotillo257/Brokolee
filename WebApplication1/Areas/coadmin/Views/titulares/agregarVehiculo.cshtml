@@ -58,7 +58,10 @@
                     <div class="float-right">
                         <ul class="breadcrumb float-md-right">
                             <li class="breadcrumb-item"><a href="@Url.Action("panel", "control", new { area = "coadmin" })" class="text-success"><i class="mdi mdi-home-modern"></i> Panel de control</a></li>
-                            <li class="breadcrumb-item active">Agregar vehículos</li>
+                            <li class="breadcrumb-item"><a href="@Url.Action("listado", "titulares", new { area = "coadmin" })" class="text-success">Titulares</a></li>
+                            <li class="breadcrumb-item"><a href="@Url.Action("listadoTitulos", "titulares", new { area = "coadmin", id = Model.titulo.IdUser })" class="text-success">Títulos</a></li>
+                            <li class="breadcrumb-item"><a href="@Url.Action("listadoVehiculos", "titulares", new { area = "coadmin", Id = Model.titulo.Id })" class="text-success">Vehículos</a></li>
+                            <li class="breadcrumb-item active">Agregar vehículo</li>
                         </ul>
                     </div>
                 </div>
