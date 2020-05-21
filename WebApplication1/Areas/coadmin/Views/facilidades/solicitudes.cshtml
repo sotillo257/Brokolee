@@ -88,17 +88,16 @@
                                     <tr>
                                         <th class="f-b">Fecha de solicitud</th>
                                         <th class="f-b">Nombre</th>
-                                        @*<th class="f-b">Descripción de la actividad</th>*@
+                                        <th class="f-b">Descripción de la facilidad</th>
                                         <th class="f-b">Hora inicio</th>
                                         <th class="f-b">Hora fin</th>
                                         @*<th class="f-b">Intervalo</th>*@
                                         <th class="f-b">Estado</th>
-                                        <th class="f-b">Opciones adicionales</th>
                                         @*<th class="f-b">Reglamento</th>*@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach (var item in Model.efacList)
+                                    @foreach (var item in Model.bookList)
                                     {
                                         <tr>
                                             <td><span style="display:none!important">@Convert.ToDateTime(item.created_at).ToString("yyyy/MM/dd hh:mm tt")</span>@Convert.ToDateTime(item.created_at).ToString("MM/dd/yyyy")</td>
@@ -106,7 +105,7 @@
                                             <td>@item.description.</td>
                                             <td class="text-center">@DateTime.Today.Add(item.start_time).ToString("hh:mm tt")</td>
                                             <td class="text-center">@DateTime.Today.Add(item.end_time).ToString("hh:mm tt")</td>
-                                            <td class="text-center">@item.duration horas</td>
+                                            @*<td class="text-center">@item.duration horas</td>*@
                                             <td class="text-center">
 
                                                 @if (item.status == 1)

@@ -97,7 +97,7 @@
                                 <div class="form-group row">
                                     <label for="example-time-input" class="col-sm-3 col-form-label">Hora de inicio</label>
                                     <div class="col-sm-9">
-                                        <input class="form-control" max="19:00:00" min="8:00:00" type="time" value="@Model.editFac.start_time.ToString(@"hh\:mm")"
+                                        <input class="form-control" max="21:00" min="08:00" type="time" value="@Model.editFac.start_time.ToString(@"hh\:mm")"
                                                data-toggle="tooltip" title="Hora de inicio de disponibilidad"
                                                id="example-time-input" name="start_time" required />
                                         @*<small class="form-text text-muted">Hora de inicio de disponibilidad</small>*@
@@ -107,7 +107,7 @@
                                 <div class="form-group row">
                                     <label for="example-time-input" class="col-sm-3 col-form-label">Hora de fin</label>
                                     <div class="col-sm-9">
-                                        <input class="form-control" min="9:00:00" max="20:00:00" type="time" value="@Model.editFac.end_time.ToString(@"hh\:mm")"
+                                        <input class="form-control" min="09:00" max="22:00" type="time" value="@Model.editFac.end_time.ToString(@"hh\:mm")"
                                                data-toggle="tooltip" title="Hora de fin de disponibilidad"
                                                id="example-time-input" name="end_time" required />
                                         @*<small class="form-text text-muted">Hora de fin de disponibilidad</small>*@
@@ -156,7 +156,7 @@
                                     <div class="col-sm-9">
                                         <div class="input-group mt-2">
                                             <div class="custom-file">
-                                                <input type="file" class="custom-file-input" id="inputGroupFile04" accept=".pdf"
+                                                <input type="file" class="custom-file-input" id="inputGroupFile04"
                                                        data-toggle="tooltip" title="Subir Reglamento"
                                                        name="upload_regulation">
                                                 <label id="input-arch" class="custom-file-label" for="inputGroupFile04">Seleccionar archivo</label>

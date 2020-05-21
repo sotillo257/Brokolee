@@ -123,9 +123,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
             {
                 efac newFac = new efac();
                 newFac.first_name = first_name;
-                newFac.description = description;
-                int starT = Convert.ToInt32(start_time);
-                int endT = Convert.ToInt32(end_time);
+                newFac.description = description;               
                 TimeSpan Inicio = TimeSpan.ParseExact(start_time, "h\\:mm",
                     System.Globalization.CultureInfo.CurrentCulture, TimeSpanStyles.None);
                 TimeSpan Final = TimeSpan.ParseExact(end_time, "h\\:mm",
@@ -134,7 +132,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 TimeSpan max = new TimeSpan(21, 0, 0);
                 if (Inicio < min || Final > max)
                 {
-                    return Redirect(Url.Action("editar", "facilidades", new { area = "coadmin", Error = "La hora de inicio y de fin no estan entre las permitidas..." }));
+                    return Redirect(Url.Action("agregar", "facilidades", new { area = "coadmin", Error = "La hora de inicio y de fin no estan entre las permitidas..." }));
                 }
                 else
                 {
@@ -167,7 +165,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     }
                     entities.efacs.Add(newFac);
                     entities.SaveChanges();
-                    return Redirect(Url.Action("solicitudes", "facilidades", new { area = "coadmin" }));
+                    return Redirect(Url.Action("disponibles", "facilidades", new { area = "coadmin" }));
                 }                
             }
             catch (Exception ex)
@@ -388,12 +386,12 @@ namespace WebApplication1.Areas.coadmin.Controllers
 
                     if (searchStr == "")
                     {
-                        var query = (from r in entities.books where r.community_id == communityAct && r.status == 1 select r);
+                        var query = (from r in entities.books where r.community_id == communityAct select r);
                         bookList = query.ToList();
                     }
                     else
                     {
-                        var query1 = (from r in entities.books where r.first_name.Contains(searchStr) == true && r.community_id == communityAct && r.status == 1 select r);
+                        var query1 = (from r in entities.books where r.first_name.Contains(searchStr) == true && r.community_id == communityAct select r);
                         bookList = query1.ToList();
                     }
 

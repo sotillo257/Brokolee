@@ -1045,6 +1045,31 @@
             }
         });
 
+        function onAprobar(self) {
+            $("#ck-body-loading-overlay").show();
+            var id = $(self).data("id");
+            var formData = new FormData();
+            formData.append("id", id);
+
+            var url = "@Url.Action("onAprobar", "facilidades", new { area = "coadmin" })";
+
+            $.ajax({
+                url: url,
+                type: "post",
+                data: formData,
+                success: function (result) {
+                    $("#ck-body-loading-overlay").hide();
+                    if (result.result === "error") {
+                        console.log('couln\'t get roles');
+                    } else {
+                        location.reload();
+                    }
+                },
+                processData: false,
+                contentType: false
+            });
+        }
+
         //Validacion dsolo un punto decimal y dos decimales
         function filterFloat(evt, input) {
             // Backspace = 8, Enter = 13, ‘0′ = 48, ‘9′ = 57, ‘.’ = 46, ‘-’ = 43
