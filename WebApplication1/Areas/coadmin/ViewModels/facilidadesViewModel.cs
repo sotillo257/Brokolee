@@ -16,6 +16,7 @@ namespace WebApplication1.Areas.coadmin.ViewModels
         public List<community> communityList { get; set; }
         public List<document_type> document_category_list { get; set; }
         public List<efac> efacList { get; set; }
+        public List<book> bookList { get; set; }
         public user curUser { get; set; }
         public int messageCount { get; set; }
         public string searchStr { get; set; }

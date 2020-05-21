@@ -847,6 +847,31 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 return false;
             }            
         }
+
+        function onAprobar(self) {
+            $("#ck-body-loading-overlay").show();
+            var id = $(self).data("id");
+            var formData = new FormData();
+            formData.append("id", id);
+
+            var url = "@Url.Action("onAprobar", "facilidades", new { area = "coadmin" })";
+
+            $.ajax({
+                url: url,
+                type: "post",
+                data: formData,
+                success: function (result) {
+                    $("#ck-body-loading-overlay").hide();
+                    if (result.result === "error") {
+                        console.log('couln\'t get roles');
+                    } else {
+                        location.reload();
+                    }
+                },
+                processData: false,
+                contentType: false
+            });
+        }
     </script>
 
     <script>

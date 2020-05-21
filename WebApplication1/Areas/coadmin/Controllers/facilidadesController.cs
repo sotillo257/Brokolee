@@ -342,38 +342,38 @@ namespace WebApplication1.Areas.coadmin.Controllers
             }
         }
 
-        public ActionResult reservartwo()
-        {
-            if (Session["USER_ID"] != null)
-            {
-                if (Session["CURRENT_COMU"] != null)
-                {
-                    long userId = (long)Session["USER_ID"];
-                    user curUser = entities.users.Find(userId);
-                    facilidadesViewModel viewModel = new facilidadesViewModel();
+        //public ActionResult reservartwo()
+        //{
+        //    if (Session["USER_ID"] != null)
+        //    {
+        //        if (Session["CURRENT_COMU"] != null)
+        //        {
+        //            long userId = (long)Session["USER_ID"];
+        //            user curUser = entities.users.Find(userId);
+        //            facilidadesViewModel viewModel = new facilidadesViewModel();
 
-                    communityList = ep.GetCommunityList(userId);
-                    viewModel.communityList = communityList;
+        //            communityList = ep.GetCommunityList(userId);
+        //            viewModel.communityList = communityList;
 
-                    viewModel.side_menu = "facilidades";
-                    viewModel.side_sub_menu = "facilidades_reservartwo";
-                    viewModel.document_category_list = entities.document_type.ToList();
-                    viewModel.curUser = curUser;
-                    viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
-                    viewModel.pubMessageList = ep.GetChatMessages(userId);
-                    return View(viewModel);
-                }
-                else
-                {
-                    return Redirect(Url.Action("disponibles", "facilidades", new { area = "coadmin", Error = "No puede reservar facilidades. Usted no administra ninguna comunidad. Comuníquese con el Webmaster..." }));
-                }
+        //            viewModel.side_menu = "facilidades";
+        //            viewModel.side_sub_menu = "facilidades_reservartwo";
+        //            viewModel.document_category_list = entities.document_type.ToList();
+        //            viewModel.curUser = curUser;
+        //            viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
+        //            viewModel.pubMessageList = ep.GetChatMessages(userId);
+        //            return View(viewModel);
+        //        }
+        //        else
+        //        {
+        //            return Redirect(Url.Action("disponibles", "facilidades", new { area = "coadmin", Error = "No puede reservar facilidades. Usted no administra ninguna comunidad. Comuníquese con el Webmaster..." }));
+        //        }
                
-            } else
-            {
-                return Redirect(ep.GetLogoutUrl());
-            }
+        //    } else
+        //    {
+        //        return Redirect(ep.GetLogoutUrl());
+        //    }
                 
-        }
+        //}
 
         public ActionResult solicitudes(string searchStr = "")
         {
@@ -383,18 +383,18 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 {
                     long userId = (long)Session["USER_ID"];
                     user curUser = entities.users.Find(userId);
-                    List<efac> efacList = new List<efac>();
+                    List<book> bookList = new List<book>();
                     long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
 
                     if (searchStr == "")
                     {
-                        var query = (from r in entities.efacs where r.community_id == communityAct && r.status != 3 select r);
-                        efacList = query.ToList();
+                        var query = (from r in entities.books where r.community_id == communityAct && r.status == 1 select r);
+                        bookList = query.ToList();
                     }
                     else
                     {
-                        var query1 = (from r in entities.efacs where r.first_name.Contains(searchStr) == true && r.community_id == communityAct && r.status != 3 select r);
-                        efacList = query1.ToList();
+                        var query1 = (from r in entities.books where r.first_name.Contains(searchStr) == true && r.community_id == communityAct && r.status == 1 select r);
+                        bookList = query1.ToList();
                     }
 
                     facilidadesViewModel viewModel = new facilidadesViewModel();
@@ -404,7 +404,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     viewModel.side_sub_menu = "facilidades_solicitudes";
                     viewModel.document_category_list = entities.document_type.ToList();
                     viewModel.searchStr = searchStr;
-                    viewModel.efacList = efacList;
+                    viewModel.bookList = bookList;
                     viewModel.curUser = curUser;
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = ep.GetChatMessages(userId);
@@ -422,44 +422,44 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 
         }
 
-        public ActionResult registrado(long? id)
-        {
-            if (Session["USER_ID"] != null)
-            {
-                if (id != null)
-                {
-                    long userId = (long)Session["USER_ID"];
-                    user curUser = entities.users.Find(userId);
-                    @event event_item = entities.events.Find(id);
-                    registradoViewModel viewmodel = new registradoViewModel();
+        //public ActionResult registrado(long? id)
+        //{
+        //    if (Session["USER_ID"] != null)
+        //    {
+        //        if (id != null)
+        //        {
+        //            long userId = (long)Session["USER_ID"];
+        //            user curUser = entities.users.Find(userId);
+        //            @event event_item = entities.events.Find(id);
+        //            registradoViewModel viewmodel = new registradoViewModel();
 
-                    communityList = ep.GetCommunityList(userId);
-                    viewmodel.communityList = communityList;
+        //            communityList = ep.GetCommunityList(userId);
+        //            viewmodel.communityList = communityList;
 
-                    viewmodel.side_menu = "facilidades";
-                    viewmodel.side_sub_menu = "facilidades_registrado";
-                    viewmodel.event_name = event_item.name;
-                    viewmodel.event_date = Convert.ToDateTime(event_item.created_at).ToString("dd/MM/yyyy");
-                    viewmodel.event_time = Convert.ToDateTime(event_item.created_at).ToString("hh:mm tt");
-                    viewmodel.place = event_item.place;
-                    viewmodel.description = event_item.description;
-                    viewmodel.note = event_item.note;
-                    viewmodel.document_category_list = entities.document_type.ToList();
-                    viewmodel.curUser = curUser;
-                    viewmodel.pubTaskList = ep.GetNotifiTaskList(userId);
-                    viewmodel.pubMessageList = ep.GetChatMessages(userId);                   
-                    return View(viewmodel);
-                }
-                else
-                {
-                    return Redirect(Url.Action("NotFound", "Error"));
-                }               
-            }
-            else
-            {
-                return Redirect(ep.GetLogoutUrl());
-            }
-        }
+        //            viewmodel.side_menu = "facilidades";
+        //            viewmodel.side_sub_menu = "facilidades_registrado";
+        //            viewmodel.event_name = event_item.name;
+        //            viewmodel.event_date = Convert.ToDateTime(event_item.created_at).ToString("dd/MM/yyyy");
+        //            viewmodel.event_time = Convert.ToDateTime(event_item.created_at).ToString("hh:mm tt");
+        //            viewmodel.place = event_item.place;
+        //            viewmodel.description = event_item.description;
+        //            viewmodel.note = event_item.note;
+        //            viewmodel.document_category_list = entities.document_type.ToList();
+        //            viewmodel.curUser = curUser;
+        //            viewmodel.pubTaskList = ep.GetNotifiTaskList(userId);
+        //            viewmodel.pubMessageList = ep.GetChatMessages(userId);                   
+        //            return View(viewmodel);
+        //        }
+        //        else
+        //        {
+        //            return Redirect(Url.Action("NotFound", "Error"));
+        //        }               
+        //    }
+        //    else
+        //    {
+        //        return Redirect(ep.GetLogoutUrl());
+        //    }
+        //}
 
         [HttpPost]
         public ActionResult addbook(string first_name, string description,  
@@ -521,21 +521,21 @@ namespace WebApplication1.Areas.coadmin.Controllers
             return Redirect(Url.Action("disponibles", "facilidades", new { area = "coadmin", searchStr = searchStr }));
         }
 
-        public JsonResult onActiveSol(long id)
+        public JsonResult onAprobar(long id)
         {
             try
             {
 
-                efac delf = entities.efacs.Find(id);
-                if(delf.status==2)
+                book delf = entities.books.Find(id);
+                if(delf.status==1)
+                {
+                    delf.status = 2;
+                }else if(delf.status == 2)
                 {
                     delf.status = 3;
                 }else if(delf.status == 3)
                 {
-                    delf.status = 1;
-                }else if(delf.status == 1)
-                {
-                    delf.status = 3;
+                    delf.status = 2;
                 }
                 
                 entities.SaveChanges();

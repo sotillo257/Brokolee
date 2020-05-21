@@ -30,8 +30,17 @@ namespace WebApplication1.Controllers
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                     long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
                     List<efac> facilitieList = new List<efac>();
-                    var query = (from r in entities.efacs where r.first_name.Contains(searchString) == true && r.community_id == communityAct && r.status == 1 select r);
-                    facilitieList = query.ToList();                                       
+                    if (searchString == "")
+                    {
+                        var query = (from r in entities.efacs where r.community_id == communityAct && r.status == 1 select r);
+                        facilitieList = query.ToList();
+                    }
+                    else
+                    {
+                        var query1 = (from r in entities.efacs where r.first_name.Contains(searchString) == true && r.community_id == communityAct && r.status == 1 select r);
+                        facilitieList = query1.ToList();
+                    }
+                                                         
                     facilidadesViewModel viewModel = new facilidadesViewModel();
                     titulosList = ep.GetTitulosByTitular(userId);
                     listComunities = ep.GetCommunityListByTitular(titulosList);
