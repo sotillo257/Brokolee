@@ -46,7 +46,17 @@
             <!-- end back button -->
 
             <div class="row">
-
+                @if (ViewBag.msgError != null)
+                {
+                    <div class="col-12">
+                        <div class="alert alert-danger" role="alert">
+                            <strong>Error: </strong> @ViewBag.msgError
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    </div>
+                }
                 <div class="col-12">
                     <div class="card">
                         @using (Html.BeginForm("editfac", "facilidades",
@@ -87,7 +97,7 @@
                                 <div class="form-group row">
                                     <label for="example-time-input" class="col-sm-3 col-form-label">Hora de inicio</label>
                                     <div class="col-sm-9">
-                                        <input class="form-control" type="time" value="@Model.editFac.start_time.ToString(@"hh\:mm")"
+                                        <input class="form-control" max="19:00:00" min="8:00:00" type="time" value="@Model.editFac.start_time.ToString(@"hh\:mm")"
                                                data-toggle="tooltip" title="Hora de inicio de disponibilidad"
                                                id="example-time-input" name="start_time" required />
                                         @*<small class="form-text text-muted">Hora de inicio de disponibilidad</small>*@
@@ -97,7 +107,7 @@
                                 <div class="form-group row">
                                     <label for="example-time-input" class="col-sm-3 col-form-label">Hora de fin</label>
                                     <div class="col-sm-9">
-                                        <input class="form-control" type="time" value="@Model.editFac.end_time.ToString(@"hh\:mm")"
+                                        <input class="form-control" min="9:00:00" max="20:00:00" type="time" value="@Model.editFac.end_time.ToString(@"hh\:mm")"
                                                data-toggle="tooltip" title="Hora de fin de disponibilidad"
                                                id="example-time-input" name="end_time" required />
                                         @*<small class="form-text text-muted">Hora de fin de disponibilidad</small>*@

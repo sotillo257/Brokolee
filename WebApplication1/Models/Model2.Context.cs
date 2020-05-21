@@ -61,8 +61,8 @@ namespace WebApplication1.Models
         public virtual DbSet<blog> blogs { get; set; }
         public virtual DbSet<task> tasks { get; set; }
         public virtual DbSet<fee> fees { get; set; }
-        public virtual DbSet<book> books { get; set; }
         public virtual DbSet<contract> contracts { get; set; }
         public virtual DbSet<supplier> suppliers { get; set; }
+        public virtual DbSet<book> books { get; set; }
     }
 }

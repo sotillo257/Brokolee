@@ -245,15 +245,13 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 blog blog = entities.blogs.Find(editID);
                 blog.title = title;
                 blog.content = content;
-                blog.blogdate = DateTime.Now;
-                blog.author = author;
-               // entities.blogs.Add(blog);
+                blog.blogdate = DateTime.Now;              
                 entities.SaveChanges();
                 return Redirect(Url.Action("verblog", "comunicaciones", new { area="webmaster", blogID = editID }));
             }
             catch(Exception ex)
             {
-                return Redirect(Url.Action("editarblog", "comunicaciones", new { area="webmaster" }));
+                return Redirect(Url.Action("editarblog", "comunicaciones", new { area="webmaster", blogID = editID }));
             }
         }
 
@@ -308,11 +306,12 @@ namespace WebApplication1.Areas.webmaster.Controllers
             try
             {
                 long userId = (long)Session["USER_ID"];
+                user curUser = entities.users.Find(userId);
                 blog blog = new blog();
                 blog.title = title;
                 blog.content = content;
                 blog.blogdate = DateTime.Now;
-                blog.author = author;
+                blog.author = curUser.first_name1 + " " + curUser.last_name1; ;
                 blog.user_id = userId;
                 entities.blogs.Add(blog);
                 entities.SaveChanges();

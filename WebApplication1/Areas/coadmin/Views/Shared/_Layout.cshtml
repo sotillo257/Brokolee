@@ -418,7 +418,7 @@
                                                     </li>
                                                 }
 
-                                                @if (Model.side_sub_menu == "facilidades_reservartwo")
+                                                @*@if (Model.side_sub_menu == "facilidades_reservartwo")
                                                 {
                                                     <li class="active">
                                                         <a href="@Url.Action("reservartwo", "facilidades", new { area = "coadmin" })" class="active">Reservar facilidad</a>
@@ -429,7 +429,7 @@
                                                     <li>
                                                         <a href="@Url.Action("reservartwo", "facilidades", new { area = "coadmin" })">Reservar facilidad</a>
                                                     </li>
-                                                }
+                                                }*@
 
                                                 @if (Model.side_sub_menu == "facilidades_solicitudes")
                                                 {
@@ -452,7 +452,7 @@
                                             <ul class="list-unstyled">
                                                 <li><a href="@Url.Action("disponibles", "facilidades", new { area = "coadmin" })">Facilidades disponibles</a></li>
                                                 <li><a href="@Url.Action("agregar", "facilidades", new { area = "coadmin" })">Agregar facilidad</a></li>
-                                                <li><a href="@Url.Action("reservartwo", "facilidades", new { area = "coadmin" })">Reservar facilidad</a></li>
+                                                @*<li><a href="@Url.Action("reservartwo", "facilidades", new { area = "coadmin" })">Reservar facilidad</a></li>*@
                                                 <li><a href="@Url.Action("solicitudes", "facilidades", new { area = "coadmin" })">Solicitudes de aprobación</a></li>
                                             </ul>
                                         }

@@ -228,26 +228,58 @@
                     {
                         @Html.AntiForgeryToken()
                     <div class="card-body">
-                        <input type="hidden" value="" name="idFacilidad" />
-                        <h5 class="d-inline-block">NOMBRE FACILIDAD</h5>
+                        <input type="hidden" value="@Model.facilidadSe.id" name="idFacilidad" />
+                        <h5 class="d-inline-block">@Model.facilidadSe.first_name</h5>
                         <div class="form-divider"></div>
                         <div class="form-group row">
-                            <label for="example-date-input" class="col-sm-3 col-form-label">Fecha para reservar</label>
+                            <label for="example-lastname1-input" class="col-sm-3 col-form-label">Descripción</label>
                             <div class="col-sm-9">
+                                <textarea readonly maxlength="90" class="form-control" rows="3" name="description"
+                                          data-toggle="tooltip" title="Descripción de la facilidad"
+                                          placeholder="Descripción">@Model.facilidadSe.description</textarea>
+                                <small class="form-text text-muted">Descripción de la facilidad</small>
+                            </div>
+                        </div>
+                        <div class="form-divider"></div>
+                      
+                        <div class="form-group row">
+                            <label for="example-email-input" class="col-sm-3 col-form-label">Costo</label>
+                            <div class="col-sm-4">
+                                <div class="input-group mt-2">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-dollar-sign"></i></span>
+                                    </div>
+                                    <input maxlength="30" readonly class="form-control" type="text"
+                                           onkeypress="return filterFloat(event,this);" value="@Model.facilidadSe.cost_reservation.ToString().Replace(',', '.')" placeholder=""
+                                           data-toggle="tooltip" title="Costo por reservación"
+                                           id="example-email-input" name="costo" required>
+                                </div>
+                                    <small class="form-text text-muted">Costo por reservación</small>
+                                </div>
+                            </div>
+                        <div class="form-divider"></div>
+
+                        <div class="form-group row">
+                            <label for="example-date-input" class="col-sm-3 col-form-label">Fecha para reservar</label>
+                            <div class="col-sm-4">
                                 <input class="form-control" type="date" autocomplete="off"
                                        data-toggle="tooltip" title="Elije la fecha para reservar"
                                        name="dateFaci" required
                                        value="" id="example-date-input">
-                                <small class="form-text text-muted">Elije la fecha para reservar FACILIDAD</small>
+                                <small class="form-text text-muted">Elije la fecha para reservar: @Model.facilidadSe.first_name</small>
                             </div>
                         </div>
                         <div class="form-divider"></div>
                         <div class="form-group row">
                             <label class="col-sm-3 col-form-label">Horarios disponibles</label>
-                            <div class="col-sm-9">
-                                <select required class="form-control" name="fedis"
-                                        data-toggle="tooltip" title="Nombre de la comunidad" id="disponibles">
-                                    <option value=""> (Comunidad actualmente seleccionada)</option>
+                            <div class="col-sm-2">
+                                <select required class="form-control" name="fechaDisponible"
+                                        data-toggle="tooltip" title="Horas disponibles" id="fechaDisponible">
+                                    <option value="">--:--</option>
+                                    @foreach (var item in Model.timeList)
+                                    {
+                                        <option value="@item.Substring(0,2)">@item</option>
+                                    }
                                 </select>
                                 <small class="form-text text-muted">Comunidad</small>
                             </div>

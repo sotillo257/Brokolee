@@ -63,6 +63,8 @@
           <Property Name="cost_per_reservation" Type="decimal" Precision="18" Scale="2" />
           <Property Name="created_at" Type="datetime" />
           <Property Name="community_id" Type="bigint" />
+          <Property Name="status" Type="int" />
+          <Property Name="id_efac" Type="bigint" />
         </EntityType>
         <EntityType Name="carpentry">
           <Key>
@@ -1914,7 +1916,6 @@
             <End Role="user" EntitySet="users" />
             <End Role="fee" EntitySet="fees" />
           </AssociationSet>
-          <EntitySet Name="books" EntityType="pjrdev_condominiosModel.book" />
           <EntitySet Name="contracts" EntityType="pjrdev_condominiosModel.contract" />
           <EntitySet Name="suppliers" EntityType="pjrdev_condominiosModel.supplier" />
           <AssociationSet Name="FK_supplier_category" Association="pjrdev_condominiosModel.FK_supplier_category">
@@ -1925,6 +1926,7 @@
             <End Role="supplier" EntitySet="suppliers" />
             <End Role="comment" EntitySet="comments" />
           </AssociationSet>
+          <EntitySet Name="books" EntityType="pjrdev_condominiosModel.book" />
           </EntityContainer>
         <EntityType Name="Vehiculo">
           <Key>
@@ -2259,20 +2261,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="book">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="first_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="start_time" Type="Time" Precision="7" />
-          <Property Name="end_time" Type="Time" Precision="7" />
-          <Property Name="requested_date" Type="DateTime" Precision="3" />
-          <Property Name="cost_per_reservation" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="created_at" Type="DateTime" Precision="3" />
-          <Property Name="community_id" Type="Int64" />
-        </EntityType>
         <EntityType Name="contract">
           <Key>
             <PropertyRef Name="id" />
@@ -2337,6 +2325,22 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="book">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="first_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="start_time" Type="Time" Precision="7" />
+          <Property Name="end_time" Type="Time" Precision="7" />
+          <Property Name="requested_date" Type="DateTime" Precision="3" />
+          <Property Name="cost_per_reservation" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="created_at" Type="DateTime" Precision="3" />
+          <Property Name="community_id" Type="Int64" />
+          <Property Name="status" Type="Int32" />
+          <Property Name="id_efac" Type="Int64" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2905,21 +2909,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="books">
-            <EntityTypeMapping TypeName="pjrdev_condominiosModel.book">
-              <MappingFragment StoreEntitySet="book">
-                <ScalarProperty Name="community_id" ColumnName="community_id" />
-                <ScalarProperty Name="created_at" ColumnName="created_at" />
-                <ScalarProperty Name="cost_per_reservation" ColumnName="cost_per_reservation" />
-                <ScalarProperty Name="requested_date" ColumnName="requested_date" />
-                <ScalarProperty Name="end_time" ColumnName="end_time" />
-                <ScalarProperty Name="start_time" ColumnName="start_time" />
-                <ScalarProperty Name="description" ColumnName="description" />
-                <ScalarProperty Name="first_name" ColumnName="first_name" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="contracts">
             <EntityTypeMapping TypeName="pjrdev_condominiosModel.contract">
               <MappingFragment StoreEntitySet="contract">
@@ -2956,6 +2945,23 @@
                 <ScalarProperty Name="category_id" ColumnName="category_id" />
                 <ScalarProperty Name="municipality" ColumnName="municipality" />
                 <ScalarProperty Name="logo" ColumnName="logo" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="books">
+            <EntityTypeMapping TypeName="pjrdev_condominiosModel.book">
+              <MappingFragment StoreEntitySet="book">
+                <ScalarProperty Name="id_efac" ColumnName="id_efac" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="community_id" ColumnName="community_id" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="cost_per_reservation" ColumnName="cost_per_reservation" />
+                <ScalarProperty Name="requested_date" ColumnName="requested_date" />
+                <ScalarProperty Name="end_time" ColumnName="end_time" />
+                <ScalarProperty Name="start_time" ColumnName="start_time" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="first_name" ColumnName="first_name" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

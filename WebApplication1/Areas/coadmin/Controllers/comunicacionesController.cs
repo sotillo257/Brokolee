@@ -439,7 +439,6 @@ namespace WebApplication1.Areas.coadmin.Controllers
             {
                 long userId = (long)Session["USER_ID"];               
                 user curUser = entities.users.Find(userId);
-
                 blog blog = new blog();
                 blog.title = title;
                 blog.content = content;

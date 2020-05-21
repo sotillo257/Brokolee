@@ -71,11 +71,11 @@
         <EntityTypeShape EntityType="pjrdev_condominiosModel.fee" Width="1.5" PointX="5.25" PointY="16.625" />
         <AssociationConnector Association="pjrdev_condominiosModel.FK_fee_bank" />
         <AssociationConnector Association="pjrdev_condominiosModel.FK_fee_user" />
-        <EntityTypeShape EntityType="pjrdev_condominiosModel.book" Width="1.5" PointX="7.375" PointY="11.75" />
         <EntityTypeShape EntityType="pjrdev_condominiosModel.contract" Width="1.5" PointX="9.375" PointY="11.75" />
         <EntityTypeShape EntityType="pjrdev_condominiosModel.supplier" Width="1.5" PointX="8" PointY="0.875" />
         <AssociationConnector Association="pjrdev_condominiosModel.FK_supplier_category" />
         <AssociationConnector Association="pjrdev_condominiosModel.FK_comment_supplier" />
+        <EntityTypeShape EntityType="pjrdev_condominiosModel.book" Width="1.5" PointX="15.375" PointY="17.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -28,33 +28,22 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     user curUser = entities.users.Find(userId);
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                     List<efac> efacList = new List<efac>();
-
                     long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
-
-                    if (Session["CURRENT_COMU"] != null) {
-                        if (searchStr == "")
-                        {
-                            var query = (from r in entities.efacs where r.status == 3 && r.community_id == communityAct select r);
-                            efacList = query.ToList();
-                        }
-                        else
-                        {
-                            var query1 = (from r in entities.efacs
-                                          where r.first_name.Contains(searchStr) == true && r.status == 3 && r.community_id == communityAct
-                                          select r);
-                            efacList = query1.ToList();
-                        }
+                    if (searchStr == "")
+                    {
+                        var query = (from r in entities.efacs where r.community_id == communityAct select r);
+                        efacList = query.ToList();
                     }
                     else
                     {
-                        efacList.Clear();
+                        var query1 = (from r in entities.efacs
+                                      where r.first_name.Contains(searchStr) == true && r.community_id == communityAct
+                                      select r);
+                        efacList = query1.ToList();
                     }
-
                     facilidadesViewModel viewModel = new facilidadesViewModel();
-
                     communityList = ep.GetCommunityList(userId);
                     viewModel.communityList = communityList;
-
                     viewModel.side_menu = "facilidades";
                     viewModel.side_sub_menu = "facilidades_disponibles";
                     viewModel.document_category_list = entities.document_type.ToList();
@@ -69,7 +58,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 }
                 catch(Exception ex)
                 {
-                    return Redirect(Url.Action("error", "control", new { area = "coadmin", Error = "Facilidades listado: " + ex.Message }));
+                    return Redirect(Url.Action("error", "control", new { area = "coadmin", Error = "Facilidades disponibles: " + ex.Message }));
                 }               
             } else
             {
@@ -135,40 +124,51 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 efac newFac = new efac();
                 newFac.first_name = first_name;
                 newFac.description = description;
-                newFac.start_time = TimeSpan.ParseExact(start_time, "h\\:mm",
-                    System.Globalization.CultureInfo.CurrentCulture, TimeSpanStyles.None
-                    );
-                newFac.end_time = TimeSpan.ParseExact(end_time, "h\\:mm",
-                    System.Globalization.CultureInfo.CurrentCulture, TimeSpanStyles.None
-                    );
-                newFac.cost_reservation = Convert.ToDecimal(cost_reservation.Replace('.', ','));
-                newFac.duration = duration;
-                newFac.created_at = DateTime.Now;
-                newFac.community_id = Convert.ToInt64(Session["CURRENT_COMU"]);
-                newFac.status = 2;
-                if (upload_regulation != null && upload_regulation.ContentLength > 0)
+                int starT = Convert.ToInt32(start_time);
+                int endT = Convert.ToInt32(end_time);
+                TimeSpan Inicio = TimeSpan.ParseExact(start_time, "h\\:mm",
+                    System.Globalization.CultureInfo.CurrentCulture, TimeSpanStyles.None);
+                TimeSpan Final = TimeSpan.ParseExact(end_time, "h\\:mm",
+                    System.Globalization.CultureInfo.CurrentCulture, TimeSpanStyles.None);
+                TimeSpan min = new TimeSpan(8, 0, 0);
+                TimeSpan max = new TimeSpan(21, 0, 0);
+                if (Inicio < min || Final > max)
                 {
-                    var fileName = Path.GetFileName(upload_regulation.FileName);
-                    if (!Directory.Exists(Path.Combine(Server.MapPath("~/"), "Upload")))
-                    {
-                        Directory.CreateDirectory(Path.Combine(Server.MapPath("~/"), "Upload"));
-                    }
-
-                    if (!Directory.Exists(Path.Combine(Server.MapPath("~/Upload/"), "Regulation")))
-                    {
-                        Directory.CreateDirectory(Path.Combine(Server.MapPath("~/Upload/"), "Regulation"));
-                    }
-                    var path = Path.Combine(Server.MapPath("~/Upload/Regulation"), fileName);
-                    upload_regulation.SaveAs(path);
-                    newFac.upload_regulation = fileName;
+                    return Redirect(Url.Action("editar", "facilidades", new { area = "coadmin", Error = "La hora de inicio y de fin no estan entre las permitidas..." }));
                 }
                 else
                 {
-                    return Redirect(Url.Action("agregar", "facilidades", new { area = "coadmin", Error = "Debe cargar el reglamento" }));
-                }
-                entities.efacs.Add(newFac);
-                entities.SaveChanges();
-                return Redirect(Url.Action("solicitudes", "facilidades", new { area = "coadmin" }));
+                    newFac.start_time = Inicio;
+                    newFac.end_time = Final;
+                    newFac.cost_reservation = Convert.ToDecimal(cost_reservation.Replace('.', ','));
+                    newFac.duration = duration;
+                    newFac.created_at = DateTime.Now;
+                    newFac.community_id = Convert.ToInt64(Session["CURRENT_COMU"]);
+                    newFac.status = 1;
+                    if (upload_regulation != null && upload_regulation.ContentLength > 0)
+                    {
+                        var fileName = Path.GetFileName(upload_regulation.FileName);
+                        if (!Directory.Exists(Path.Combine(Server.MapPath("~/"), "Upload")))
+                        {
+                            Directory.CreateDirectory(Path.Combine(Server.MapPath("~/"), "Upload"));
+                        }
+
+                        if (!Directory.Exists(Path.Combine(Server.MapPath("~/Upload/"), "Regulation")))
+                        {
+                            Directory.CreateDirectory(Path.Combine(Server.MapPath("~/Upload/"), "Regulation"));
+                        }
+                        var path = Path.Combine(Server.MapPath("~/Upload/Regulation"), fileName);
+                        upload_regulation.SaveAs(path);
+                        newFac.upload_regulation = fileName;
+                    }
+                    else
+                    {
+                        return Redirect(Url.Action("agregar", "facilidades", new { area = "coadmin", Error = "Debe cargar el reglamento" }));
+                    }
+                    entities.efacs.Add(newFac);
+                    entities.SaveChanges();
+                    return Redirect(Url.Action("solicitudes", "facilidades", new { area = "coadmin" }));
+                }                
             }
             catch (Exception ex)
             {
@@ -180,49 +180,49 @@ namespace WebApplication1.Areas.coadmin.Controllers
             }
         }
 
-        public ActionResult reservar()
-        {
-            if (Session["USER_ID"] != null)
-            {
-                if (Session["CURRENT_COMU"] != null)
-                {
-                    try
-                    {
-                        long userId = (long)Session["USER_ID"];
-                        user curUser = entities.users.Find(userId);
-                        List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
-                        facilidadesViewModel viewModel = new facilidadesViewModel();
+        //public ActionResult reservar()
+        //{
+        //    if (Session["USER_ID"] != null)
+        //    {
+        //        if (Session["CURRENT_COMU"] != null)
+        //        {
+        //            try
+        //            {
+        //                long userId = (long)Session["USER_ID"];
+        //                user curUser = entities.users.Find(userId);
+        //                List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
+        //                facilidadesViewModel viewModel = new facilidadesViewModel();
 
-                        communityList = ep.GetCommunityList(userId);
-                        viewModel.communityList = communityList;
+        //                communityList = ep.GetCommunityList(userId);
+        //                viewModel.communityList = communityList;
 
-                        viewModel.side_menu = "facilidades";
-                        viewModel.side_sub_menu = "facilidades_reservar";
-                        viewModel.document_category_list = entities.document_type.ToList();
-                        viewModel.curUser = curUser;
-                        viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
-                        viewModel.pubMessageList = pubMessageList;
-                        viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                        return View(viewModel);
-                    }
-                    catch (Exception ex)
-                    {
-                        return Redirect(Url.Action("error", "control", new { area = "coadmin", Error = "Reservar facilidad: " + ex.Message }));
-                    }                    
-                }
-                else
-                {
-                    return Redirect(Url.Action("disponibles", "facilidades", new { area = "coadmin", Error = "No puede reservar facilidades. Usted no administra ninguna comunidad. Comuníquese con el Webmaster..." }));
-                }
+        //                viewModel.side_menu = "facilidades";
+        //                viewModel.side_sub_menu = "facilidades_reservar";
+        //                viewModel.document_category_list = entities.document_type.ToList();
+        //                viewModel.curUser = curUser;
+        //                viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
+        //                viewModel.pubMessageList = pubMessageList;
+        //                viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+        //                return View(viewModel);
+        //            }
+        //            catch (Exception ex)
+        //            {
+        //                return Redirect(Url.Action("error", "control", new { area = "coadmin", Error = "Reservar facilidad: " + ex.Message }));
+        //            }                    
+        //        }
+        //        else
+        //        {
+        //            return Redirect(Url.Action("disponibles", "facilidades", new { area = "coadmin", Error = "No puede reservar facilidades. Usted no administra ninguna comunidad. Comuníquese con el Webmaster..." }));
+        //        }
                 
-            } else
-            {
-                return Redirect(ep.GetLogoutUrl());
-            }
+        //    } else
+        //    {
+        //        return Redirect(ep.GetLogoutUrl());
+        //    }
                 
-        }
+        //}
 
-        public ActionResult editar(long? facID)
+        public ActionResult editar(string Error, long? facID)
         {
             if (Session["USER_ID"] != null)
             {
@@ -240,10 +240,8 @@ namespace WebApplication1.Areas.coadmin.Controllers
                                 user curUser = entities.users.Find(userId);
                                 List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                                 editarFacViewModel viewModel = new editarFacViewModel();
-
                                 communityList = ep.GetCommunityList(userId);
                                 viewModel.communityList = communityList;
-
                                 viewModel.side_menu = "facilidades";
                                 viewModel.side_sub_menu = "facilidades_editar";
                                 viewModel.document_category_list = entities.document_type.ToList();
@@ -259,6 +257,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                                 viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                                 viewModel.pubMessageList = pubMessageList;
                                 viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                                ViewBag.msgError = Error;
                                 return View(viewModel);
                             }
                             catch (Exception ex)
@@ -298,38 +297,48 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 efac editFac = entities.efacs.Find(facID);
                 editFac.first_name = first_name;
                 editFac.description = description;
-                editFac.start_time = TimeSpan.ParseExact(start_time, "h\\:mm",
+                int starT = Convert.ToInt32(start_time);
+                int endT = Convert.ToInt32(end_time);
+                TimeSpan Inicio = TimeSpan.ParseExact(start_time, "h\\:mm",
                     System.Globalization.CultureInfo.CurrentCulture, TimeSpanStyles.None);
-                editFac.end_time = TimeSpan.ParseExact(end_time, "h\\:mm",
+                TimeSpan Final = TimeSpan.ParseExact(end_time, "h\\:mm",
                     System.Globalization.CultureInfo.CurrentCulture, TimeSpanStyles.None);
-                editFac.duration = duration;
-                editFac.cost_reservation = Convert.ToDecimal(cost_reservation.Replace('.', ','));
-                if (upload_regulation != null  && upload_regulation.ContentLength > 0)
+                TimeSpan min = new TimeSpan(8, 0, 0);
+                TimeSpan max = new TimeSpan(21, 0, 0);
+                if (Inicio < min || Final > max)
                 {
-                    var fileName = Path.GetFileName(upload_regulation.FileName);
-                    if (!Directory.Exists(Path.Combine(Server.MapPath("~/"), "Upload")))
-                    {
-                        Directory.CreateDirectory(Path.Combine(Server.MapPath("~/"), "Upload"));
-                    }
-
-                    if (!Directory.Exists(Path.Combine(Server.MapPath("~/Upload/"), "Regulation")))
-                    {
-                        Directory.CreateDirectory(Path.Combine(Server.MapPath("~/Upload/"), "Regulation"));
-                    }
-                    var path = Path.Combine(Server.MapPath("~/Upload/Regulation"), fileName);
-                    upload_regulation.SaveAs(path);
-                    editFac.upload_regulation = fileName;
+                    return Redirect(Url.Action("editar", "facilidades", new { area = "coadmin", facID = facID, Error = "La hora de inicio y de fin no estan entre las permitidas..." }));
                 }
-                entities.SaveChanges();
-                return Redirect(Url.Action("disponibles", "facilidades", new { area = "coadmin" }));
-            } catch(Exception ex)
+                else
+                {
+                    editFac.start_time = Inicio;
+                    editFac.end_time = Final;
+                    editFac.duration = duration;
+                    editFac.cost_reservation = Convert.ToDecimal(cost_reservation.Replace('.', ','));
+                    if (upload_regulation != null && upload_regulation.ContentLength > 0)
+                    {
+                        var fileName = Path.GetFileName(upload_regulation.FileName);
+                        if (!Directory.Exists(Path.Combine(Server.MapPath("~/"), "Upload")))
+                        {
+                            Directory.CreateDirectory(Path.Combine(Server.MapPath("~/"), "Upload"));
+                        }
+
+                        if (!Directory.Exists(Path.Combine(Server.MapPath("~/Upload/"), "Regulation")))
+                        {
+                            Directory.CreateDirectory(Path.Combine(Server.MapPath("~/Upload/"), "Regulation"));
+                        }
+                        var path = Path.Combine(Server.MapPath("~/Upload/Regulation"), fileName);
+                        upload_regulation.SaveAs(path);
+                        editFac.upload_regulation = fileName;                        
+                    }
+                    entities.SaveChanges();
+                    return Redirect(Url.Action("disponibles", "facilidades", new { area = "coadmin" }));
+                }
+                                
+            } 
+            catch(Exception ex)
             {
-                return Redirect(Url.Action("editar", "facilidades",
-                    new {
-                        area = "coadmin",
-                        facID = facID,
-                        exception = ex.Message
-                    }));
+                return Redirect(Url.Action("editar", "facilidades",new { area = "coadmin", facID = facID, Error = "Error al editar la facilidad: ", ex.Message }));
             }
         }
 

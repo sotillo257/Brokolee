@@ -17,6 +17,7 @@ namespace WebApplication1.ViewModels
         public List<community> communityList { get; set; }
         public List<efac> facilitieList { get; set; }
         public efac facilidadSe { get; set; }
+        public List<string> timeList { get; set; }
         public List<document_type> document_category_list { get; set; }
         public user curUser { get; set; }
         public int messageCount { get; set; }
