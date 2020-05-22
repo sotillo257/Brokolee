@@ -19,6 +19,7 @@
                     <div class="float-right">
                         <ul class="breadcrumb float-md-right">
                             <li class="breadcrumb-item"><a href="@Url.Action("panel", "control")" class="text-success"><i class="mdi mdi-home-modern"></i> Panel de control</a></li>
+                            <li class="breadcrumb-item"><a href="@Url.Action("listado", "tareas")" class="text-success"> Tareas</a></li>
                             <li class="breadcrumb-item active">Ver tarea</li>
                         </ul>
                     </div>
@@ -29,7 +30,7 @@
         <!-- back button -->
         <div class="row pb-4">
             <div class="col-md-6">
-                <a href="javascript:history.back()"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+                <a href="@Url.Action("listado", "tareas")"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
             </div>
         </div>
         <!-- end back button -->
@@ -56,32 +57,25 @@
                                     <div class="col-md-2"><p><i class="mdi mdi-calendar-clock text-primary"></i> @Convert.ToDateTime(Model.viewTask.estimated_date).ToString("MM/dd/yyyy")</p></div>
                                     <div class="col-md-4">
                                         <p>
-                                            @if (Model.viewTask.status == 0)
-                                            {
-                                                <button type="button" class="btn btn-primary waves-effect waves-light btn-sm">Sin comenzar</button>
-                                            }
-                                            else
+                                            @if (Model.viewTask.status == 3)
                                             {
                                                 <button type="button" class="btn btn-dark waves-effect waves-light btn-sm">Sin comenzar</button>
-                                            }
-
-                                            @if (Model.viewTask.status == 1)
-                                            {
-                                                <button type="button" class="btn btn-primary waves-effect waves-light btn-sm">En Proceso</button>
-                                            }
-                                            else
-                                            {
                                                 <button type="button" class="btn btn-dark waves-effect waves-light btn-sm">En Proceso</button>
+                                                <button type="button" class="btn btn-danger waves-effect waves-light btn-sm">Terminada</button>
                                             }
-
-                                            @if (Model.viewTask.status == 2)
+                                            else if (Model.viewTask.status == 2)
                                             {
-                                                <button type="button" class="btn btn-primary waves-effect waves-light btn-sm">Terminada</button>
-                                            }
-                                            else
-                                            {
+                                                <button type="button" class="btn btn-dark waves-effect waves-light btn-sm">Sin comenzar</button>
+                                                <button type="button" class="btn btn-primary waves-effect waves-light btn-sm">En Proceso</button>
                                                 <button type="button" class="btn btn-dark waves-effect waves-light btn-sm">Terminada</button>
                                             }
+                                            else
+                                            {
+                                                <button type="button" class="btn btn-warning waves-effect waves-light btn-sm">Sin comenzar</button>
+                                                <button type="button" class="btn btn-dark waves-effect waves-light btn-sm">En Proceso</button>
+                                                <button type="button" class="btn btn-dark waves-effect waves-light btn-sm">Terminada</button>
+                                            }
+
                                         </p>
                                     </div>
                                     <div class="col-md-2"><p></p></div>
@@ -144,7 +138,7 @@
         <!-- back button -->
         <div class="row pb-4">
             <div class="col-md-6">
-                <a href="javascript:history.back()"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+                <a href="@Url.Action("listado", "tareas")"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
             </div>
         </div>
         <!-- end back button -->

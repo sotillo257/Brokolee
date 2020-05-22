@@ -84,12 +84,40 @@ namespace WebApplication1.Areas.coadmin.Controllers
                         viewModel.side_menu = "facilidades";
                         viewModel.side_sub_menu = "facilidades_agregar";
                         viewModel.document_category_list = entities.document_type.ToList();
+
                         int[] timeList = new int[24];
                         for (int i = 1; i < 25; i++)
                         {
                             timeList.SetValue(i, i - 1);
                         }
+
+                        TimeSpan minInicio = new TimeSpan(8, 0, 0);
+                        TimeSpan maxInicio = new TimeSpan(21, 0, 0);
+                        TimeSpan minFinal = new TimeSpan(9, 0, 0);
+                        TimeSpan maxFinal = new TimeSpan(22, 0, 0);
+                        TimeSpan masU = TimeSpan.FromHours(1);
+
+                        List<string> timeListIni = new List<string>();
+                        List<string> timeListFin = new List<string>();
+                        while (minInicio < maxInicio)
+                        {
+                            timeListIni.Add(
+                                minInicio.ToString("hh':'mm"));
+
+                            minInicio = minInicio.Add(masU);
+                        }
+
+                        while (minFinal < maxFinal)
+                        {
+                            timeListFin.Add(
+                                minFinal.ToString("hh':'mm"));
+
+                            minFinal = minFinal.Add(masU);
+                        }
+
                         viewModel.timeList = timeList;
+                        viewModel.timeListIni = timeListIni;
+                        viewModel.timeListFin = timeListFin;
                         viewModel.curUser = curUser;
                         viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                         viewModel.pubMessageList = pubMessageList;
@@ -123,11 +151,11 @@ namespace WebApplication1.Areas.coadmin.Controllers
             {
                 efac newFac = new efac();
                 newFac.first_name = first_name;
-                newFac.description = description;               
-                TimeSpan Inicio = TimeSpan.ParseExact(start_time, "h\\:mm",
-                    System.Globalization.CultureInfo.CurrentCulture, TimeSpanStyles.None);
-                TimeSpan Final = TimeSpan.ParseExact(end_time, "h\\:mm",
-                    System.Globalization.CultureInfo.CurrentCulture, TimeSpanStyles.None);
+                newFac.description = description;
+                int start = Convert.ToInt32(start_time);
+                int end = Convert.ToInt32(end_time);
+                TimeSpan Inicio = TimeSpan.FromHours(start);
+                TimeSpan Final = TimeSpan.FromHours(end);
                 TimeSpan min = new TimeSpan(8, 0, 0);
                 TimeSpan max = new TimeSpan(21, 0, 0);
                 if (Inicio < min || Final > max)
@@ -250,6 +278,40 @@ namespace WebApplication1.Areas.coadmin.Controllers
                                     timeList.SetValue(i, i - 1);
 
                                 }
+
+                                TimeSpan minInicio = new TimeSpan(8, 0, 0);
+                                TimeSpan maxInicio = new TimeSpan(21, 0, 0);
+                                TimeSpan minFinal = new TimeSpan(9, 0, 0);
+                                TimeSpan maxFinal = new TimeSpan(22, 0, 0);
+                                TimeSpan masU = TimeSpan.FromHours(1);
+
+                                List<string> timeListIni = new List<string>();
+                                List<string> timeListFin = new List<string>();
+                                while (minInicio < maxInicio)
+                                {
+                                    timeListIni.Add(
+                                        minInicio.ToString("hh':'mm"));
+
+                                    minInicio = minInicio.Add(masU);
+                                }
+
+                                while (minFinal < maxFinal)
+                                {
+                                    timeListFin.Add(
+                                        minFinal.ToString("hh':'mm"));
+
+                                    minFinal = minFinal.Add(masU);
+                                }
+
+                                string ini = Convert.ToString(editFac.start_time);
+                                string fin = Convert.ToString(editFac.end_time);
+                                TimeSpan horaInicio = TimeSpan.Parse(ini);
+                                TimeSpan horaFin = TimeSpan.Parse(fin);
+                              
+                                viewModel.inicioEfac = horaInicio.ToString("hh':'mm");
+                                viewModel.finalEfac = horaFin.ToString("hh':'mm");
+                                viewModel.timeListIni = timeListIni;
+                                viewModel.timeListFin = timeListFin;
                                 viewModel.timeList = timeList;
                                 viewModel.curUser = curUser;
                                 viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
@@ -295,12 +357,10 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 efac editFac = entities.efacs.Find(facID);
                 editFac.first_name = first_name;
                 editFac.description = description;
-                int starT = Convert.ToInt32(start_time);
-                int endT = Convert.ToInt32(end_time);
-                TimeSpan Inicio = TimeSpan.ParseExact(start_time, "h\\:mm",
-                    System.Globalization.CultureInfo.CurrentCulture, TimeSpanStyles.None);
-                TimeSpan Final = TimeSpan.ParseExact(end_time, "h\\:mm",
-                    System.Globalization.CultureInfo.CurrentCulture, TimeSpanStyles.None);
+                int start = Convert.ToInt32(start_time);
+                int end = Convert.ToInt32(end_time);
+                TimeSpan Inicio = TimeSpan.FromHours(start);
+                TimeSpan Final = TimeSpan.FromHours(end);
                 TimeSpan min = new TimeSpan(8, 0, 0);
                 TimeSpan max = new TimeSpan(21, 0, 0);
                 if (Inicio < min || Final > max)

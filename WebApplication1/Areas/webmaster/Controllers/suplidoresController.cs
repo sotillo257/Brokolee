@@ -366,6 +366,20 @@ namespace WebApplication1.Areas.webmaster.Controllers
             }));
         }
 
+        public JsonResult DeleteSupplierComment(long delID)
+        {
+            try
+            {
+                comment comments = entities.comments.Find(delID);
+                entities.comments.Remove(comments);
+                entities.SaveChanges();
+                return Json(new { result = "success" });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { result = "error", exception = ex.HResult });
+            }
+        }
 
 
 

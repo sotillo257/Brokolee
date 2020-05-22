@@ -29,7 +29,7 @@
                         <div class="float-right">
                             <ul class="breadcrumb float-md-right">
                                 <li class="breadcrumb-item"><a href="@Url.Action("panel", "control", new { area = "coadmin" })" class="text-success"><i class="mdi mdi-home-modern"></i> Panel de control</a></li>
-                                <li class="breadcrumb-item"><a href="@Url.Action("disponibles", "facilidades", new { area ="coadmin" })" class="text-success"> Facilidades disponibles</a></li>
+                                <li class="breadcrumb-item"><a href="@Url.Action("disponibles", "facilidades", new { area ="coadmin" })" class="text-success"> Facilidades</a></li>
                                 <li class="breadcrumb-item active">Editar facilidad</li>
                             </ul>
                         </div>
@@ -96,20 +96,45 @@
                                 <div class="form-divider"></div>
                                 <div class="form-group row">
                                     <label for="example-time-input" class="col-sm-3 col-form-label">Hora de inicio</label>
-                                    <div class="col-sm-9">
-                                        <input class="form-control" max="21:00" min="08:00" type="time" value="@Model.editFac.start_time.ToString(@"hh\:mm")"
-                                               data-toggle="tooltip" title="Hora de inicio de disponibilidad"
-                                               id="example-time-input" name="start_time" required />
+                                    <div class="col-sm-2">
+                                        <select required class="form-control" name="start_time"
+                                                data-toggle="tooltip" title="Hora de inicio de disponibilidad" id="start_time">
+                                            <option value="">--:--</option>
+                                            @foreach (var item in Model.timeListIni)
+                                            {
+                                                if (item == Model.inicioEfac)
+                                                {
+                                                    <option selected value="@item.Substring(0,2)">@item</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@item.Substring(0,2)">@item</option>
+                                                }
+
+                                            }
+                                        </select>
                                         @*<small class="form-text text-muted">Hora de inicio de disponibilidad</small>*@
                                     </div>
                                 </div>
                                 <div class="form-divider"></div>
                                 <div class="form-group row">
                                     <label for="example-time-input" class="col-sm-3 col-form-label">Hora de fin</label>
-                                    <div class="col-sm-9">
-                                        <input class="form-control" min="09:00" max="22:00" type="time" value="@Model.editFac.end_time.ToString(@"hh\:mm")"
-                                               data-toggle="tooltip" title="Hora de fin de disponibilidad"
-                                               id="example-time-input" name="end_time" required />
+                                    <div class="col-sm-2">
+                                        <select required class="form-control" name="end_time"
+                                                data-toggle="tooltip" title="Hora de fin de disponibilidad" id="end_time">
+                                            <option value="">--:--</option>
+                                            @foreach (var item in Model.timeListFin)
+                                            {
+                                                if (item == Model.finalEfac)
+                                                {
+                                                    <option selected value="@item.Substring(0,2)">@item</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@item.Substring(0,2)">@item</option>
+                                                }                                              
+                                            }
+                                        </select>
                                         @*<small class="form-text text-muted">Hora de fin de disponibilidad</small>*@
                                     </div>
                                 </div>

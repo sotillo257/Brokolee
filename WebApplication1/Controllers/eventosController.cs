@@ -24,25 +24,13 @@ namespace WebApplication1.Controllers
             {
                 try
                 {
-                    long userId = 0;
-                    if (Convert.ToInt32(Session["USER_ROLE"]) == 1)
-                    {
-                        userId = (long)Session["USER_ID"];
-                    }
-                    else if (Convert.ToInt32(Session["USER_ROLE"]) > 1
-                    && Session["ACC_USER_ID"] != null)
-                    {
-                        userId = (long)Session["ACC_USER_ID"];
-                    }                    
-
+                    long userId = (long)Session["USER_ID"];                                       
                     user curUser = entities.users.Find(userId);
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                     eventosViewModel viewModel = new eventosViewModel();
-
                     titulosList = ep.GetTitulosByTitular(userId);
                     listComunities = ep.GetCommunityListByTitular(titulosList);
                     viewModel.communityList = listComunities;                  
-
                     viewModel.side_menu = "eventos";
                     viewModel.document_category_list = entities.document_type.ToList();
                     viewModel.curUser = curUser;
@@ -54,7 +42,7 @@ namespace WebApplication1.Controllers
                 }
                 catch(Exception ex)
                 {
-                    return Redirect(Url.Action("Index", "Error"));
+                    return Redirect(Url.Action("error", "control", new { Error = "Eventos: " + ex.Message }));
                 }
             } else
             {
@@ -124,54 +112,50 @@ namespace WebApplication1.Controllers
             {
                 if(id != null)
                 {
-                    try
+                    long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
+                    @event event_item = entities.events.Where(x=> x.id == id && x.community_id == communityAct).FirstOrDefault();
+                    if (event_item != null)
                     {
-                        long userId = 0;
-                        if (Convert.ToInt32(Session["USER_ROLE"]) == 1)
+                        try
                         {
-                            userId = (long)Session["USER_ID"];
+                            long userId = (long)Session["USER_ID"];
+                            user curUser = entities.users.Find(userId);
+                            List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
+                            registradoViewModel viewModel = new registradoViewModel();
+                            titulosList = ep.GetTitulosByTitular(userId);
+                            listComunities = ep.GetCommunityListByTitular(titulosList);
+                            viewModel.communityList = listComunities;
+                            viewModel.side_menu = "eventos";
+                            viewModel.event_name = event_item.name;
+                            viewModel.event_date = Convert.ToDateTime(event_item.created_at).ToString("dd/MM/yyyy");
+                            viewModel.event_time = Convert.ToDateTime(event_item.created_at).ToString("hh:mm tt");
+                            viewModel.place = event_item.place;
+                            viewModel.description = event_item.description;
+                            viewModel.note = event_item.note;
+                            viewModel.document_category_list = entities.document_type.ToList();
+                            viewModel.curUser = curUser;
+                            viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
+                            viewModel.pubMessageList = pubMessageList;
+                            viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                            return View(viewModel);
                         }
-                        else if (Convert.ToInt32(Session["USER_ROLE"]) > 1
-                        && Session["ACC_USER_ID"] != null)
+                        catch (Exception ex)
                         {
-                            userId = (long)Session["ACC_USER_ID"];
+                            return Redirect(Url.Action("error", "control", new { Error = "Ver evento: " + ex.Message }));
                         }
-
-                        user curUser = entities.users.Find(userId);
-                        List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
-                        @event event_item = entities.events.Find(id);
-                        registradoViewModel viewModel = new registradoViewModel();
-
-                        titulosList = ep.GetTitulosByTitular(userId);
-                        listComunities = ep.GetCommunityListByTitular(titulosList);
-                        viewModel.communityList = listComunities;
-
-                        viewModel.side_menu = "registrado";
-                        viewModel.event_name = event_item.name;
-                        viewModel.event_date = Convert.ToDateTime(event_item.created_at).ToString("dd/MM/yyyy");
-                        viewModel.event_time = Convert.ToDateTime(event_item.created_at).ToString("hh:mm tt");
-                        viewModel.place = event_item.place;
-                        viewModel.description = event_item.description;
-                        viewModel.note = event_item.note;
-                        viewModel.document_category_list = entities.document_type.ToList();
-                        viewModel.curUser = curUser;
-                        viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
-                        viewModel.pubMessageList = pubMessageList;
-                        viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                        return View(viewModel);
                     }
-                    catch(Exception ex)
+                    else
                     {
-                        return Redirect(Url.Action("Index", "Error"));
-                    }                   
+                        return Redirect(Url.Action("calendario", "eventos", new { Error = "No existe ese elemento: " }));
+                    }                                    
                 }
                 else
                 {
-                    return Redirect(Url.Action("NotFound", "Error"));
+                    return Redirect(Url.Action("calendario", "eventos"));
                 }               
             } else
             {
-                return Redirect(Url.Action("iniciar", "iniciar"));
+                return Redirect(ep.GetLogoutUrl());
             }
         }
 

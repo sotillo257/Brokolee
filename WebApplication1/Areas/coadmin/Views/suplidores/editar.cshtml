@@ -44,6 +44,7 @@
                     <div class="float-right">
                         <ul class="breadcrumb float-md-right">
                             <li class="breadcrumb-item"><a href="@Url.Action("panel", "control", new { area="coadmin" })" class="text-success"><i class="mdi mdi-home-modern"></i> Panel de control</a></li>
+                            <li class="breadcrumb-item"><a href="@Url.Action("listado", "suplidores", new { area = "coadmin" })" class="text-success"> Suplidores</a></li>
                             <li class="breadcrumb-item active">Editar suplidor</li>
                         </ul>
                     </div>
@@ -54,7 +55,7 @@
         <!-- back button -->
         <div class="row pb-4">
             <div class="col-md-6">
-                <a href="javascript:history.back()"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+                <a href="@Url.Action("listado", "suplidores", new { area = "coadmin" })"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
             </div>
         </div>
         <!-- end back button -->
@@ -110,7 +111,7 @@
                                     <input class="form-control" type="text" value="@Model.editSupplier.company"
                                            placeholder="Compañía suplidor" id="example-email-input" name="company"
                                            data-toggle="tooltip" title="Nombre de la compañía del suplidor" />
-                                    <small class="form-text text-muted">Nombre de la compañía del suplidor</small>
+                                    @*<small class="form-text text-muted">Nombre de la compañía del suplidor</small>*@
                                 </div>
                             </div>
                             <div class="form-divider"></div>
@@ -120,7 +121,7 @@
                                     <input class="form-control" type="text" value="@Model.editSupplier.contact_name"
                                            placeholder="Nombre de contacto" id="example-name1-input" name="contact_name"
                                            data-toggle="tooltip" title="Nombre de contacto del suplidor" />
-                                    <small class="form-text text-muted">Nombre de contacto del suplidor</small>
+                                    @*<small class="form-text text-muted">Nombre de contacto del suplidor</small>*@
                                 </div>
                             </div>
                             <div class="form-divider"></div>
@@ -130,7 +131,7 @@
                                     <input class="form-control" type="text" value="@Model.editSupplier.type_service"
                                            placeholder="Tipo de servicio" name="type_service" id="example-lastname1-input"
                                            data-toggle="tooltip" title="Servicio que ofrece" />
-                                    <small class="form-text text-muted">Servicio que ofrece</small>
+                                    @*<small class="form-text text-muted">Servicio que ofrece</small>*@
                                 </div>
                             </div>
                             <div class="form-divider"></div>
@@ -153,7 +154,7 @@
 
                                         }
                                     </select>
-                                    <small class="form-text text-muted">Categoría del suplidor</small>
+                                    @*<small class="form-text text-muted">Categoría del suplidor</small>*@
                                 </div>
                             </div>
                             <div class="form-divider"></div>
@@ -163,7 +164,7 @@
                                     <input class="form-control" type="text" value="@Model.editSupplier.address"
                                            name="address" data-toggle="tooltip" title="Dirección del suplidor"
                                            placeholder="Dirección" id="example-lastname1-input">
-                                    <small class="form-text text-muted">Dirección del suplidor</small>
+                                    @*<small class="form-text text-muted">Dirección del suplidor</small>*@
                                 </div>
                             </div>
                             <div class="form-divider"></div>
@@ -173,7 +174,7 @@
                                     <input class="form-control" type="tel" value="@Model.editSupplier.phone"
                                            name="phone" data-toggle="tooltip" title="Teléfono del suplidor"
                                            placeholder="# Teléfono" id="example-tel1-input">
-                                    <small class="form-text text-muted">Teléfono del suplidor</small>
+                                    @*<small class="form-text text-muted">Teléfono del suplidor</small>*@
                                 </div>
                             </div>
                             <div class="form-divider"></div>
@@ -183,7 +184,7 @@
                                     <input class="form-control" type="email" value="@Model.editSupplier.email"
                                            name="email" data-toggle="tooltip" title="Correo electrónico del suplidor"
                                            placeholder="Correo electrónico" id="example-email-input">
-                                    <small class="form-text text-muted">Correo electrónico del suplidor</small>
+                                    @*<small class="form-text text-muted">Correo electrónico del suplidor</small>*@
                                 </div>
                             </div>
                             <div class="form-divider"></div>
@@ -203,11 +204,11 @@
                                     <input class="form-control" type="text" value="@Model.editSupplier.web_page"
                                            name="web_page" data-toggle="tooltip" title="Por ejemplo: wwww.suplidores.com"
                                            placeholder="Url de página web" id="example-email-input">
-                                    <small class="form-text text-muted">Por ejemplo: wwww.suplidores.com</small>
+                                    @*<small class="form-text text-muted">Por ejemplo: wwww.suplidores.com</small>*@
                                 </div>
                             </div>
                             <a href=""><button type="submit" class="btn btn-primary waves-effect waves-light">Guardar</button></a>
-                            <a href=""><button type="button" class="btn btn-danger waves-effect waves-light">Cancelar</button></a>
+                            <a href="@Url.Action("listado", "suplidores", new { area = "coadmin" })"><button type="button" class="btn btn-danger waves-effect waves-light">Cancelar</button></a>
                         </div>
                     }
                 </div>
@@ -216,7 +217,7 @@
         <!-- back button -->
         <div class="row pb-4">
             <div class="col-md-6">
-                <a href="javascript:history.back()"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+                <a href="@Url.Action("listado", "suplidores", new { area = "coadmin" })"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
             </div>
         </div>
         <!-- end back button -->

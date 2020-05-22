@@ -16,6 +16,10 @@ namespace WebApplication1.Areas.coadmin.ViewModels
         public List<community> communityList { get; set; }
         public List<document_type> document_category_list { get; set; }
         public efac editFac { get; set; }
+        public List<string> timeListIni { get; set; }
+        public List<string> timeListFin { get; set; }
+        public string inicioEfac { get; set; }
+        public string finalEfac { get; set; }
         public int[] timeList { get; set; }
         public user curUser { get; set; }
         public int messageCount { get; set; }

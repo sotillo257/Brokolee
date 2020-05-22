@@ -23,18 +23,24 @@
                             {
                                 if (ViewBag.newCuota == 1)
                                 {
-                                    <li class="breadcrumb-item"><a href="@Url.Action("listado", "cuotas", new { area = "coadmin" })" class="text-success">Listado de cuotas</a></li>
+                                    <li class="breadcrumb-item"><a href="@Url.Action("listado", "cuotas", new { area = "coadmin" })" class="text-success">Cuotas</a></li>
                                     <li class="breadcrumb-item"><a href="@Url.Action("agregar", "cuotas", new { area = "coadmin" })" class="text-success">Agregar cuota</a></li>
                                 }
                                 else if (ViewBag.newCuota == 2)
                                 {
-                                    <li class="breadcrumb-item"><a href="@Url.Action("listado", "cuotas", new { area = "coadmin" })" class="text-success">Listado de cuotas</a></li>
+                                    <li class="breadcrumb-item"><a href="@Url.Action("listado", "cuotas", new { area = "coadmin" })" class="text-success">Cuotas</a></li>
                                     <li class="breadcrumb-item"><a href="@Url.Action("editar", "cuotas", new { area = "coadmin", editID = ViewBag.isEdit  })" class="text-success">Editar cuota</a></li>
                                 }
                                 else
                                 {
-                                    <li class="breadcrumb-item"><a href="@Url.Action("listadoCuentas", "cuotas", new { area = "coadmin" })" class="text-success">Listado de cuentas de banco</a></li>
+                                    <li class="breadcrumb-item"><a href="@Url.Action("listado", "cuotas", new { area = "coadmin" })" class="text-success">Cuotas</a></li>
+                                    <li class="breadcrumb-item"><a href="@Url.Action("listadoCuentas", "cuotas", new { area = "coadmin" })" class="text-success">Cuentas de banco</a></li>
                                 }
+                            }
+                            else
+                            {
+                                <li class="breadcrumb-item"><a href="@Url.Action("listado", "cuotas", new { area = "coadmin" })" class="text-success">Cuotas</a></li>
+                                <li class="breadcrumb-item"><a href="@Url.Action("listadoCuentas", "cuotas", new { area = "coadmin" })" class="text-success">Cuentas de banco</a></li>
                             }
                             <li class="breadcrumb-item active">Agregar cuenta</li>
                         </ul>
@@ -63,7 +69,7 @@
                 }
                 else
                 {
-                    <a href="@Url.Action("panel", "control", new { area = "coadmin" })"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+                    <a href="@Url.Action("listadoCuentas", "cuotas", new { area = "coadmin" })"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
                 }
             </div>
         </div>
@@ -139,7 +145,7 @@
                         }
                         else
                         {
-                            <a href="@Url.Action("panel", "control", new { area = "coadmin" })"><button type="button" class="btn btn-danger waves-effect waves-light">Cancelar</button></a>
+                            <a href="@Url.Action("listadoCuentas", "cuotas", new { area = "coadmin" })"><button type="button" class="btn btn-danger waves-effect waves-light">Cancelar</button></a>
                         }
 
                     </div>
@@ -167,7 +173,7 @@
                 }
                 else
                 {
-                    <a href="@Url.Action("panel", "control", new { area = "coadmin" })"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+                    <a href="@Url.Action("listadoCuentas", "cuotas", new { area = "coadmin" })"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
                 }
             </div>
         </div>

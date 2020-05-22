@@ -19,7 +19,7 @@
                     <div class="float-right">
                         <ul class="breadcrumb float-md-right">
                             <li class="breadcrumb-item"><a href="@Url.Action("panel", "control")" class="text-success"><i class="mdi mdi-home-modern"></i> Panel de control</a></li>
-                            <li class="breadcrumb-item active">Listado de tareas</li>
+                            <li class="breadcrumb-item active">Tareas</li>
                         </ul>
                     </div>
                 </div>
@@ -44,7 +44,7 @@
         <!-- back button -->
         <div class="row pb-4">
             <div class="col-md-6">
-                <a href="javascript:history.back()"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+                <a href="@Url.Action("panel", "control")"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
             </div>
         </div>
         <!-- end back button -->
@@ -56,6 +56,9 @@
                         <div class="row form-material">
                             <div class="col-md-6 mb-1">
                                 <h5 class="d-inline-block">Listado</h5>
+                            </div>
+                            <div class="col-md-6 mb-1 float-right">
+                                <a href="@Url.Action("sugerirtarea", "tareas")"><button type="button" class="btn btn-primary waves-effect waves-light float-xl-right float-lg-right float-md-left">Sugerir tarea</button></a>
                             </div>
                         </div>
                         <div class="table-responsive">
@@ -88,7 +91,7 @@
                                             <td class="text-center">
                                                 @if (item.status == 3)
                                                 {
-                                                    <button type="button" class="btn btn-dark waves-effect waves-light btn-sm">Terminada</button>
+                                                    <button type="button" class="btn btn-danger waves-effect waves-light btn-sm">Terminada</button>
                                                 }
                                                 else if (item.status == 2)
                                                 {
@@ -113,7 +116,7 @@
         <!-- back button -->
         <div class="row pb-4">
             <div class="col-md-6">
-                <a href="javascript:history.back()"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+                <a href="@Url.Action("panel", "control")"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
             </div>
         </div>
         <!-- end back button -->

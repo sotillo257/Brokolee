@@ -24,49 +24,29 @@ namespace WebApplication1.Controllers
             {
                 try
                 {
-                    long userId = 0;
-                    if (Convert.ToInt32(Session["USER_ROLE"]) == 1)
-                    {
-                        userId = (long)Session["USER_ID"];
-                    }
-                    else if (Convert.ToInt32(Session["USER_ROLE"]) > 1
-                    && Session["ACC_USER_ID"] != null)
-                    {
-                        userId = (long)Session["ACC_USER_ID"];
-                    }
-
+                    long userId = (long)Session["USER_ID"];                    
                     user curUser = entities.users.Find(userId);
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                     List<task> taskList = new List<task>();
-
                     long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
-
-                    if (Session["CURRENT_COMU"] != null)
+                    if (searchStr != "")
                     {
-                        if (searchStr != "")
-                        {
-                            var query = (from r in entities.tasks where r.task_name.Contains(searchStr) == true && r.community_id == communityAct select r);
-                            taskList = query.ToList();
-                        }
-                        else
-                        {
-                            var query = (from r in entities.tasks where r.community_id == communityAct select r);
-                            taskList = query.ToList();
-                        }
+                        var query = (from r in entities.tasks
+                                     where r.task_name.Contains(searchStr) == true
+                                    && r.community_id == communityAct && r.status != 3
+                                     select r);
+                        taskList = query.ToList();
                     }
                     else
                     {
-                        taskList.Clear();
+                        var query = (from r in entities.tasks where r.community_id == communityAct && r.status != 3 select r);
+                        taskList = query.ToList();
                     }
-
-                    
-
                     tareasViewModel viewModel = new tareasViewModel();
 
                     titulosList = ep.GetTitulosByTitular(userId);
                     listComunities = ep.GetCommunityListByTitular(titulosList);
-                    viewModel.communityList = listComunities;
-             
+                    viewModel.communityList = listComunities;             
                     viewModel.side_menu = "tareas";
                     viewModel.side_sub_menu = "tareas_listado";
                     viewModel.taskList = taskList;
@@ -95,16 +75,7 @@ namespace WebApplication1.Controllers
             {
                 try
                 {
-                    long userId = 0;
-                    if (Convert.ToInt32(Session["USER_ROLE"]) == 1)
-                    {
-                        userId = (long)Session["USER_ID"];
-                    }
-                    else if (Convert.ToInt32(Session["USER_ROLE"]) > 1
-                    && Session["ACC_USER_ID"] != null)
-                    {
-                        userId = (long)Session["ACC_USER_ID"];
-                    }
+                    long userId = (long)Session["USER_ID"];                    
                     user curUser = entities.users.Find(userId);
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                     List<task> taskList = new List<task>();
@@ -120,14 +91,11 @@ namespace WebApplication1.Controllers
                     else
                     {
                         taskList.Clear();
-                    }
-                        
+                    }                        
                     tareasViewModel viewModel = new tareasViewModel();
-
                     titulosList = ep.GetTitulosByTitular(userId);
                     listComunities = ep.GetCommunityListByTitular(titulosList);
-                    viewModel.communityList = listComunities;
-          
+                    viewModel.communityList = listComunities;          
                     viewModel.side_menu = "tareas";
                     viewModel.side_sub_menu = "tareas_completadas";
                     viewModel.taskList = taskList;
@@ -155,17 +123,7 @@ namespace WebApplication1.Controllers
             {
                 try
                 {
-                    long userId = 0;
-                    if (Convert.ToInt32(Session["USER_ROLE"]) == 1)
-                    {
-                        userId = (long)Session["USER_ID"];
-                    }
-                    else if (Convert.ToInt32(Session["USER_ROLE"]) > 1
-                    && Session["ACC_USER_ID"] != null)
-                    {
-                        userId = (long)Session["ACC_USER_ID"];
-                    }
-
+                    long userId = (long)Session["USER_ID"];                    
                     user curUser = entities.users.Find(userId);
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                     List<TaskVerItem> taskcommentList = new List<TaskVerItem>();
@@ -183,7 +141,6 @@ namespace WebApplication1.Controllers
                     }
                     taskuser taskuser = entities.taskusers.Where(m => m.user_id == userId).FirstOrDefault();
                     string taskList = taskuser.task_list;
-
                     if (taskList != null)
                     {
                         string[] strList = taskList.Split(',');
@@ -214,13 +171,10 @@ namespace WebApplication1.Controllers
 
                         entities.SaveChanges();
                     }
-
                     tareasViewModel viewModel = new tareasViewModel();
-
                     titulosList = ep.GetTitulosByTitular(userId);
                     listComunities = ep.GetCommunityListByTitular(titulosList);
-                    viewModel.communityList = listComunities;
-           
+                    viewModel.communityList = listComunities;           
                     viewModel.side_menu = "tareas";
                     viewModel.side_sub_menu = "tareas_vertarea";
                     viewModel.document_category_list = entities.document_type.ToList();
@@ -251,24 +205,12 @@ namespace WebApplication1.Controllers
                 {
                     try
                     {
-                        long userId = 0;
-                        if (Convert.ToInt32(Session["USER_ROLE"]) == 1)
-                        {
-                            userId = (long)Session["USER_ID"];
-                        }
-                        else if (Convert.ToInt32(Session["USER_ROLE"]) > 1
-                        && Session["ACC_USER_ID"] != null)
-                        {
-                            userId = (long)Session["ACC_USER_ID"];
-                        }
-
+                        long uuserId = (long)Session["USER_ID"];                       
                         user curUser = entities.users.Find(userId);
                         tareasViewModel viewModel = new tareasViewModel();
-
                         titulosList = ep.GetTitulosByTitular(userId);
                         listComunities = ep.GetCommunityListByTitular(titulosList);
                         viewModel.communityList = listComunities;
-
                         viewModel.side_menu = "tareas";
                         viewModel.side_sub_menu = "tareas_sugerirtarea";
                         viewModel.document_category_list = entities.document_type.ToList();

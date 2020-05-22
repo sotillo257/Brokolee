@@ -82,6 +82,10 @@
         #dataTable-directorio-suplidores_filter {
             display: none !important;
         }
+
+         #blogTable_filter {
+            display: none !important;
+        }
     </style>
 </head>
 
@@ -1508,6 +1512,39 @@
             formData.append("delID", id);
 
             var url = "@Url.Action("DeleteSupplier", "suplidores", new { area = "webmaster" })";
+            var respuesta = confirm("¿Estás seguro que deseas éste suplidor?");
+            if (respuesta == true) {
+                $.ajax({
+                    url: url,
+                    type: "post",
+                    data: formData,
+                    success: function (result) {
+                        $("#ck-body-loading-overlay").hide();
+                        if (result.result === "error") {
+                            console.log('couln\'t get roles');
+                        } else {
+                            location.reload();
+                        }
+                    },
+                    processData: false,
+                    contentType: false
+                });
+            }
+            else {
+                return false;
+            }
+        }
+
+        function onDeleteSupplierComment(self) {
+
+            var id = $(self).data('id');
+            var formData = new FormData();
+            formData.append("delID", id);
+
+            var url = "@Url.Action("DeleteSupplierComment", "suplidores", new { area = "webmaster" })";
+
+             var respuesta = confirm("¿Estás seguro que deseas eliminar el comentario?");
+        if (respuesta == true) {
 
             $.ajax({
                 url: url,
@@ -1524,6 +1561,11 @@
                 processData: false,
                 contentType: false
             });
+             } else {
+
+            return false;
+
+        }
         }
 
          function onDeactiveResident(self) {
