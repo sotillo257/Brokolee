@@ -28,7 +28,7 @@
                     </div>
                     <div class="float-right">
                         <ul class="breadcrumb float-md-right">
-                            <li class="breadcrumb-item"><a href="@Url.Action("panel", "control")" class="text-success"><i class="mdi mdi-home-modern"></i> Panel de control</a></li>
+                            <li class="breadcrumb-item"><a href="@Url.Action("community", "control")" class="text-success"><i class="mdi mdi-home-modern"></i> Panel de control</a></li>
                             <li class="breadcrumb-item"><a href="@Url.Action("disponibles", "facilidades")" class="text-success"> Facilidades</a></li>
                             <li class="breadcrumb-item active">Reservar facilidad</li>
                         </ul>
@@ -91,7 +91,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-dollar-sign"></i></span>
                                         </div>
-                                        <input maxlength="30" readonly class="form-control" type="text"
+                                        <input maxlength="20" readonly class="form-control" type="text"
                                                onkeypress="return filterFloat(event,this);" value="@Model.facilidadSe.cost_reservation.ToString().Replace(',', '.')" placeholder=""
                                                data-toggle="tooltip" title="Costo por reservación"
                                                id="example-email-input" name="costo" required>

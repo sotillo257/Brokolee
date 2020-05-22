@@ -19,6 +19,7 @@
                     <div class="float-right">
                         <ul class="breadcrumb float-md-right">
                             <li class="breadcrumb-item"><a href="@Url.Action("community", "control")" class="text-success"><i class="mdi mdi-home-modern"></i> Panel de control</a></li>
+                            <li class="breadcrumb-item"><a href="@Url.Action("listadoCuentas", "cuotas")" class="text-success"> Cuentas de banco</a></li>
                             <li class="breadcrumb-item active">Editar cuenta</li>
                         </ul>
                     </div>
@@ -29,7 +30,7 @@
         <!-- back button -->
         <div class="row pb-4">
             <div class="col-md-6">
-                <a href="javascript:history.back()"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+                <a href="@Url.Action("listadoCuentas", "cuotas")"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
             </div>
         </div>
         <!-- end back button -->
@@ -41,7 +42,6 @@
                     {
                         id = "addForm",
                         @class = "search-form",
-                        area = "coadmin",
                         enctype = "multipart/form-data"
                     }))
                     {
@@ -53,7 +53,7 @@
                             <div class="form-group row">
                                 <label for="example-email-input" class="col-sm-3 col-form-label">Nombre de la cuenta</label>
                                 <div class="col-sm-9">
-                                    <input maxlength="30" class="form-control" type="text" value="@Model.bankItem.account_name" name="account_name"
+                                    <input maxlength="20" class="form-control" type="text" value="@Model.bankItem.account_name" name="account_name"
                                            placeholder="Cuenta personal" id="example-email-input" required>
                                     @*<small class="form-text text-muted">Nombre de la cuenta</small>*@
                                 </div>
@@ -71,7 +71,7 @@
                             <div class="form-group row">
                                 <label for="example-name1-input" class="col-sm-3 col-form-label">Nombre del banco</label>
                                 <div class="col-sm-9">
-                                    <input  maxlength="30" class="form-control soloTexto" type="text" value="@Model.bankItem.bank_name" name="bank_name"
+                                    <input  maxlength="20" class="form-control soloTexto" type="text" value="@Model.bankItem.bank_name" name="bank_name"
                                            placeholder="Nombre del banco" id="example-name1-input" required>
                                     @*<small class="form-text text-muted">Nombre del banco</small>*@
                                 </div>
@@ -86,7 +86,7 @@
                                 </div>
                             </div>
                             <button type="submit" class="btn btn-primary waves-effect waves-light">Guardar</button>
-                            <a href="javascript:history.back()"><button type="button" class="btn btn-danger waves-effect waves-light">Cancelar</button>
+                            <a href="@Url.Action("listadoCuentas", "cuotas")"><button type="button" class="btn btn-danger waves-effect waves-light">Cancelar</button>
 
                         </div>
                     }
@@ -96,7 +96,7 @@
         <!-- back button -->
         <div class="row pb-4">
             <div class="col-md-6">
-                <a href="javascript:history.back()"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+                <a href="@Url.Action("listadoCuentas", "cuotas")"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
             </div>
         </div>
         <!-- end back button -->

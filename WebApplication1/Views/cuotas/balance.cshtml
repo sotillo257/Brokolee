@@ -19,7 +19,7 @@
                     <div class="float-right">
                         <ul class="breadcrumb float-md-right">
                             <li class="breadcrumb-item"><a href="@Url.Action("community", "control")" class="text-success"><i class="mdi mdi-home-modern"></i> Panel de control</a></li>
-                            <li class="breadcrumb-item active">Balance pendiente</li>
+                            <li class="breadcrumb-item active">Balance</li>
                         </ul>
                     </div>
                 </div>
@@ -68,9 +68,9 @@
                                     @foreach (var item in Model.feeList)
                                     {
                                         <tr>
-                                            <td>@item.cost</td>
-                                            <td>@item.tax_charge</td>
-                                            <td>@item.penalty</td>                                           
+                                            <td>@item.cost.ToString().Replace(',', '.')</td>
+                                            <td>@item.tax_charge.ToString().Replace(',', '.')</td>
+                                            <td>@item.penalty.ToString().Replace(',', '.')</td>                                           
                                             <td class="text-center">                                                 
                                                 <button onclick="#" data-id="@item.id" type="button" class="btn btn-warning waves-effect waves-light btn-sm">Pagar</button>
                                             </td>

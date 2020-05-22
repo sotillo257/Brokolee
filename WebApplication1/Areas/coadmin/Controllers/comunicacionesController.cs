@@ -349,12 +349,12 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 entities.blogcomments.Add(blogcomment);
                 entities.SaveChanges();
                 return Redirect(Url.Action("verblog", "comunicaciones",
-                    new { blogID = blogID }));
+                    new { area = "coadmin", blogID = blogID }));
             }
             catch (Exception)
             {
                 return Redirect(Url.Action("agregarcomentario", "comunicaciones",
-                    new { blogID = blogID }));
+                    new { area = "coadmin", blogID = blogID }));
             }
         }
 
@@ -439,11 +439,11 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 blog.community_id = Convert.ToInt64(Session["CURRENT_COMU"]); 
                 entities.blogs.Add(blog);
                 entities.SaveChanges();
-                return Redirect(Url.Action("blog", "comunicaciones"));
+                return Redirect(Url.Action("blog", "comunicaciones", new { area = "coadmin" }));
             }
             catch (Exception)
             {
-                return Redirect(Url.Action("agregarblog", "comunicaciones"));
+                return Redirect(Url.Action("agregarblog", "comunicaciones", new { area = "coadmin" }));
             }
         }
 
@@ -676,37 +676,6 @@ namespace WebApplication1.Areas.coadmin.Controllers
             //                exception = ex.Message
             //});
             //        }
-        }
-
-        public JsonResult DeleteBlog(long id)
-        {
-            //try
-            //{
-
-            //List<communuser> communusers = entities.communusers.Where(m => m.commun_id == id).ToList();
-            //entities.communusers.RemoveRange(communusers);
-
-
-            //community delCommunity = entities.communities.Find(id);
-            //entities.communities.Remove(delCommunity);
-            //blogcomment blogcom = entities.blogcomments.Find(id);
-            //entities.blogcomments.Remove(blogcom);
-            List<blogcomment> blogcomments = entities.blogcomments.Where(m => m.blog_id == id).ToList();
-            entities.blogcomments.RemoveRange(blogcomments);
-            blog blogger = entities.blogs.Find(id);
-            entities.blogs.Remove(blogger);
-
-            entities.SaveChanges();
-            return Json(new { result = "success" });
-            //}
-            //catch (Exception ex)
-            //{
-            return Json(new
-            {
-                result = "error",
-                //exception = ex.Message
-            });
-            //}
         }
     }
 }

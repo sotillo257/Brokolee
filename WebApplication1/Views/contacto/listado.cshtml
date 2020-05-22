@@ -17,7 +17,7 @@
                         </div>
                         <div class="float-right">
                             <ul class="breadcrumb float-md-right">
-                                <li class="breadcrumb-item"><a href="@Url.Action("panel", "control")" class="text-success"><i class="mdi mdi-home-modern"></i> Panel de control</a></li>
+                                <li class="breadcrumb-item"><a href="@Url.Action("community", "control")" class="text-success"><i class="mdi mdi-home-modern"></i> Panel de control</a></li>
                                 <li class="breadcrumb-item active">Contactos</li>
                             </ul>
                         </div>
@@ -34,7 +34,6 @@
                                 {
                                     id = "searchForm",
                                     @class = "search-form",
-                                    area = "coadmin",
                                     enctype = "multipart/form-data"
                                 }))
                                 {
@@ -126,7 +125,7 @@
 
             <div class="row pb-4">
                 <div class="col-md-6">
-                    <a href="javascript:history.back()"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+                    <a href="@Url.Action("community", "control")"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
                 </div>
             </div>
             @*<!DOCTYPE html>

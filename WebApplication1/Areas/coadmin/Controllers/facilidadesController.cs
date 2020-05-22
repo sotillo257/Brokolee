@@ -162,6 +162,10 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 {
                     return Redirect(Url.Action("agregar", "facilidades", new { area = "coadmin", Error = "La hora de inicio y de fin no estan entre las permitidas..." }));
                 }
+                else if (Final < Inicio)
+                {
+                    return Redirect(Url.Action("agregar", "facilidades", new { area = "coadmin", Error = "La hora de fin no puede ser menor a la hora de inicio..." }));
+                }
                 else
                 {
                     newFac.start_time = Inicio;
@@ -366,6 +370,10 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 if (Inicio < min || Final > max)
                 {
                     return Redirect(Url.Action("editar", "facilidades", new { area = "coadmin", facID = facID, Error = "La hora de inicio y de fin no estan entre las permitidas..." }));
+                }
+                else if (Final < Inicio)
+                {
+                    return Redirect(Url.Action("editar", "facilidades", new { area = "coadmin", facID = facID, Error = "La hora de fin no puede ser menor a la hora de inicio..." }));
                 }
                 else
                 {

@@ -36,7 +36,7 @@
                     <div class="float-right">
                         <ul class="breadcrumb float-md-right">
                             <li class="breadcrumb-item"><a href="@Url.Action("panel", "control", new { area = "webmaster" })" class="text-success"><i class="mdi mdi-home-modern"></i> Panel de control</a></li>
-                            <li class="breadcrumb-item"><a href="@Url.Action("listado", "webmaster", new { area = "webmaster" })" class="text-success">Listado de webmasters</a></li>
+                            <li class="breadcrumb-item"><a href="@Url.Action("listado", "webmaster", new { area = "webmaster" })" class="text-success">Webmasters</a></li>
                             <li class="breadcrumb-item active">Agregar webmaster</li>
                         </ul>
                     </div>
@@ -92,7 +92,7 @@
                         <div class="form-group row">
                             <label for="example-email-input" class="col-sm-3 col-form-label">Nombre</label>
                             <div class="col-sm-9">
-                                <input maxlength="30" class="form-control soloTexto" type="text" value="" name="first_name1"
+                                <input maxlength="20" class="form-control soloTexto" type="text" value="" name="first_name1"
                                        data-toggle="tooltip" title="Nombre del webmaster"
                                        placeholder="Nombre" id="example-email-input" required>
                                 <small class="form-text text-muted">Nombre del webmaster</small>

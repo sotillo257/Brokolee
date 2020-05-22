@@ -1132,6 +1132,54 @@
                 }
             });
         });
+        $("#newfacForm").on('submit', function (evt) {
+            if ($(".selectFinal").val() == "")
+            {
+                evt.preventDefault();  
+                 $(".selectFinal").addClass('is-invalid');
+            }  
+
+            if ($(".selectInicio").val() == "")
+            {
+                evt.preventDefault();  
+                 $(".selectInicio").addClass('is-invalid');
+            }  
+
+            if ($(".selectInicio").val() >= $(".selectFinal").val())
+            {
+                $('#alertaHoras').css("display", "block");
+                evt.preventDefault();  
+                $(".selectInicio").addClass('is-invalid');
+                $(".selectFinal").addClass('is-invalid');
+            }
+        });
+
+
+
+        $('.selectInicio').on('change', function (event) {
+            if ($(".selectFinal").val() != "") {
+                if ($(".selectInicio").val() >= $(".selectFinal").val()) {
+                    $(".selectInicio").addClass('is-invalid');
+                } else {
+                    $(".selectInicio").removeClass('is-invalid');
+                    $(".selectFinal").removeClass('is-invalid');
+                    $('#alertaHoras').css("display", "none");
+                }
+            }            
+        });
+
+         $('.selectFinal').on('change', function (event) {
+            if ($(".selectInicio").val() != "") {
+                if ($(".selectFinal").val() <= $(".selectInicio").val()) {
+                    $(".selectFinal").addClass('is-invalid');
+                } else {
+                    $(".selectFinal").removeClass('is-invalid');
+                    $(".selectInicio").removeClass('is-invalid');
+                     $('#alertaHoras').css("display", "none");
+                }
+            } 
+        });
+
     </script>
 
     <script>
@@ -1878,6 +1926,11 @@
                 contentType: false
             });
         }
+
+        function horasValidation(self) {
+             console.log(1);
+            onhorasValidation($(self).val());
+        }      
 
         //*****
         function onResidentPrint(self){

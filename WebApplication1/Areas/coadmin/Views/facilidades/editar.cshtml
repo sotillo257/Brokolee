@@ -77,7 +77,7 @@
                                 <div class="form-group row">
                                     <label for="example-email-input" class="col-sm-3 col-form-label">Nombre</label>
                                     <div class="col-sm-9">
-                                        <input maxlength="30" class="form-control soloTexto" type="text" value="@Model.editFac.first_name" required
+                                        <input maxlength="20" class="form-control soloTexto" type="text" value="@Model.editFac.first_name" required
                                                data-toggle="tooltip" title="Nombre de la facilidad"
                                                placeholder="Nombre" id="example-email-input" name="first_name">
                                         @*<small class="form-text text-muted">Nombre de la facilidad</small>*@
@@ -97,7 +97,7 @@
                                 <div class="form-group row">
                                     <label for="example-time-input" class="col-sm-3 col-form-label">Hora de inicio</label>
                                     <div class="col-sm-2">
-                                        <select required class="form-control" name="start_time"
+                                        <select required class="form-control selectInicio" name="start_time"
                                                 data-toggle="tooltip" title="Hora de inicio de disponibilidad" id="start_time">
                                             <option value="">--:--</option>
                                             @foreach (var item in Model.timeListIni)
@@ -120,7 +120,7 @@
                                 <div class="form-group row">
                                     <label for="example-time-input" class="col-sm-3 col-form-label">Hora de fin</label>
                                     <div class="col-sm-2">
-                                        <select required class="form-control" name="end_time"
+                                        <select required class="form-control selectFinal" name="end_time"
                                                 data-toggle="tooltip" title="Hora de fin de disponibilidad" id="end_time">
                                             <option value="">--:--</option>
                                             @foreach (var item in Model.timeListFin)
@@ -132,7 +132,7 @@
                                                 else
                                                 {
                                                     <option value="@item.Substring(0,2)">@item</option>
-                                                }                                              
+                                                }
                                             }
                                         </select>
                                         @*<small class="form-text text-muted">Hora de fin de disponibilidad</small>*@
@@ -208,6 +208,9 @@
                                             <small class="form-text text-muted">Descargar el reglamento de la facilidad</small>
                                         </div>
                                     </div>
+                                </div>
+                                <div id="alertaHoras" class="alert alert-danger fade show" style="display:none" role="alert">
+                                    <strong>Error!</strong> La hora de inicio no puede ser mayor a la hora de fin
                                 </div>
                                 <div class="form-divider"></div>
                                 <a href=""><button type="submit" class="btn btn-primary waves-effect waves-light">Guardar</button></a>

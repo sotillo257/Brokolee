@@ -22,7 +22,7 @@
                     </div>
                     <div class="float-right">
                         <ul class="breadcrumb float-md-right">
-                            <li class="breadcrumb-item"><a href="@Url.Action("panel", "control")" class="text-success"><i class="mdi mdi-home-modern"></i> Panel de control</a></li>
+                            <li class="breadcrumb-item"><a href="@Url.Action("community", "control")" class="text-success"><i class="mdi mdi-home-modern"></i> Panel de control</a></li>
                             <li class="breadcrumb-item"><a href="@Url.Action("blog", "comunicaciones")" class="text-success">Blog</a></li>
                             <li class="breadcrumb-item"><a href="@Url.Action("verblog", "comunicaciones", new { blogID = Model.editBlog.id })" class="text-success">Ver blog</a></li>
                             <li class="breadcrumb-item active">Editar entrada</li>
@@ -50,7 +50,6 @@
                         id = "editblogForm",
                         @class = "",
                         enctype = "multipart/form-data",
-                        area = "coadmin"
                     }))
                     {
                         @Html.AntiForgeryToken()

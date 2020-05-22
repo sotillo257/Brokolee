@@ -205,7 +205,7 @@ namespace WebApplication1.Controllers
                 {
                     try
                     {
-                        long uuserId = (long)Session["USER_ID"];                       
+                        long userId = (long)Session["USER_ID"];                       
                         user curUser = entities.users.Find(userId);
                         tareasViewModel viewModel = new tareasViewModel();
                         titulosList = ep.GetTitulosByTitular(userId);

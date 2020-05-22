@@ -19,6 +19,7 @@
                     <div class="float-right">
                         <ul class="breadcrumb float-md-right">
                             <li class="breadcrumb-item"><a href="@Url.Action("community", "control")" class="text-success"><i class="mdi mdi-home-modern"></i> Panel de control</a></li>
+                            <li class="breadcrumb-item"><a href="@Url.Action("listadoCuentas", "cuotas")" class="text-success"> Cuentas de banco</a></li>
                             <li class="breadcrumb-item active">Agregar cuenta</li>
                         </ul>
                     </div>
@@ -29,7 +30,7 @@
         <!-- back button -->
         <div class="row pb-4">
             <div class="col-md-6">
-                <a href="javascript:history.back()"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+                <a href="@Url.Action("listadoCuentas", "cuotas")"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
             </div>
         </div>
         <!-- end back button -->
@@ -38,32 +39,16 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="d-inline-block">Nueva cuenta</h5>
-                        <div class="form-group row">
-                            <div class="form-divider"></div>
-                            <label for="example-address1-input" class="col-sm-3 col-form-label">Elija el tipo de cuenta</label>
-                            <div class="col-sm-9">
-                                <div class="form-check-inline my-2">
-                                    <div class="custom-control custom-checkbox">
-                                        <label><input type="radio" id="id_radio_bank" name="tipocuenta" value="banco" onchange="onBankChange(this)"> Banco</label>
-                                    </div>
-                                </div>
-                                <div class="form-check-inline my-2">
-                                    <div class="custom-control custom-checkbox">
-                                        <label><input type="radio" id="id_radio_credit" name="tipocuenta" value="creditcard" onchange="onCreditChange(this)"> Tarjeta de credito</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <h5 class="d-inline-block">Nueva cuenta</h5>                        
                         <form method="post" id="bancoForm" action="@Url.Action("addbank", "cuotas")">
                             @Html.AntiForgeryToken()
-                            <div class="banco box">
+                            <div class="banco">
                                 <div class="form-divider"></div>
                                 <h5 class="d-inline-block m-b-20">Información de la cuenta de banco</h5>
                                 <div class="form-group row">
                                     <label for="example-email-input" class="col-sm-3 col-form-label">Nombre de la cuenta</label>
                                     <div class="col-sm-9">
-                                        <input maxlength="30" class="form-control" type="text" value="" 
+                                        <input maxlength="20" class="form-control" type="text" value="" 
                                                name="account_name" required  data-toggle="tooltip"
                                                title="Nombre de la cuenta"
                                                placeholder="Cuenta personal" id="example-email-input">
@@ -85,7 +70,7 @@
                                 <div class="form-group row">
                                     <label for="example-name1-input" class="col-sm-3 col-form-label">Nombre del banco</label>
                                     <div class="col-sm-9">
-                                        <input maxlength="30" class="form-control soloTexto" type="text" value="" name="bank_name" required 
+                                        <input maxlength="20" class="form-control soloTexto" type="text" value="" name="bank_name" required 
                                                placeholder="Nombre del banco" id="example-name1-input" 
                                                data-toggle="tooltip" title="Nombre del banco"
                                                />
@@ -103,11 +88,11 @@
                                     </div>
                                 </div>
                                 <button type="submit" class="btn btn-primary waves-effect waves-light">Guardar</button>
-                                <a href="@Url.Action("estado", "cuotas")"><button type="button" class="btn btn-danger waves-effect waves-light">Cancelar</button></a>
+                                <a href="@Url.Action("listadoCuentas", "cuotas")"><button type="button" class="btn btn-danger waves-effect waves-light">Cancelar</button></a>
                             </div>
                         </form>
                         
-                        <form method="post" id="creditForm" action="@Url.Action("addcredit", "cuotas")">
+                        @*<form method="post" id="creditForm" action="@Url.Action("addcredit", "cuotas")">
                             @Html.AntiForgeryToken()
                             <div class="creditcard box">
                                 <div class="form-divider"></div>
@@ -116,7 +101,7 @@
                                     <div class="form-group row col-md-6 mb-2">
                                         <label for="example-email-input" class="col-sm-6 col-form-label">Nombre</label>
                                         <div class="col-sm-6">
-                                            <input maxlength="30" class="form-control soloTexto" type="text" value="" name="first_name" required
+                                            <input maxlength="20" class="form-control soloTexto" type="text" value="" name="first_name" required
                                                    placeholder="Nombre en la tarjeta" id="example-email-input">
                                         </div>
                                     </div>
@@ -242,10 +227,10 @@
                                     </div>
                                 </div>
                                 <button type="submit" class="btn btn-primary waves-effect waves-light">Guardar</button>
-                                <button type="button" class="btn btn-danger waves-effect waves-light">Cancelar</button>
+                                <button href="@Url.Action("listadoCuentas", "cuotas")" type="button" class="btn btn-danger waves-effect waves-light">Cancelar</button>
 
                             </div>
-                        </form>
+                        </form>*@
                     </div>
                 </div>
             </div>
@@ -253,7 +238,7 @@
         <!-- back button -->
         <div class="row pb-4">
             <div class="col-md-6">
-                <a href="javascript:history.back()"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
+                <a href="@Url.Action("listadoCuentas", "cuotas")"><button type="button" class="btn btn-light waves-effect waves-light"><i class="mdi mdi-keyboard-return"></i> Regresar</button></a>
             </div>
         </div>
         <!-- end back button -->
