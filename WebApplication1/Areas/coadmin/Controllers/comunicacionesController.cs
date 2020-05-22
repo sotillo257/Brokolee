@@ -28,10 +28,8 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     user curUser = entities.users.Find(userId);
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                     comunicacionesViewModel viewModel = new comunicacionesViewModel();
-
                     communityList = ep.GetCommunityList(userId);
                     viewModel.communityList = communityList;
-
                     viewModel.side_menu = "comunicaciones";
                     viewModel.side_sub_menu = "comunicaciones_blog";
                     viewModel.document_category_list = entities.document_type.ToList();
@@ -82,12 +80,10 @@ namespace WebApplication1.Areas.coadmin.Controllers
                         user curUser = entities.users.Find(userId);
                         List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                         agregarBlogViewModel viewModel = new agregarBlogViewModel();
-
                         communityList = ep.GetCommunityList(userId);
                         viewModel.communityList = communityList;
-
-                        viewModel.side_menu = "agregarblog";
-                        viewModel.side_sub_menu = "agregarblog";
+                        viewModel.side_menu = "comunicaciones";
+                        viewModel.side_sub_menu = "comunicaciones_blog";
                         viewModel.document_category_list = entities.document_type.ToList();
                         viewModel.curUser = curUser;
                         viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
@@ -130,12 +126,10 @@ namespace WebApplication1.Areas.coadmin.Controllers
                                 user curUser = entities.users.Find(userId);
                                 List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                                 agregarComentarioViewModel viewModel = new agregarComentarioViewModel();
-
                                 communityList = ep.GetCommunityList(userId);
                                 viewModel.communityList = communityList;
-
-                                viewModel.side_menu = "agregarcomentario";
-                                viewModel.side_sub_menu = "agregarcomentario";
+                                viewModel.side_menu = "comunicaciones";
+                                viewModel.side_sub_menu = "comunicaciones_blog";
                                 viewModel.document_category_list = entities.document_type.ToList();
                                 viewModel.curUser = curUser;
                                 viewModel.blogID = Convert.ToInt64(blogID);
@@ -240,7 +234,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                                 communityList = ep.GetCommunityList(userId);
                                 viewModel.communityList = communityList;
                                 viewModel.side_menu = "comunicaciones";
-                                viewModel.side_sub_menu = "comunicaciones";
+                                viewModel.side_sub_menu = "comunicaciones_blog";
                                 viewModel.document_category_list = entities.document_type.ToList();
                                 viewModel.curUser = curUser;
                                 viewModel.editBlog = blog;
@@ -295,14 +289,11 @@ namespace WebApplication1.Areas.coadmin.Controllers
                                 long userId = (long)Session["USER_ID"];
                                 List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                                 user curUser = entities.users.Find(userId);
-
                                 verblogViewModel viewModel = new verblogViewModel();
-
                                 communityList = ep.GetCommunityList(userId);
                                 viewModel.communityList = communityList;
-
                                 viewModel.side_menu = "comunicaciones";
-                                viewModel.side_sub_menu = "comunicaciones";
+                                viewModel.side_sub_menu = "comunicaciones_blog";
                                 viewModel.document_category_list = entities.document_type.ToList();
                                 viewModel.curUser = curUser;
                                 viewModel.viewBlog = blog;

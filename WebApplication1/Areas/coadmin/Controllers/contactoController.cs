@@ -22,23 +22,11 @@ namespace WebApplication1.Areas.coadmin.Controllers
             {
                 try
                 {
-                    long userId = 0;
-                    if (Convert.ToInt32(Session["USER_ROLE"]) == 2)
-                    {
-                        userId = (long)Session["USER_ID"];
-                    }
-                    else if (Convert.ToInt32(Session["USER_ROLE"]) > 2
-                    && Session["ACC_USER_ID"] != null)
-                    {
-                        userId = (long)Session["ACC_USER_ID"];
-                    }
-
+                    long userId = (long)Session["USER_ID"];                    
                     user curUser = entities.users.Find(userId);
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                     List<contactinfo> contactList = new List<contactinfo>();
-
                     long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
-
                     if (searchStr == "")
                     {
                         var query1 = (from r in entities.contactinfoes where r.community_id == communityAct select r);
@@ -52,11 +40,9 @@ namespace WebApplication1.Areas.coadmin.Controllers
                         contactList = query2.ToList();
                     }
 
-                    contactoViewModel viewModel = new contactoViewModel();
-                  
+                    contactoViewModel viewModel = new contactoViewModel();                  
                     communityList = ep.GetCommunityList(userId);
                     viewModel.communityList = communityList;
-
                     viewModel.side_menu = "contacto";
                     viewModel.side_sub_menu = "contacto";
                     viewModel.contactList = contactList;
@@ -92,27 +78,15 @@ namespace WebApplication1.Areas.coadmin.Controllers
                         List<contactinfo> contactinfoList = entities.contactinfoes.Where(m => m.community_id == communityAct).ToList();
                         if (contactinfoList == null || contactinfoList.Count == 0)
                         {
-                            long userId = 0;
-                            if (Convert.ToInt32(Session["USER_ROLE"]) == 2)
-                            {
-                                userId = (long)Session["USER_ID"];
-                            }
-                            else if (Convert.ToInt32(Session["USER_ROLE"]) > 2
-                            && Session["ACC_USER_ID"] != null)
-                            {
-                                userId = (long)Session["ACC_USER_ID"];
-                            }
-
+                            long userId = (long)Session["USER_ID"];                           
                             user curUser = entities.users.Find(userId);
                             List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                             List<document_type> document_category_list = entities.document_type.ToList();
                             contactoViewModel viewModel = new contactoViewModel();
-
                             communityList = ep.GetCommunityList(userId);
                             viewModel.communityList = communityList;
-
                             viewModel.side_menu = "contacto";
-                            viewModel.side_sub_menu = "contacto_informacion";
+                            viewModel.side_sub_menu = "contacto";
                             viewModel.document_category_list = document_category_list;
                             if (contactinfoList.Count > 0)
                             {
@@ -168,12 +142,10 @@ namespace WebApplication1.Areas.coadmin.Controllers
                             List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                             user curUser = entities.users.Find(userId);
                             contactoViewModel viewModel = new contactoViewModel();
-
                             communityList = ep.GetCommunityList(userId);
                             viewModel.communityList = communityList;
-
                             viewModel.side_menu = "contacto";
-                            viewModel.side_sub_menu = "manage_edit_headlines";
+                            viewModel.side_sub_menu = "contacto";
                             viewModel.document_category_list = entities.document_type.ToList();
                             viewModel.curUser = curUser;
                             viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
@@ -222,13 +194,11 @@ namespace WebApplication1.Areas.coadmin.Controllers
                             List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                             user curUser = entities.users.Find(userId);
                             contactoViewModel viewModel = new contactoViewModel();
-
                             List<community> communityList = new List<community>();
                             communityList = ep.GetCommunityList(userId);
                             viewModel.communityList = communityList;
-
                             viewModel.side_menu = "contacto";
-                            viewModel.side_sub_menu = "manage_edit_headlines";
+                            viewModel.side_sub_menu = "contacto";
                             viewModel.document_category_list = entities.document_type.ToList();
                             viewModel.curUser = curUser;
                             viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
