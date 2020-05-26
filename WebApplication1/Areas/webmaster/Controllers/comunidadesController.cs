@@ -324,7 +324,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
 
                 List<Titulo> titulosC = entities.Titulos.Where(m => m.IdCommunity == id).ToList();
                 List<long> idsTitulares = new List<long>();
-                //Almacenando Id de los Titulares
+                //Almacenando Id de los Titulares para eliminar
                 foreach (var item2 in titulosC)
                 {
                     idsTitulares.Add(item2.IdUser);
