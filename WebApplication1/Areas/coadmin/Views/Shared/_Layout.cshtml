@@ -93,6 +93,10 @@
             display: none !important;
         }
 
+        #eventsR_filter {
+            display: none !important;
+        }
+
         #dataTable-tareas-completadas_filter {
             display: none !important;
         }
@@ -2385,19 +2389,23 @@
             }
         });
 
-        $("#customCheck6").change(function () {
+         $("#customCheck6").change(function () {
             if ($("#customCheck6").prop('checked')) {
                 $("#customCheck7").prop('checked', false);
+                $(".box").show();
             } else {
                 $("#customCheck7").prop('checked', true);
+                $(".box").hide();
             }
         });
 
         $("#customCheck7").change(function () {
             if ($("#customCheck7").prop('checked')) {
                 $("#customCheck6").prop('checked', false);
+                $(".box").hide();
             } else {
                 $("#customCheck6").prop('checked', true);
+                $(".box").show();
             }
         });
 

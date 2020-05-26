@@ -436,9 +436,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     List<@event> eventList = new List<@event>();
 
                     long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
-
-                    if (Session["CURRENT_COMU"] != null)
-                    {
+                  
                         if (searchStr == "")
                         {
                             var query = (from r in entities.events where r.is_active == true && r.community_id == communityAct select r);
@@ -451,12 +449,8 @@ namespace WebApplication1.Areas.coadmin.Controllers
                                          select r);
                             eventList = query.ToList();
                         }
-                    }
-                    else
-                    {
-                        eventList.Clear();
-                    }
-
+                    
+                    
                     foreach (var item in eventList)
                     {
                         CalEventView ii = new CalEventView();

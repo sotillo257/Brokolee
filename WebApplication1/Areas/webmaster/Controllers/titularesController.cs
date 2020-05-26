@@ -632,7 +632,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                     }
                     else
                     {
-                        return Redirect(Url.Action("listado", "titulares", new { area = "webmaster", Error = "Debe tener seleccionar una comunidad para crear titulares", iN = 1 }));
+                        return Redirect(Url.Action("listado", "titulares", new { area = "webmaster", Error = "Debe tener seleccionada una comunidad para crear titulares", iN = 1 }));
                     }
                 }
                 else
