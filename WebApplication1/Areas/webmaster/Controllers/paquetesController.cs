@@ -175,7 +175,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 editPackage.admin_email = admin_email;
                 editPackage.community = community;
                 editPackage.description = description;
-                editPackage.payment = Convert.ToDecimal(payment.Replace('.', ','));
+                editPackage.payment = Convert.ToDecimal(payment);
                 editPackage.updated_at = DateTime.Now;
                 editPackage.suscribe_link = suscribe_link;
                 entities.SaveChanges();
@@ -203,7 +203,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 newPackage.admin_email = admin_email;
                 newPackage.description = description;
                 newPackage.created_at = DateTime.Now;               
-                newPackage.payment = Convert.ToDecimal(payment.Replace('.', ','));
+                newPackage.payment = Convert.ToDecimal(payment);
                 entities.packages.Add(newPackage);
                 entities.SaveChanges();
                 newPackage = entities.packages.Find(newPackage.id);

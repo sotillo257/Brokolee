@@ -412,11 +412,11 @@ namespace WebApplication1.Areas.coadmin.Controllers
             if (feeItem != null)
             {
                 feeItem.name = fee_name;
-                feeItem.cost = Convert.ToDecimal(cost.Replace('.', ','));
+                feeItem.cost = Convert.ToDecimal(cost);
                 feeItem.bank_id = bank_id;
                 feeItem.merchant_account = merchant_account;
-                feeItem.tax_charge = Convert.ToDecimal(taxCharge.Replace('.', ','));
-                feeItem.penalty = Convert.ToDecimal(penalty.Replace('.', ','));
+                feeItem.tax_charge = Convert.ToDecimal(taxCharge);
+                feeItem.penalty = Convert.ToDecimal(penalty);
                 entities.SaveChanges();
                 return Redirect(Url.Action("listado", "cuotas", new { area = "coadmin" }));
             }
@@ -433,11 +433,11 @@ namespace WebApplication1.Areas.coadmin.Controllers
             long userId = (long)Session["USER_ID"];
             fee feeItem = new fee();
             feeItem.name = fee_name;
-            feeItem.cost = Convert.ToDecimal(cost.Replace('.', ','));
+            feeItem.cost = Convert.ToDecimal(cost);
             feeItem.bank_id = bank_id;
             feeItem.merchant_account = merchant_account;
-            feeItem.tax_charge = Convert.ToDecimal(taxCharge.Replace('.', ','));
-            feeItem.penalty = Convert.ToDecimal(penalty.Replace('.', ','));
+            feeItem.tax_charge = Convert.ToDecimal(taxCharge);
+            feeItem.penalty = Convert.ToDecimal(penalty);
             feeItem.created_at = DateTime.Now;
             feeItem.user_id = userId;
             feeItem.community_id = Convert.ToInt64(Session["CURRENT_COMU"]);

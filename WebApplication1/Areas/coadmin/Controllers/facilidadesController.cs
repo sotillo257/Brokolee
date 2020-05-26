@@ -170,7 +170,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 {
                     newFac.start_time = Inicio;
                     newFac.end_time = Final;
-                    newFac.cost_reservation = Convert.ToDecimal(cost_reservation.Replace('.', ','));
+                    newFac.cost_reservation = Convert.ToDecimal(cost_reservation);
                     newFac.duration = duration;
                     newFac.created_at = DateTime.Now;
                     newFac.community_id = Convert.ToInt64(Session["CURRENT_COMU"]);
@@ -380,7 +380,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     editFac.start_time = Inicio;
                     editFac.end_time = Final;
                     editFac.duration = duration;
-                    editFac.cost_reservation = Convert.ToDecimal(cost_reservation.Replace('.', ','));
+                    editFac.cost_reservation = Convert.ToDecimal(cost_reservation);
                     if (upload_regulation != null && upload_regulation.ContentLength > 0)
                     {
                         var fileName = Path.GetFileName(upload_regulation.FileName);
