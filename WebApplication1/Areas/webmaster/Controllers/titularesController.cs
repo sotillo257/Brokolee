@@ -589,7 +589,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 }
                 catch (Exception ex)
                 {
-                    return Redirect(Url.Action("error", "control", new { area = "webmaster", Error = "Error al obtener listado de titulares: " + ex }));
+                    return Redirect(Url.Action("error", "control", new { area = "webmaster", Error = "Error al obtener listado de titulares: " + ex.Message }));
                 }
             }
             else
@@ -883,14 +883,25 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 entities.creditcards.RemoveRange(creditcards);
                 List<taskuser> taskusers = entities.taskusers.Where(m => m.user_id == delID).ToList();
                 entities.taskusers.RemoveRange(taskusers);
+                List<taskcomment> taskcomments = entities.taskcomments.Where(m => m.user_id == delID).ToList();
+                entities.taskcomments.RemoveRange(taskcomments);
                 List<uso> usos = entities.usoes.Where(m => m.create_userid == delID).ToList();
                 entities.usoes.RemoveRange(usos);
                 List<emailtheme> emailthemes = entities.emailthemes.Where(m => m.user_id == delID).ToList();
-                entities.emailthemes.RemoveRange(emailthemes);               
+                entities.emailthemes.RemoveRange(emailthemes);
 
-                user delUser = entities.users.Find(delID);
-                delUser.is_del = true;
-                entities.SaveChanges();
+                List<Vehiculo> vehiculos = entities.Vehiculos.Where(x => x.Titulo.IdUser == delID).ToList();
+                entities.Vehiculos.RemoveRange(vehiculos);
+                List<Titulo> titulos = entities.Titulos.Where(x => x.IdUser == delID).ToList();
+                entities.Titulos.RemoveRange(titulos);
+                List<comment> comentarios = entities.comments.Where(x=> x.user_id == delID).ToList();
+                entities.comments.RemoveRange(comentarios);
+
+                List<book> reservas = entities.books.Where(x => x.idUser == delID).ToList();
+                entities.books.RemoveRange(reservas);
+
+                user delUser = entities.users.Find(delID);                
+                entities.users.Remove(delUser);
                 return Json(new { result = "success" });
             }
             catch (Exception ex)

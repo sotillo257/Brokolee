@@ -126,10 +126,12 @@
                         <div class="form-group row">
                             <label for="example-email-input" class="col-sm-3 col-form-label">Correo electrónico</label>
                             <div class="col-sm-9">
-                                <input maxlength="40" class="form-control" type="email" value="" name="email" required
+                                <input maxlength="40" class="form-control inputEmailKey" type="email" value="" name="email" required
                                        data-toggle="tooltip" title="Correo electrónico del titular"
                                        placeholder="Correo electrónico" id="example-email-input">
-                                <small class="form-text text-muted">Correo electrónico del titular</small>
+                                <div id="textError">
+                                    <small class="form-text text-muted">Correo electrónico del titular</small>
+                                </div>                              
                             </div>
                         </div>
                         <div class="form-divider"></div>
@@ -187,7 +189,7 @@
                         <div class="form-group row">
                             <label for="example-address11-input" class="col-sm-3 col-form-label">Dirección postal</label>
                             <div class="col-sm-9">
-                                <input maxlength="15" class="form-control" type="text" value="" name="postal_address"
+                                <input maxlength="15" autocomplete="off" class="form-control" type="text" value="" name="postal_address"
                                        data-toggle="tooltip" title="Dirección postal del titular"
                                        placeholder="Dirección postal" id="example-address11-input" required>
                                 <small class="form-text text-muted">Dirección postal del titular</small>

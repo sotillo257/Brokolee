@@ -65,6 +65,7 @@
           <Property Name="community_id" Type="bigint" />
           <Property Name="status" Type="int" />
           <Property Name="id_efac" Type="bigint" />
+          <Property Name="idUser" Type="bigint" />
         </EntityType>
         <EntityType Name="carpentry">
           <Key>
@@ -2340,6 +2341,7 @@
           <Property Name="community_id" Type="Int64" />
           <Property Name="status" Type="Int32" />
           <Property Name="id_efac" Type="Int64" />
+          <Property Name="idUser" Type="Int64" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -2952,6 +2954,7 @@
           <EntitySetMapping Name="books">
             <EntityTypeMapping TypeName="pjrdev_condominiosModel.book">
               <MappingFragment StoreEntitySet="book">
+                <ScalarProperty Name="idUser" ColumnName="idUser" />
                 <ScalarProperty Name="id_efac" ColumnName="id_efac" />
                 <ScalarProperty Name="status" ColumnName="status" />
                 <ScalarProperty Name="community_id" ColumnName="community_id" />

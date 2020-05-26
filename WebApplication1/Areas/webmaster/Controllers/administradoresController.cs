@@ -17,7 +17,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
         pjrdev_condominiosEntities entities = new pjrdev_condominiosEntities();
         EFPublicRepository ep = new EFPublicRepository();
         // GET: webmaster/administradores
-        public ActionResult listado()
+        public ActionResult listado(string Error)
         {
             if (Session["USER_ID"] != null)
             {
@@ -53,6 +53,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                 viewModel.pubMessageList = pubMessageList;
                 viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                ViewBag.msgError = Error;
                 return View(viewModel);
             } else
             {
@@ -61,7 +62,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 
         }
 
-        public ActionResult agregar()
+        public ActionResult agregar(string Error)
         {
             if (Session["USER_ID"] != null)
             {
@@ -77,6 +78,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                 viewModel.pubMessageList = pubMessageList;
                 viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                ViewBag.msgError = Error;
                 return View(viewModel);
             } else
             {
@@ -120,7 +122,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
             }
         }
 
-        public ActionResult editar(long? id)
+        public ActionResult editar(string Error, long? id)
         {
             if (Session["USER_ID"] != null)
             {
@@ -143,6 +145,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = pubMessageList;
                     viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                    ViewBag.msgError = Error;
                     return View(viewModel);
                 }
                 else
@@ -223,7 +226,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
             }
             catch (Exception ex)
             {
-                return Redirect(Url.Action("agregar", "administradores", new { area = "webmaster", exception = ex.Message }));
+                return Redirect(Url.Action("agregar", "administradores", new { area = "webmaster", Error = "Error al agregar nuevo administrador: " + ex.Message }));
             }
         }
 
@@ -291,9 +294,8 @@ namespace WebApplication1.Areas.webmaster.Controllers
                        
                 return Redirect(Url.Action("listado", "administradores", new { area = "webmaster" }));
             } catch(Exception ex)
-            {
-                return Redirect(Url.Action("editar", "administradores", 
-                    new { area = "webmaster", id = adminID , exception = ex.Message }));
+            {               
+                return Redirect(Url.Action("editar", "administradores", new { area = "webmaster", id = adminID, Error = "Error al editar el administrador: " + ex.Message }));
             }
         }
 
@@ -333,7 +335,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                     exception = ex.Message
                 });
             }
-        }
+        }        
 
         public JsonResult DeleteAdmin(long delID)
         {
@@ -356,12 +358,8 @@ namespace WebApplication1.Areas.webmaster.Controllers
 
                 ///Delete comunities
                 List<communuser> comxuserAnterior = entities.communusers.Where(x => x.user_id == delID).ToList();
-                foreach (var item in comxuserAnterior)
-                {
-                    entities.communusers.Remove(item);
-                    entities.SaveChanges();
-                }
-
+                entities.communusers.RemoveRange(comxuserAnterior);
+                
                 // Delete bank info
                 List<bank> banks = entities.banks.Where(m => m.user_id == delID).ToList();
                 foreach(var item in banks)
@@ -370,6 +368,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                     entities.fees.RemoveRange(fees);
                 }
                 entities.banks.RemoveRange(banks);
+
                 // Delete CreditCards
                 List<creditcard> creditcards = entities.creditcards.Where(m => m.user_id == delID).ToList();
                 entities.creditcards.RemoveRange(creditcards);
@@ -380,7 +379,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 List<emailtheme> emailthemes = entities.emailthemes.Where(m => m.user_id == delID).ToList();
                 entities.emailthemes.RemoveRange(emailthemes);
                 user delUser = entities.users.Find(delID);
-                delUser.is_del = true;
+                entities.users.Remove(delUser);
                 entities.SaveChanges();
                 return Json(new { result = "success" });
             } catch(Exception ex)

@@ -205,20 +205,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                     newAdmin.user_img = fileName;
                 }
                 newAdmin.create_userid = userId;
-                entities.users.Add(newAdmin);
-                //communuser communuserResult = entities.communusers.Where(m => m.user_id == newAdmin.id).FirstOrDefault();
-                //if (communuserResult == null)
-                //{
-                //    communuser communuser = new communuser();
-                //    communuser.user_id = newAdmin.id;
-                //    communuser.commun_id = communityID1;
-                //    entities.communusers.Add(communuser);
-                //}
-                //else
-                //{
-                //    communuserResult.commun_id = communityID1;
-                //}
-
+                entities.users.Add(newAdmin);              
                 entities.SaveChanges();
                 return Redirect(Url.Action("listado", "webmaster", new { area = "webmaster" }));
             }

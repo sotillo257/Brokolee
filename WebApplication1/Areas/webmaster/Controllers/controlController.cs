@@ -70,5 +70,115 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 return Redirect(ep.GetLogoutUrl());
             }
         }
+
+        [HttpPost]
+        public ActionResult confirmarCorreo(long? id, string correo)
+        {
+            try
+            {
+                if (id == null) //Validar correo en AGREGAR NUEVO
+                {
+                    user user = entities.users.Where(x => x.email == correo).FirstOrDefault();
+                    if (user != null)
+                    {
+                        if (user.role == 2) //Si el usuario es Coadmin
+                        {
+                            if (user.is_active == true)
+                            {
+                                return Json(new { result = "adExist" }); //Si el coadmin existe
+                            }
+                            else
+                            {
+                                return Json(new { result = "adInact" }); //Si el coadmin existe y esta inactivo
+                            }
+                        }
+                        else if (user.role == 3) //Si el usuario es Webmaster
+                        {
+                            if (user.is_active == true)
+                            {
+                                return Json(new { result = "wbExist" }); //Si el webmaster existe
+                            }
+                            else
+                            {
+                                return Json(new { result = "wbInact" }); //Si el webmaster existe y esta inactivo
+                            }
+                        }
+                        else //Si el usuario es Titular
+                        {
+                            if (user.is_active == true)
+                            {
+                                return Json(new { result = "tiExist" }); //Si el titular existe
+                            }
+                            else
+                            {
+                                return Json(new { result = "tiInact" }); //Si el titular existe y esta inactivo
+                            }
+                            
+                        }
+                    }
+                    else //Si no se encontro ningun usuario con ese email
+                    {
+                        return Json(new { result = "noExist" });
+                    }
+                }
+                else //Validar correo en EDITAR
+                {
+                    user user = entities.users.Where(x => x.email == correo).FirstOrDefault();
+                    if (user != null)
+                    {
+                        if (user.id == id)
+                        {
+                            return Json(new { result = "userEdit" }); //Si se usara el mismo email permitir guardar
+                        }
+                        else
+                        {
+                            if (user.role == 2) //Si el usuario es Coadmin
+                            {
+                                if (user.is_active == true)
+                                {
+                                    return Json(new { result = "adExist" }); //Si el coadmin existe
+                                }
+                                else
+                                {
+                                    return Json(new { result = "adInact" }); //Si el coadmin existe y esta inactivo
+                                }                               
+                            }
+                            else if (user.role == 3) //Si el usuario es Webmaster
+                            {
+                                if (user.is_active == true)
+                                {
+                                    return Json(new { result = "wbExist" }); //Si el coadmin existe
+                                }
+                                else
+                                {
+                                    return Json(new { result = "wbInact" }); //Si el coadmin existe y esta inactivo
+                                }
+                                
+                            }
+                            else //Si el usuario es Titular
+                            {
+                                if (user.is_active == true)
+                                {
+                                    return Json(new { result = "tiExist" }); //Si el coadmin existe
+                                }
+                                else
+                                {
+                                    return Json(new { result = "tiInact" }); //Si el coadmin existe y esta inactivo
+                                }
+                                
+                            }
+                        }                        
+                    }
+                    else //Si no se encontro ningun usuario con ese email
+                    {
+                        return Json(new { result = "noExistEdit" });
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return Redirect(Url.Action("error", "control", new { area = "webmaster", Error = "Error al validar correo existente: " + ex.Message }));
+            }
+        }
     }
 }

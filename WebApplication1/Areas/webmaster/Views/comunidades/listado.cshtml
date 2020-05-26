@@ -31,7 +31,7 @@
                 <div class="card m-b-30">
                     <div class="card-body">
                         <div class="input-group">
-                            <input type="text" id="search-input" name="searchStr" 
+                            <input type="text" id="search-input" name="searchStr"
                                    class="form-control" placeholder="Buscar por nombre o email...">
                             <span class="input-group-append">
                                 <button type="button" id="search-button" class="btn btn-effect-ripple btn-primary"><i class="fas fa-search"></i> Buscar </button>
@@ -50,6 +50,17 @@
         <!-- end back button -->
 
         <div class="row">
+            @if (ViewBag.msgError != null)
+            {
+                <div class="col-12">
+                    <div class="alert alert-danger" role="alert">
+                        <strong>Error: </strong> @ViewBag.msgError
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+            }
             <div class="col-12">
                 <div class="card m-b-30">
                     <div class="card-body">
@@ -85,28 +96,31 @@
                                                 }
                                                 else
                                                 {
-                                                    <button type="button" onclick="onActiveCommunity(this)" data-id="@item.id"   class="btn btn-danger waves-effect waves-light btn-sm">Inactivo</button>
+                                                    <button type="button" onclick="onActiveCommunity(this)" data-id="@item.id" class="btn btn-danger waves-effect waves-light btn-sm">Inactivo</button>
                                                 }
 
                                             </td>
                                             <td class="text-center">@Model.packageDict[item.id]</td>
                                             <td class="text-center">
                                                 <a href="@Url.Action("ver", "comunidades", new { area = "webmaster", id = item.id })">
-                                                    <button type="button" class="btn btn-success waves-effect waves-light btn-sm mr-1 mb-1" 
+                                                    <button type="button" class="btn btn-success waves-effect waves-light btn-sm mr-1 mb-1"
                                                             data-toggle="tooltip" data-placement="top" title="Ver">
                                                         <i class="mdi mdi-eye"></i>
                                                     </button>
                                                 </a>
                                                 <a href="@Url.Action("editar", "comunidades", new { area = "webmaster", id= item.id })">
-                                                    <button type="button" class="btn btn-primary waves-effect waves-light btn-sm mr-1 mb-1" 
+                                                    <button type="button" class="btn btn-primary waves-effect waves-light btn-sm mr-1 mb-1"
                                                             data-toggle="tooltip" data-placement="top" title="Editar">
-                                                        <i class="mdi mdi-lead-pencil"></i></button></a>
+                                                        <i class="mdi mdi-lead-pencil"></i>
+                                                    </button>
+                                                </a>
                                                 <a href="#">
-                                                    <button type="button" class="btn btn-danger waves-effect waves-light btn-sm mb-1" 
-                                                            onclick="onDeleteCommunity(this)" data-id="@item.id"
-                                                            data-toggle="tooltip" data-placement="top" title="Eliminar">
-                                                    <i class="mdi mdi-delete"></i></button>
-                                                   
+                                                    <button onclick="onConfirmDelete(this)" type="button" class="btn btn-danger waves-effect waves-light btn-sm mb-1"
+                                                             data-id="@item.id"
+                                                             data-placement="top" title="Eliminar">
+                                                        <i class="mdi mdi-delete"></i>
+                                                    </button>
+
                                                 </a>
                                             </td>
                                         </tr>
@@ -119,6 +133,43 @@
                 </div>
             </div>
         </div><!-- end row -->
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">¿Estas seguro que deseas eliminar la comunidad?</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Al hacerlo se eliminaran los registros asociados a esta comunidad:</p>
+                        <ul>
+                            <li>Titulares.</li>
+                            <li>Titulos.</li>
+                            <li>Vehiculos.</li>
+                            <li>Tarjetas de creditos.</li>
+                            <li>Cuentas de banco.</li>
+                            <li>Mensajes de chat.</li>
+                            <li>Contactos.</li>
+                            <li>Eventos.</li>
+                            <li>Facilidades.</li>
+                            <li>Tareas.</li>
+                            <li>Blogs.</li>
+                            <li>Comentarios.</li>
+                        </ul>
+                        <p>Los Administradores que solo esten asociados a esta comunidad seran desactivados y no podran iniciar sesión.</p>
+                        <p>Los Titulares que posean propiedades en otras comunidades solo se les eliminara los registros correspondientes de la comunidad a eliminar.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="hidden" id="idDeleteComm" value="" />
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="button" onclick="onDeleteCommunity(this)" class="btn btn-danger">Eliminar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- back button -->
         <div class="row pb-4">
             <div class="col-md-6">

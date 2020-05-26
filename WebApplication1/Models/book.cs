@@ -25,5 +25,6 @@ namespace WebApplication1.Models
         public Nullable<long> community_id { get; set; }
         public Nullable<int> status { get; set; }
         public Nullable<long> id_efac { get; set; }
+        public Nullable<long> idUser { get; set; }
     }
 }

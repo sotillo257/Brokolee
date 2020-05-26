@@ -96,7 +96,7 @@
                         }))
                     {
                         @Html.AntiForgeryToken()
-                        <input type="hidden" value="@Model.editUser.id" name="editID" />
+                        <input type="hidden" class="idDelUserEdit" value="@Model.editUser.id" name="editID" />
                         <div class="card-body">
                             <h5 class="d-inline-block">Información del titular</h5>
                             <div class="form-divider"></div>
@@ -129,10 +129,11 @@
                             <div class="form-group row">
                                 <label for="example-email-input" class="col-sm-3 col-form-label">Correo electrónico</label>
                                 <div class="col-sm-9">
-                                    <input maxlength="40" class="form-control" type="email" name="email" required value="@Model.editUser.email"
+                                    <input maxlength="40" class="form-control inputEmailKey" type="email" name="email" required value="@Model.editUser.email"
                                            data-toggle="tooltip"
                                            placeholder="Correo electrónico" id="example-email-input">
-                                    @*<small class="form-text text-muted">Correo electrónico del titular</small>*@
+                                    <div id="textError">                                     
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-divider"></div>
@@ -199,7 +200,7 @@
                             <div class="form-group row">
                                 <label for="example-address1-input-postal-address" class="col-sm-3 col-form-label">Dirección postal</label>
                                 <div class="col-sm-9">
-                                    <input maxlength="15" class="form-control"
+                                    <input maxlength="15" autocomplete="off" class="form-control"
                                            type="text" name="postal_address"
                                            value="@Model.editUser.postal_address"
                                            data-toggle="tooltip"

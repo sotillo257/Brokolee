@@ -187,6 +187,7 @@ namespace WebApplication1.Controllers
         {
             try
             {
+                long userId = (long)Session["USER_ID"];
                 TimeSpan masU = TimeSpan.FromHours(1);
                 efac facility = entities.efacs.Find(idFacilidad);
                 book newBook = new book();
@@ -203,6 +204,7 @@ namespace WebApplication1.Controllers
                 newBook.id_efac = idFacilidad;
                 newBook.created_at = DateTime.Now;
                 newBook.community_id = facility.community_id;
+                newBook.idUser = userId;
                 entities.books.Add(newBook);
                 entities.SaveChanges();
                 return Redirect(Url.Action("reservas", "facilidades"));

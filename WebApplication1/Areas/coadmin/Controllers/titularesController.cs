@@ -1058,6 +1058,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 entities.payments.RemoveRange(payments);
                 List<onlineuser> onlineusers = entities.onlineusers.Where(m => m.user_id == delID).ToList();
                 entities.onlineusers.RemoveRange(onlineusers);
+
                 user delUser = entities.users.Find(delID);                           
 
                 entities.users.Remove(delUser);
@@ -1148,17 +1149,19 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 List<emailtheme> emailthemes = entities.emailthemes.Where(m => m.user_id == delID).ToList();
                 entities.emailthemes.RemoveRange(emailthemes);
 
-                //Delete Titulos
-                List<Titulo> titulosd = entities.Titulos.Where(m => m.user.id == delID).ToList();
-                foreach (var item2 in titulosd)
-                {
-                    List<Vehiculo> vehiculosd = entities.Vehiculos.Where(m => m.Titulo.Id == item2.Id).ToList();
-                    entities.Vehiculos.RemoveRange(vehiculosd);
-                }
-                entities.Titulos.RemoveRange(titulosd);
+                List<taskcomment> taskcomments = entities.taskcomments.Where(m => m.user_id == delID).ToList();
+                entities.taskcomments.RemoveRange(taskcomments);
+                List<Vehiculo> vehiculos = entities.Vehiculos.Where(x => x.Titulo.IdUser == delID).ToList();
+                entities.Vehiculos.RemoveRange(vehiculos);
+                List<Titulo> titulos = entities.Titulos.Where(x => x.IdUser == delID).ToList();
+                entities.Titulos.RemoveRange(titulos);
+                List<comment> comentarios = entities.comments.Where(x => x.user_id == delID).ToList();
+                entities.comments.RemoveRange(comentarios);
+                List<book> reservas = entities.books.Where(x => x.idUser == delID).ToList();
+                entities.books.RemoveRange(reservas);
 
                 user delUser = entities.users.Find(delID);
-                delUser.is_del = true;
+                entities.users.Remove(delUser);
                 entities.SaveChanges();
                 return Json(new { result = "success" });
             }

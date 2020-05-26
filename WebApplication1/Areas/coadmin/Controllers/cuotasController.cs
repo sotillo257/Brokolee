@@ -345,16 +345,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     {
                         state = false;
                     }
-                    long userId = 0;
-                    if (Convert.ToInt32(Session["USER_ROLE"]) == 2)
-                    {
-                        userId = (long)Session["USER_ID"];
-                    }
-                    else if (Convert.ToInt32(Session["USER_ROLE"]) > 2
-                    && Session["ACC_USER_ID"] != null)
-                    {
-                        userId = (long)Session["ACC_USER_ID"];
-                    }
+                    long userId = (long)Session["USER_ID"];                  
                     user curUser = entities.users.Find(userId);
                     List<payment> paymentList = new List<payment>();
 
