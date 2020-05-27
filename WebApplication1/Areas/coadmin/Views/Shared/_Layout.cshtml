@@ -93,6 +93,10 @@
             display: none !important;
         }
 
+        #eventsR_filter {
+            display: none !important;
+        }
+
         #dataTable-tareas-completadas_filter {
             display: none !important;
         }
@@ -1133,6 +1137,7 @@
             });
         });
 
+        //Validaciones para las horas en facilidades
         $("#newfacForm").on('submit', function (evt) {
             if ($(".selectFinal").val() == "")
             {
@@ -1179,7 +1184,136 @@
                      $('#alertaHoras').css("display", "none");
                 }
             } 
-        });
+         });
+
+
+        //Validar Correo existente en administradores
+        var _errorEmail = 0;
+        var _errorEmailEdit = 0;
+        
+        
+        $('.inputEmailKey').bind('keyup', function () {
+            var datos = {
+                id:$(".idDelUserEdit").val(),
+                correo:$(".inputEmailKey").val(),
+            };
+            var urls = "@Url.Action("confirmarCorreo", "control", new { area = "coadmin" })";
+
+            var errUrl = "@Url.Action("error", "control", new { area = "coadmin", Error = "Error al validar correo. Revisar el controlador."  })";
+
+            var _nombreArea = "";
+            var modelArea = "@Model.side_menu";
+
+            if (modelArea.toString() == "webmaster") {
+                _nombreArea = "Webmaster";
+            } else if (modelArea.toString() == "administradores") {
+                _nombreArea = "Administrador";
+            } else {
+                _nombreArea = "Titular";
+            }
+
+            $.ajax({
+                type: 'POST',
+                data: JSON.stringify(datos),
+                url: urls,
+                dataType: "json",
+                contentType: 'application/json; charset=utf-8',
+                success: function (result) {
+                    if (result.result === "adExist") {
+                        var textError = '<small id="adExist" style="color:red!important" class="form-text text-muted">Existe un Administrador con éste email</small>';
+                        $("#textError").empty().append(textError);
+                        $(".inputEmailKey").addClass('is-invalid');
+                        _errorEmail = 1;
+
+                    } else if (result.result === "adInact") {
+
+                        var textError = '<small id="adExist" style="color:red!important" class="form-text text-muted">Existe un Administrador con éste email pero está inactivo</small>';
+                        $("#textError").empty().append(textError);
+                        $(".inputEmailKey").addClass('is-invalid');
+                        _errorEmail = 1;
+
+                    } else if (result.result === "noExist") {
+
+                         var textError = '<small id="adNormal" class="form-text text-muted">Correo electrónico del '+_nombreArea+'</small>';
+                        $("#textError").empty().append(textError);
+                        $(".inputEmailKey").removeClass('is-invalid');
+                        _errorEmail = 0;
+
+                    } else if (result.result === "noExistEdit") {
+                         
+                        $("#textError").empty();
+                        $(".inputEmailKey").removeClass('is-invalid');                   
+                        _errorEmail = 0;
+
+                    } else if (result.result === "wbExist") {
+
+                        var textError = '<small id="adExist" style="color:red!important" class="form-text text-muted">Existe un Webmaster con éste email</small>';
+                        $("#textError").empty().append(textError);
+                        $(".inputEmailKey").addClass('is-invalid');
+                        _errorEmail = 1;
+
+                    } else if (result.result === "wbInact") {
+
+                        var textError = '<small id="adExist" style="color:red!important" class="form-text text-muted">Existe un Webmaster con éste email pero está inactivo</small>';
+                        $("#textError").empty().append(textError);
+                        $(".inputEmailKey").addClass('is-invalid');
+                        _errorEmail = 1;
+
+                    } else if (result.result === "tiExist") {
+
+                        var textError = '<small id="adExist" style="color:red!important" class="form-text text-muted">Existe un Titular con éste email</small>';
+                        $("#textError").empty().append(textError);
+                        $(".inputEmailKey").addClass('is-invalid');
+                        _errorEmail = 1;
+
+                    } else if (result.result === "tiInact") {
+
+                        var textError = '<small id="adExist" style="color:red!important" class="form-text text-muted">Existe un Titular con éste email pero está inactivo</small>';
+                        $("#textError").empty().append(textError);
+                        $(".inputEmailKey").addClass('is-invalid');
+                        _errorEmail = 1;
+
+                    } else if (result.result === "userEdit") {
+                        
+                        $("#textError").empty();
+                        $(".inputEmailKey").removeClass('is-invalid');                      
+                        _errorEmail = 0;
+
+                    } else {
+                        window.location = errUrl;
+                    }
+                },
+            });
+        });          
+
+        //Formularios de donde se usa Email
+        $("#newadminForm").on('submit', function (evt) {
+            if (_errorEmail == 1)
+            {
+                evt.preventDefault();                  
+            }              
+        });        
+
+         $("#editadminForm").on('submit', function (evt) {
+            if (_errorEmail == 1)
+            {
+                evt.preventDefault();                  
+            }              
+         });        
+
+        $("#newresidentForm").on('submit', function (evt) {
+            if (_errorEmail == 1)
+            {
+                evt.preventDefault();                  
+            }              
+        });        
+
+         $("#editresidentForm").on('submit', function (evt) {
+            if (_errorEmail == 1)
+            {
+                evt.preventDefault();                  
+            }              
+         });
 
     </script>
 
@@ -2020,7 +2154,7 @@
             var formData = new FormData();
             formData.append("id", id);
 
-            var url = "@Url.Action("DeactiveEventos", "eventos", new { area = "coadmin" })";
+            var url = "@Url.Action("ActiveEventos", "eventos", new { area = "coadmin" })";
 
             $.ajax({
                 url: url,
@@ -2045,7 +2179,7 @@
             var formData = new FormData();
             formData.append("id", id);
 
-            var url = "@Url.Action("ActiveEventos", "eventos", new { area = "coadmin" })";
+            var url = "@Url.Action("DeactiveEventos", "eventos", new { area = "coadmin" })";
 
             $.ajax({
                 url: url,
@@ -2385,19 +2519,23 @@
             }
         });
 
-        $("#customCheck6").change(function () {
+         $("#customCheck6").change(function () {
             if ($("#customCheck6").prop('checked')) {
                 $("#customCheck7").prop('checked', false);
+                $(".box").show();
             } else {
                 $("#customCheck7").prop('checked', true);
+                $(".box").hide();
             }
         });
 
         $("#customCheck7").change(function () {
             if ($("#customCheck7").prop('checked')) {
                 $("#customCheck6").prop('checked', false);
+                $(".box").hide();
             } else {
                 $("#customCheck6").prop('checked', true);
+                $(".box").show();
             }
         });
 
