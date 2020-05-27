@@ -624,7 +624,7 @@
                                                         <li><a href="@Url.Action("listado", "documentos", new { area = "coadmin" })">Listado de documentos</a></li>
                                                         @if (Session["CURRENT_COMU"] != null)
                                                         {
-                                                            <li><a href="@Url.Action("categoria", "documentos", new { area = "coadmin" })">Categorías</a></li>
+                                                            <li><a href="@Url.Action("listadoCategoria", "documentos", new { area = "coadmin" })">Categorías</a></li>
                                                             foreach (var item in Model.document_category_list)
                                                             {
                                                                 <li><a href="@Url.Action("listado", "documentos", new { area = "coadmin", id = item.id })">@item.type_name</a></li>

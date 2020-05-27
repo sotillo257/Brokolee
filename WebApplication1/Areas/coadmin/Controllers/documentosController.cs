@@ -60,7 +60,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     document_list = query3.ToList();
                 }              
 
-                List<document_type> document_category_list = entities.document_type.ToList();
+                List<document_type> document_category_list = entities.document_type.Where(x=> x.community_id == communityAct).ToList();
                 documentosViewModel viewModel = new documentosViewModel();
 
                 communityList = ep.GetCommunityList(userId);
@@ -115,6 +115,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                                 viewModel.side_menu = "documentos";
                                 viewModel.side_sub_menu = "documentos_categoria";
                                 viewModel.editDocumentType = documentCategory;
+                                viewModel.document_category_list = entities.document_type.Where(x => x.community_id == communityAct).ToList();
                                 viewModel.curUser = curUser;
                                 viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                                 viewModel.pubMessageList = pubMessageList;
@@ -162,7 +163,8 @@ namespace WebApplication1.Areas.coadmin.Controllers
                                 editarcategoriaViewModel viewModel = new editarcategoriaViewModel();
                                 communityList = ep.GetCommunityList(userId);
                                 viewModel.communityList = communityList;
-                                viewModel.side_menu = "documentos";
+                        viewModel.document_category_list = entities.document_type.Where(x => x.community_id == communityAct).ToList();
+                        viewModel.side_menu = "documentos";
                                 viewModel.side_sub_menu = "documentos_categoria";
                                 viewModel.curUser = curUser;
                                 viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
@@ -201,13 +203,13 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     List<document_type> document_category_list = new List<document_type>();
                     if (searchStr == "")
                     {
-                        var query = (from r in entities.document_type select r);
+                        var query = (from r in entities.document_type where r.community_id == communityAct select r);
                         document_category_list = query.ToList();
                     }
                     else if (searchStr != "")
                     {
                         var query1 = (from r in entities.document_type
-                                      where r.type_name.Contains(searchStr) == true
+                                      where r.type_name.Contains(searchStr) == true && r.community_id == communityAct
                                       select r);
                         document_category_list = query1.ToList();
                     }
@@ -218,7 +220,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                             DocumentTypeItemViewModel itemViewModel = new DocumentTypeItemViewModel();
                             itemViewModel.ID = ID;
                             itemViewModel.DocumentTypeName = item.type_name;
-                            itemViewModel.Documents = entities.documents.Where(m => m.type_id == ID && m.community_id == communityAct).ToList().Count; ;
+                            itemViewModel.Documents = entities.documents.Where(m => m.type_id == ID && m.community_id == communityAct).ToList().Count; 
                             itemViewModel.Share = (int)item.share;
                             documentTypeItemList.Add(itemViewModel);
                         }
@@ -226,8 +228,8 @@ namespace WebApplication1.Areas.coadmin.Controllers
 
                         communityList = ep.GetCommunityList(userId);
                         viewModel.communityList = communityList;
-
-                        viewModel.side_menu = "documentos";
+                         viewModel.searchStr = searchStr;
+                    viewModel.side_menu = "documentos";
                         viewModel.side_sub_menu = "documentos_categoria";
                         viewModel.document_category_list = document_category_list;
                         viewModel.categoryList = entities.categories.ToList();
@@ -263,13 +265,13 @@ namespace WebApplication1.Areas.coadmin.Controllers
                         user curUser = entities.users.Find(userId);
                         List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                         documentosViewModel viewModel = new documentosViewModel();
-
+                        long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
                         communityList = ep.GetCommunityList(userId);
                         viewModel.communityList = communityList;
 
                         viewModel.side_menu = "documentos";
                         viewModel.side_sub_menu = "documentos_agregar";
-                        viewModel.document_category_list = entities.document_type.ToList();
+                        viewModel.document_category_list = entities.document_type.Where(x => x.community_id == communityAct).ToList();
                         viewModel.curUser = curUser;
                         viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                         viewModel.pubMessageList = pubMessageList;
@@ -320,7 +322,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
 
                                 viewModel.side_menu = "documentos";
                                 viewModel.side_sub_menu = "documentos_ver";
-                                viewModel.document_category_list = entities.document_type.ToList();
+                                viewModel.document_category_list = entities.document_type.Where(x => x.community_id == communityAct).ToList();
                                 viewModel.viewDocument = viewDocument;
                                 viewModel.curUser = curUser;
                                 viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
@@ -378,7 +380,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
 
                                 viewModel.side_menu = "documentos";
                                 viewModel.side_sub_menu = "documentos_editar";
-                                viewModel.document_category_list = entities.document_type.ToList();
+                                viewModel.document_category_list = entities.document_type.Where(x => x.community_id == communityAct).ToList();
                                 viewModel.editDocument = editDocument;
                                 viewModel.curUser = curUser;
                                 viewModel.pubTaskList = ep.GetNotifiTaskList(userId);

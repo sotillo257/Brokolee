@@ -17,6 +17,7 @@ namespace WebApplication1.Areas.coadmin.ViewModels
         public List<document_type> document_category_list { get; set; }
         public List<category> categoryList { get; set; }
         public user curUser { get; set; }
+        public string searchStr { get; set; }
         public int messageCount { get; set; }
         public List<task> pubTaskList { get; set; }
         public List<ShowMessage> pubMessageList { get; set; }

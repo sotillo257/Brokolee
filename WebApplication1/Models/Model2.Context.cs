@@ -34,7 +34,6 @@ namespace WebApplication1.Models
         public virtual DbSet<community> communities { get; set; }
         public virtual DbSet<communuser> communusers { get; set; }
         public virtual DbSet<creditcard> creditcards { get; set; }
-        public virtual DbSet<document_type> document_type { get; set; }
         public virtual DbSet<emailtheme> emailthemes { get; set; }
         public virtual DbSet<emailtype> emailtypes { get; set; }
         public virtual DbSet<facsche> facsches { get; set; }
@@ -64,5 +63,6 @@ namespace WebApplication1.Models
         public virtual DbSet<contract> contracts { get; set; }
         public virtual DbSet<supplier> suppliers { get; set; }
         public virtual DbSet<book> books { get; set; }
+        public virtual DbSet<document_type> document_type { get; set; }
     }
 }

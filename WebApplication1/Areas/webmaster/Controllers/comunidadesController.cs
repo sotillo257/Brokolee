@@ -359,6 +359,8 @@ namespace WebApplication1.Areas.webmaster.Controllers
                         entities.payments.RemoveRange(payments);
                         List<onlineuser> onlineusers = entities.onlineusers.Where(m => m.user_id == item3).ToList();
                         entities.onlineusers.RemoveRange(onlineusers);
+                        user usuario = entities.users.Find(item3);
+                        entities.users.Remove(usuario);
                     }
                 }
 
@@ -369,6 +371,10 @@ namespace WebApplication1.Areas.webmaster.Controllers
                     List<blogcomment> blogcomments = entities.blogcomments.Where(m => m.blog_id == itemb.id).ToList();
                     entities.blogcomments.RemoveRange(blogcomments);
                 }
+                entities.blogs.RemoveRange(blogs);
+
+                // Delete cuotas
+                List<fee> feeList = entities.fees.Where(m => m.community_id == id).ToList();
                 entities.blogs.RemoveRange(blogs);
 
                 // Delete Tareas
@@ -400,6 +406,12 @@ namespace WebApplication1.Areas.webmaster.Controllers
 
                 List<@event> eventos = entities.events.Where(x=>x.community_id == id).ToList();
                 entities.Titulos.RemoveRange(titulos);
+
+                List<document> documentos = entities.documents.Where(x => x.community_id == id).ToList();
+                entities.documents.RemoveRange(documentos);
+
+                List<document_type> documentos_ti = entities.document_type.Where(x => x.community_id == id).ToList();
+                entities.document_type.RemoveRange(documentos_ti);
 
                 community delCommunity = entities.communities.Find(id);
                 entities.communities.Remove(delCommunity);

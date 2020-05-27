@@ -23,6 +23,7 @@ namespace WebApplication1.Models
         public int id { get; set; }
         public string type_name { get; set; }
         public Nullable<int> share { get; set; }
+        public Nullable<long> community_id { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<document> documents { get; set; }

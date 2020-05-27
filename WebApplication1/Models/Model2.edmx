@@ -217,6 +217,7 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="type_name" Type="varchar" MaxLength="255" />
           <Property Name="share" Type="int" />
+          <Property Name="community_id" Type="bigint" />
         </EntityType>
         <EntityType Name="efac">
           <Key>
@@ -1268,15 +1269,6 @@
           <Property Name="updated_at" Type="DateTime" Precision="3" />
           <NavigationProperty Name="user" Relationship="Self.FK_creditcard_user" FromRole="creditcard" ToRole="user" />
         </EntityType>
-        <EntityType Name="document_type">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="type_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="share" Type="Int32" />
-          <NavigationProperty Name="documents" Relationship="pjrdev_condominiosModel.FK_document_type" FromRole="document_type" ToRole="document" />
-        </EntityType>
         <EntityType Name="emailtheme">
           <Key>
             <PropertyRef Name="id" />
@@ -1770,7 +1762,6 @@
           <EntitySet Name="communities" EntityType="Self.community" />
           <EntitySet Name="communusers" EntityType="Self.communuser" />
           <EntitySet Name="creditcards" EntityType="Self.creditcard" />
-          <EntitySet Name="document_type" EntityType="Self.document_type" />
           <EntitySet Name="emailthemes" EntityType="Self.emailtheme" />
           <EntitySet Name="emailtypes" EntityType="Self.emailtype" />
           <EntitySet Name="facsches" EntityType="Self.facsche" />
@@ -1881,10 +1872,6 @@
           <EntitySet Name="contactinfoes" EntityType="pjrdev_condominiosModel.contactinfo" />
           <EntitySet Name="events" EntityType="pjrdev_condominiosModel.event" />
           <EntitySet Name="documents" EntityType="pjrdev_condominiosModel.document" />
-          <AssociationSet Name="FK_document_type" Association="pjrdev_condominiosModel.FK_document_type">
-            <End Role="document_type" EntitySet="document_type" />
-            <End Role="document" EntitySet="documents" />
-          </AssociationSet>
           <EntitySet Name="efacs" EntityType="pjrdev_condominiosModel.efac" />
           <EntitySet Name="blogs" EntityType="pjrdev_condominiosModel.blog" />
           <AssociationSet Name="FK_blog_user" Association="pjrdev_condominiosModel.FK_blog_user">
@@ -1928,6 +1915,11 @@
             <End Role="comment" EntitySet="comments" />
           </AssociationSet>
           <EntitySet Name="books" EntityType="pjrdev_condominiosModel.book" />
+          <EntitySet Name="document_type" EntityType="pjrdev_condominiosModel.document_type" />
+          <AssociationSet Name="FK_document_type" Association="pjrdev_condominiosModel.FK_document_type">
+            <End Role="document_type" EntitySet="document_type" />
+            <End Role="document" EntitySet="documents" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="Vehiculo">
           <Key>
@@ -2093,18 +2085,6 @@
           <Property Name="community_id" Type="Int64" />
           <NavigationProperty Name="document_type" Relationship="pjrdev_condominiosModel.FK_document_type" FromRole="document" ToRole="document_type" />
         </EntityType>
-        <Association Name="FK_document_type">
-          <End Type="pjrdev_condominiosModel.document_type" Role="document_type" Multiplicity="1" />
-          <End Type="pjrdev_condominiosModel.document" Role="document" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="document_type">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="document">
-              <PropertyRef Name="type_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="efac">
           <Key>
             <PropertyRef Name="id" />
@@ -2343,6 +2323,28 @@
           <Property Name="id_efac" Type="Int64" />
           <Property Name="idUser" Type="Int64" />
         </EntityType>
+        <EntityType Name="document_type">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="type_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="share" Type="Int32" />
+          <Property Name="community_id" Type="Int64" />
+          <NavigationProperty Name="documents" Relationship="pjrdev_condominiosModel.FK_document_type" FromRole="document_type" ToRole="document" />
+        </EntityType>
+        <Association Name="FK_document_type">
+          <End Type="pjrdev_condominiosModel.document_type" Role="document_type" Multiplicity="1" />
+          <End Type="pjrdev_condominiosModel.document" Role="document" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="document_type">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="document">
+              <PropertyRef Name="type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2465,15 +2467,6 @@
                 <ScalarProperty Name="user_id" ColumnName="user_id" />
                 <ScalarProperty Name="created_at" ColumnName="created_at" />
                 <ScalarProperty Name="updated_at" ColumnName="updated_at" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="document_type">
-            <EntityTypeMapping TypeName="pjrdev_condominiosModel.document_type">
-              <MappingFragment StoreEntitySet="document_type">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="type_name" ColumnName="type_name" />
-                <ScalarProperty Name="share" ColumnName="share" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2965,6 +2958,16 @@
                 <ScalarProperty Name="start_time" ColumnName="start_time" />
                 <ScalarProperty Name="description" ColumnName="description" />
                 <ScalarProperty Name="first_name" ColumnName="first_name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="document_type">
+            <EntityTypeMapping TypeName="pjrdev_condominiosModel.document_type">
+              <MappingFragment StoreEntitySet="document_type">
+                <ScalarProperty Name="community_id" ColumnName="community_id" />
+                <ScalarProperty Name="share" ColumnName="share" />
+                <ScalarProperty Name="type_name" ColumnName="type_name" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

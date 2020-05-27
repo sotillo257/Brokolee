@@ -272,8 +272,25 @@ namespace WebApplication1.Areas.webmaster.Controllers
         public ActionResult agregarTitulo(long? Id, string Error)
         {
 
-            if (Session["USER_ID"] != null && Id != null)
+            if (Session["USER_ID"] != null)
             {
+                //if (Id != null)
+                //{
+                //    user titular = entities.users.Find(Id);
+                //    List<Titulo> titulosU = entities.Titulos.Any
+                //    if ()
+                //    {
+                        
+                //    }
+                //    else
+                //    {
+
+                //    }
+                //}
+                //else
+                //{
+
+                //}
                 long userId = (long)Session["USER_ID"];
                 user curUser = entities.users.Find(userId);
                 List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
