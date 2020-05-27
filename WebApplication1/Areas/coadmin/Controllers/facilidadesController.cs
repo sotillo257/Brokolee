@@ -408,39 +408,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
             }
         }
 
-        //public ActionResult reservartwo()
-        //{
-        //    if (Session["USER_ID"] != null)
-        //    {
-        //        if (Session["CURRENT_COMU"] != null)
-        //        {
-        //            long userId = (long)Session["USER_ID"];
-        //            user curUser = entities.users.Find(userId);
-        //            facilidadesViewModel viewModel = new facilidadesViewModel();
-
-        //            communityList = ep.GetCommunityList(userId);
-        //            viewModel.communityList = communityList;
-
-        //            viewModel.side_menu = "facilidades";
-        //            viewModel.side_sub_menu = "facilidades_reservartwo";
-        //            viewModel.document_category_list = entities.document_type.ToList();
-        //            viewModel.curUser = curUser;
-        //            viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
-        //            viewModel.pubMessageList = ep.GetChatMessages(userId);
-        //            return View(viewModel);
-        //        }
-        //        else
-        //        {
-        //            return Redirect(Url.Action("disponibles", "facilidades", new { area = "coadmin", Error = "No puede reservar facilidades. Usted no administra ninguna comunidad. Comuníquese con el Webmaster..." }));
-        //        }
-               
-        //    } else
-        //    {
-        //        return Redirect(ep.GetLogoutUrl());
-        //    }
-                
-        //}
-
+      
         public ActionResult solicitudes(string searchStr = "")
         {
             if (Session["USER_ID"] != null)
