@@ -599,7 +599,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 }
                 catch (Exception ex)
                 {
-                    return Redirect(Url.Action("agregarTitulo", "titulares", new { area = "coadmin", Id = IdUser, Error = "Intentando guardar Titulo " + ex.Message }));
+                    return Redirect(Url.Action("agregarTitulo", "titulares", new { area = "coadmin", Id = IdUser, Error = "Intentando guardar titulo: " + ex.Message }));
                 }
 
 
@@ -633,7 +633,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 }
                 catch (Exception ex)
                 {
-                    return Redirect(Url.Action("editarTitulo", "titulares", new { area = "coadmin", Id = IdTitulo, Error = "Intentando guardar Titulo" + ex.Message }));
+                    return Redirect(Url.Action("editarTitulo", "titulares", new { area = "coadmin", Id = IdTitulo, Error = "Intentando editar titulo: " + ex.Message }));
                 }
 
 
