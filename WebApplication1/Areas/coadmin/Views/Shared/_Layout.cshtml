@@ -2409,7 +2409,9 @@
             formData.append("delID", id);
 
             var url = "@Url.Action("DeleteDocumentType", "documentos", new { area = "coadmin" })";
-            var errUrl = "@Url.Action("categoria", "documentos", new { area = "coadmin", Error = "No se puede eliminar esta cuenta porque posee documentos asociados"  })";
+            var urlSucces = "@Url.Action("listadoCategoria", "documentos", new { area = "coadmin" })";
+            var errUrl = "@Url.Action("listadoCategoria", "documentos", new { area = "coadmin", Error = "No se puede eliminar ésta categoría porque posee documentos asociados"  })";
+             var errUrl2 = "@Url.Action("listadoCategoria", "documentos", new { area = "coadmin", Error = "Ocurrio un error al eliminar"  })";
              var respuesta = confirm("¿Estás seguro que deseas eliminar esta categoría?");
         if (respuesta == true) {
 
@@ -2419,12 +2421,12 @@
                 data: formData,
                 success: function (result) {
                     $("#ck-body-loading-overlay").hide();
-                    if (result.result === "error") {
-                        console.log('couln\'t get roles');
+                    if (result.result === "success") {
+                        window.location = urlSucces;
                     } else if (result.result === "NotAlowed") {
                         window.location = errUrl;
                     } else {
-                        location.reload();
+                       window.location = errUrl2;
                     }
                 },
                 processData: false,

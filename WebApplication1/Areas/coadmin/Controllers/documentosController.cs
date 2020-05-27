@@ -92,7 +92,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
             } 
         }   
 
-        public ActionResult editarcategoria(int? typeID)
+        public ActionResult editarCategoria(string Error, int? typeID)
         {
             if (Session["USER_ID"] != null)
             {
@@ -109,55 +109,37 @@ namespace WebApplication1.Areas.coadmin.Controllers
                                 long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
                                 user curUser = entities.users.Find(userId);
                                 List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
-
-                                List<document_type> document_category_list = new List<document_type>();
-                                document_category_list = entities.document_type.ToList();
-                                List<DocumentTypeItemViewModel> documentTypeItemList = new List<DocumentTypeItemViewModel>();
-
-                                foreach (var item in document_category_list)
-                                {
-                                    int ID = item.id;
-                                    DocumentTypeItemViewModel itemViewModel = new DocumentTypeItemViewModel();
-                                    itemViewModel.ID = ID;
-                                    itemViewModel.DocumentTypeName = item.type_name;
-                                    itemViewModel.Documents = entities.documents.Where(m => m.type_id == ID && m.community_id == communityAct).ToList().Count;
-                                    itemViewModel.Share = (int)item.share;//item.share;
-                                    documentTypeItemList.Add(itemViewModel);
-                                }
                                 editarcategoriaViewModel viewModel = new editarcategoriaViewModel();
-
                                 communityList = ep.GetCommunityList(userId);
                                 viewModel.communityList = communityList;
-
                                 viewModel.side_menu = "documentos";
-                                viewModel.side_sub_menu = "documentos_editarcategoria";
-                                viewModel.document_category_list = document_category_list;
+                                viewModel.side_sub_menu = "documentos_categoria";
                                 viewModel.editDocumentType = documentCategory;
                                 viewModel.curUser = curUser;
                                 viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                                 viewModel.pubMessageList = pubMessageList;
                                 viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                                viewModel.documentTypeItemList = documentTypeItemList;
+                                ViewBag.msgError = Error;
                                 return View(viewModel);
                             }
                             catch (Exception ex)
                             {
-                                return Redirect(Url.Action("listado", "documentos", new { area = "coadmin", Error = "Problema interno " + ex.Message }));
+                                return Redirect(Url.Action("listadoCategoria", "documentos", new { area = "coadmin", Error = "Editar categoría: " + ex.Message }));
                             }
                         }
                         else
                         {
-                            return Redirect(Url.Action("listado", "documentos", new { area = "coadmin", Error = "No existe ese elemento" }));
+                            return Redirect(Url.Action("listadoCategoria", "documentos", new { area = "coadmin", Error = "No existe ese elemento" }));
                         }
                     }
                     else
                     {
-                        return Redirect(Url.Action("listado", "documentos", new { area = "coadmin" }));
+                        return Redirect(Url.Action("listadoCategoria", "documentos", new { area = "coadmin" }));
                     }
                 }
                 else
                 {
-                    return Redirect(Url.Action("listado", "documentos", new { area = "coadmin", Error = "No puede editar categorias. Usted no administra ninguna comunidad. Comuníquese con el Webmaster..." }));
+                    return Redirect(Url.Action("listadoCategoria", "documentos", new { area = "coadmin", Error = "No puede editar categorias. Usted no administra ninguna comunidad. Comuníquese con el Webmaster..." }));
                 }                                                           
             } else
             {
@@ -165,12 +147,50 @@ namespace WebApplication1.Areas.coadmin.Controllers
             }
         }
 
-        public ActionResult categoria(string Error)
+        public ActionResult agregarCategoria(string Error)
         {
             if (Session["USER_ID"] != null)
             {
                 if (Session["CURRENT_COMU"] != null)
+                {                                           
+                            try
+                            {
+                                long userId = (long)Session["USER_ID"];
+                                long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
+                                user curUser = entities.users.Find(userId);
+                                List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
+                                editarcategoriaViewModel viewModel = new editarcategoriaViewModel();
+                                communityList = ep.GetCommunityList(userId);
+                                viewModel.communityList = communityList;
+                                viewModel.side_menu = "documentos";
+                                viewModel.side_sub_menu = "documentos_categoria";
+                                viewModel.curUser = curUser;
+                                viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
+                                viewModel.pubMessageList = pubMessageList;
+                                viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                                ViewBag.msgError = Error;
+                                return View(viewModel);
+                            }
+                            catch (Exception ex)
+                            {
+                                return Redirect(Url.Action("listadoCategoria", "documentos", new { area = "coadmin", Error = "Agregar categoría: " + ex.Message }));
+                            }                                         
+                }
+                else
                 {
+                    return Redirect(Url.Action("listadoCategoria", "documentos", new { area = "coadmin", Error = "No puede agregar categorias. Usted no administra ninguna comunidad. Comuníquese con el Webmaster..." }));
+                }
+            }
+            else
+            {
+                return Redirect(ep.GetLogoutUrl());
+            }
+        }
+
+        public ActionResult listadoCategoria(string Error, string searchStr = "")
+        {
+            if (Session["USER_ID"] != null)
+            {               
                     try
                     {
                         long userId = (long)Session["USER_ID"];
@@ -178,8 +198,20 @@ namespace WebApplication1.Areas.coadmin.Controllers
                         user curUser = entities.users.Find(userId);
                         List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
 
-                        List<document_type> document_category_list = entities.document_type.ToList();
-                        List<DocumentTypeItemViewModel> documentTypeItemList = new List<DocumentTypeItemViewModel>();
+                    List<document_type> document_category_list = new List<document_type>();
+                    if (searchStr == "")
+                    {
+                        var query = (from r in entities.document_type select r);
+                        document_category_list = query.ToList();
+                    }
+                    else if (searchStr != "")
+                    {
+                        var query1 = (from r in entities.document_type
+                                      where r.type_name.Contains(searchStr) == true
+                                      select r);
+                        document_category_list = query1.ToList();
+                    }
+                    List<DocumentTypeItemViewModel> documentTypeItemList = new List<DocumentTypeItemViewModel>();
                         foreach (var item in document_category_list)
                         {
                             int ID = item.id;
@@ -209,13 +241,8 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     }
                     catch (Exception ex)
                     {
-                        return Redirect(Url.Action("categoria", "documentos", new { area = "coadmin", Error = "Problema interno " + ex.Message }));
-                    }
-                }
-                else
-                {
-                    return Redirect(Url.Action("listado", "documentos", new { area = "coadmin", Error = "No permitido. Usted no administra ninguna comunidad. Comuníquese con el Webmaster..." }));
-                }                              
+                        return Redirect(Url.Action("error", "control", new { area = "coadmin", Error = "Listado Categorías: " + ex.Message }));
+                    }                                                   
             }
             else
             {
@@ -396,11 +423,11 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 editDocumentType.type_name = type_name;
                 editDocumentType.share = documentTypeShare;             
                 entities.SaveChanges();
-                return Redirect(Url.Action("categoria", "documentos", new { area = "coadmin" }));
+                return Redirect(Url.Action("listadoCategoria", "documentos", new { area = "coadmin" }));
             }
             catch(Exception ex)
             {                
-                return Redirect(Url.Action("categoria", "documentos", new { area = "coadmin", Error = "Problema interno " + ex.Message }));
+                return Redirect(Url.Action("editarCategoria", "documentos", new { area = "coadmin", typeID = typeID, Error = "Error al editar la categoría: " + ex.Message }));
             }
         }
 
@@ -414,11 +441,11 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 newDocumentType.share = documentTypeShare;
                 entities.document_type.Add(newDocumentType);
                 entities.SaveChanges();
-                return Redirect(Url.Action("categoria", "documentos", new { area = "coadmin" }));
+                return Redirect(Url.Action("listadoCategoria", "documentos", new { area = "coadmin" }));
             }
             catch(Exception ex)
             {
-                return Redirect(Url.Action("categoria", "documentos", new { area = "coadmin", Error = "Problema interno " + ex.Message }));
+                return Redirect(Url.Action("agregarCategoria", "documentos", new { area = "coadmin", Error = "Error al agregar la categoría: " + ex.Message }));
             }
         }
 
@@ -551,6 +578,12 @@ namespace WebApplication1.Areas.coadmin.Controllers
         public ActionResult SeacrhResult(string searchStr, int idDocumentT)
         {
             return Redirect(Url.Action("listado", "documentos", new { area = "coadmin", searchStr = searchStr, idCategory = idDocumentT }));
+        }
+
+        [HttpPost]
+        public ActionResult SeacrhResultCateg(string searchStr)
+        {
+            return Redirect(Url.Action("listadoCategoria", "documentos", new { area = "coadmin", searchStr = searchStr}));
         }
 
         public JsonResult DeleteDocument(long delID)
