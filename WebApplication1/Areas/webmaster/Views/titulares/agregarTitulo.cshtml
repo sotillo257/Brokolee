@@ -123,6 +123,13 @@
                                         data-toggle="tooltip" title="Nombre de la comunidad" id="IdCommunity">
                                     @foreach (var item in Model.communityList)
                                     {
+                                        if (Session["WM_selectedComm"] != null)
+                                        {
+                                            if (Convert.ToInt64(Session["CURRENT_COMU"]) == item.id)
+                                            {
+                                                <option selected value="@item.id">@item.first_name</option>
+                                            }
+                                        }
                                         <option value="@item.id">@item.first_name</option>
                                     }
                                 </select>

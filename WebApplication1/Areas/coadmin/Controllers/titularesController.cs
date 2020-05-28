@@ -29,7 +29,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
         #region VEHICULO
         public ActionResult listadoVehiculos(long? Id)
         {
-            if (Session["USER_ID"] != null && Id != null)
+            if (Session["USER_ID"] != null)
             {
                 if (Session["CURRENT_COMU"] != null)
                 {

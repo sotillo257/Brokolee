@@ -181,70 +181,120 @@
                                         <th class="f-b">Nombre</th>
                                         <th class="f-b">Apellidos</th>
                                         <th class="f-b">Email</th>
+                                        <th class="f-b">Registro</th>
                                         <th class="f-b">Estado</th>
                                         <th class="text-center f-b">Opciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach (var item in Model.titularList)
-                                    {
-                                        <tr>
-                                            <td>@item.first_name1</td>
-                                            <td>@item.last_name1</td>
-                                            <td>@item.email</td>
-
-                                            <td class="text-center">
-                                                @if (item.is_active == true)
+                                   {     
+                                        int suma = 0;  
+                                        List<long> usados = new List<long>();
+                                    <tr>
+                                        <td>@item.first_name1</td>
+                                        <td>@item.last_name1</td>
+                                        <td>@item.email</td>
+                                        <td class="text-center">
+                                            <button type="button" data-toggle="tooltip" data-placement="top" title="Comunidades"
+                                                    class="btn btn-info waves-effect waves-light btn-sm">
+                                                <i class="mdi mdi-hospital-building"></i>                                                
+                                                @foreach (var item2 in item.Titulos)
                                                 {
-                                                    <button type="button" onclick="onDeactiveResident(this)" data-id="@item.id"
-                                                            class="btn btn-primary waves-effect waves-light btn-sm">
-                                                        Activo
-                                                    </button>
+
+                                                    foreach (var commID in Model.communityList)
+                                                    {
+                                                        if (item2.IdCommunity == commID.id)
+                                                        {
+                                                            if (usados.Count == 0)
+                                                            {
+                                                                usados.Add(item2.IdCommunity);
+                                                                suma = suma + 1;
+                                                            }
+                                                            else
+                                                            {
+                                                                long bandera = -1;
+                                                                foreach (long idU in usados)
+                                                                {
+                                                                    if (item2.IdCommunity != idU)
+                                                                    {
+                                                                        suma = suma + 1;
+                                                                        bandera = item2.IdCommunity;
+                                                                    }
+                                                                }
+
+                                                                if (bandera != -1)
+                                                                {
+                                                                    usados.Add(item2.IdCommunity);
+                                                                }
+
+                                                            }
+
+                                                        }
+                                                    }
                                                 }
-                                                else
-                                                {
-                                                    <button type="button" onclick="onActiveResident(this)" data-id="@item.id"
-                                                            class="btn btn-danger waves-effect waves-light btn-sm">
-                                                        Inactivo
-                                                    </button>
-                                                }
-                                            </td>
-                                            <td class="text-center">
-                                                <a href="@Url.Action("ver", "titulares", new { area = "webmaster", id = item.id })">
-                                                    <button type="button"
-                                                            class="btn btn-success waves-effect waves-light btn-sm mr-1 mb-1"
-                                                            data-toggle="tooltip"
-                                                            data-placement="top"
-                                                            title="Ver">
-                                                        <i class="mdi mdi-eye"></i>
-                                                    </button>
-                                                </a>
-                                                <a href="@Url.Action("editar", "titulares", new { area = "webmaster", id = item.id })">
-                                                    <button type="button"
-                                                            class="btn btn-primary waves-effect waves-light btn-sm mr-1 mb-1"
-                                                            data-toggle="tooltip" data-placement="top" title="Editar">
-                                                        <i class="mdi mdi-lead-pencil"></i>
-                                                    </button>
-                                                </a>
-                                                <a href="@Url.Action("listadoTitulos", "titulares", new { area = "webmaster", id = item.id })"
-                                                   class="btn btn-primary waves-effect waves-light btn-sm mr-1 mb-1"
-                                                   data-toggle="tooltip" data-placement="top" title="Propiedades">
-                                                    <i class="mdi mdi-home"></i>
-                                                </a>
-                                                <a href="#">
-                                                    <button type="button" onclick="onDeleteTitulares(this)" data-id="@item.id"
-                                                            class="btn btn-danger waves-effect waves-light btn-sm mb-1"
-                                                            data-toggle="tooltip"
-                                                            data-placement="top"
-                                                            title="Eliminar">
-                                                        <i class="mdi mdi-delete"></i>
-                                                    </button>
-                                                </a>
+
+                                                @suma
+                                            </button>
+
+                                            <button type="button" data-toggle="tooltip" data-placement="top" title="Propiedades"
+                                                    class="btn btn-info waves-effect waves-light btn-sm">
+                                                <i class="mdi mdi-home"></i>@item.Titulos.Count
+                                            </button>
+
+                                        </td>                                        
+                                        <td class="text-center">
+                                            @if (item.is_active == true)
+                                            {
+                                                <button type="button" onclick="onDeactiveResident(this)" data-id="@item.id"
+                                                        class="btn btn-primary waves-effect waves-light btn-sm">
+                                                    Activo
+                                                </button>
+                                            }
+                                            else
+                                            {
+                                                <button type="button" onclick="onActiveResident(this)" data-id="@item.id"
+                                                        class="btn btn-danger waves-effect waves-light btn-sm">
+                                                    Inactivo
+                                                </button>
+                                            }
+                                        </td>
+                                        <td class="text-center">
+                                            <a href="@Url.Action("ver", "titulares", new { area = "webmaster", id = item.id })">
+                                                <button type="button"
+                                                        class="btn btn-success waves-effect waves-light btn-sm mr-1 mb-1"
+                                                        data-toggle="tooltip"
+                                                        data-placement="top"
+                                                        title="Ver">
+                                                    <i class="mdi mdi-eye"></i>
+                                                </button>
+                                            </a>
+                                            <a href="@Url.Action("editar", "titulares", new { area = "webmaster", id = item.id })">
+                                                <button type="button"
+                                                        class="btn btn-primary waves-effect waves-light btn-sm mr-1 mb-1"
+                                                        data-toggle="tooltip" data-placement="top" title="Editar">
+                                                    <i class="mdi mdi-lead-pencil"></i>
+                                                </button>
+                                            </a>
+                                            <a href="@Url.Action("listadoTitulos", "titulares", new { area = "webmaster", id = item.id })"
+                                               class="btn btn-primary waves-effect waves-light btn-sm mr-1 mb-1"
+                                               data-toggle="tooltip" data-placement="top" title="Propiedades">
+                                                <i class="mdi mdi-home"></i>
+                                            </a>
+                                            <a href="#">
+                                                <button type="button" onclick="onDeleteTitulares(this)" data-id="@item.id"
+                                                        class="btn btn-danger waves-effect waves-light btn-sm mb-1"
+                                                        data-toggle="tooltip"
+                                                        data-placement="top"
+                                                        title="Eliminar">
+                                                    <i class="mdi mdi-delete"></i>
+                                                </button>
+                                            </a>
 
 
-                                            </td>
+                                        </td>
 
-                                        </tr>
+                                    </tr>
                                     }
                                 </tbody>
                             </table>

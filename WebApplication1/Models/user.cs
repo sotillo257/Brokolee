@@ -34,7 +34,7 @@ namespace WebApplication1.Models
             this.Titulos = new HashSet<Titulo>();
             this.BlogUserLikes = new HashSet<BlogUserLike>();
             this.blogs = new HashSet<blog>();
-            this.fees = new HashSet<fee>();
+            this.fees = new HashSet<fee>();            
         }
     
         public long id { get; set; }
@@ -121,6 +121,6 @@ namespace WebApplication1.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<blog> blogs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<fee> fees { get; set; }
+        public virtual ICollection<fee> fees { get; set; }       
     }
 }
