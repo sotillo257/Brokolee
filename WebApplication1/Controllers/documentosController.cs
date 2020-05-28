@@ -15,98 +15,87 @@ namespace WebApplication1.Controllers
         EFPublicRepository ep = new EFPublicRepository();
 
         List<Titulo> titulosList = new List<Titulo>();
-        List<community> listComunities = new List<community>();
+        List<community> listComunities = new List<community>();        
 
-        // GET: documentos
-        public ActionResult legales(int? type_id, string searchStr = "")
+        public ActionResult listado(string Error, string searchStr = "", int idCategory = 0)
         {
             if (Session["USER_ID"] != null)
             {
-                if (type_id != null)
+                long userId = (long)Session["USER_ID"];
+                user curUser = entities.users.Find(userId);
+                List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
+                List<document> document_list = new List<document>();
+
+                long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
+
+                Dictionary<long, string> categoryDict = new Dictionary<long, string>();
+                if (searchStr == "" && idCategory == 0)
                 {
-                    try
-                    {
-                        long userId = 0;
-                        if (Convert.ToInt32(Session["USER_ROLE"]) == 1)
-                        {
-                            userId = (long)Session["USER_ID"];
-                        }
-                        else if (Convert.ToInt32(Session["USER_ROLE"]) > 1
-                        && Session["ACC_USER_ID"] != null)
-                        {
-                            userId = (long)Session["ACC_USER_ID"];
-                        }                        
-                        user curUser = entities.users.Find(userId);
-                        List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
-                        document_type document_Type = entities.document_type.Find(type_id);
-                        List<document> documentList = new List<document>();
-
-                        long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
-
-                        if (Session["CURRENT_COMU"] != null)
-                        {
-                            if (searchStr == "")
-                            {
-                                var query = (from r in entities.documents
-                                             where r.type_id == type_id && r.community_id == communityAct
-                                             select r);
-                                documentList = query.ToList();
-                            }
-                            else
-                            {
-                                var query = (from r in entities.documents
-                                             where r.type_id == type_id && (r.first_name.Contains(searchStr) == true) && r.community_id == communityAct
-                                             select r);
-                                documentList = query.ToList();
-                            }
-                        }
-                        else
-                        {
-                            documentList.Clear();
-                        }                        
-
-                        documentosViewModel viewModel = new documentosViewModel();
-
-                        titulosList = ep.GetTitulosByTitular(userId);
-                        listComunities = ep.GetCommunityListByTitular(titulosList);
-                        viewModel.communityList = listComunities;                     
-
-                        viewModel.side_menu = "documentos";
-                        viewModel.side_sub_menu = "documentos_" + document_Type.type_name;
-                        viewModel.documentList = documentList;
-                        viewModel.document_category_list = entities.document_type.ToList();
-                        viewModel.curUser = curUser;
-                        viewModel.searchStr = searchStr;
-                        viewModel.typeId = Convert.ToInt32(type_id);
-                        viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
-                        viewModel.pubMessageList = pubMessageList;
-                        viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);                       
-                        return View(viewModel);
-                    }
-                    catch(Exception ex)
-                    {
-                        return Redirect(Url.Action("Index", "Error"));
-                    }                                     
+                    var query = (from r in entities.documents where r.community_id == communityAct select r);
+                    document_list = query.ToList();
+                }
+                else if (searchStr != "" && idCategory == 0)
+                {
+                    var query1 = (from r in entities.documents
+                                  where r.first_name.Contains(searchStr) == true && r.community_id == communityAct
+                                  select r);
+                    document_list = query1.ToList();
+                }
+                else if (searchStr == "" && idCategory != 0)
+                {
+                    var query2 = (from r in entities.documents
+                                  where r.document_type.id == idCategory && r.community_id == communityAct
+                                  select r
+                                  );
+                    document_list = query2.ToList();
                 }
                 else
                 {
-                    return Redirect(Url.Action("NotFound", "Error"));
-                }               
-            } else
-            {
-                return Redirect(Url.Action("iniciar", "iniciar"));
+                    var query3 = (from r in entities.documents
+                                  where r.first_name.Contains(searchStr) == true &&
+                                  r.document_type.id == idCategory && r.community_id == communityAct
+                                  select r);
+                    document_list = query3.ToList();
+                }
+
+                List<document_type> document_category_list = entities.document_type.Where(x => x.community_id == communityAct).ToList();
+                documentosViewModel viewModel = new documentosViewModel();
+
+                titulosList = ep.GetTitulosByTitular(userId);
+                listComunities = ep.GetCommunityListByTitular(titulosList);
+                viewModel.communityList = listComunities;
+
+                document_type document_type = entities.document_type.Find(idCategory);
+                viewModel.side_menu = "documentos";
+                if (idCategory != 0)
+                {
+                    viewModel.side_sub_menu = "documentos_" + document_type.type_name;
+                }
+                else
+                {
+                    viewModel.side_sub_menu = "documentos_listado";
+                }
+                viewModel.document_category_list = document_category_list;
+                viewModel.documentList = document_list;
+                viewModel.searchStr = searchStr;
+                viewModel.typeID = idCategory;
+                viewModel.curUser = curUser;
+                viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
+                viewModel.pubMessageList = pubMessageList;
+                viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                ViewBag.msgError = Error;
+                return View(viewModel);
             }
-                
+            else
+            {
+                return Redirect(ep.GetLogoutUrl());
+            }
         }
 
-        public ActionResult SeacrhResult(int type_id, string searchStr)
+        [HttpPost]
+        public ActionResult SeacrhResult(string searchStr, int idDocumentT)
         {
-            return Redirect(Url.Action("legales", "documentos",
-                new
-                {
-                    type_id = type_id,
-                    searchStr = searchStr
-                }));
+            return Redirect(Url.Action("listado", "documentos", new { searchStr = searchStr, idCategory = idDocumentT }));
         }
     }
 }

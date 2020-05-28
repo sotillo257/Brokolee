@@ -59,7 +59,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
 
                     viewModel.side_menu = "event_calendar";
                     viewModel.side_sub_menu = "event_calendar_recorded";
-                    viewModel.document_category_list = entities.document_type.ToList();
+                     viewModel.document_category_list = entities.document_type.Where(x => x.community_id == communityAct).ToList();
                     viewModel.eventList = eventList;
                     viewModel.curUser = curUser;
                     viewModel.searchStr = searchStr;
@@ -244,7 +244,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                                 viewModel.side_sub_menu = "event_calendar_editar";
                                 viewModel.editEvent = editEvent;
                                 viewModel.curUser = curUser;
-                                viewModel.document_category_list = entities.document_type.ToList();
+                                 viewModel.document_category_list = entities.document_type.Where(x => x.community_id == communityAct).ToList();
                                 viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                                 viewModel.pubMessageList = pubMessageList;
                                 viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
@@ -308,7 +308,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                                 viewmodel.place = event_item.place;
                                 viewmodel.description = event_item.description;
                                 viewmodel.note = event_item.note;
-                                viewmodel.document_category_list = entities.document_type.ToList();
+                                viewmodel.document_category_list = entities.document_type.Where(x => x.community_id == communityAct).ToList();
                                 viewmodel.curUser = curUser;
                                 viewmodel.eventID = Convert.ToInt64(id);
                                 viewmodel.searchStr = searchStr;

@@ -25,16 +25,8 @@ namespace WebApplication1.Areas.coadmin.Controllers
             {
                 try
                 {
-                    long userId = 0;
-                    if (Convert.ToInt32(Session["USER_ROLE"]) == 2)
-                    {
-                        userId = (long)Session["USER_ID"];
-                    }
-                    else if (Convert.ToInt32(Session["USER_ROLE"]) > 2
-                    && Session["ACC_USER_ID"] != null)
-                    {
-                        userId = (long)Session["ACC_USER_ID"];
-                    }
+                    long userId = (long)Session["USER_ID"];
+                    long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);                   
 
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                     user curUser = entities.users.Find(userId);
@@ -46,7 +38,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     viewModel.side_menu = "";
                     viewModel.side_sub_menu = "";
                     viewModel.curUser = curUser;
-                    viewModel.document_category_list = entities.document_type.ToList();
+                     viewModel.document_category_list = entities.document_type.Where(x => x.community_id == communityAct).ToList();
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = pubMessageList;
                     viewModel.password = ep.Decrypt(curUser.password);

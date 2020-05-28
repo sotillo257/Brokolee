@@ -42,7 +42,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 disponiblesFacViewModel viewModel = new disponiblesFacViewModel();
                 viewModel.side_menu = "facilidades";
                 viewModel.side_sub_menu = "facilidades_disponibles";
-                viewModel.document_category_list = entities.document_type.ToList();
+                
                 viewModel.efacList = efacList;
                 viewModel.curUser = curUser;
                 viewModel.searchStr = searchStr;
@@ -66,7 +66,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 agregarFacViewModel viewModel = new agregarFacViewModel();
                 viewModel.side_menu = "facilidades";
                 viewModel.side_sub_menu = "facilidades_agregar";
-                viewModel.document_category_list = entities.document_type.ToList();
+                
                 int[] timeList = new int[24];
                 for (int i = 1; i < 25; i++)
                 {
@@ -98,7 +98,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                     editarFacViewModel viewModel = new editarFacViewModel();
                     viewModel.side_menu = "facilidades";
                     viewModel.side_sub_menu = "facilidades_editar";
-                    viewModel.document_category_list = entities.document_type.ToList();
+                    
                     viewModel.editFac = editFac;
                     int[] timeList = new int[24];
                     for (int i = 1; i < 25; i++)
@@ -133,7 +133,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 facilidadesViewModel viewModel = new facilidadesViewModel();
                 viewModel.side_menu = "facilidades";
                 viewModel.side_sub_menu = "facilidades_reservar";
-                viewModel.document_category_list = entities.document_type.ToList();
+                
                 viewModel.curUser = curUser;
                 viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                 viewModel.pubMessageList = pubMessageList;
@@ -156,7 +156,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 viewModel.side_menu = "facilidades";
                 viewModel.side_sub_menu = "facilidades_reservartwo";
                 viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
-                viewModel.document_category_list = entities.document_type.ToList();
+                
                 viewModel.curUser = curUser;
                 viewModel.pubMessageList = pubMessageList;
                 viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
@@ -193,7 +193,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 facilidadesViewModel viewModel = new facilidadesViewModel();
                 viewModel.side_menu = "facilidades";
                 viewModel.side_sub_menu = "facilidades_solicitudes";
-                viewModel.document_category_list = entities.document_type.ToList();
+                
                 viewModel.searchStr = searchStr;
                 viewModel.efacList = efacList;
                 viewModel.curUser = curUser;
@@ -226,7 +226,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                     viewmodel.place = event_item.place;
                     viewmodel.description = event_item.description;
                     viewmodel.note = event_item.note;
-                    viewmodel.document_category_list = entities.document_type.ToList();
+                    
                     viewmodel.curUser = curUser;
                     viewmodel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewmodel.pubMessageList = pubMessageList;

@@ -24,6 +24,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
             {
                 try
                 {
+                    long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
                     long userId = (long)Session["USER_ID"];
                     user curUser = entities.users.Find(userId);
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
@@ -32,10 +33,9 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     viewModel.communityList = communityList;
                     viewModel.side_menu = "comunicaciones";
                     viewModel.side_sub_menu = "comunicaciones_blog";
-                    viewModel.document_category_list = entities.document_type.ToList();
+                     viewModel.document_category_list = entities.document_type.Where(x => x.community_id == communityAct).ToList();
                     viewModel.curUser = curUser;
-                    viewModel.Content = userId.ToString();
-                    long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
+                    viewModel.Content = userId.ToString();                  
 
                     List<blog> blogs = new List<blog>();
                     if (Session["CURRENT_COMU"] != null)
@@ -76,6 +76,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 {
                     try
                     {
+                        long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
                         long userId = (long)Session["USER_ID"];
                         user curUser = entities.users.Find(userId);
                         List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
@@ -84,7 +85,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                         viewModel.communityList = communityList;
                         viewModel.side_menu = "comunicaciones";
                         viewModel.side_sub_menu = "comunicaciones_blog";
-                        viewModel.document_category_list = entities.document_type.ToList();
+                         viewModel.document_category_list = entities.document_type.Where(x => x.community_id == communityAct).ToList();
                         viewModel.curUser = curUser;
                         viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                         viewModel.pubMessageList = pubMessageList;
@@ -130,7 +131,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                                 viewModel.communityList = communityList;
                                 viewModel.side_menu = "comunicaciones";
                                 viewModel.side_sub_menu = "comunicaciones_blog";
-                                viewModel.document_category_list = entities.document_type.ToList();
+                                 viewModel.document_category_list = entities.document_type.Where(x => x.community_id == communityAct).ToList();
                                 viewModel.curUser = curUser;
                                 viewModel.blogID = Convert.ToInt64(blogID);
                                 viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
@@ -173,6 +174,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
         {
             if (Session["USER_ID"] != null)
             {
+                long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
                 long userId = (long)Session["USER_ID"];
                 user curUser = entities.users.Find(userId);
                 List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
@@ -185,7 +187,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
 
                 viewModel.side_menu = "comunicaciones";
                 viewModel.side_sub_menu = "comunicaciones_privados";
-                viewModel.document_category_list = entities.document_type.ToList();
+                 viewModel.document_category_list = entities.document_type.Where(x => x.community_id == communityAct).ToList();
                 viewModel.curUser = curUser;             
                 viewModel.onlineUserList = onlineUserList;
                 if (onlineUserList.Count > 0)
@@ -235,7 +237,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                                 viewModel.communityList = communityList;
                                 viewModel.side_menu = "comunicaciones";
                                 viewModel.side_sub_menu = "comunicaciones_blog";
-                                viewModel.document_category_list = entities.document_type.ToList();
+                                 viewModel.document_category_list = entities.document_type.Where(x => x.community_id == communityAct).ToList();
                                 viewModel.curUser = curUser;
                                 viewModel.editBlog = blog;
                                 viewModel.blogID = Convert.ToInt64(blogID);
@@ -294,7 +296,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                                 viewModel.communityList = communityList;
                                 viewModel.side_menu = "comunicaciones";
                                 viewModel.side_sub_menu = "comunicaciones_blog";
-                                viewModel.document_category_list = entities.document_type.ToList();
+                                 viewModel.document_category_list = entities.document_type.Where(x => x.community_id == communityAct).ToList();
                                 viewModel.curUser = curUser;
                                 viewModel.viewBlog = blog;
                                 viewModel.Content = blogID.ToString();

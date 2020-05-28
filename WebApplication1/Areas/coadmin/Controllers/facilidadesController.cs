@@ -46,7 +46,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     viewModel.communityList = communityList;
                     viewModel.side_menu = "facilidades";
                     viewModel.side_sub_menu = "facilidades_disponibles";
-                    viewModel.document_category_list = entities.document_type.ToList();
+                     viewModel.document_category_list = entities.document_type.Where(x => x.community_id == communityAct).ToList();
                     viewModel.efacList = efacList;
                     viewModel.curUser = curUser;
                     viewModel.searchStr = searchStr;
@@ -75,6 +75,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 {
                     try
                     {
+                        long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
                         long userId = (long)Session["USER_ID"];                        
                         user curUser = entities.users.Find(userId);
                         List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
@@ -83,7 +84,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                         viewModel.communityList = communityList;
                         viewModel.side_menu = "facilidades";
                         viewModel.side_sub_menu = "facilidades_agregar";
-                        viewModel.document_category_list = entities.document_type.ToList();
+                         viewModel.document_category_list = entities.document_type.Where(x => x.community_id == communityAct).ToList();
 
                         int[] timeList = new int[24];
                         for (int i = 1; i < 25; i++)
@@ -228,7 +229,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
 
         //                viewModel.side_menu = "facilidades";
         //                viewModel.side_sub_menu = "facilidades_reservar";
-        //                viewModel.document_category_list = entities.document_type.ToList();
+        //                 viewModel.document_category_list = entities.document_type.Where(x => x.community_id == communityAct).ToList();
         //                viewModel.curUser = curUser;
         //                viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
         //                viewModel.pubMessageList = pubMessageList;
@@ -274,7 +275,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                                 viewModel.communityList = communityList;
                                 viewModel.side_menu = "facilidades";
                                 viewModel.side_sub_menu = "facilidades_editar";
-                                viewModel.document_category_list = entities.document_type.ToList();
+                                 viewModel.document_category_list = entities.document_type.Where(x => x.community_id == communityAct).ToList();
                                 viewModel.editFac = editFac;
                                 int[] timeList = new int[24];
                                 for (int i = 1; i < 25; i++)
@@ -436,7 +437,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     viewModel.communityList = communityList;
                     viewModel.side_menu = "facilidades";
                     viewModel.side_sub_menu = "facilidades_solicitudes";
-                    viewModel.document_category_list = entities.document_type.ToList();
+                     viewModel.document_category_list = entities.document_type.Where(x => x.community_id == communityAct).ToList();
                     viewModel.searchStr = searchStr;
                     viewModel.bookList = bookList;
                     viewModel.curUser = curUser;
@@ -478,7 +479,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
         //            viewmodel.place = event_item.place;
         //            viewmodel.description = event_item.description;
         //            viewmodel.note = event_item.note;
-        //            viewmodel.document_category_list = entities.document_type.ToList();
+        //             viewModel.document_category_list = entities.document_type.Where(x => x.community_id == communityAct).ToList();
         //            viewmodel.curUser = curUser;
         //            viewmodel.pubTaskList = ep.GetNotifiTaskList(userId);
         //            viewmodel.pubMessageList = ep.GetChatMessages(userId);                   

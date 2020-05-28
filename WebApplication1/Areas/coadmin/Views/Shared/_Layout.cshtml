@@ -598,7 +598,7 @@
                                                                 </li>
                                                             }
 
-                                                            foreach (var item in Model.document_category_list)
+                                                            @*foreach (var item in Model.document_category_list)
                                                             {
                                                                 if (Model.side_sub_menu == "documentos_" + item.type_name)
                                                                 {
@@ -612,7 +612,7 @@
                                                                         <a href="@Url.Action("listado", "documentos", new { area = "coadmin", idCategory = item.id })">@item.type_name</a>
                                                                     </li>
                                                                 }
-                                                            }
+                                                            }*@
 
                                                         }
                                                     </ul>
@@ -625,10 +625,10 @@
                                                         @if (Session["CURRENT_COMU"] != null)
                                                         {
                                                             <li><a href="@Url.Action("listadoCategoria", "documentos", new { area = "coadmin" })">Categorías</a></li>
-                                                            foreach (var item in Model.document_category_list)
+                                                            @*foreach (var item in Model.document_category_list)
                                                             {
                                                                 <li><a href="@Url.Action("listado", "documentos", new { area = "coadmin", id = item.id })">@item.type_name</a></li>
-                                                            }
+                                                            }*@
                                                         }
 
                                                     </ul>

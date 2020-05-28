@@ -24,7 +24,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                 panelControlViewModel viewModel = new panelControlViewModel();
                 viewModel.curUser = curUser;
-                viewModel.document_category_list = entities.document_type.ToList();
+                
                 viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                 viewModel.side_menu = "control_panel";
                 viewModel.side_sub_menu = "control_panel";

@@ -24,7 +24,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 listadoTooltipsViewModel viewModel = new listadoTooltipsViewModel();
                 viewModel.side_menu = "tooltips";
                 viewModel.side_sub_menu = "tooltips_titular";
-                viewModel.document_category_list = entities.document_type.ToList();
+                
                 viewModel.pubTaskList = entities.tasks.Take(3).ToList();
                 viewModel.curUser = curUser;
                 viewModel.pubMessageList = pubMessageList;

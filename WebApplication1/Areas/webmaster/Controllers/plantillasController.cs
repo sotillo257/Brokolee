@@ -37,7 +37,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 }
                 viewModel.side_menu = "plantillas";
                 viewModel.side_sub_menu = "plantillas_listado";
-                viewModel.document_category_list = entities.document_type.ToList();
+                
                 viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                 viewModel.curUser = curUser;
                 viewModel.pubMessageList = pubMessageList;
@@ -60,7 +60,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 agregarTemadeViewModel viewModel = new agregarTemadeViewModel();
                 viewModel.side_menu = "plantillas";
                 viewModel.side_sub_menu = "plantillas_tema";
-                viewModel.document_category_list = entities.document_type.ToList();
+                
                 viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                 viewModel.curUser = curUser;
                 viewModel.pubMessageList = pubMessageList;
@@ -85,7 +85,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 viewModel.side_menu = "plantillas";
                 viewModel.side_sub_menu = "plantillas_crear";
                 viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
-                viewModel.document_category_list = entities.document_type.ToList();
+                
                 viewModel.curUser = curUser;
                 viewModel.pubMessageList = pubMessageList;
                 viewModel.typeList = entities.emailtypes.ToList();

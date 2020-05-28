@@ -46,7 +46,7 @@ namespace WebApplication1.Controllers
         //            viewModel.communityID1 = Convert.ToInt64(Session["CURRENT_COMU"]);
         //            viewModel.side_menu = "contacto";
         //            viewModel.side_sub_menu = "";
-        //            viewModel.document_category_list = entities.document_type.ToList();
+        //             viewModel.document_category_list = entities.document_type.Where(x => x.community_id == communityAct).ToList();
         //            viewModel.curUser = curUser;
         //            viewModel.contactinfo = contactinfo;
         //            viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
@@ -72,6 +72,7 @@ namespace WebApplication1.Controllers
             {
                 try
                 {
+                    long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
                     long userId = (long)Session["USER_ID"];                    
                     user curUser = entities.users.Find(userId);
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
@@ -82,7 +83,7 @@ namespace WebApplication1.Controllers
 
                     if (listComunities.Count != 0)
                     {
-                        long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
+                        
                         if (searchStr == "")
                         {
                             var query1 = (from r in entities.contactinfoes where r.community_id == communityAct select r);
@@ -102,7 +103,7 @@ namespace WebApplication1.Controllers
                     viewModel.side_menu = "contacto";
                     viewModel.side_sub_menu = "contacto_informacion";
                     viewModel.contactList = contactList;
-                    viewModel.document_category_list = entities.document_type.ToList();
+                     viewModel.document_category_list = entities.document_type.Where(x => x.community_id == communityAct).ToList();
                     viewModel.curUser = curUser;
                     viewModel.searchStr = searchStr;
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
@@ -142,7 +143,7 @@ namespace WebApplication1.Controllers
 
                     viewModel.side_menu = "contacto";
                     viewModel.side_sub_menu = "manage_edit_headlines";
-                    viewModel.document_category_list = entities.document_type.ToList();
+                     viewModel.document_category_list = entities.document_type.Where(x => x.community_id == communityAct).ToList();
                     viewModel.curUser = curUser;
                     viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
                     viewModel.editContactInfo = infoContact;

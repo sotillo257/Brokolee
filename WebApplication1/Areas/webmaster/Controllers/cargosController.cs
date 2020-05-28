@@ -19,12 +19,13 @@ namespace WebApplication1.Areas.webmaster.Controllers
             if (Session["USER_ID"] != null)
             {
                 long userId = (long)Session["USER_ID"];
+                long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
                 user curUser = entities.users.Find(userId);
                 List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                 balanceCargosViewModel viewModel = new balanceCargosViewModel();
                 viewModel.side_menu = "cargos";
                 viewModel.side_sub_menu = "cargos_balance";
-                viewModel.document_category_list = entities.document_type.ToList();
+                
                 viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                 viewModel.curUser = curUser;
                 viewModel.pubMessageList = pubMessageList;
@@ -42,12 +43,13 @@ namespace WebApplication1.Areas.webmaster.Controllers
             if (Session["USER_ID"] != null)
             {
                 long userId = (long)Session["USER_ID"];
+                long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
                 user curUser = entities.users.Find(userId);
                 List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                 pagoCargosViewModel viewModel = new pagoCargosViewModel();
                 viewModel.side_menu = "cargos";
                 viewModel.side_sub_menu = "cargos_pago";
-                viewModel.document_category_list = entities.document_type.ToList();
+                
                 viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                 viewModel.curUser = curUser;
                 viewModel.pubMessageList = pubMessageList;
@@ -65,12 +67,13 @@ namespace WebApplication1.Areas.webmaster.Controllers
             if (Session["USER_ID"] != null)
             {
                 long userId = (long)Session["USER_ID"];
+                long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
                 user curUser = entities.users.Find(userId);
                 List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                 estadoCargosViewModel viewModel = new estadoCargosViewModel();
                 viewModel.side_menu = "cargos";
                 viewModel.side_sub_menu = "cargos_estado";
-                viewModel.document_category_list = entities.document_type.ToList();
+                
                 viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                 viewModel.curUser = curUser;
                 viewModel.pubMessageList = pubMessageList;
@@ -88,12 +91,13 @@ namespace WebApplication1.Areas.webmaster.Controllers
             if (Session["USER_ID"] != null)
             {
                 long userId = (long)Session["USER_ID"];
+                long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
                 user curUser = entities.users.Find(userId);
                 List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                 historialCargosViewModel viewModel = new historialCargosViewModel();
                 viewModel.side_menu = "cargos";
                 viewModel.side_sub_menu = "cargos_historial";
-                viewModel.document_category_list = entities.document_type.ToList();
+                
                 viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                 viewModel.curUser = curUser;
                 viewModel.pubMessageList = pubMessageList;

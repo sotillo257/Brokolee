@@ -23,6 +23,7 @@ namespace WebApplication1.Controllers
             if (Session["USER_ID"] != null)
             {
                 long userId = (long)Session["USER_ID"];
+                long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
                 List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                 user curUser = entities.users.Find(userId);
                 long tecUserId = (long)curUser.create_userid;
@@ -35,7 +36,7 @@ namespace WebApplication1.Controllers
            
                 viewModel.side_menu = "tecnico";
                 viewModel.side_sub_menu = "";
-                viewModel.document_category_list = entities.document_type.ToList();
+                 viewModel.document_category_list = entities.document_type.Where(x => x.community_id == communityAct).ToList();
                 viewModel.curUser = curUser;
                 viewModel.tecUser = tecUser;
                 viewModel.chatmessageList = entities.chatmessages.Where(

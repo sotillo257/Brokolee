@@ -36,7 +36,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 listadoPaqViewModel viewModel = new listadoPaqViewModel();
                 viewModel.side_menu = "paquete";
                 viewModel.side_sub_menu = "paquete_listado";
-                viewModel.document_category_list = entities.document_type.ToList();
+                
                 viewModel.curUser = curUser;
                 viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                 viewModel.packageList = packageList;
@@ -62,7 +62,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 agregarPaqViewModel viewModel = new agregarPaqViewModel();
                 viewModel.side_menu = "paquete";
                 viewModel.side_sub_menu = "paquete_agregar";
-                viewModel.document_category_list = entities.document_type.ToList();
+                
                 viewModel.curUser = curUser;
                 viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                 viewModel.pubMessageList = pubMessageList;
@@ -89,7 +89,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                     viewModel.side_menu = "paquete";
                     viewModel.side_sub_menu = "paquete_ver";
                     viewModel.curUser = curUser;
-                    viewModel.document_category_list = entities.document_type.ToList();
+                    
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.viewPackage = viewPackage;
                     viewModel.pubMessageList = pubMessageList;
@@ -120,7 +120,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                     viewModel.side_menu = "paquete";
                     viewModel.side_sub_menu = "paquete_ver";
                     viewModel.curUser = curUser;
-                    viewModel.document_category_list = entities.document_type.ToList();
+                    
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.editPackage = editPackage;
                     viewModel.pubMessageList = pubMessageList;

@@ -21,6 +21,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 try
                 {
                     long userId = (long)Session["USER_ID"];
+
                     user curUser = entities.users.Find(userId);
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                     Dictionary<long, string> packageDict = new Dictionary<long, string>();
@@ -65,8 +66,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
 
                     listadoCommunViewModel viewModel = new listadoCommunViewModel();
                     viewModel.side_menu = "comunidades";
-                    viewModel.side_sub_menu = "comunidades_listado";
-                    viewModel.document_category_list = entities.document_type.ToList();
+                    viewModel.side_sub_menu = "comunidades_listado";                   
                     viewModel.curUser = curUser;
                     viewModel.communityList = communityList;
                     viewModel.searchStr = searchStr;
@@ -107,7 +107,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                     coadminList = query.ToList();
                     viewModel.side_menu = "comunidades";
                     viewModel.side_sub_menu = "comunidades_agregar";
-                    viewModel.document_category_list = entities.document_type.ToList();
+                    
                     viewModel.curUser = curUser;
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = pubMessageList;
@@ -206,7 +206,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                             viewModel.curUser = curUser;
                             viewModel.side_menu = "comunidades";
                             viewModel.side_sub_menu = "comunidades_ver";
-                            viewModel.document_category_list = entities.document_type.ToList();
+                            
                             viewModel.packageList = entities.packages.ToList();
                             viewModel.viewCommunity = viewCommunity;
                             package package = entities.packages.Find(viewCommunity.package_id);

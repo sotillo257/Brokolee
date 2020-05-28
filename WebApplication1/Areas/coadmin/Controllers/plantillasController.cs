@@ -22,16 +22,8 @@ namespace WebApplication1.Areas.coadmin.Controllers
             {
                 try
                 {
-                    long userId = 0;
-                    if (Convert.ToInt32(Session["USER_ROLE"]) == 2)
-                    {
-                        userId = (long)Session["USER_ID"];
-                    }
-                    else if (Convert.ToInt32(Session["USER_ROLE"]) > 2
-                    && Session["ACC_USER_ID"] != null)
-                    {
-                        userId = (long)Session["ACC_USER_ID"];
-                    }
+                    long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
+                    long userId = (long)Session["USER_ID"];                    
                     user curUser = entities.users.Find(userId);
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                     List<emailtheme> emailthemeList = entities.emailthemes.Where(m => m.user_id == userId).ToList();
@@ -54,7 +46,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
 
                     viewModel.side_menu = "plantillas";
                     viewModel.side_sub_menu = "plantillas_listado";
-                    viewModel.document_category_list = entities.document_type.ToList();
+                     viewModel.document_category_list = entities.document_type.Where(x => x.community_id == communityAct).ToList();
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.curUser = curUser;
                     viewModel.pubMessageList = pubMessageList;
@@ -79,16 +71,9 @@ namespace WebApplication1.Areas.coadmin.Controllers
             {
                 try
                 {
-                    long userId = 0;
-                    if (Convert.ToInt32(Session["USER_ROLE"]) == 2)
-                    {
-                        userId = (long)Session["USER_ID"];
-                    }
-                    else if (Convert.ToInt32(Session["USER_ROLE"]) > 2
-                    && Session["ACC_USER_ID"] != null)
-                    {
-                        userId = (long)Session["ACC_USER_ID"];
-                    }
+                    long userId = (long)Session["USER_ID"];
+                    long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
+                   
                     user curUser = entities.users.Find(userId);
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                     crearPlantillasViewModel viewModel = new crearPlantillasViewModel();
@@ -99,7 +84,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     viewModel.side_menu = "plantillas";
                     viewModel.side_sub_menu = "plantillas_crear";
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
-                    viewModel.document_category_list = entities.document_type.ToList();
+                     viewModel.document_category_list = entities.document_type.Where(x => x.community_id == communityAct).ToList();
                     viewModel.curUser = curUser;
                     viewModel.pubMessageList = pubMessageList;
                     viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);

@@ -23,6 +23,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 try
                 {
                     long userId = (long)Session["USER_ID"];
+                    long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
                     user curUser = entities.users.Find(userId);
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                     var query = (from r in entities.usoes where r.create_userid == userId select r);
@@ -43,7 +44,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
 
                     viewModel.side_menu = "aviso";
                     viewModel.side_menu = "aviso_terminos";
-                    viewModel.document_category_list = entities.document_type.ToList();
+                     viewModel.document_category_list = entities.document_type.Where(x => x.community_id == communityAct).ToList();
                     viewModel.curUser = curUser;
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = pubMessageList;
@@ -66,6 +67,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 try
                 {
                     long userId = (long)Session["USER_ID"];
+                    long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
                     user curUser = entities.users.Find(userId);
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                     var query = (from r in entities.usoes where r.create_userid == userId select r);
@@ -86,7 +88,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
 
                     viewModel.side_menu = "uso";
                     viewModel.side_menu = "uso_terminos";
-                    viewModel.document_category_list = entities.document_type.ToList();
+                     viewModel.document_category_list = entities.document_type.Where(x => x.community_id == communityAct).ToList();
                     viewModel.curUser = curUser;
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = pubMessageList;
@@ -111,6 +113,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 try
                 {
                     long userId = (long)Session["USER_ID"];
+                    long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
                     user curUser = entities.users.Find(userId);
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                     usoViewModel viewModel = new usoViewModel();
@@ -129,7 +132,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
 
                     viewModel.side_menu = "uso";
                     viewModel.side_menu = "uso_derechos";
-                    viewModel.document_category_list = entities.document_type.ToList();
+                     viewModel.document_category_list = entities.document_type.Where(x => x.community_id == communityAct).ToList();
                     viewModel.curUser = curUser;
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);

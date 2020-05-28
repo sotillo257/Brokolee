@@ -21,13 +21,14 @@ namespace WebApplication1.Areas.webmaster.Controllers
             if (Session["USER_ID"] != null)
             {
                 long userId = (long)Session["USER_ID"];
+                long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
                 user curUser = entities.users.Find(userId);
                 List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                 perfilViewModel viewModel = new perfilViewModel();
                 viewModel.side_menu = "";
                 viewModel.side_sub_menu = "";
                 viewModel.curUser = curUser;
-                viewModel.document_category_list = entities.document_type.ToList();
+                
                 viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                 viewModel.pubMessageList = pubMessageList;
                 viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);

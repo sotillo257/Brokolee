@@ -36,14 +36,14 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     if (Id != null)
                     {
                         long userId = (long)Session["USER_ID"];
+                        long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
                         List<community> communityList = new List<community>();
                         communityList = ep.GetCommunityList(userId);                        
                         Titulo tituls = entities.Titulos.Find(Id);
                         if (tituls != null)
                         {
                             if (communityList.Any(x => x.id == tituls.IdCommunity))
-                            {
-                                long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
+                            {                               
                                 user curUser = entities.users.Find(userId);
                                 Dictionary<long, string> communityDict = new Dictionary<long, string>();
                                 List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
@@ -55,7 +55,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                                 viewModel.titulo = titulo;
                                 viewModel.side_menu = "titulares";
                                 viewModel.side_sub_menu = "titulares_listado";
-                                viewModel.document_category_list = entities.document_type.ToList();
+                                 viewModel.document_category_list = entities.document_type.Where(x => x.community_id == communityAct).ToList();
                                 viewModel.vehiculosList = vehiculosLists;
                                 viewModel.curUser = curUser;
                                 viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
@@ -113,7 +113,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                                 viewModel.titulo = tituls;
                                 viewModel.side_menu = "titulares";
                                 viewModel.side_sub_menu = "titulares_agregar";
-                                viewModel.document_category_list = entities.document_type.ToList();
+                                 viewModel.document_category_list = entities.document_type.Where(x => x.community_id == communityAct).ToList();
                                 viewModel.curUser = curUser;
                                 viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
                                 viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
@@ -171,7 +171,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                                 viewModel.communityList = communityList;
                                 viewModel.side_menu = "titulares";
                                 viewModel.side_sub_menu = "manage_edit_headlines";
-                                viewModel.document_category_list = entities.document_type.ToList();
+                                 viewModel.document_category_list = entities.document_type.Where(x => x.community_id == communityAct).ToList();
                                 viewModel.vehiculo = vehiculo;
                                 viewModel.curUser = curUser;
                                 viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
@@ -230,7 +230,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                                 viewModel.communityList = communityList;
                                 viewModel.side_menu = "titulares";
                                 viewModel.side_sub_menu = "manage_edit_headlines";
-                                viewModel.document_category_list = entities.document_type.ToList();
+                                 viewModel.document_category_list = entities.document_type.Where(x => x.community_id == communityAct).ToList();
                                 viewModel.vehiculo = vehiculo;
                                 viewModel.curUser = curUser;
                                 viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
@@ -370,7 +370,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                                 viewModel.communityList = communityList;
                                 viewModel.side_menu = "titulares";
                                 viewModel.side_sub_menu = "titulares_listado";
-                                viewModel.document_category_list = entities.document_type.ToList();
+                                 viewModel.document_category_list = entities.document_type.Where(x => x.community_id == communityAct).ToList();
                                 viewModel.titulosList = titulosList;
                                 viewModel.IdUserTitular = (int)Id;
                                 viewModel.curUser = curUser;
@@ -424,7 +424,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                             viewModel.communityS = entities.communities.Find(communityAct);
                             viewModel.side_menu = "titulares";
                             viewModel.side_sub_menu = "titulares_agregar";
-                            viewModel.document_category_list = entities.document_type.ToList();
+                             viewModel.document_category_list = entities.document_type.Where(x => x.community_id == communityAct).ToList();
                             viewModel.curUser = curUser;
                             viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
                             viewModel.IdUserTitular = (int)Id;
@@ -479,7 +479,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                                 viewModel.communityS = entities.communities.Find(communityAct);
                                 viewModel.side_menu = "titulares";
                                 viewModel.side_sub_menu = "manage_edit_headlines";
-                                viewModel.document_category_list = entities.document_type.ToList();
+                                 viewModel.document_category_list = entities.document_type.Where(x => x.community_id == communityAct).ToList();
                                 viewModel.curUser = curUser;
                                 viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
                                 viewModel.titulo = titulo;
@@ -527,6 +527,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                         if (titulo != null)
                         {
                             long userId = (long)Session["USER_ID"];
+                            long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
                             List<community> communityList = new List<community>();
                             communityList = ep.GetCommunityList(userId);
                             if (communityList.Any(x => x.id == titulo.IdCommunity))
@@ -537,7 +538,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                                 viewModel.communityList = communityList;
                                 viewModel.side_menu = "titulares";
                                 viewModel.side_sub_menu = "manage_edit_headlines";
-                                viewModel.document_category_list = entities.document_type.ToList();
+                                 viewModel.document_category_list = entities.document_type.Where(x => x.community_id == communityAct).ToList();
                                 viewModel.curUser = curUser;
                                 viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
                                 viewModel.titulo = titulo;
@@ -717,7 +718,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 viewModel.communityList = communityList;                
                 viewModel.side_menu = "titulares";
                 viewModel.side_sub_menu = "titulares_listado";
-                viewModel.document_category_list = entities.document_type.ToList();
+                 viewModel.document_category_list = entities.document_type.Where(x => x.community_id == communityAct).ToList();
                 viewModel.titularList = titularList;
                 viewModel.searchStr = searchStr;
                 viewModel.curUser = curUser;                
@@ -741,6 +742,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 if (Session["CURRENT_COMU"] != null)
                 {
                     long userId = (long)Session["USER_ID"];
+                    long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
                     user curUser = entities.users.Find(userId);
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                     agregarTitularesViewModel viewModel = new agregarTitularesViewModel();
@@ -751,7 +753,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
 
                     viewModel.side_menu = "titulares";
                     viewModel.side_sub_menu = "titulares_agregar";
-                    viewModel.document_category_list = entities.document_type.ToList();
+                     viewModel.document_category_list = entities.document_type.Where(x => x.community_id == communityAct).ToList();
                     viewModel.curUser = curUser;
                     viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
@@ -811,7 +813,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                                 viewModel.communityList = communityList;
                                 viewModel.side_menu = "titulares";
                                 viewModel.side_sub_menu = "manage_edit_headlines";
-                                viewModel.document_category_list = entities.document_type.ToList();
+                                 viewModel.document_category_list = entities.document_type.Where(x => x.community_id == communityAct).ToList();
                                 viewModel.editUser = editUser;
                                 viewModel.view_resident_logo = "~/App_Data/User_Logo/" + editUser.user_img;
                                 viewModel.curUser = curUser;
@@ -886,7 +888,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                                 viewModel.communityList = communityList;
                                 viewModel.side_menu = "titulares";
                                 viewModel.side_sub_menu = "manage_edit_headlines";
-                                viewModel.document_category_list = entities.document_type.ToList();
+                                 viewModel.document_category_list = entities.document_type.Where(x => x.community_id == communityAct).ToList();
                                 viewModel.editUser = editUser;
                                 viewModel.curUser = curUser;
                                 viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);

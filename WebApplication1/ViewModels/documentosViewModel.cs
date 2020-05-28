@@ -14,6 +14,7 @@ namespace WebApplication1.ViewModels
         public string communityName { get; set; }
         public string communityApart { get; set; }
         public long communityID1 { get; set; }
+        public int typeID { get; set; }
         public List<community> communityList { get; set; }
 
         public List<document> documentList;

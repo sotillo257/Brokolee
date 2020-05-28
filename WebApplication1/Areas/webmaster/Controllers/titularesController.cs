@@ -43,7 +43,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 viewModel.titulo = titulo;
                 viewModel.side_menu = "titulares";
                 viewModel.side_sub_menu = "titulares_listado";
-                viewModel.document_category_list = entities.document_type.ToList();
+                
                 viewModel.vehiculosList = vehiculosLists;
                 viewModel.curUser = curUser;
                 viewModel.CantidadDeVehiculos = vehiculosLists.Count();
@@ -70,7 +70,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 viewModel.titulo = titulo;
                 viewModel.side_menu = "titulares";
                 viewModel.side_sub_menu = "titulares_agregar";
-                viewModel.document_category_list = entities.document_type.ToList();
+                
                 viewModel.curUser = curUser;
                 viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                 viewModel.pubMessageList = pubMessageList;
@@ -98,7 +98,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                     editarVehiculoViewModel viewModel = new editarVehiculoViewModel();
                     viewModel.side_menu = "titulares";
                     viewModel.side_sub_menu = "manage_edit_headlines";
-                    viewModel.document_category_list = entities.document_type.ToList();
+                    
                     viewModel.vehiculo = vehiculo;
                     viewModel.curUser = curUser;
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
@@ -131,7 +131,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                     editarVehiculoViewModel viewModel = new editarVehiculoViewModel();
                     viewModel.side_menu = "titulares";
                     viewModel.side_sub_menu = "manage_edit_headlines";
-                    viewModel.document_category_list = entities.document_type.ToList();
+                    
                     viewModel.vehiculo = vehiculo;
                     viewModel.curUser = curUser;
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
@@ -254,7 +254,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 listadoTitulosViewModel viewModel = new listadoTitulosViewModel();
                 viewModel.side_menu = "titulares";
                 viewModel.side_sub_menu = "titulares_listado";
-                viewModel.document_category_list = entities.document_type.ToList();
+                
                 viewModel.titulosList = titulosList;
                 viewModel.IdUserTitular = (int)Id;
                 viewModel.curUser = curUser;
@@ -297,7 +297,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 listadoTitulosViewModel viewModel = new listadoTitulosViewModel();
                 viewModel.side_menu = "titulares";
                 viewModel.side_sub_menu = "titulares_agregar";
-                viewModel.document_category_list = entities.document_type.ToList();
+                
                 viewModel.curUser = curUser;
                 viewModel.IdUserTitular = (int)Id;
                 viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
@@ -339,7 +339,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                     editarTituloViewModel viewModel = new editarTituloViewModel();
                     viewModel.side_menu = "titulares";
                     viewModel.side_sub_menu = "manage_edit_headlines";
-                    viewModel.document_category_list = entities.document_type.ToList();
+                    
                     viewModel.curUser = curUser;
                     viewModel.titulo = titulo;                   
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
@@ -384,7 +384,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                     editarTituloViewModel viewModel = new editarTituloViewModel();
                     viewModel.side_menu = "titulares";
                     viewModel.side_sub_menu = "manage_edit_headlines";
-                    viewModel.document_category_list = entities.document_type.ToList();
+                    
                     viewModel.curUser = curUser;
                     viewModel.titulo = titulo;
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
@@ -592,7 +592,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                     viewModel.communityList = communityList;
                     viewModel.side_menu = "titulares";
                     viewModel.side_sub_menu = "titulares_listado";
-                    viewModel.document_category_list = entities.document_type.ToList();
+                    
                     viewModel.titularList = titularList;
                     viewModel.searchStr = searchStr;
                     viewModel.curUser = curUser;
@@ -633,7 +633,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                             agregarTitularesViewModel viewModel = new agregarTitularesViewModel();
                             viewModel.side_menu = "titulares";
                             viewModel.side_sub_menu = "titulares_agregar";
-                            viewModel.document_category_list = entities.document_type.ToList();
+                            
                             viewModel.curUser = curUser;
                             viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                             viewModel.pubMessageList = pubMessageList;
@@ -676,7 +676,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                     verTitularesViewModel viewModel = new verTitularesViewModel();
                     viewModel.side_menu = "titulares";
                     viewModel.side_sub_menu = "manage_edit_headlines";
-                    viewModel.document_category_list = entities.document_type.ToList();
+                    
                     viewModel.editUser = editUser;
                     viewModel.view_resident_logo = "~/App_Data/User_Logo/" + editUser.user_img;
                     viewModel.curUser = curUser;
@@ -709,7 +709,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                     editarTitularesViewModel viewModel = new editarTitularesViewModel();
                     viewModel.side_menu = "titulares";
                     viewModel.side_sub_menu = "manage_edit_headlines";
-                    viewModel.document_category_list = entities.document_type.ToList();
+                    
                     viewModel.editUser = editUser;
                     viewModel.curUser = curUser;
                     viewModel.password = ep.Decrypt(editUser.password);

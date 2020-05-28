@@ -61,7 +61,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     titularList = query2.ToList();
                     viewModel.side_menu = "task_process";
                     viewModel.side_sub_menu = "task_process_listado";
-                    viewModel.document_category_list = entities.document_type.ToList();
+                     viewModel.document_category_list = entities.document_type.Where(x => x.community_id == communityAct).ToList();
                     viewModel.taskList = taskList;
                     viewModel.searchStr = searchStr;
                     viewModel.curUser = curUser;
@@ -92,6 +92,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     try
                     {
                         long userId = (long)Session["USER_ID"];
+                        long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
                         user curUser = entities.users.Find(userId);
                         List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                         tareasagregarViewModel viewModel = new tareasagregarViewModel();
@@ -101,7 +102,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
 
                         viewModel.side_menu = "task_process";
                         viewModel.side_sub_menu = "task_process_agregar";
-                        viewModel.document_category_list = entities.document_type.ToList();
+                         viewModel.document_category_list = entities.document_type.Where(x => x.community_id == communityAct).ToList();
                         viewModel.curUser = curUser;
                         viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                         viewModel.pubMessageList = pubMessageList;
@@ -199,7 +200,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
 
                             viewModel.side_menu = "task_process";
                             viewModel.side_sub_menu = "task_process_editar";
-                            viewModel.document_category_list = entities.document_type.ToList();
+                             viewModel.document_category_list = entities.document_type.Where(x => x.community_id == communityAct).ToList();
                             viewModel.editTask = editTask;
                             viewModel.curUser = curUser;
                             viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
@@ -302,7 +303,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
 
                 viewModel.side_menu = "task_process";
                 viewModel.side_sub_menu = "task_process_completadas";
-                viewModel.document_category_list = entities.document_type.ToList();
+                 viewModel.document_category_list = entities.document_type.Where(x => x.community_id == communityAct).ToList();
                 viewModel.searchStr = searchStr;
                 viewModel.taskList = taskList;
                 viewModel.curUser = curUser;
@@ -326,6 +327,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     if (taskID != null)
                     {
                         long userId = (long)Session["USER_ID"];
+                        long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
                         user curUser = entities.users.Find(userId);
                         task viewTask = entities.tasks.Find(taskID);
 
@@ -340,7 +342,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
 
                             viewModel.side_menu = "task_process";
                             viewModel.side_sub_menu = "task_process_ver";
-                            viewModel.document_category_list = entities.document_type.ToList();
+                             viewModel.document_category_list = entities.document_type.Where(x => x.community_id == communityAct).ToList();
                             viewModel.viewTask = viewTask;
                             viewModel.taskcommentList = commentList;
                             viewModel.curUser = curUser;

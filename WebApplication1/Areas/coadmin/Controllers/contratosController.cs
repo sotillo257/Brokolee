@@ -48,7 +48,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     viewModel.side_menu = "contratos";
                     viewModel.side_sub_menu = "contratos_listado";
                     viewModel.contractList = contractList;
-                    viewModel.document_category_list = entities.document_type.ToList();
+                     viewModel.document_category_list = entities.document_type.Where(x => x.community_id == communityAct).ToList();
                     viewModel.curUser = curUser;
                     viewModel.searchStr = searchStr;
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
@@ -76,7 +76,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     try
                     {
                         long userId = (long)Session["USER_ID"];
-
+                        long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
                         user curUser = entities.users.Find(userId);
                         List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                         contratosViewModel viewModel = new contratosViewModel();
@@ -86,7 +86,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
 
                         viewModel.side_menu = "contratos";
                         viewModel.side_sub_menu = "contratos_agregar";
-                        viewModel.document_category_list = entities.document_type.ToList();
+                         viewModel.document_category_list = entities.document_type.Where(x => x.community_id == communityAct).ToList();
                         viewModel.curUser = curUser;
                         viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                         viewModel.pubMessageList = pubMessageList;
@@ -184,7 +184,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
 
                                 viewModel.side_menu = "contratos";
                                 viewModel.side_sub_menu = "contratos_editar";
-                                viewModel.document_category_list = entities.document_type.ToList();
+                                 viewModel.document_category_list = entities.document_type.Where(x => x.community_id == communityAct).ToList();
                                 viewModel.editContract = editContract;
                                 viewModel.curUser = curUser;
                                 viewModel.pubTaskList = ep.GetNotifiTaskList(userId);

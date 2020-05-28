@@ -55,7 +55,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 listadoAdminViewModel viewModel = new listadoAdminViewModel();
                 viewModel.side_menu = "webmaster";
                 viewModel.side_sub_menu = "webmaster_listado";
-                viewModel.document_category_list = entities.document_type.ToList();
+                
                 viewModel.curUser = curUser;
                 viewModel.coadminList = coadminList;
                 viewModel.communityDict = communityDict;
@@ -81,7 +81,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 agregarAdminViewModel viewModel = new agregarAdminViewModel();
                 viewModel.side_menu = "webmaster";
                 viewModel.side_sub_menu = "webmaster_agregar";
-                viewModel.document_category_list = entities.document_type.ToList();
+                
                 viewModel.curUser = curUser;
                 viewModel.communityList = entities.communities.ToList();
                 viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
@@ -108,7 +108,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                     verAdminViewModel viewModel = new verAdminViewModel();
                     viewModel.side_menu = "webmaster";
                     viewModel.side_sub_menu = "webmaster_ver";
-                    viewModel.document_category_list = entities.document_type.ToList();
+                    
                     viewModel.curUser = curUser;
                     viewModel.viewAdmin = viewAdmin;
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
@@ -149,7 +149,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                     editarAdminViewModel viewModel = new editarAdminViewModel();
                     viewModel.side_menu = "webmaster";
                     viewModel.side_sub_menu = "webmaster_editar";
-                    viewModel.document_category_list = entities.document_type.ToList();
+                    
                     viewModel.curUser = curUser;
                     viewModel.editAdmin = editAdmin;
                     viewModel.editPassword = ep.Decrypt(editAdmin.password);
@@ -355,7 +355,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 viewModel.side_menu = "";
                 viewModel.side_sub_menu = "";
                 viewModel.curUser = curUser;
-                viewModel.document_category_list = entities.document_type.ToList();
+                
                 viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                 viewModel.pubMessageList = pubMessageList;
                 viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);

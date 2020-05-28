@@ -75,7 +75,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     viewModel.supplierList = supplierList;
                     viewModel.categoryDict = categoryDict;
                     viewModel.categoryList = entities.categories.ToList();
-                    viewModel.document_category_list = entities.document_type.ToList();
+                     viewModel.document_category_list = entities.document_type.Where(x => x.community_id == communityAct).ToList();
                     viewModel.curUser = curUser;
                     viewModel.searchStr = searchStr;
                     viewModel.searchCategoryId = searchCategoryId;
@@ -110,6 +110,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                             try
                             {
                                 long userId = (long)Session["USER_ID"];
+                                long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
                                 user curUser = entities.users.Find(userId);
                                 List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                                 var query = (from r in entities.comments where r.supplier_id == selID select r);
@@ -124,7 +125,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                                 viewModel.side_sub_menu = "supplier_directory_versuplidor";
                                 viewModel.commentList = query.ToList();
                                 viewModel.viewSupplier = supplier;
-                                viewModel.document_category_list = entities.document_type.ToList();
+                                 viewModel.document_category_list = entities.document_type.Where(x => x.community_id == communityAct).ToList();
                                 viewModel.supplierCategory = category;
                                 viewModel.curUser = curUser;
                                 viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
@@ -183,7 +184,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
 
         //            viewModel.side_menu = "supplier_directory";
         //            viewModel.side_sub_menu = "supplier_directory_agregar";
-        //            viewModel.document_category_list = entities.document_type.ToList();
+        //             viewModel.document_category_list = entities.document_type.Where(x => x.community_id == communityAct).ToList();
         //            viewModel.categoryList = entities.categories.ToList();
         //            viewModel.curUser = curUser;
         //            viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
@@ -228,7 +229,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
         //                viewModel.side_menu = "supplier_directory";
         //                viewModel.side_sub_menu = "supplier_directory_editar";
         //                viewModel.editSupplier = editSupplier;
-        //                viewModel.document_category_list = entities.document_type.ToList();
+        //                 viewModel.document_category_list = entities.document_type.Where(x => x.community_id == communityAct).ToList();
         //                viewModel.categoryList = entities.categories.ToList();
         //                viewModel.curUser = curUser;
         //                viewModel.pubTaskList = ep.GetNotifiTaskList(userId);

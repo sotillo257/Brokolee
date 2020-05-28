@@ -74,7 +74,7 @@ namespace WebApplication1.Controllers
                   
                     viewModel.side_menu = "suppliers";
                     viewModel.supplierList = supplierList;
-                    viewModel.document_category_list = entities.document_type.ToList();
+                     viewModel.document_category_list = entities.document_type.Where(x => x.community_id == communityAct).ToList();
                     viewModel.categoryDict = categoryDict;
                     viewModel.curUser = curUser;
                     viewModel.categoryList = entities.categories.ToList();
@@ -109,6 +109,7 @@ namespace WebApplication1.Controllers
                         {
                             try
                             {
+                                long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
                                 long userId = (long)Session["USER_ID"];
                                 List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                                 user curUser = entities.users.Find(userId);                                
@@ -124,7 +125,7 @@ namespace WebApplication1.Controllers
                                 viewModel.viewSupplier = supplier;
                                 List<comment> commentList = entities.comments.Where(m => m.supplier_id == supplier_id).ToList();
                                 viewModel.commentList = commentList;
-                                viewModel.document_category_list = entities.document_type.ToList();
+                                 viewModel.document_category_list = entities.document_type.Where(x => x.community_id == communityAct).ToList();
                                 viewModel.curUser = curUser;
                                 viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                                 viewModel.pubMessageList = pubMessageList;

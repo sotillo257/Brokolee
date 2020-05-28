@@ -46,7 +46,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     viewModel.side_menu = "contacto";
                     viewModel.side_sub_menu = "contacto";
                     viewModel.contactList = contactList;
-                    viewModel.document_category_list = entities.document_type.ToList();
+                     viewModel.document_category_list = entities.document_type.Where(x => x.community_id == communityAct).ToList();
                     viewModel.curUser = curUser;
                     viewModel.searchStr = searchStr;
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
@@ -146,7 +146,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                             viewModel.communityList = communityList;
                             viewModel.side_menu = "contacto";
                             viewModel.side_sub_menu = "contacto";
-                            viewModel.document_category_list = entities.document_type.ToList();
+                             viewModel.document_category_list = entities.document_type.Where(x => x.community_id == communityAct).ToList();
                             viewModel.curUser = curUser;
                             viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
                             viewModel.editContactInfo = infoContact;
@@ -199,7 +199,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                             viewModel.communityList = communityList;
                             viewModel.side_menu = "contacto";
                             viewModel.side_sub_menu = "contacto";
-                            viewModel.document_category_list = entities.document_type.ToList();
+                             viewModel.document_category_list = entities.document_type.Where(x => x.community_id == communityAct).ToList();
                             viewModel.curUser = curUser;
                             viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
                             viewModel.editContactInfo = infoContact;

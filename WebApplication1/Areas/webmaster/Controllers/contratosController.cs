@@ -41,7 +41,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 viewModel.side_menu = "contratos";
                 viewModel.side_sub_menu = "contratos_listado";
                 viewModel.contractList = contractList;
-                viewModel.document_category_list = entities.document_type.ToList();
+                
                 viewModel.curUser = curUser;
                 viewModel.searchStr = searchStr;
                 viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
@@ -65,7 +65,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 agregarContratosViewModel viewModel = new agregarContratosViewModel();
                 viewModel.side_menu = "contratos";
                 viewModel.side_sub_menu = "contratos_agregar";
-                viewModel.document_category_list = entities.document_type.ToList();
+                
                 viewModel.curUser = curUser;
                 viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                 viewModel.pubMessageList = pubMessageList;
@@ -99,7 +99,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 archivadosContratosViewModel viewModel = new archivadosContratosViewModel();
                 viewModel.side_menu = "contratos";
                 viewModel.side_sub_menu = "contratos_archivados";
-                viewModel.document_category_list = entities.document_type.ToList();
+                
                 viewModel.curUser = curUser;
                 viewModel.contractList = contractList;
                 viewModel.searchStr = searchStr;
@@ -127,7 +127,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                     editarContratosViewModel viewModel = new editarContratosViewModel();
                     viewModel.side_menu = "contratos";
                     viewModel.side_sub_menu = "contratos_editar";
-                    viewModel.document_category_list = entities.document_type.ToList();
+                    
                     viewModel.curUser = curUser;
                     viewModel.editContract = editContract;
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);

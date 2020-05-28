@@ -32,7 +32,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 }
                 viewModel.side_menu = "uso";
                 viewModel.side_sub_menu = "uso_privacidad";
-                viewModel.document_category_list = entities.document_type.ToList();
+                
                 viewModel.curUser = curUser;
                 viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                 viewModel.pubMessageList = pubMessageList;
@@ -63,7 +63,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 }
                 viewModel.side_menu = "uso";
                 viewModel.side_sub_menu = "terminos_privacidad";
-                viewModel.document_category_list = entities.document_type.ToList();
+                
                 viewModel.curUser = curUser;
                 viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                 viewModel.pubMessageList = pubMessageList;
@@ -93,7 +93,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 }
                 viewModel.side_menu = "uso";
                 viewModel.side_sub_menu = "uso_reservados";
-                viewModel.document_category_list = entities.document_type.ToList();
+                
                 viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                 viewModel.curUser = curUser;
                 viewModel.pubMessageList = pubMessageList;

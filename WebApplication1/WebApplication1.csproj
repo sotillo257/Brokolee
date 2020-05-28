@@ -1614,7 +1614,7 @@
     <Content Include="Views\Shared\_Layout_Login.cshtml" />
     <Content Include="Views\Login\Login.cshtml" />
     <Content Include="Views\control\panel.cshtml" />
-    <Content Include="Views\documentos\legales.cshtml" />
+    <Content Include="Views\documentos\listado.cshtml" />
     <Content Include="Views\eventos\calendario.cshtml" />
     <Content Include="Views\tareas\listado.cshtml" />
     <Content Include="Views\tareas\completadas.cshtml" />

@@ -43,7 +43,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 viewModel.side_menu = "tecnico";
                 viewModel.side_sub_menu = "tecnico";
                 viewModel.curUser = curUser;
-                viewModel.document_category_list = entities.document_type.ToList();
+                
                 viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                 viewModel.pubMessageList = pubMessageList;
                 viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);

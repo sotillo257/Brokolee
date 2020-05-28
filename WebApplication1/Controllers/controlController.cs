@@ -24,7 +24,8 @@ namespace WebApplication1.Controllers
             {
                 try
                 {
-                    long userId = (long)Session["USER_ID"];                    
+                    long userId = (long)Session["USER_ID"];
+                    long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
                     user curUser = entities.users.Find(userId);
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                     communityControlViewModel viewModel = new communityControlViewModel();
@@ -34,7 +35,7 @@ namespace WebApplication1.Controllers
                     {                        
                         viewModel.side_menu = "control";
                         viewModel.side_sub_menu = "control";
-                        viewModel.document_category_list = entities.document_type.ToList();
+                         viewModel.document_category_list = entities.document_type.Where(x => x.community_id == communityAct).ToList();
                         viewModel.curUser = curUser;
                         viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                         viewModel.pubMessageList = pubMessageList;
@@ -76,8 +77,8 @@ namespace WebApplication1.Controllers
                         }
                         viewModel.communityList = listComunities;
                         viewModel.side_menu = "control";
-                        viewModel.side_sub_menu = "control";
-                        viewModel.document_category_list = entities.document_type.ToList();
+                        viewModel.side_sub_menu = "control";                     
+                        viewModel.document_category_list = entities.document_type.Where(x => x.community_id == communityAct).ToList();
                         viewModel.curUser = curUser;
                         viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                         viewModel.pubMessageList = pubMessageList;
@@ -95,53 +96,54 @@ namespace WebApplication1.Controllers
             {
                 return Redirect(ep.GetLogoutUrl());
             }
-        }        
-        //public ActionResult panel(long? id)
-        //{
-        //    if (Session["USER_ID"] != null)
-        //    {
-        //        if (id != null)
-        //        {
-        //            try
-        //            {
-        //                long userId = (long)Session["USER_ID"];                       
-        //                long comId = Convert.ToInt64(id);
-        //                List<blog> blogList = new List<blog>();
-        //                user curUser = entities.users.Find(userId);
-        //                List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
-        //                communuser communuser = entities.communusers.Where(m => m.commun_id == comId).FirstOrDefault();
-        //                if (communuser != null)
-        //                {
-        //                    long comUserId = communuser.user_id;
-        //                    blogList = entities.blogs.Where(m => m.user_id == comUserId).ToList();
-        //                }
-        //                controlViewModel viewModel = new controlViewModel();
-        //                viewModel.ComID = comId;
-        //                viewModel.communityID1 = Convert.ToInt64(Session["CURRENT_COMU"]);
-        //                viewModel.side_menu = "control";
-        //                viewModel.document_category_list = entities.document_type.ToList();
-        //                viewModel.curUser = curUser;
-        //                viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
-        //                viewModel.pubMessageList = pubMessageList;
-        //                viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);                        
-        //                viewModel.blogList = blogList;
-        //                return View(viewModel);
-        //            }
-        //            catch(Exception ex)
-        //            {
-        //                return Redirect(Url.Action("Index", "Error"));
-        //            }                   
-        //        }
-        //        else
-        //        {
-        //            return Redirect(Url.Action("NotFound", "Error"));
-        //        }
-        //    }
-        //    else
-        //    {
-        //        return Redirect(ep.GetLogoutUrl());
-        //    } 
-        //}
+        }
+        public ActionResult panel(long? id)
+        {
+            if (Session["USER_ID"] != null)
+            {
+                if (id != null)
+                {
+                    try
+                    {
+                        long userId = (long)Session["USER_ID"];
+                        long comId = Convert.ToInt64(id);
+                        long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
+                        List<blog> blogList = new List<blog>();
+                        user curUser = entities.users.Find(userId);
+                        List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
+                        communuser communuser = entities.communusers.Where(m => m.commun_id == comId).FirstOrDefault();
+                        if (communuser != null)
+                        {
+                            long comUserId = communuser.user_id;
+                            blogList = entities.blogs.Where(m => m.user_id == comUserId).ToList();
+                        }
+                        controlViewModel viewModel = new controlViewModel();
+                        viewModel.ComID = comId;
+                        viewModel.communityID1 = Convert.ToInt64(Session["CURRENT_COMU"]);
+                        viewModel.side_menu = "control";
+                        viewModel.document_category_list = entities.document_type.Where(x => x.community_id == communityAct).ToList();
+                        viewModel.curUser = curUser;
+                        viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
+                        viewModel.pubMessageList = pubMessageList;
+                        viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                        viewModel.blogList = blogList;
+                        return View(viewModel);
+                    }
+                    catch (Exception ex)
+                    {
+                        return Redirect(Url.Action("Index", "Error"));
+                    }
+                }
+                else
+                {
+                    return Redirect(Url.Action("NotFound", "Error"));
+                }
+            }
+            else
+            {
+                return Redirect(ep.GetLogoutUrl());
+            }
+        }
 
         #region Titulos
         public ActionResult listadoTitulos(long? Id)
@@ -154,6 +156,7 @@ namespace WebApplication1.Controllers
                     {
                         try
                         {
+                            long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
                             long userId = (long)Session["USER_ID"];
                             user curUser = entities.users.Find(userId);
                             Dictionary<long, string> communityDict = new Dictionary<long, string>();
@@ -168,7 +171,7 @@ namespace WebApplication1.Controllers
                             viewModel.communityID1 = Convert.ToInt64(Id);
                             viewModel.side_menu = "control";
                             viewModel.side_sub_menu = "control";
-                            viewModel.document_category_list = entities.document_type.ToList();
+                             viewModel.document_category_list = entities.document_type.Where(x => x.community_id == communityAct).ToList();
                             viewModel.titulosList = titulosList;
                             viewModel.IdUserTitular = (int)Id;
                             viewModel.curUser = curUser;
@@ -192,7 +195,7 @@ namespace WebApplication1.Controllers
                 {
                     try
                     {
-                        long idCurrent = Convert.ToInt64(Session["CURRENT_COMU"]);
+                        long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
                         long userId = (long)Session["USER_ID"];
                         user curUser = entities.users.Find(userId);
                         Dictionary<long, string> communityDict = new Dictionary<long, string>();
@@ -202,11 +205,11 @@ namespace WebApplication1.Controllers
                         titulosList = ep.GetTitulosByTitular(userId);
                         listComunities = ep.GetCommunityListByTitular(titulosList);
                         viewModel.communityList = listComunities;
-                        titulosList = entities.Titulos.Where(x => x.is_del != true && x.IdUser == userId && x.community.id == idCurrent).ToList();
-                        viewModel.communityID1 = Convert.ToInt64(idCurrent);
+                        titulosList = entities.Titulos.Where(x => x.is_del != true && x.IdUser == userId && x.community.id == communityAct).ToList();
+                        viewModel.communityID1 = Convert.ToInt64(communityAct);
                         viewModel.side_menu = "control";
                         viewModel.side_sub_menu = "control";
-                        viewModel.document_category_list = entities.document_type.ToList();
+                         viewModel.document_category_list = entities.document_type.Where(x => x.community_id == communityAct).ToList();
                         viewModel.titulosList = titulosList;
                         viewModel.IdUserTitular = (int)Id;
                         viewModel.curUser = curUser;
@@ -237,8 +240,8 @@ namespace WebApplication1.Controllers
                     if (id != null)
                     {
                         long userId = (long)Session["USER_ID"];
-                        long idCurrent = Convert.ToInt64(Session["CURRENT_COMU"]);
-                        Titulo titulo = entities.Titulos.Where(x => x.Id == id && x.IdCommunity == idCurrent && x.IdUser == userId).FirstOrDefault();
+                        long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
+                        Titulo titulo = entities.Titulos.Where(x => x.Id == id && x.IdCommunity == communityAct && x.IdUser == userId).FirstOrDefault();
                         if (titulo != null)
                         {                            
                             List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
@@ -246,7 +249,7 @@ namespace WebApplication1.Controllers
                             editarTituloViewModel viewModel = new editarTituloViewModel();
                             viewModel.side_menu = "control";
                             viewModel.side_sub_menu = "control";
-                            viewModel.document_category_list = entities.document_type.ToList();
+                             viewModel.document_category_list = entities.document_type.Where(x => x.community_id == communityAct).ToList();
                             viewModel.curUser = curUser;
                             viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
                             viewModel.titulo = titulo;
@@ -288,6 +291,7 @@ namespace WebApplication1.Controllers
                 {
                     try
                     {
+                        long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
                         long userId = (long)Session["USER_ID"];
                         user curUser = entities.users.Find(userId);
                         Dictionary<long, string> communityDict = new Dictionary<long, string>();
@@ -299,7 +303,7 @@ namespace WebApplication1.Controllers
                         viewModel.titulo = titulo;
                         viewModel.side_menu = "control";
                         viewModel.side_sub_menu = "control";
-                        viewModel.document_category_list = entities.document_type.ToList();
+                         viewModel.document_category_list = entities.document_type.Where(x => x.community_id == communityAct).ToList();
                         viewModel.vehiculosList = vehiculosLists;
                         viewModel.curUser = curUser;
                         viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
@@ -338,12 +342,13 @@ namespace WebApplication1.Controllers
                     Vehiculo vehiculo = entities.Vehiculos.Where(x=> x.IdVehiculo == id && x.Titulo.IdUser == userId).FirstOrDefault();
                     if (vehiculo != null)
                     {
+                        long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
                         List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                         user curUser = entities.users.Find(userId);
                         editarVehiculoViewModel viewModel = new editarVehiculoViewModel();
                         viewModel.side_menu = "control";
                         viewModel.side_sub_menu = "control";
-                        viewModel.document_category_list = entities.document_type.ToList();
+                         viewModel.document_category_list = entities.document_type.Where(x => x.community_id == communityAct).ToList();
                         viewModel.vehiculo = vehiculo;
                         viewModel.curUser = curUser;
                         viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);

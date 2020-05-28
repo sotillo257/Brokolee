@@ -22,6 +22,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
             if (Session["USER_ID"] != null)
             {
                 long userId = (long)Session["USER_ID"];
+                long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
                 user curUser = entities.users.Find(userId);
                 List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                 List<user> coadminList = new List<user>();
@@ -46,7 +47,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 listadoAdminViewModel viewModel = new listadoAdminViewModel();
                 viewModel.side_menu = "administradores";
                 viewModel.side_sub_menu = "administradores_listado";
-                viewModel.document_category_list = entities.document_type.ToList();
+                
                 viewModel.curUser = curUser;
                 viewModel.coadminList = coadminList;
                 viewModel.communityDict = communityDict;
@@ -67,12 +68,13 @@ namespace WebApplication1.Areas.webmaster.Controllers
             if (Session["USER_ID"] != null)
             {
                 long userId = (long)Session["USER_ID"];
+                long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
                 user curUser = entities.users.Find(userId);
                 List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                 agregarAdminViewModel viewModel = new agregarAdminViewModel();
                 viewModel.side_menu = "administradores";
                 viewModel.side_sub_menu = "administradores_agregar";
-                viewModel.document_category_list = entities.document_type.ToList();
+                
                 viewModel.curUser = curUser;
                 viewModel.communityList = entities.communities.Where(m => m.is_active == true).ToList();
                 viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
@@ -93,6 +95,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 if (id != null)
                 {
                     long userId = (long)Session["USER_ID"];
+                    long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
                     user curUser = entities.users.Find(userId);
                     user editAdmin = entities.users.Find(id);
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
@@ -100,7 +103,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                     editarAdminViewModel viewModel = new editarAdminViewModel();
                     viewModel.side_menu = "administradores";
                     viewModel.side_sub_menu = "administradores_editar";
-                    viewModel.document_category_list = entities.document_type.ToList();
+                    
                     viewModel.curUser = curUser;
                     viewModel.editAdmin = editAdmin;
                     viewModel.communityID1 = communuserResult;
@@ -129,6 +132,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 if (id != null)
                 {
                     long userId = (long)Session["USER_ID"];
+                    long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
                     user curUser = entities.users.Find(userId);
                     user editAdmin = entities.users.Find(id);
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
@@ -136,7 +140,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                     editarAdminViewModel viewModel = new editarAdminViewModel();
                     viewModel.side_menu = "administradores";
                     viewModel.side_sub_menu = "administradores_editar";
-                    viewModel.document_category_list = entities.document_type.ToList();
+                    
                     viewModel.curUser = curUser;
                     viewModel.editAdmin = editAdmin;
                     viewModel.communityID1 = communuserResult;                    

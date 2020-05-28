@@ -22,16 +22,8 @@ namespace WebApplication1.Areas.coadmin.Controllers
             {
                 try
                 {
-                    long userId = 0;
-                    if (Convert.ToInt32(Session["USER_ROLE"]) >= 1)
-                    {
-                        userId = (long)Session["USER_ID"];
-                    }
-                    else if (Convert.ToInt32(Session["USER_ROLE"]) > 1
-                    && Session["ACC_USER_ID"] != null)
-                    {
-                        userId = (long)Session["ACC_USER_ID"];
-                    }
+                    long userId = (long)Session["USER_ID"];
+                    long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);                    
                     user curUser = entities.users.Find(userId);
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                     long tecUserId = (long)curUser.create_userid;
@@ -43,7 +35,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
 
                     viewModel.side_menu = "tecnico";
                     viewModel.side_sub_menu = "";
-                    viewModel.document_category_list = entities.document_type.ToList();
+                     viewModel.document_category_list = entities.document_type.Where(x => x.community_id == communityAct).ToList();
                     viewModel.chatmessageList = entities.chatmessages.Where(
                             m => (m.from_user_id == userId && m.to_user_id == tecUserId)
                             || (m.from_user_id == tecUserId && m.to_user_id == userId)).ToList();

@@ -204,7 +204,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                         }
                                         else
                                         {
-                                    <a href="@Url.Action("balance", "cuotas")">Balance pendiente</a>
+                                            <a href="@Url.Action("balance", "cuotas")">Balance pendiente</a>
                                         }
 
                                     </li>
@@ -212,11 +212,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                     <li>
                                         @if (Model.side_sub_menu == "cuotas_estado")
                                         {
-                                        <a href="@Url.Action("estado", "cuotas")" class="active">Estados de cuenta</a>
+                                            <a href="@Url.Action("estado", "cuotas")" class="active">Estados de cuenta</a>
                                         }
                                         else
                                         {
-                                    <a href="@Url.Action("estado", "cuotas")">Estados de cuenta</a>
+                                            <a href="@Url.Action("estado", "cuotas")">Estados de cuenta</a>
                                         }
                                     </li>
                                     <li>
@@ -226,7 +226,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                         }
                                         else
                                         {
-                                    <a href="@Url.Action("listadoCuentas", "cuotas")">Listado de cuentas de banco</a>
+                                            <a href="@Url.Action("listadoCuentas", "cuotas")">Listado de cuentas de banco</a>
                                         }
                                     </li>
                                 </ul>
@@ -275,7 +275,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             }
                         </li>
 
-                        <li class="has_sub">
+                        @*<li class="has_sub">
                             @if (Model.side_menu == "documentos")
                             {
                                 <a href="javascript:void(0);" class="waves-effect active">
@@ -288,11 +288,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                         <li>
                                             @if (Model.side_sub_menu == "documentos_" + item.type_name)
                                             {
-                                                <a href="@Url.Action("legales", "documentos", new { type_id = item.id })" class="active">@item.type_name</a>
+                                                <a href="@Url.Action("listado", "documentos", new { type_id = item.id })" class="active">@item.type_name</a>
                                             }
                                             else
                                             {
-                                                <a href="@Url.Action("legales", "documentos", new { type_id = item.id })">@item.type_name</a>
+                                                <a href="@Url.Action("listado", "documentos", new { type_id = item.id })">@item.type_name</a>
                                             }
 
                                         </li>
@@ -310,9 +310,67 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                     @foreach (var item in Model.document_category_list)
                                     {
                                         <li>
-                                            <a href="@Url.Action("legales", "documentos", new { type_id = item.id })">@item.type_name</a>
+                                            <a href="@Url.Action("listado", "documentos", new { type_id = item.id })">@item.type_name</a>
                                         </li>
                                     }
+                                </ul>
+                            }
+                        </li>*@
+
+                        <li class="has_sub">
+                            @if (Model.side_menu == "documentos")
+                            {
+                                <a href="javascript:void(0);" class="waves-effect active"><i class="mdi mdi-file-document"></i><span> Documentos </span> <span class="float-right"><i class="mdi mdi-chevron-right"></i></span></a>
+                                <ul class="list-unstyled">
+                                    @if (Model.side_sub_menu == "documentos_listado")
+                                    {
+                                        <li class="active">
+                                            <a href="@Url.Action("listado", "documentos")" class="active">Listado de documentos</a>
+                                        </li>
+
+                                    }
+                                    else
+                                    {
+                                        <li>
+                                            <a href="@Url.Action("listado", "documentos")">Listado de documentos</a>
+                                        </li>
+
+                                    }
+                                    @if (Session["CURRENT_COMU"] != null)
+                                    {                                        
+
+                                        foreach (var item in Model.document_category_list)
+                                        {
+                                            if (Model.side_sub_menu == "documentos_" + item.type_name)
+                                            {
+                                                <li class="active">
+                                                    <a href="@Url.Action("listado", "documentos", new { idCategory = item.id })" class="active">@item.type_name</a>
+                                                </li>
+                                            }
+                                            else
+                                            {
+                                                <li>
+                                                    <a href="@Url.Action("listado", "documentos", new { idCategory = item.id })">@item.type_name</a>
+                                                </li>
+                                            }
+                                        }
+
+                                    }
+                                </ul>
+                            }
+                            else
+                            {
+                                <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-file-document"></i><span> Documentos </span> <span class="float-right"><i class="mdi mdi-chevron-right"></i></span></a>
+                                <ul class="list-unstyled">
+                                    <li><a href="@Url.Action("listado", "documentos")">Listado de documentos</a></li>
+                                    @if (Session["CURRENT_COMU"] != null)
+                                    {                                        
+                                        foreach (var item in Model.document_category_list)
+                                        {
+                                            <li><a href="@Url.Action("listado", "documentos", new { id = item.id })">@item.type_name</a></li>
+                                        }
+                                    }
+
                                 </ul>
                             }
                         </li>
@@ -777,6 +835,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 return false;
             }
         });
+
+        function onSearchDocumentType() {
+            $("#searchFormTitu").submit();
+        }
 
         //Solo numero. Validacion para inputs
         $('.soloNumero').bind('keypress', function (event) {

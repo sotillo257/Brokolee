@@ -259,31 +259,39 @@ namespace WebApplication1.Areas.coadmin.Controllers
             {
                 if (Session["CURRENT_COMU"] != null)
                 {
-                    try
+                    long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
+                    List<document_type> document_category_list = entities.document_type.Where(x => x.community_id == communityAct).ToList();
+                    if (document_category_list.Count > 0)
                     {
-                        long userId = (long)Session["USER_ID"];                      
-                        user curUser = entities.users.Find(userId);
-                        List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
-                        documentosViewModel viewModel = new documentosViewModel();
-                        long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
-                        communityList = ep.GetCommunityList(userId);
-                        viewModel.communityList = communityList;
+                        try
+                        {
+                            long userId = (long)Session["USER_ID"];
+                            user curUser = entities.users.Find(userId);
+                            List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
+                            documentosViewModel viewModel = new documentosViewModel();
+                            communityList = ep.GetCommunityList(userId);
+                            viewModel.communityList = communityList;
 
-                        viewModel.side_menu = "documentos";
-                        viewModel.side_sub_menu = "documentos_agregar";
-                        viewModel.document_category_list = entities.document_type.Where(x => x.community_id == communityAct).ToList();
-                        viewModel.curUser = curUser;
-                        viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
-                        viewModel.pubMessageList = pubMessageList;
-                        viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
-                        ViewBag.msgError = Error;
-                        return View(viewModel);
+                            viewModel.side_menu = "documentos";
+                            viewModel.side_sub_menu = "documentos_agregar";
+                            viewModel.document_category_list = document_category_list;
+                            viewModel.curUser = curUser;
+                            viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
+                            viewModel.pubMessageList = pubMessageList;
+                            viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                            ViewBag.msgError = Error;
+                            return View(viewModel);
 
+                        }
+                        catch (Exception ex)
+                        {
+                            return Redirect(Url.Action("error", "control", new { area = "coadmin", Error = "Listado documentos: " + ex.Message }));
+                        }
                     }
-                    catch (Exception ex)
+                    else
                     {
-                        return Redirect(Url.Action("listado", "documentos", new { area = "coadmin", Error = "Problema interno " + ex.Message }));
-                    }
+                        return Redirect(Url.Action("listado", "documentos", new { area = "coadmin", Error = "No existen categorías para crear nuevos documentos." }));
+                    }                   
                 }
                 else
                 {
@@ -438,9 +446,11 @@ namespace WebApplication1.Areas.coadmin.Controllers
         {
             try
             {
+                long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
                 document_type newDocumentType = new document_type();
                 newDocumentType.type_name = type_name;
                 newDocumentType.share = documentTypeShare;
+                newDocumentType.community_id = communityAct;
                 entities.document_type.Add(newDocumentType);
                 entities.SaveChanges();
                 return Redirect(Url.Action("listadoCategoria", "documentos", new { area = "coadmin" }));

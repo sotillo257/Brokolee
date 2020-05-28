@@ -24,7 +24,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 agregarTemadeViewModel viewModel = new agregarTemadeViewModel();
                 viewModel.side_menu = "plantillas";
                 viewModel.side_sub_menu = "plantillas_tema";
-                viewModel.document_category_list = entities.document_type.ToList();
+                
                 viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                 viewModel.curUser = curUser;
                 viewModel.pubMessageList = pubMessageList;

@@ -42,7 +42,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 listadoTareasViewModel viewModel = new listadoTareasViewModel();
                 viewModel.side_menu = "tareas";
                 viewModel.side_sub_menu = "tareas_listado";
-                viewModel.document_category_list = entities.document_type.ToList();
+                
                 viewModel.taskList = taskList;
                 viewModel.searchStr = searchStr;
                 viewModel.curUser = curUser;
@@ -66,7 +66,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 agregarTareasViewModel viewModel = new agregarTareasViewModel();
                 viewModel.side_menu = "tareas";
                 viewModel.side_sub_menu = "tareas_agregar";
-                viewModel.document_category_list = entities.document_type.ToList();
+                
                 viewModel.curUser = curUser;
                 viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                 viewModel.pubMessageList = pubMessageList;
@@ -102,7 +102,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 completadasTareasViewModel viewModel = new completadasTareasViewModel();
                 viewModel.side_menu = "tareas";
                 viewModel.side_sub_menu = "tareas_completadas";
-                viewModel.document_category_list = entities.document_type.ToList();
+                
                 viewModel.searchStr = searchStr;
                 viewModel.taskList = taskList;
                 viewModel.curUser = curUser;
@@ -129,7 +129,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                     editarTareasViewModel viewModel = new editarTareasViewModel();
                     viewModel.side_menu = "tareas";
                     viewModel.side_sub_menu = "tareas_editar";
-                    viewModel.document_category_list = entities.document_type.ToList();
+                    
                     viewModel.editTask = editTask;
                     viewModel.curUser = curUser;
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
@@ -206,7 +206,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                     verTareasViewModel viewModel = new verTareasViewModel();
                     viewModel.side_menu = "tareas";
                     viewModel.side_sub_menu = "tareas_ver";
-                    viewModel.document_category_list = entities.document_type.ToList();
+                    
                     viewModel.viewTask = viewTask;
                     viewModel.curUser = curUser;
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);

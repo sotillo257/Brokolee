@@ -23,12 +23,13 @@ namespace WebApplication1.Areas.webmaster.Controllers
             if (Session["USER_ID"] != null)
             {
                 long userId = (long)Session["USER_ID"];
+                long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
                 user curUser = entities.users.Find(userId);
                 List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                 blogComViewModel viewModel = new blogComViewModel();
                 viewModel.side_menu = "comunicaciones";
                 viewModel.side_sub_menu = "comunicaciones_blog";
-                viewModel.document_category_list = entities.document_type.ToList();
+                
                 viewModel.curUser = curUser;                
                 viewModel.Content = userId.ToString();
                 List<blog> blogs = entities.blogs.ToList();
@@ -52,12 +53,13 @@ namespace WebApplication1.Areas.webmaster.Controllers
             if (Session["USER_ID"] != null)
             {
                 long userId = (long)Session["USER_ID"];
+                long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
                 user curUser = entities.users.Find(userId);
                 List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                 agregarBlogViewModel viewModel = new agregarBlogViewModel();
                 viewModel.side_menu = "agregarblog";
                 viewModel.side_sub_menu = "agregarblog";
-                viewModel.document_category_list = entities.document_type.ToList();
+                
                 viewModel.curUser = curUser;
                 viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                 viewModel.pubMessageList = pubMessageList;
@@ -78,12 +80,13 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 if (blogID != null)
                 {
                     long userId = (long)Session["USER_ID"];
+                    long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
                     user curUser = entities.users.Find(userId);
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                     agregarComentarioViewModel viewModel = new agregarComentarioViewModel();
                     viewModel.side_menu = "agregarcomentario";
                     viewModel.side_sub_menu = "agregarcomentario";
-                    viewModel.document_category_list = entities.document_type.ToList();
+                    
                     viewModel.curUser = curUser;
                     viewModel.blogID = Convert.ToInt64(blogID);
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
@@ -107,6 +110,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
             if (Session["USER_ID"] != null)
             {
                 long userId = (long)Session["USER_ID"];
+                long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
                 user curUser = entities.users.Find(userId);
                 List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                 List<onlineuser> onlineUserList = entities.onlineusers
@@ -114,7 +118,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 privadosComViewModel viewModel = new privadosComViewModel();
                 viewModel.side_menu = "comunicaciones";
                 viewModel.side_sub_menu = "comunicaciones_privados";
-                viewModel.document_category_list = entities.document_type.ToList();
+                
                 viewModel.curUser = curUser;
                 viewModel.onlineUserList = onlineUserList;
                 if (onlineUserList.Count > 0)
@@ -148,13 +152,14 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 if (blogID != null)
                 {
                     long userId = (long)Session["USER_ID"];
+                    long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                     user curUser = entities.users.Find(userId);
                     blog blog = entities.blogs.Find(blogID);
                     editblogViewModel viewModel = new editblogViewModel();
                     viewModel.side_menu = "comunicaciones";
                     viewModel.side_sub_menu = "comunicaciones";
-                    viewModel.document_category_list = entities.document_type.ToList();
+                    
                     viewModel.curUser = curUser;
                     viewModel.editBlog = blog;
                     viewModel.blogID = Convert.ToInt64(blogID);
@@ -182,13 +187,14 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 if (blogID != null)
                 {
                     long userId = (long)Session["USER_ID"];
+                    long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                     user curUser = entities.users.Find(userId);
                     blog blog = entities.blogs.Find(blogID);
                     verblogViewModel viewModel = new verblogViewModel();
                     viewModel.side_menu = "comunicaciones";
                     viewModel.side_sub_menu = "comunicaciones";
-                    viewModel.document_category_list = entities.document_type.ToList();
+                    
                     viewModel.curUser = curUser;
                     viewModel.viewBlog = blog;
                     viewModel.Content = blogID.ToString();

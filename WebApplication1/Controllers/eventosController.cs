@@ -24,7 +24,8 @@ namespace WebApplication1.Controllers
             {
                 try
                 {
-                    long userId = (long)Session["USER_ID"];                                       
+                    long userId = (long)Session["USER_ID"];
+                    long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
                     user curUser = entities.users.Find(userId);
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                     eventosViewModel viewModel = new eventosViewModel();
@@ -32,7 +33,7 @@ namespace WebApplication1.Controllers
                     listComunities = ep.GetCommunityListByTitular(titulosList);
                     viewModel.communityList = listComunities;                  
                     viewModel.side_menu = "eventos";
-                    viewModel.document_category_list = entities.document_type.ToList();
+                     viewModel.document_category_list = entities.document_type.Where(x => x.community_id == communityAct).ToList();
                     viewModel.curUser = curUser;
                     viewModel.searchStr = searchStr;
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
@@ -132,7 +133,7 @@ namespace WebApplication1.Controllers
                             viewModel.place = event_item.place;
                             viewModel.description = event_item.description;
                             viewModel.note = event_item.note;
-                            viewModel.document_category_list = entities.document_type.ToList();
+                             viewModel.document_category_list = entities.document_type.Where(x => x.community_id == communityAct).ToList();
                             viewModel.curUser = curUser;
                             viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                             viewModel.pubMessageList = pubMessageList;

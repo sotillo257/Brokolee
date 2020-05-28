@@ -37,7 +37,7 @@ namespace WebApplication1.Controllers
                                     
                     viewModel.side_menu = "cuotas";
                     viewModel.side_sub_menu = "cuotas_balance";
-                    viewModel.document_category_list = entities.document_type.ToList();
+                     viewModel.document_category_list = entities.document_type.Where(x => x.community_id == communityAct).ToList();
                     viewModel.curUser = curUser;
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = pubMessageList;
@@ -68,6 +68,7 @@ namespace WebApplication1.Controllers
                 try
                 {
                     long userId = (long)Session["USER_ID"];
+                    long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
                     decimal totalCredit = 0;
                     decimal totalDebit = 0;
                     decimal curBalance = 0;
@@ -119,7 +120,7 @@ namespace WebApplication1.Controllers
 
                     viewModel.side_menu = "cuotas";
                     viewModel.side_sub_menu = "cuotas_estado";
-                    viewModel.document_category_list = entities.document_type.ToList();
+                     viewModel.document_category_list = entities.document_type.Where(x => x.community_id == communityAct).ToList();
                     viewModel.curUser = curUser;
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = pubMessageList;
@@ -147,7 +148,8 @@ namespace WebApplication1.Controllers
             {
                 try
                 {
-                    long userId = (long)Session["USER_ID"];                   
+                    long userId = (long)Session["USER_ID"];
+                    long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
                     user curUser = entities.users.Find(userId);
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                     conceptoViewModel viewModel = new conceptoViewModel();
@@ -158,7 +160,7 @@ namespace WebApplication1.Controllers
 
                     viewModel.side_menu = "cuotas";
                     viewModel.side_sub_menu = "bancos_listado";
-                    viewModel.document_category_list = entities.document_type.ToList();
+                     viewModel.document_category_list = entities.document_type.Where(x => x.community_id == communityAct).ToList();
                     viewModel.curUser = curUser;
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = pubMessageList;
@@ -547,7 +549,7 @@ namespace WebApplication1.Controllers
                     viewModel.banks = bankList;
                     viewModel.side_menu = "cuotas";
                     viewModel.side_sub_menu = "bancos_listado";
-                    viewModel.document_category_list = entities.document_type.ToList();
+                     viewModel.document_category_list = entities.document_type.Where(x => x.community_id == communityAct).ToList();
                     viewModel.curUser = curUser;
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = pubMessageList;
@@ -576,7 +578,8 @@ namespace WebApplication1.Controllers
                     {
                         try
                         {
-                            long userId = (long)Session["USER_ID"];                           
+                            long userId = (long)Session["USER_ID"];
+                            long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
                             bank banItem = entities.banks.Where(m => m.id == editID).FirstOrDefault();
                             if (banItem != null)
                             {
@@ -590,7 +593,7 @@ namespace WebApplication1.Controllers
 
                                 viewModel.side_menu = "cuotas";
                                 viewModel.side_sub_menu = "bancos_listado";
-                                viewModel.document_category_list = entities.document_type.ToList();
+                                 viewModel.document_category_list = entities.document_type.Where(x => x.community_id == communityAct).ToList();
                                 viewModel.curUser = curUser;
                                 viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                                 viewModel.pubMessageList = pubMessageList;

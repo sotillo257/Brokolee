@@ -89,7 +89,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 categoriaViewModel viewModel = new categoriaViewModel();
                 viewModel.side_menu = "documentos";
                 viewModel.side_sub_menu = "documentos_categoria";
-                viewModel.document_category_list = entities.document_type.ToList();
+                
                 viewModel.categoryLiest = entities.categories.ToList();
                 viewModel.curUser = curUser;
                 viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
@@ -157,7 +157,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 agregarDocumentViewModel viewModel = new agregarDocumentViewModel();
                 viewModel.side_menu = "documentos";
                 viewModel.side_sub_menu = "documentos_agregar";
-                viewModel.document_category_list = entities.document_type.ToList();
+                
                 viewModel.curUser = curUser;
                 viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                 viewModel.pubMessageList = pubMessageList;
@@ -182,7 +182,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                     editDocumentViewModel viewModel = new editDocumentViewModel();
                     viewModel.side_menu = "documentos";
                     viewModel.side_sub_menu = "documentos_editar";
-                    viewModel.document_category_list = entities.document_type.ToList();
+                    
                     viewModel.editDocument = editDocument;
                     viewModel.curUser = curUser;
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);

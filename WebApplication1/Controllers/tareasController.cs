@@ -50,7 +50,7 @@ namespace WebApplication1.Controllers
                     viewModel.side_menu = "tareas";
                     viewModel.side_sub_menu = "tareas_listado";
                     viewModel.taskList = taskList;
-                    viewModel.document_category_list = entities.document_type.ToList();
+                     viewModel.document_category_list = entities.document_type.Where(x => x.community_id == communityAct).ToList();
                     viewModel.curUser = curUser;
                     viewModel.searchStr = searchStr;
                     viewModel.pubMessageList = pubMessageList;
@@ -99,7 +99,7 @@ namespace WebApplication1.Controllers
                     viewModel.side_menu = "tareas";
                     viewModel.side_sub_menu = "tareas_completadas";
                     viewModel.taskList = taskList;
-                    viewModel.document_category_list = entities.document_type.ToList();
+                     viewModel.document_category_list = entities.document_type.Where(x => x.community_id == communityAct).ToList();
                     viewModel.curUser = curUser;
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = pubMessageList;
@@ -123,6 +123,7 @@ namespace WebApplication1.Controllers
             {
                 try
                 {
+                    long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
                     long userId = (long)Session["USER_ID"];                    
                     user curUser = entities.users.Find(userId);
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
@@ -177,7 +178,7 @@ namespace WebApplication1.Controllers
                     viewModel.communityList = listComunities;           
                     viewModel.side_menu = "tareas";
                     viewModel.side_sub_menu = "tareas_vertarea";
-                    viewModel.document_category_list = entities.document_type.ToList();
+                     viewModel.document_category_list = entities.document_type.Where(x => x.community_id == communityAct).ToList();
                     viewModel.curUser = curUser;
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.viewTask = entities.tasks.Find(id);
@@ -205,6 +206,7 @@ namespace WebApplication1.Controllers
                 {
                     try
                     {
+                        long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
                         long userId = (long)Session["USER_ID"];                       
                         user curUser = entities.users.Find(userId);
                         tareasViewModel viewModel = new tareasViewModel();
@@ -213,7 +215,7 @@ namespace WebApplication1.Controllers
                         viewModel.communityList = listComunities;
                         viewModel.side_menu = "tareas";
                         viewModel.side_sub_menu = "tareas_sugerirtarea";
-                        viewModel.document_category_list = entities.document_type.ToList();
+                         viewModel.document_category_list = entities.document_type.Where(x => x.community_id == communityAct).ToList();
                         viewModel.curUser = curUser;
                         viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                         viewModel.pubMessageList = ep.GetChatMessages(userId);

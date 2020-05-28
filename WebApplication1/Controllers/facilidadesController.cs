@@ -48,7 +48,7 @@ namespace WebApplication1.Controllers
                     viewModel.side_menu = "facilidades";
                     viewModel.side_sub_menu = "facilidades_disponibles";
                     viewModel.facilitieList = facilitieList;
-                    viewModel.document_category_list = entities.document_type.ToList();
+                     viewModel.document_category_list = entities.document_type.Where(x => x.community_id == communityAct).ToList();
                     viewModel.curUser = curUser;
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = pubMessageList;
@@ -92,7 +92,7 @@ namespace WebApplication1.Controllers
                     viewModel.communityList = listComunities;
                     viewModel.side_menu = "facilidades";
                     viewModel.side_sub_menu = "facilidades_reservas";
-                    viewModel.document_category_list = entities.document_type.ToList();
+                     viewModel.document_category_list = entities.document_type.Where(x => x.community_id == communityAct).ToList();
                     viewModel.bookList = reservasList;
                     viewModel.curUser = curUser;
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
@@ -122,6 +122,7 @@ namespace WebApplication1.Controllers
                         if (facilidad !=null)
                         {
                             try{
+                                long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
                                 long userId = (long)Session["USER_ID"];                               
                                 user curUser = entities.users.Find(userId);
                                 List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
@@ -148,7 +149,7 @@ namespace WebApplication1.Controllers
                                 viewModel.side_menu = "reservar";
                                 viewModel.side_sub_menu = "facilidades_reservar";
                                 viewModel.curUser = curUser;
-                                viewModel.document_category_list = entities.document_type.ToList();
+                                 viewModel.document_category_list = entities.document_type.Where(x => x.community_id == communityAct).ToList();
                                 viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                                 viewModel.pubMessageList = pubMessageList;
                                 viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
@@ -243,7 +244,7 @@ namespace WebApplication1.Controllers
         //            viewModel.side_menu = "reservartwo";
         //            viewModel.side_sub_menu = "facilidades_reservartwo";
         //            viewModel.curUser = curUser;
-        //            viewModel.document_category_list = entities.document_type.ToList();
+        //             viewModel.document_category_list = entities.document_type.Where(x => x.community_id == communityAct).ToList();
         //            viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
         //            viewModel.pubMessageList = pubMessageList;
         //            viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);                   

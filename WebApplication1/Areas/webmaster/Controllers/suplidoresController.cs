@@ -67,7 +67,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 viewModel.supplierList = supplierList;
                 viewModel.categoryDict = categoryDict;
                 viewModel.categoryList = entities.categories.ToList();
-                viewModel.document_category_list = entities.document_type.ToList();
+                
                 viewModel.curUser = curUser;
                 viewModel.searchStr = searchStr;
                 viewModel.searchCategoryId = searchCategoryId;
@@ -101,7 +101,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                             viewModel.side_menu = "suplidores";
                             viewModel.side_sub_menu = "supplier_directory";
                             viewModel.editSupplier = editSupplier;
-                            viewModel.document_category_list = entities.document_type.ToList();
+                            
                             viewModel.categoryList = entities.categories.ToList();
                             viewModel.curUser = curUser;
                             viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
@@ -149,7 +149,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                         viewModel.side_sub_menu = "supplier_directory";
                         viewModel.commentList = query.ToList();
                         viewModel.viewSupplier = supplier;
-                        viewModel.document_category_list = entities.document_type.ToList();
+                        
                         viewModel.supplierCategory = category;
                         viewModel.curUser = curUser;
                         viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
@@ -186,7 +186,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                     agregarSuplidoresViewModel viewModel = new agregarSuplidoresViewModel();
                     viewModel.side_menu = "suplidores";
                     viewModel.side_sub_menu = "supplier_directory";
-                    viewModel.document_category_list = entities.document_type.ToList();
+                    
                     viewModel.categoryList = entities.categories.ToList();
                     viewModel.curUser = curUser;
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
@@ -413,7 +413,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 categoriesTareasViewModel viewModel = new categoriesTareasViewModel();
                 viewModel.side_menu = "suplidores";
                 viewModel.side_sub_menu = "category_directory";
-                viewModel.document_category_list = entities.document_type.ToList();
+                
                 viewModel.categoryList = catList;
                 viewModel.searchStr = searchStr;
                 viewModel.curUser = curUser;
@@ -439,7 +439,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 categoriesTareasViewModel viewModel = new categoriesTareasViewModel();
                 viewModel.side_menu = "suplidores";
                 viewModel.side_sub_menu = "category_directory";
-                viewModel.document_category_list = entities.document_type.ToList();
+                
                 viewModel.curUser = curUser;
                 viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                 viewModel.pubMessageList = pubMessageList;
@@ -465,7 +465,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                     categoriesTareasViewModel viewModel = new categoriesTareasViewModel();
                     viewModel.side_menu = "suplidores";
                     viewModel.side_sub_menu = "category_directory";
-                    viewModel.document_category_list = entities.document_type.ToList();
+                    
                     viewModel.categ = editCat;
                     viewModel.curUser = curUser;
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);

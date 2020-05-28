@@ -41,7 +41,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 eventosViewModel viewModel = new eventosViewModel();
                 viewModel.side_menu = "eventos";
                 viewModel.side_sub_menu = "eventos_registrados";
-                viewModel.document_category_list = entities.document_type.ToList();
+                
                 viewModel.eventList = eventList;
                 viewModel.curUser = curUser;
                 viewModel.searchStr = searchStr;
@@ -112,7 +112,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                     viewModel.side_sub_menu = "eventos_editar";
                     viewModel.editEvent = editEvent;
                     viewModel.curUser = curUser;
-                    viewModel.document_category_list = entities.document_type.ToList();
+                    
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = ep.GetChatMessages(userId);
                     return View(viewModel);
@@ -183,7 +183,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
                     viewmodel.place = event_item.place;
                     viewmodel.description = event_item.description;
                     viewmodel.note = event_item.note;
-                    viewmodel.document_category_list = entities.document_type.ToList();
+                    
                     viewmodel.curUser = curUser;
                     viewmodel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewmodel.pubMessageList = ep.GetChatMessages(userId);

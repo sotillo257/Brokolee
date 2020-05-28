@@ -21,6 +21,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
             {
                 try
                 {
+                    long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
                     long userId = (long)Session["USER_ID"];                    
                     user curUser = entities.users.Find(userId);
                     listadoCuotasViewModel viewModel = new listadoCuotasViewModel();
@@ -28,14 +29,13 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     communityList = ep.GetCommunityList(userId);
                     viewModel.communityList = communityList;
 
-                    long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
                     List<fee> feeList = new List<fee>();
                     feeList = entities.fees.Where(m => m.community_id == communityAct).ToList();                                                       
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                     viewModel.feeList = feeList;
                     viewModel.side_menu = "cuotas";
                     viewModel.side_sub_menu = "cuotas_listado";
-                    viewModel.document_category_list = entities.document_type.ToList();
+                     viewModel.document_category_list = entities.document_type.Where(x => x.community_id == communityAct).ToList();
                     viewModel.curUser = curUser;
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = pubMessageList;
@@ -62,6 +62,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 {
                     try
                     {
+                        long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
                         long userId = (long)Session["USER_ID"];                        
                         user curUser = entities.users.Find(userId);
                         List<bank> bankList = entities.banks.ToList();
@@ -73,7 +74,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
 
                         viewModel.side_menu = "cuotas";
                         viewModel.side_sub_menu = "cuotas_agregar";
-                        viewModel.document_category_list = entities.document_type.ToList();
+                         viewModel.document_category_list = entities.document_type.Where(x => x.community_id == communityAct).ToList();
                         viewModel.curUser = curUser;
                         viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                         viewModel.pubMessageList = pubMessageList;
@@ -118,6 +119,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                             fee feeItem = entities.fees.Where(m => m.id == editID).FirstOrDefault();
                             if (feeItem != null)
                             {
+                                long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
                                 user curUser = entities.users.Find(userId);
                                 List<bank> bankList = entities.banks.Where(m => m.user_id == userId).ToList();
                                 List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
@@ -128,7 +130,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
 
                                 viewModel.side_menu = "cuotas";
                                 viewModel.side_sub_menu = "cuotas_editar";
-                                viewModel.document_category_list = entities.document_type.ToList();
+                                 viewModel.document_category_list = entities.document_type.Where(x => x.community_id == communityAct).ToList();
                                 viewModel.curUser = curUser;
                                 viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                                 viewModel.pubMessageList = pubMessageList;
@@ -178,6 +180,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 {
                     try
                     {
+                        long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
                         long userId = (long)Session["USER_ID"];                       
                         user curUser = entities.users.Find(userId);
                         List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
@@ -188,7 +191,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
 
                         viewModel.side_menu = "cuotas";
                         viewModel.side_sub_menu = "cuotas_cuenta";
-                        viewModel.document_category_list = entities.document_type.ToList();
+                         viewModel.document_category_list = entities.document_type.Where(x => x.community_id == communityAct).ToList();
                         viewModel.curUser = curUser;
                         viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                         viewModel.pubMessageList = pubMessageList;
@@ -243,7 +246,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     viewModel.banks = bankList;
                     viewModel.side_menu = "cuotas";
                     viewModel.side_sub_menu = "bancos_listado";
-                    viewModel.document_category_list = entities.document_type.ToList();
+                     viewModel.document_category_list = entities.document_type.Where(x => x.community_id == communityAct).ToList();
                     viewModel.curUser = curUser;
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = pubMessageList;
@@ -272,16 +275,8 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     {
                         try
                         {
-                            long userId = 0;
-                            if (Convert.ToInt32(Session["USER_ROLE"]) == 2)
-                            {
-                                userId = (long)Session["USER_ID"];
-                            }
-                            else if (Convert.ToInt32(Session["USER_ROLE"]) > 2
-                            && Session["ACC_USER_ID"] != null)
-                            {
-                                userId = (long)Session["ACC_USER_ID"];
-                            }
+                            long userId = (long)Session["USER_ID"];
+                            long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);                           
                             bank banItem = entities.banks.Where(m => m.id == editID).FirstOrDefault();
                             if (banItem != null)
                             {
@@ -294,7 +289,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
 
                                 viewModel.side_menu = "cuotas";
                                 viewModel.side_sub_menu = "cuenta_editar";
-                                viewModel.document_category_list = entities.document_type.ToList();
+                                 viewModel.document_category_list = entities.document_type.Where(x => x.community_id == communityAct).ToList();
                                 viewModel.curUser = curUser;
                                 viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                                 viewModel.pubMessageList = pubMessageList;
@@ -336,7 +331,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
                 try
                 {
                     bool state = false;
-
+                    long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
                     if (searchState == 1)
                     {
                         state = true;
@@ -381,7 +376,7 @@ namespace WebApplication1.Areas.coadmin.Controllers
 
                     viewModel.side_menu = "cuotas";
                     viewModel.side_sub_menu = "cuotas_pagos";
-                    viewModel.document_category_list = entities.document_type.ToList();
+                     viewModel.document_category_list = entities.document_type.Where(x => x.community_id == communityAct).ToList();
                     viewModel.curUser = curUser;
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = pubMessageList;
