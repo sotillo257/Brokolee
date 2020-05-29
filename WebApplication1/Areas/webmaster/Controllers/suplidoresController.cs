@@ -320,6 +320,8 @@ namespace WebApplication1.Areas.webmaster.Controllers
             try
             {
                 supplier delSupplier = entities.suppliers.Find(delID);
+                List<comment> comentarios = entities.comments.Where(x=> x.supplier_id == delID).ToList();
+                entities.comments.RemoveRange(comentarios);
                 entities.suppliers.Remove(delSupplier);
                 entities.SaveChanges();
                 return Json(new { result = "success" });

@@ -423,5 +423,21 @@ namespace WebApplication1.Areas.coadmin.Controllers
                     }));
             }
         }
+
+        [HttpPost]
+        public ActionResult changeStatusTask(long? id, int status)
+        {
+            try
+            {
+                task editTask = entities.tasks.Find(id);
+                editTask.status = status;
+                entities.SaveChanges();
+                return Json(new { result = "success" }); 
+            }
+            catch
+            {
+                return Json(new { result = "error" }); 
+            }
+        }
     }
 }

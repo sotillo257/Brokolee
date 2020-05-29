@@ -68,7 +68,7 @@
                                         <th class="f-b">Nombre de tarea</th>
                                         <th class="f-b">Responsable</th>
                                         <th class="f-b">Fecha</th>
-                                        <th class="f-b">Fecha estimada</th>
+                                        <th class="f-b">Fecha límite</th>
                                         <th class="f-b">Estado</th>
                                         <th class="text-center f-b">Ver</th>
                                     </tr>
@@ -79,30 +79,32 @@
                                     <tr>
                                         <td>@item.task_name</td>
                                         <td>@item.responsable</td>
-                                        <td class="text-center">@Convert.ToDateTime(item.task_date).ToString("MM/dd/yyyy")</td>
-                                        @if (item.estimated_date != null)
-                                        {
-                                            <td class="text-center">@Convert.ToDateTime(item.estimated_date).ToString("MM/dd/yyyy | hh:mm")</td>
-                                        } else
-                                        {
-                                            <td></td>
-                                        }
+                                        <td class="text-center">@Convert.ToDateTime(item.task_date).ToString("MM/dd/yyyy - HH:mm tt")</td>
+                                        <td class="text-center">@Convert.ToDateTime(item.estimated_date).ToString("MM/dd/yyyy - HH:mm tt")</td>
 
-                                            <td class="text-center">
-                                                @if (item.status == 3)
-                                                {
-                                                    <button type="button" class="btn btn-danger waves-effect waves-light btn-sm">Terminada</button>
-                                                }
-                                                else if (item.status == 2)
-                                                {
-                                                    <button type="button" class="btn btn-primary waves-effect waves-light btn-sm">En Proceso</button>
-                                                }
-                                                else
-                                                {
-                                                    <button type="button" class="btn btn-warning waves-effect waves-light btn-sm">Sin comenzar</button>
-                                                }
+                                        <td class="text-center">
+                                            @if (item.status == 3)
+                                            {
+                                                <button type="button" class="btn btn-danger waves-effect waves-light btn-sm">Terminada</button>
+                                            }
+                                            else if (item.status == 2)
+                                            {
+                                                <button type="button" class="btn btn-primary waves-effect waves-light btn-sm">En Proceso</button>
+                                            }
+                                            else if (item.status == 4)
+                                            {
+                                                <button type="button" class="btn btn-warning waves-effect waves-light btn-sm">Por aprobar</button>
+                                            }
+                                            else if (item.status == 5)
+                                            {
+                                                <button type="button" class="btn btn-danger waves-effect waves-light btn-sm">Rechazada</button>
+                                            }
+                                            else
+                                            {
+                                                <button type="button" class="btn btn-secondary waves-effect waves-light btn-sm">Sin comenzar</button>
+                                            }
 
-                                            </td>
+                                        </td>
                                         <td class="text-center"><a href="@Url.Action("vertarea", "tareas", new { id=item.id })"><button type="button" class="btn btn-success waves-effect waves-light btn-sm mr-1 mb-1" data-toggle="tooltip" data-placement="top" title="Ver"><i class="mdi mdi-eye"></i></button></a></td>
                                     </tr>
                                     }

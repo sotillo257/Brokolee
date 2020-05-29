@@ -1584,7 +1584,7 @@
             formData.append("delID", id);
 
             var url = "@Url.Action("DeletePackage", "paquetes", new { area = "webmaster" })";
-
+            var succesUrl = "@Url.Action("listado", "paquetes", new { area = "webmaster" })";
             var errUrl = "@Url.Action("listado", "paquetes", new { area = "webmaster", Error = "No se puede eliminar este paquete porque posee comunidades asociadas"  })";
 
             var respuesta = confirm("¿Estás seguro que deseas eliminar el paquete?");
@@ -1602,7 +1602,7 @@
                     } else if (result.result === "NotAlowed") {
                          window.location = errUrl;
                     } else {
-                        location.reload();
+                        window.location = succesUrl;
                     }
                 },
                 processData: false,
@@ -1619,7 +1619,8 @@
             formData.append("delID", id);
 
             var url = "@Url.Action("DeleteFac", "facilidades", new { area = "webmaster" })";
-
+            var errUrl = "@Url.Action("listado", "facilidades", new { area = "webmaster", Error = "No se pudo eliminar la facilidad"  })";
+             var succesUrl = "@Url.Action("listado", "facilidades", new { area = "webmaster"  })";
             $.ajax({
                 url: url,
                 type: "post",
@@ -1627,9 +1628,9 @@
                 success: function (result) {
                     $("#ck-body-loading-overlay").hide();
                     if (result.result === "error") {
-                        console.log('couln\'t get roles');
+                        window.location = errUrl;;
                     } else {
-                        location.reload();
+                       window.location = succesUrl;;
                     }
                 },
                 processData: false,
@@ -1643,7 +1644,9 @@
             formData.append("delID", id);
 
             var url = "@Url.Action("DeleteSupplier", "suplidores", new { area = "webmaster" })";
-            var respuesta = confirm("¿Estás seguro que deseas éste suplidor?");
+            var errUrl = "@Url.Action("listado", "suplidores", new { area = "webmaster", Error = "No se pudo eliminar el suplidor"  })";
+            var succesUrl = "@Url.Action("listado", "suplidores", new { area = "webmaster"  })";
+            var respuesta = confirm("¿Estás seguro que deseas eliminar éste suplidor?");
             if (respuesta == true) {
                 $.ajax({
                     url: url,
@@ -1652,9 +1655,9 @@
                     success: function (result) {
                         $("#ck-body-loading-overlay").hide();
                         if (result.result === "error") {
-                            console.log('couln\'t get roles');
+                            window.location = errUrl;;
                         } else {
-                            location.reload();
+                             window.location = succesUrl;;
                         }
                     },
                     processData: false,

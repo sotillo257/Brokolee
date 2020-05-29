@@ -18,7 +18,7 @@ namespace WebApplication1.Controllers
         List<community> listComunities = new List<community>();
 
         // GET: tareas
-        public ActionResult listado(string searchStr = "")
+        public ActionResult listado(string Error, string searchStr = "")
         {
             if (Session["USER_ID"] != null)
             {
@@ -55,7 +55,8 @@ namespace WebApplication1.Controllers
                     viewModel.searchStr = searchStr;
                     viewModel.pubMessageList = pubMessageList;
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
-                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);                   
+                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                    ViewBag.msgError = Error;
                     return View(viewModel);
                 }
                 catch(Exception ex)
@@ -69,7 +70,7 @@ namespace WebApplication1.Controllers
                 
         }
 
-        public ActionResult completadas(string searchString = "")
+        public ActionResult completadas(string Error, string searchString = "")
         {
             if (Session["USER_ID"] != null)
             {
@@ -103,7 +104,8 @@ namespace WebApplication1.Controllers
                     viewModel.curUser = curUser;
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                     viewModel.pubMessageList = pubMessageList;
-                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);                  
+                    viewModel.messageCount = ep.GetUnreadMessageCount(pubMessageList);
+                    ViewBag.msgError = Error;
                     return View(viewModel);
                 }
                 catch(Exception ex)
@@ -198,7 +200,7 @@ namespace WebApplication1.Controllers
                
         }
 
-        public ActionResult sugerirtarea()
+        public ActionResult sugerirtarea(string Error)
         {
             if (Session["USER_ID"] != null)
             {
@@ -219,6 +221,7 @@ namespace WebApplication1.Controllers
                         viewModel.curUser = curUser;
                         viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
                         viewModel.pubMessageList = ep.GetChatMessages(userId);
+                        ViewBag.msgError = Error;
                         return View(viewModel);
                     }
                     catch (Exception ex)
@@ -239,52 +242,54 @@ namespace WebApplication1.Controllers
         }
 
         [HttpPost]
-        public ActionResult newtask(string task_name, string description, string commentary,
-            string responsable, string start_date, string start_time)
+        public ActionResult newtask(string task_name, string description,
+            string responsable, string task_date, string task_time, string comments, string estimated_date, string estimated_time
+            )
         {
             try
             {
-                //string[] listStr = start_date.Split('-');
-                //string date_str = listStr[0] + "/" + listStr[1] + "/" + listStr[2];
-                task task = new task();
-                task.comments = commentary;
-                task.description = description;
-                task.task_name = task_name;
-                task.description = description;
-                task.responsable = responsable;
-                task.status = 2;
-                task.community_id = Convert.ToInt64(Session["CURRENT_COMU"]);
-                string datetime_str = start_date + " " + start_time;
-                DateTime datetime = DateTime.ParseExact(datetime_str, "yyyy-MM-dd HH:mm", 
-                    System.Globalization.CultureInfo.CurrentCulture);
-                task.created_at = datetime;
-                task.share = 1;
-                entities.tasks.Add(task);
-                entities.SaveChanges();
                 long userId = (long)Session["USER_ID"];
+                task newTask = new task();
+                newTask.task_name = task_name;
+                newTask.description = description;
+                newTask.responsable = responsable;
+                newTask.comments = comments;
+                newTask.task_date = DateTime.ParseExact(task_date + " " + task_time, "yyyy-MM-dd HH:mm",
+                    System.Globalization.CultureInfo.CurrentCulture);
+                newTask.estimated_date = DateTime.ParseExact(estimated_date + " " + estimated_time, "yyyy-MM-dd HH:mm",
+                    System.Globalization.CultureInfo.CurrentCulture);
+                newTask.share = 1;
+                newTask.status = 4;
+                newTask.created_at = DateTime.Now;
+                newTask.updated_at = DateTime.Now;
+                newTask.community_id = Convert.ToInt64(Session["CURRENT_COMU"]);
+                entities.tasks.Add(newTask);
+                entities.SaveChanges();
                 taskuser taskuser = entities.taskusers.Where(m => m.user_id == userId).FirstOrDefault();
                 if (taskuser == null)
                 {
                     taskuser = new taskuser();
                     taskuser.user_id = userId;
-                    taskuser.task_list = task.id.ToString();
+                    taskuser.task_list = newTask.id.ToString();
                     entities.taskusers.Add(taskuser);
-                } else
+                }
+                else
                 {
                     string taskList = taskuser.task_list;
                     if (taskList == null)
                     {
-                        taskuser.task_list = task.id.ToString();
-                    } else
+                        taskuser.task_list = newTask.id.ToString();
+                    }
+                    else
                     {
-                        taskuser.task_list = taskList + "," + task.id.ToString();
+                        taskuser.task_list = taskList + "," + newTask.id.ToString();
                     }
                 }
                 entities.SaveChanges();
                 return Redirect(Url.Action("listado", "tareas"));
             } catch(Exception)
             {
-                return Redirect(Url.Action("sugerirtarea", "tareas"));
+                return Redirect(Url.Action("sugerirtarea", "tareas", new { Error = "No se pudo guardar la tarea" }));
             }
         }
 

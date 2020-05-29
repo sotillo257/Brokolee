@@ -1286,6 +1286,93 @@
             });
         });          
 
+        //Modal cambiar estado Tarea
+         function onChangeStateTask(self) {
+             var id = $(self).data("id");      
+             var state = $(self).data("state"); 
+             if (state == 1) {
+                 $("#idState").val(state);
+                 $("#check2").prop('checked', true);                
+                 $("#check1").prop('checked', false);
+                 $("#check3").prop('checked', false);
+                 $("#check4").prop('checked', false);
+                 $("#check5").prop('checked', false);                
+             }
+             else if (state == 2) {
+                  $("#idState").val(state);
+                  $("#check4").prop('checked', true);
+                 $("#check1").prop('checked', false);
+                 $("#check2").prop('checked', false);
+                 $("#check3").prop('checked', false);
+                 $("#check5").prop('checked', false);
+             }
+             else if (state == 3) {
+                  $("#idState").val(state);
+                  $("#check5").prop('checked', true);
+                 $("#check1").prop('checked', false);
+                 $("#check2").prop('checked', false);
+                 $("#check3").prop('checked', false);
+                 $("#check4").prop('checked', false);
+             }
+             else if (state == 4) {
+                  $("#idState").val(state);
+                  $("#check1").prop('checked', true);
+                 $("#check2").prop('checked', false);
+                 $("#check3").prop('checked', false);
+                 $("#check4").prop('checked', false);
+                 $("#check5").prop('checked', false);
+             } else {
+                  $("#idState").val(state);
+                  $("#check3").prop('checked', true);
+                 $("#check1").prop('checked', false);
+                 $("#check2").prop('checked', false);
+                 $("#check4").prop('checked', false);
+                 $("#check5").prop('checked', false);
+             }
+             $("#idTarea").val(id),               
+             $('#exampleModalLong').modal('show')
+        }      
+
+        $('.CambiosStado').click(function() {
+            // Si esta seleccionado (si la propiedad checked es igual a true)
+            if ($(this).prop('checked')) {
+                var idT = $(this).val();
+                $('.CambiosStado').prop('checked', false);
+                 $("#idState").val(idT);
+                $(this).prop('checked', true)
+            } else {                
+                $('.CambiosStado').prop('checked', false);
+            }
+        });
+
+        //Funcion para cambiar el estado de la tarea
+
+         function onChangeEstadoTarea() {
+
+            var datos = {
+                id:$("#idTarea").val(),
+                status:$("#idState").val(),
+            };
+            var urls = "@Url.Action("changeStatusTask", "tareas", new { area = "coadmin" })";
+              var succesUrl = "@Url.Action("listado", "tareas", new { area = "coadmin"})";  
+            var errUrl = "@Url.Action("listado", "tareas", new { area = "coadmin", Error = "Error al cambiar estado. Intentelo nuevamente."  })";          
+            $.ajax({
+                type: 'POST',
+                data: JSON.stringify(datos),
+                url: urls,
+                dataType: "json",
+                contentType: 'application/json; charset=utf-8',
+                success: function (result) {                            
+                    $("#ck-body-loading-overlay").hide();
+                    if (result.result === "success") {                        
+                        window.location = succesUrl;
+                    } else {
+                       window.location = errUrl;
+                    }
+                },                
+            })            
+        }
+
         //Formularios de donde se usa Email
         $("#newadminForm").on('submit', function (evt) {
             if (_errorEmail == 1)

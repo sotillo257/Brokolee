@@ -78,8 +78,8 @@
                             <div class="col-md-6">
                                 <h5 class="d-inline-block">Listado</h5>
                             </div>
-                            <div class="col-md-6 mb-1">                              
-                                    <a href="@Url.Action("agregar", "tareas", new { area = "coadmin" })"><button type="button" class="btn btn-warning waves-effect waves-light float-xl-right float-lg-right float-md-left">Crear nueva tarea</button></a>                                                   
+                            <div class="col-md-6 mb-1">
+                                <a href="@Url.Action("agregar", "tareas", new { area = "coadmin" })"><button type="button" class="btn btn-warning waves-effect waves-light float-xl-right float-lg-right float-md-left">Crear nueva tarea</button></a>
                             </div>
                         </div>
 
@@ -102,8 +102,8 @@
                                         <tr>
                                             <td>@item.task_name</td>
                                             <td>@item.responsable</td>
-                                            <td class="text-center">@Convert.ToDateTime(item.task_date).ToString("MM/dd/yyyy")</td>
-                                            <td class="text-center">@Convert.ToDateTime(item.estimated_date).ToString("MM/dd/yyyy | HH:mm")</td>
+                                            <td class="text-center">@Convert.ToDateTime(item.task_date).ToString("MM/dd/yyyy - HH:mm tt")</td>
+                                            <td class="text-center">@Convert.ToDateTime(item.estimated_date).ToString("MM/dd/yyyy - HH:mm tt")</td>
                                             <td class="text-center">
                                                 @if (item.share == 1)
                                                 {
@@ -115,17 +115,25 @@
                                                 }
                                             </td>
                                             <td class="text-center">
-                                                @if (item.status == 2)
+                                                @if (item.status == 3)
                                                 {
-                                                    <button type="button" class="btn btn-primary waves-effect waves-light btn-sm">En Proceso</button>
+                                                    <button onclick="onChangeStateTask(this)" data-id="@item.id" data-state="@item.status" type="button" class="btn btn-danger waves-effect waves-light btn-sm">Terminada</button>
                                                 }
-                                                else if (item.status == 3)
+                                                else if (item.status == 2)
                                                 {
-                                                    <button type="button" class="btn btn-dark waves-effect waves-light btn-sm">Terminada</button>
+                                                    <button onclick="onChangeStateTask(this)" data-id="@item.id" data-state="@item.status" type="button" class="btn btn-primary waves-effect waves-light btn-sm">En Proceso</button>
+                                                }
+                                                else if (item.status == 4)
+                                                {
+                                                    <button onclick="onChangeStateTask(this)" data-id="@item.id" data-state="@item.status" type="button" class="btn btn-warning waves-effect waves-light btn-sm">Por aprobar</button>
+                                                }
+                                                else if (item.status == 5)
+                                                {
+                                                    <button onclick="onChangeStateTask(this)" data-id="@item.id" data-state="@item.status" type="button" class="btn btn-danger waves-effect waves-light btn-sm">Rechazada</button>
                                                 }
                                                 else
                                                 {
-                                                    <button type="button" class="btn btn-warning waves-effect waves-light btn-sm">Sin comenzar</button>
+                                                    <button onclick="onChangeStateTask(this)" data-id="@item.id" data-state="@item.status" type="button" class="btn btn-secondary waves-effect waves-light btn-sm">Sin comenzar</button>
                                                 }
                                             </td>
                                             <td class="text-center">
@@ -135,12 +143,15 @@
                                                         <i class="mdi mdi-eye"></i>
                                                     </button>
                                                 </a>
-                                                <a href="@Url.Action("editar", "tareas", new { area = "coadmin", taskID = item.id })">
-                                                    <button type="button" class="btn btn-primary waves-effect waves-light btn-sm mr-1 mb-1"
-                                                            data-toggle="tooltip" data-placement="top" title="Editar">
-                                                        <i class="mdi mdi-lead-pencil"></i>
-                                                    </button>
-                                                </a>
+                                                @if (item.status != 5)
+                                                {
+                                                    <a href="@Url.Action("editar", "tareas", new { area = "coadmin", taskID = item.id })">
+                                                        <button type="button" class="btn btn-primary waves-effect waves-light btn-sm mr-1 mb-1"
+                                                                data-toggle="tooltip" data-placement="top" title="Editar">
+                                                            <i class="mdi mdi-lead-pencil"></i>
+                                                        </button>
+                                                    </a>
+                                                }
                                                 <button type="button" onclick="onDeleteTask(this)" data-id="@item.id" class="btn btn-danger waves-effect waves-light btn-sm mb-1" data-toggle="tooltip"
                                                         data-placement="top" title="Eliminar">
                                                     <i class="mdi mdi-delete"></i>
@@ -163,6 +174,62 @@
             </div>
         </div>
         <!-- end back button -->
+
+        <div id="exampleModalLong" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Cambiar estado de la tarea</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-check-inline my-2">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input CambiosStado"
+                                       value="4" id="check1" data-parsley-multiple="groups">
+                                <label class="custom-control-label" for="check1">Por aprobar</label>
+                            </div>
+                        </div>
+                        <div class="form-check-inline my-2">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input CambiosStado" value="1"
+                                       id="check2" checked="" data-parsley-multiple="groups">
+                                <label class="custom-control-label" for="check2">Sin comenzar</label>
+                            </div>
+                        </div>
+                        <div class="form-check-inline my-2">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input CambiosStado"
+                                       value="5" id="check3" data-parsley-multiple="groups">
+                                <label class="custom-control-label" for="check3">Rechazada</label>
+                            </div>
+                        </div>
+                        <div class="form-check-inline my-2">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input CambiosStado"
+                                       value="2" id="check4" data-parsley-multiple="groups">
+                                <label class="custom-control-label" for="check4">En proceso</label>
+                            </div>
+                        </div>
+                        <div class="form-check-inline my-2">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input CambiosStado"
+                                       value="3" id="check5" data-parsley-multiple="groups">
+                                <label class="custom-control-label" for="check5">Terminada</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" onclick="onChangeEstadoTarea()" class="btn btn-primary waves-effect waves-light">Guardar</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+            <input id="idTarea" type="hidden" value="" />
+            <input id="idState" type="hidden" value="" />
+        </div>
 
     </div><!-- container -->
 
