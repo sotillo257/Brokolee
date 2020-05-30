@@ -107,7 +107,7 @@
                                                 <a href="@Url.Action("listadoVehiculos", "titulares", new { area = "webmaster", id = item.Id })"
                                                    class="btn btn-primary waves-effect waves-light btn-sm mr-1 mb-1"
                                                    data-toggle="tooltip" data-placement="top" title="Listado Vehículos">
-                                                    <i class="mdi mdi-car"></i>
+                                                    <i class="mdi mdi-car"></i>@item.Vehiculos.Count
                                                 </a>
                                                 <a href="#">
                                                     <button type="button" onclick="onDeleteTitulo(this)" data-id="@item.Id"

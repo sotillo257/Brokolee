@@ -20,7 +20,7 @@ namespace WebApplication1.Controllers
         List<community> listComunities = new List<community>();
 
         // GET: comunicaciones
-        public ActionResult blog(string Error)
+        public ActionResult blog(string Error, string searchStr = "")
         {
             if (Session["USER_ID"] != null)
             {
@@ -44,13 +44,29 @@ namespace WebApplication1.Controllers
                     List<blog> blogs = new List<blog>();
                     if (Session["CURRENT_COMU"] != null)
                     {
-                        blogs = entities.blogs.Where(m => m.community_id == communityAct || m.user.role == 3).ToList();
+                        if (searchStr != "")
+                        {
+                            blogs = entities.blogs.Where(m => (m.community_id == communityAct || m.user.role == 3) && m.title.Contains(searchStr) == true).ToList();
+                        }
+                        else
+                        {
+                            blogs = entities.blogs.Where(m => m.community_id == communityAct || m.user.role == 3).ToList();
+                        }                        
                     }
                     else
                     {
-                        blogs = entities.blogs.Where(m => m.user.role == 3).ToList();
+                        if (searchStr != "")
+                        {
+                            blogs = entities.blogs.Where(m => m.user.role == 3 && m.title.Contains(searchStr) == true).ToList();
+                        }
+                        else
+                        {
+                            blogs = entities.blogs.Where(m => m.user.role == 3).ToList();
+                        }
                     }
-                    
+
+                   
+
 
                     viewModel.blogList = blogs;
                     viewModel.pubTaskList = ep.GetNotifiTaskList(userId);
@@ -635,6 +651,12 @@ namespace WebApplication1.Controllers
                     exception = ex.Message
                 });
             }
+        }
+
+        [HttpPost]
+        public ActionResult SeacrhResult(string searchStr)
+        {
+            return Redirect(Url.Action("blog", "comunicaciones", new { searchStr = searchStr }));
         }
 
         public JsonResult SendFile(HttpPostedFileBase sendFile)

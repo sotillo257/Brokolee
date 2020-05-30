@@ -54,50 +54,50 @@
                                         <div class="col-sm-6 col-md-8">
                                             @if (ViewBag.selectForm == 1)
                                             {
-                                            <select class="form-control is-invalid" id="id-search-category"
-                                                    name="searchCommunityId"
-                                                    onchange="onSearchTitularCommunity()">
-                                                <option value="-1">Seleccionar comunidad</option>
-                                                @foreach (var item in Model.communityList)
-                                                {
-                                                    if (Convert.ToInt64(Session["WM_selectedComm"]) == item.id)
+                                                <select class="form-control is-invalid" id="id-search-category"
+                                                        name="searchCommunityId"
+                                                        onchange="onSearchTitularCommunity()">
+                                                    <option value="-1">Seleccionar comunidad</option>
+                                                    @foreach (var item in Model.communityList)
                                                     {
-                                                        <option selected value="@item.id">@item.first_name</option>
+                                                        if (Convert.ToInt64(Session["WM_selectedComm"]) == item.id)
+                                                        {
+                                                            <option selected value="@item.id">@item.first_name</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="@item.id">@item.first_name</option>
+                                                        }
+                                                    }
+                                                </select>
+                                            }
+                                            else
+                                            {
+                                                <select class="form-control" id="id-search-category"
+                                                        name="searchCommunityId"
+                                                        onchange="onSearchTitularCommunity()">
+                                                    @if (Convert.ToInt64(Session["WM_selectedComm"]) == -1)
+                                                    {
+                                                        <option value="-1">Seleccionar comunidad</option>
+
                                                     }
                                                     else
                                                     {
-                                                        <option value="@item.id">@item.first_name</option>
+                                                        <option value="-1">Mostrar todos</option>
                                                     }
-                                                }
-                                            </select>
-                                            }
-                                            else
-                                            {
-                                        <select class="form-control" id="id-search-category"
-                                                name="searchCommunityId"
-                                                onchange="onSearchTitularCommunity()">
-                                            @if (Convert.ToInt64(Session["WM_selectedComm"]) == -1)
-                                            {
-                                                <option value="-1">Seleccionar comunidad</option>
+                                                    @foreach (var item in Model.communityList)
+                                                    {
+                                                        if (Convert.ToInt64(Session["WM_selectedComm"]) == item.id)
+                                                        {
+                                                            <option selected value="@item.id">@item.first_name</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="@item.id">@item.first_name</option>
+                                                        }
+                                                    }
+                                                </select>
 
-                                            }                                           
-                                            else
-                                            {
-                                                <option value="-1">Mostrar todos</option>
-                                            }
-                                            @foreach (var item in Model.communityList)
-                                            {
-                                                if (Convert.ToInt64(Session["WM_selectedComm"]) == item.id)
-                                                {
-                                                    <option selected value="@item.id">@item.first_name</option>
-                                                }
-                                                else
-                                                {
-                                                    <option value="@item.id">@item.first_name</option>
-                                                }
-                                            }
-                                        </select>
-                                                
                                             }
 
                                         </div>
@@ -109,7 +109,7 @@
                 </div>
             </div>
         </div><!--end row-->
-        <!-- end page title end breadcrumb -->      
+        <!-- end page title end breadcrumb -->
         <!-- back button -->
         <div class="row pb-4">
             <div class="col-md-6">
@@ -181,120 +181,115 @@
                                         <th class="f-b">Nombre</th>
                                         <th class="f-b">Apellidos</th>
                                         <th class="f-b">Email</th>
-                                        <th class="f-b">Registro</th>
+                                        <th class="f-b">Comunidades</th>
                                         <th class="f-b">Estado</th>
                                         <th class="text-center f-b">Opciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach (var item in Model.titularList)
-                                   {     
-                                        int suma = 0;  
+                                    {
+                                        int suma = 0;
                                         List<long> usados = new List<long>();
-                                    <tr>
-                                        <td>@item.first_name1</td>
-                                        <td>@item.last_name1</td>
-                                        <td>@item.email</td>
-                                        <td class="text-center">
-                                            <button type="button" data-toggle="tooltip" data-placement="top" title="Comunidades"
-                                                    class="btn btn-info waves-effect waves-light btn-sm">
-                                                <i class="mdi mdi-hospital-building"></i>                                                
-                                                @foreach (var item2 in item.Titulos)
-                                                {
-
-                                                    foreach (var commID in Model.communityList)
+                                        <tr>
+                                            <td>@item.first_name1</td>
+                                            <td>@item.last_name1</td>
+                                            <td>@item.email</td>
+                                            <td class="text-center">
+                                                <button type="button" data-id="@item.id" data-toggle="tooltip" data-placement="top" title="Comunidades"
+                                                        class="btn btn-info waves-effect waves-light btn-sm">
+                                                    <i class="mdi mdi-hospital-building"></i>
+                                                    @foreach (var item2 in item.Titulos)
                                                     {
-                                                        if (item2.IdCommunity == commID.id)
-                                                        {
-                                                            if (usados.Count == 0)
-                                                            {
-                                                                usados.Add(item2.IdCommunity);
-                                                                suma = suma + 1;
-                                                            }
-                                                            else
-                                                            {
-                                                                long bandera = -1;
-                                                                foreach (long idU in usados)
-                                                                {
-                                                                    if (item2.IdCommunity != idU)
-                                                                    {
-                                                                        suma = suma + 1;
-                                                                        bandera = item2.IdCommunity;
-                                                                    }
-                                                                }
 
-                                                                if (bandera != -1)
+                                                        foreach (var commID in Model.communityList)
+                                                        {
+                                                            if (item2.IdCommunity == commID.id)
+                                                            {
+                                                                if (usados.Count == 0)
                                                                 {
                                                                     usados.Add(item2.IdCommunity);
+                                                                    suma = suma + 1;
+                                                                }
+                                                                else
+                                                                {
+                                                                    long bandera = -1;
+                                                                    foreach (long idU in usados)
+                                                                    {
+                                                                        if (item2.IdCommunity != idU)
+                                                                        {
+                                                                            suma = suma + 1;
+                                                                            bandera = item2.IdCommunity;
+                                                                        }
+                                                                    }
+
+                                                                    if (bandera != -1)
+                                                                    {
+                                                                        usados.Add(item2.IdCommunity);
+                                                                    }
+
                                                                 }
 
                                                             }
-
                                                         }
                                                     }
+
+                                                    @suma
+                                                </button>
+
+                                            </td>
+                                            <td class="text-center">
+                                                @if (item.is_active == true)
+                                                {
+                                                    <button type="button" onclick="onDeactiveResident(this)" data-id="@item.id"
+                                                            class="btn btn-primary waves-effect waves-light btn-sm">
+                                                        Activo
+                                                    </button>
                                                 }
-
-                                                @suma
-                                            </button>
-
-                                            <button type="button" data-toggle="tooltip" data-placement="top" title="Propiedades"
-                                                    class="btn btn-info waves-effect waves-light btn-sm">
-                                                <i class="mdi mdi-home"></i>@item.Titulos.Count
-                                            </button>
-
-                                        </td>                                        
-                                        <td class="text-center">
-                                            @if (item.is_active == true)
-                                            {
-                                                <button type="button" onclick="onDeactiveResident(this)" data-id="@item.id"
-                                                        class="btn btn-primary waves-effect waves-light btn-sm">
-                                                    Activo
-                                                </button>
-                                            }
-                                            else
-                                            {
-                                                <button type="button" onclick="onActiveResident(this)" data-id="@item.id"
-                                                        class="btn btn-danger waves-effect waves-light btn-sm">
-                                                    Inactivo
-                                                </button>
-                                            }
-                                        </td>
-                                        <td class="text-center">
-                                            <a href="@Url.Action("ver", "titulares", new { area = "webmaster", id = item.id })">
-                                                <button type="button"
-                                                        class="btn btn-success waves-effect waves-light btn-sm mr-1 mb-1"
-                                                        data-toggle="tooltip"
-                                                        data-placement="top"
-                                                        title="Ver">
-                                                    <i class="mdi mdi-eye"></i>
-                                                </button>
-                                            </a>
-                                            <a href="@Url.Action("editar", "titulares", new { area = "webmaster", id = item.id })">
-                                                <button type="button"
-                                                        class="btn btn-primary waves-effect waves-light btn-sm mr-1 mb-1"
-                                                        data-toggle="tooltip" data-placement="top" title="Editar">
-                                                    <i class="mdi mdi-lead-pencil"></i>
-                                                </button>
-                                            </a>
-                                            <a href="@Url.Action("listadoTitulos", "titulares", new { area = "webmaster", id = item.id })"
-                                               class="btn btn-primary waves-effect waves-light btn-sm mr-1 mb-1"
-                                               data-toggle="tooltip" data-placement="top" title="Propiedades">
-                                                <i class="mdi mdi-home"></i>
-                                            </a>
-                                            <a href="#">
-                                                <button type="button" onclick="onDeleteTitulares(this)" data-id="@item.id"
-                                                        class="btn btn-danger waves-effect waves-light btn-sm mb-1"
-                                                        data-toggle="tooltip"
-                                                        data-placement="top"
-                                                        title="Eliminar">
-                                                    <i class="mdi mdi-delete"></i>
-                                                </button>
-                                            </a>
+                                                else
+                                                {
+                                                    <button type="button" onclick="onActiveResident(this)" data-id="@item.id"
+                                                            class="btn btn-danger waves-effect waves-light btn-sm">
+                                                        Inactivo
+                                                    </button>
+                                                }
+                                            </td>
+                                            <td class="text-center">
+                                                <a href="@Url.Action("ver", "titulares", new { area = "webmaster", id = item.id })">
+                                                    <button type="button"
+                                                            class="btn btn-success waves-effect waves-light btn-sm mr-1 mb-1"
+                                                            data-toggle="tooltip"
+                                                            data-placement="top"
+                                                            title="Ver">
+                                                        <i class="mdi mdi-eye"></i>
+                                                    </button>
+                                                </a>
+                                                <a href="@Url.Action("editar", "titulares", new { area = "webmaster", id = item.id })">
+                                                    <button type="button"
+                                                            class="btn btn-primary waves-effect waves-light btn-sm mr-1 mb-1"
+                                                            data-toggle="tooltip" data-placement="top" title="Editar">
+                                                        <i class="mdi mdi-lead-pencil"></i>
+                                                    </button>
+                                                </a>
+                                                <a href="@Url.Action("listadoTitulos", "titulares", new { area = "webmaster", id = item.id })"
+                                                   class="btn btn-primary waves-effect waves-light btn-sm mr-1 mb-1"
+                                                   data-toggle="tooltip" data-placement="top" title="Propiedades">
+                                                    <i class="mdi mdi-home"></i>@item.Titulos.Count
+                                                </a>
+                                                <a href="#">
+                                                    <button type="button" onclick="onDeleteTitulares(this)" data-id="@item.id"
+                                                            class="btn btn-danger waves-effect waves-light btn-sm mb-1"
+                                                            data-toggle="tooltip"
+                                                            data-placement="top"
+                                                            title="Eliminar">
+                                                        <i class="mdi mdi-delete"></i>
+                                                    </button>
+                                                </a>
 
 
-                                        </td>
+                                            </td>
 
-                                    </tr>
+                                        </tr>
                                     }
                                 </tbody>
                             </table>
@@ -311,6 +306,35 @@
             </div>
         </div>
         <!-- end back button -->
+
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Comunidades</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <table id="dataTable-directorio-suplidores" class="table table-striped table-bordered normal tablaComunidadesSe" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                            <thead>
+                                <tr>
+                                    <th class="f-b">Id</th>                                    
+                                    <th class="f-b">Nombre</th>                                    
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>                    
+                    </div>
+                </div>
+            </div>
+        </div>
 
     </div><!-- container -->
     <form id="exportForm" method="post" action="@Url.Action("ExportCSV", "titulares", new { area = "webmaster", searchStr = Model.searchStr })">

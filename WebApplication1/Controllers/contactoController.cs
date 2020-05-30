@@ -162,5 +162,11 @@ namespace WebApplication1.Controllers
                 return Redirect(ep.GetLogoutUrl());
             }
         }
+
+        [HttpPost]
+        public ActionResult SeacrhResult(string searchStr)
+        {
+            return Redirect(Url.Action("listado", "contacto", new { searchStr = searchStr }));
+        }
     }
 }

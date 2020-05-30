@@ -23,7 +23,7 @@ namespace WebApplication1.Areas.webmaster.Controllers
     public class titularesController : Controller
     {
         pjrdev_condominiosEntities entities = new pjrdev_condominiosEntities();
-        EFPublicRepository ep = new EFPublicRepository();
+        EFPublicRepository ep = new EFPublicRepository();        
         // GET: webmaster/titulares
       
 
@@ -1364,8 +1364,45 @@ namespace WebApplication1.Areas.webmaster.Controllers
                 });
             }
         }
-
        
+        //public JsonResult almacenarID(long id)
+        //{
+        //    try
+        //    {
+        //        Session["idTitular"] = id;
+        //        return Json(new { result = "success" });
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return Json(new
+        //        {
+        //            result = "error",
+        //            exception = ex.HResult
+        //        });
+        //    }
+        //}
+        
+        //public JsonResult listaComunidades()
+        //{
+        //    try
+        //    {
+        //        long userId = (long)Session["idTitular"];
+        //        List<Titulo> titulosList = new List<Titulo>();
+        //        List<community> listComunities = new List<community>();
+        //        titulosList = ep.GetTitulosByTitular(userId);
+        //        listComunities = ep.GetCommunityListByTitular(titulosList);
+        //        return Json(new { result = listComunities });
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return Json(new
+        //        {
+        //            result = "error",
+        //            exception = ex.HResult
+        //        });
+        //    }
+        //}
+
 
 
         [HttpPost]

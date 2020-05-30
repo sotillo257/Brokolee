@@ -31,11 +31,21 @@
                 <div class="card m-b-30">
                     <div class="card-body">
                         <div class="input-group">
-                            <input type="text" id="search-input" name="example-input1-group2" 
-                                   class="form-control" placeholder="Buscar tarea...">
-                            <span class="input-group-append">
-                                <button type="button" id="search-button" class="btn btn-effect-ripple btn-primary"><i class="fas fa-search"></i> Buscar </button>
-                            </span>
+                            @using (Html.BeginForm("SeacrhResultC", "tareas", FormMethod.Post,
+                               new
+                               {
+                                   id = "searchSupplierForm",
+                                   @class = "search-form",
+                                   enctype = "multipart/form-data"
+                               }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <input type="text" id="search-event-input" name="searchStr" value="@Model.searchStr"
+                                       class="form-control" placeholder="Buscar por palabras clave">
+                                <span class="input-group-append">
+                                    <button type="submit" class="btn btn-effect-ripple btn-primary"><i class="fas fa-search"></i> Buscar </button>
+                                </span>
+                            }
                         </div>
                     </div>
                 </div>
@@ -57,7 +67,7 @@
                             <div class="col-md-6 float-left">
                                 <h5 class="d-inline-block">Listado</h5>
                             </div>
-                            
+
                         </div>
                         <div class="table-responsive">
                             <table id="dataTable-tareas-completadas" class="table table-striped table-bordered normal" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
@@ -74,29 +84,29 @@
                                 <tbody>
                                     @foreach (var item in Model.taskList)
                                     {
-                                    <tr class="alert-inactive">
-                                        <td>@item.task_name</td>
-                                        <td>@item.responsable</td>
-                                        <td class="text-center">@Convert.ToDateTime(item.created_at).ToString("MM/dd/yyyy")</td>
-                                        @if (item.completed_date != null)
-                                        {
-                                            <td class="text-center">@Convert.ToDateTime(item.completed_date).ToString("MM/dd/yyyy")</td>
-                                        }
-                                        else
-                                        {
-                                            <td class="text-center"></td>
-                                        }
+                                        <tr class="alert-inactive">
+                                            <td>@item.task_name</td>
+                                            <td>@item.responsable</td>
+                                            <td class="text-center">@Convert.ToDateTime(item.created_at).ToString("MM/dd/yyyy")</td>
+                                            @if (item.completed_date != null)
+                                            {
+                                                <td class="text-center">@Convert.ToDateTime(item.completed_date).ToString("MM/dd/yyyy")</td>
+                                            }
+                                            else
+                                            {
+                                                <td class="text-center"></td>
+                                            }
 
-                                        @if (item.archived_date != null)
-                                        {
-                                            <td class="text-center">@Convert.ToDateTime(item.archived_date).ToString("MM/dd/yyyy")</td>
-                                        }
-                                        else
-                                        {
-                                            <td class="text-center"></td>
-                                        }
+                                            @if (item.archived_date != null)
+                                            {
+                                                <td class="text-center">@Convert.ToDateTime(item.archived_date).ToString("MM/dd/yyyy")</td>
+                                            }
+                                            else
+                                            {
+                                                <td class="text-center"></td>
+                                            }
 
-                                    </tr>
+                                        </tr>
                                     }
                                 </tbody>
                             </table>

@@ -70,7 +70,7 @@ namespace WebApplication1.Controllers
                 
         }
 
-        public ActionResult completadas(string Error, string searchString = "")
+        public ActionResult completadas(string Error, string searchStr = "")
         {
             if (Session["USER_ID"] != null)
             {
@@ -81,18 +81,23 @@ namespace WebApplication1.Controllers
                     List<ShowMessage> pubMessageList = ep.GetChatMessages(userId);
                     List<task> taskList = new List<task>();
                     long communityAct = Convert.ToInt64(Session["CURRENT_COMU"]);
-                    if (Session["CURRENT_COMU"] != null)
+                    if (searchStr != "")
                     {
                         var query = (from r in entities.tasks
-                                     where r.task_name.Contains(searchString) == true && r.community_id == communityAct
+                                     where r.task_name.Contains(searchStr) == true && r.community_id == communityAct
                                      && r.completed_date != null
                                      select r);
                         taskList = query.ToList();
                     }
                     else
                     {
-                        taskList.Clear();
-                    }                        
+                        var query = (from r in entities.tasks
+                                     where r.community_id == communityAct
+                                     && r.completed_date != null
+                                     select r);
+                        taskList = query.ToList();
+                    }                    
+                                        
                     tareasViewModel viewModel = new tareasViewModel();
                     titulosList = ep.GetTitulosByTitular(userId);
                     listComunities = ep.GetCommunityListByTitular(titulosList);
@@ -230,8 +235,8 @@ namespace WebApplication1.Controllers
                     }
                 }
                 else
-                {
-                    return Redirect(Url.Action("listado", "tareas"));
+                {                
+                    return Redirect(Url.Action("listado", "tareas", new { Error = "No puede sugerir tareas, usted no pertenece a ninguna comunidad." }));
                 }
                 
             } else
@@ -297,6 +302,12 @@ namespace WebApplication1.Controllers
         public ActionResult SeacrhResult(string searchStr)
         {
             return Redirect(Url.Action("listado", "tareas", new { searchStr = searchStr }));
+        }
+
+        [HttpPost]
+        public ActionResult SeacrhResultC(string searchStr)
+        {
+            return Redirect(Url.Action("completadas", "tareas", new { searchStr = searchStr }));
         }
     }
 }

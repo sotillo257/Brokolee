@@ -31,10 +31,21 @@
                 <div class="card m-b-30">
                     <div class="card-body">
                         <div class="input-group">
-                            <input type="text" id="search-input" name="example-input1-group2" class="form-control" placeholder="Buscar entrada en el blog...">
-                            <span class="input-group-append">
-                                <button type="button" id="search-button" class="btn btn-effect-ripple btn-primary"><i class="fas fa-search"></i> Buscar </button>
-                            </span>
+                            @using (Html.BeginForm("SeacrhResult", "comunicaciones", FormMethod.Post,
+                               new
+                               {
+                                   id = "searchSupplierForm",
+                                   @class = "search-form",
+                                   enctype = "multipart/form-data"
+                               }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <input type="text" id="search-event-input" name="searchStr" value="@Model.searchStr"
+                                       class="form-control" placeholder="Buscar entrada en el blog">
+                                <span class="input-group-append">
+                                    <button type="submit" class="btn btn-effect-ripple btn-primary"><i class="fas fa-search"></i> Buscar </button>
+                                </span>
+                            }
                         </div>
                     </div>
                 </div>

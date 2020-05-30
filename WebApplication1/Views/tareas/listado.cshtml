@@ -31,11 +31,21 @@
                 <div class="card m-b-30">
                     <div class="card-body">
                         <div class="input-group">
-                            <input type="text" id="search-input" name="searchStr" class="form-control" value="@Model.searchStr"
-                                   placeholder="Introduzca palabra clave">
-                            <span class="input-group-append">
-                                <button type="button" id="search-button" class="btn btn-effect-ripple btn-primary"><i class="fas fa-search"></i> Buscar </button>
-                            </span>
+                            @using (Html.BeginForm("SeacrhResult", "tareas", FormMethod.Post,
+                               new
+                               {
+                                   id = "searchSupplierForm",
+                                   @class = "search-form",
+                                   enctype = "multipart/form-data"
+                               }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <input type="text" id="search-event-input" name="searchStr" value="@Model.searchStr"
+                                       class="form-control" placeholder="Buscar por palabras clave">
+                                <span class="input-group-append">
+                                    <button type="submit" class="btn btn-effect-ripple btn-primary"><i class="fas fa-search"></i> Buscar </button>
+                                </span>
+                            }
                         </div>
                     </div>
                 </div>
@@ -76,37 +86,37 @@
                                 <tbody>
                                     @foreach (var item in Model.taskList)
                                     {
-                                    <tr>
-                                        <td>@item.task_name</td>
-                                        <td>@item.responsable</td>
-                                        <td class="text-center">@Convert.ToDateTime(item.task_date).ToString("MM/dd/yyyy - HH:mm tt")</td>
-                                        <td class="text-center">@Convert.ToDateTime(item.estimated_date).ToString("MM/dd/yyyy - HH:mm tt")</td>
+                                        <tr>
+                                            <td>@item.task_name</td>
+                                            <td>@item.responsable</td>
+                                            <td class="text-center">@Convert.ToDateTime(item.task_date).ToString("MM/dd/yyyy - HH:mm tt")</td>
+                                            <td class="text-center">@Convert.ToDateTime(item.estimated_date).ToString("MM/dd/yyyy - HH:mm tt")</td>
 
-                                        <td class="text-center">
-                                            @if (item.status == 3)
-                                            {
-                                                <button type="button" class="btn btn-danger waves-effect waves-light btn-sm">Terminada</button>
-                                            }
-                                            else if (item.status == 2)
-                                            {
-                                                <button type="button" class="btn btn-primary waves-effect waves-light btn-sm">En Proceso</button>
-                                            }
-                                            else if (item.status == 4)
-                                            {
-                                                <button type="button" class="btn btn-warning waves-effect waves-light btn-sm">Por aprobar</button>
-                                            }
-                                            else if (item.status == 5)
-                                            {
-                                                <button type="button" class="btn btn-danger waves-effect waves-light btn-sm">Rechazada</button>
-                                            }
-                                            else
-                                            {
-                                                <button type="button" class="btn btn-secondary waves-effect waves-light btn-sm">Sin comenzar</button>
-                                            }
+                                            <td class="text-center">
+                                                @if (item.status == 3)
+                                                {
+                                                    <button type="button" class="btn btn-danger waves-effect waves-light btn-sm">Terminada</button>
+                                                }
+                                                else if (item.status == 2)
+                                                {
+                                                    <button type="button" class="btn btn-primary waves-effect waves-light btn-sm">En Proceso</button>
+                                                }
+                                                else if (item.status == 4)
+                                                {
+                                                    <button type="button" class="btn btn-warning waves-effect waves-light btn-sm">Por aprobar</button>
+                                                }
+                                                else if (item.status == 5)
+                                                {
+                                                    <button type="button" class="btn btn-danger waves-effect waves-light btn-sm">Rechazada</button>
+                                                }
+                                                else
+                                                {
+                                                    <button type="button" class="btn btn-secondary waves-effect waves-light btn-sm">Sin comenzar</button>
+                                                }
 
-                                        </td>
-                                        <td class="text-center"><a href="@Url.Action("vertarea", "tareas", new { id=item.id })"><button type="button" class="btn btn-success waves-effect waves-light btn-sm mr-1 mb-1" data-toggle="tooltip" data-placement="top" title="Ver"><i class="mdi mdi-eye"></i></button></a></td>
-                                    </tr>
+                                            </td>
+                                            <td class="text-center"><a href="@Url.Action("vertarea", "tareas", new { id=item.id })"><button type="button" class="btn btn-success waves-effect waves-light btn-sm mr-1 mb-1" data-toggle="tooltip" data-placement="top" title="Ver"><i class="mdi mdi-eye"></i></button></a></td>
+                                        </tr>
                                     }
                                 </tbody>
                             </table>

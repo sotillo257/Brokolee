@@ -2000,19 +2000,13 @@
             }
         }
 
-        function onConfirmDelete(self) {
-            var id = $(self).data("id");            
-            $("#idDeleteComm").val(id),
-             $('#exampleModalLong').modal('show')
-        }
-
-        function onDeleteCommunity() {
-
-            var id = $("#idDeleteComm").val();
+        @*//Comunidades que posee un titular
+        function onCommunities(self) {
+            var id = $(self).data("id");
             var formData = new FormData();
             formData.append("id", id);
-            var url = "@Url.Action("DeleteCommunity", "comunidades", new { area = "webmaster" })";    
-            var errUrl = "@Url.Action("listado", "comunidades", new { area = "webmaster", Error = "No se pudo eliminar la comunidad. Revisar controlador."})";                  
+            var url = "@Url.Action("almacenarID", "titulares", new { area = "webmaster" })";
+            var errUrl = "@Url.Action("listado", "titulares", new { area = "webmaster", Error = "No se pudo procesar la solicitud."})";
             $.ajax({
                 url: url,
                 type: "post",
@@ -2025,7 +2019,70 @@
 
                     
                     } else {
-                        location.reload();
+                        onCommunitiesList();
+                        bue();
+                    }
+                },
+                processData: false,
+                contentType: false
+            }) 
+        }
+
+        function onCommunitiesList() {
+            var url = "@Url.Action("listaComunidades", "titulares", new { area = "webmaster" })";
+            var errUrl = "@Url.Action("listado", "titulares", new { area = "webmaster", Error = "No se pudo procesar la solicitud."})";
+           $.ajax({
+         url: url,
+        cache: false,
+        type: 'POST',
+        async: false,      
+        success: function (result) {     
+                    if (result.result != null) {
+                        //listCommun = data;
+                        //var t = $('.tablaComunidadesSe').DataTable();
+                        //t.rows().remove().draw(false);
+                        //for (var i = 0; i < data.length; i++) {
+                        //    t.row.add([
+                        //        data[i].Id,
+                        //        data[i].first_name,
+                        //    ]).draw(false);
+                        //}
+                        $('#exampleModalLong').modal('show')
+                    } else {
+                        window.location = errUrl;
+                    }
+               },          
+            })   
+        }*@
+       
+
+        function onConfirmDelete(self) {
+            var id = $(self).data("id");            
+            $("#idDeleteComm").val(id),
+             $('#exampleModalLong').modal('show')
+        }
+
+        function onDeleteCommunity() {
+
+            var id = $("#idDeleteComm").val();
+            var formData = new FormData();
+            formData.append("id", id);
+            var url = "@Url.Action("DeleteCommunity", "comunidades", new { area = "webmaster" })";   
+            var successUrl = "@Url.Action("listado", "comunidades", new { area = "webmaster"})";  
+            var errUrl = "@Url.Action("listado", "comunidades", new { area = "webmaster", Error = "No se pudo eliminar la comunidad."})";                  
+            $.ajax({
+                url: url,
+                type: "post",
+                data: formData,
+                success: function (result) {
+                    $("#ck-body-loading-overlay").hide();
+                    if (result.result === "error") {                        
+                        window.location = errUrl;
+                    } else if (result.result === "NotAlowed") {
+
+                    
+                    } else {
+                        window.location = successUrl;
                     }
                 },
                 processData: false,
